@@ -1,0 +1,594 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_118?></title>
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+
+var f=document.edit;
+function InitValue(f)
+{
+var f=document.edit;
+	  show_network_status();
+	
+	/*----- Remote Access ----*/
+	
+	f.http_passwd.value = '<%nvram_get("http_password");%>';
+	f.confirm_http_passwd.value = '<%nvram_get("http_password");%>';
+	f.http_name.value='<%nvram_get("http_username");%>';	
+	
+	if ('<%nvram_get("web_use_https");%>' == '1')
+		f.web_access_https.checked = true;
+	else
+		f.web_access_https.checked = false;
+
+	if ('<%nvram_get("web_use_http");%>' == '1')
+		f.web_access_http.checked = true;
+	else
+		f.web_access_http.checked = false;
+		
+
+	if ('<%nvram_get("wireless_control");%>' == '1')
+		f.wireless_access[0].checked = true;
+	else
+		f.wireless_access[1].checked = true;
+
+	if ('<%nvram_get("remote_mgmt_enabled");%>' == '1')
+	{
+		f.filter_Remote[0].checked=true;
+		f.filter_remotePort.disabled = false ;
+	}
+	else
+	{
+		f.filter_Remote[1].checked=true;
+		f.filter_remotePort.disabled = true ;
+	}
+	if ('<%nvram_get("remote_use_https");%>' == '1')
+	{
+		f.remote_access_https[1].checked = true;
+		f.remote_access_https[0].checked = false;
+	}
+		
+	if ('<%nvram_get("remote_use_http");%>' == '1')
+	{
+		f.remote_access_https[1].checked = false;
+		f.remote_access_https[0].checked = true;
+	}
+
+
+	if ('<%nvram_get("remote_upgrade");%>' == '1')
+		f.upgrade_Remote[0].checked = true;
+	else 
+		f.upgrade_Remote[1].checked = true;
+
+	f.filter_remotePort.value='<%nvram_get("remote_mgmt_port");%>';
+
+	if ('<%nvram_get("allow_remote_ip");%>' == '0'){
+		f.allow_ip[0].checked = true;
+	} 
+	else 
+		f.allow_ip[1].checked = true;
+
+	SplitRMIPAddress ('<%nvram_get("remote_mgmt_ip_start");%>');
+	f.rm_ipaddr_4_1.value=GetIPSegment ( '<%nvram_get("remote_mgmt_ip_end");%>' , 4 );
+			
+	RMIPCheck(f);
+	RMCheck(f);
+}
+function handle_https(f)
+{
+//if(f.filter_Remote[0].checked == true && f.web_access_https[1].checked == true) {
+//choose_enable(f.remote_access_https);
+		
+//if(f.web_access_https[1].checked == true && f.remote_access_https.checked == false)
+//f.filter_remotePort.disabled = false ;
+//}
+//else {
+//choose_disable(f.remote_access_https);
+//
+//}
+}
+function RMCheck(f)
+{
+var f=document.edit;
+	if (f.filter_Remote[0].checked == true)
+	{
+		f.filter_remotePort.disabled=0;
+		f.remote_access_https[0].disabled=0;
+		f.remote_access_https[1].disabled=0;
+		f.upgrade_Remote[0].disabled=0;
+		f.upgrade_Remote[1].disabled=0;
+		f.allow_ip[0].disabled=0;
+		f.allow_ip[1].disabled=0;
+	}
+	else
+	{
+		f.filter_remotePort.disabled=1;
+		f.remote_access_https[0].disabled=1;
+		f.remote_access_https[1].disabled=1;
+		f.upgrade_Remote[0].disabled=1;
+		f.upgrade_Remote[1].disabled=1;
+		f.allow_ip[0].disabled=1;
+		f.allow_ip[1].disabled=1;
+	}
+
+	if (<%nvram_get("client_from_remote");%> == 1)
+	{
+		f.upgrade_Remote[0].disabled=1;
+		f.upgrade_Remote[1].disabled=1;
+	}
+	
+	RMIPCheck(f);
+	handle_https(f);
+	gray_port(f);
+
+	if (f.filter_Remote[1].checked == true)
+	{
+		f.rm_ipaddr_1.disabled=1;
+		f.rm_ipaddr_2.disabled=1;
+		f.rm_ipaddr_3.disabled=1;
+		f.rm_ipaddr_4.disabled=1;
+		f.rm_ipaddr_4_1.disabled=1;
+	}
+}
+
+function RMIPCheck(passForm)
+{
+	if (passForm.allow_ip[0].checked == true)
+	{
+		passForm.rm_ipaddr_1.disabled=1;
+		passForm.rm_ipaddr_2.disabled=1;
+		passForm.rm_ipaddr_3.disabled=1;
+		passForm.rm_ipaddr_4.disabled=1;
+		passForm.rm_ipaddr_4_1.disabled=1;
+	}
+	else
+	{
+		passForm.rm_ipaddr_1.disabled=0;
+		passForm.rm_ipaddr_2.disabled=0;
+		passForm.rm_ipaddr_3.disabled=0;
+		passForm.rm_ipaddr_4.disabled=0;
+		passForm.rm_ipaddr_4_1.disabled=0;
+	}	
+}
+
+function message()
+{
+//	  alert(translate_str("SetupWizard",92));
+}
+
+function dispassword()
+{
+var f=document.edit;         
+   var input_password=document.getElementById("http_passwd");
+   var confirm_password=document.getElementById("confirm_http_passwd");
+   var password_show=document.getElementById("password_show");
+   var password_confirm=document.getElementById("password_confirm");
+   
+    var sAgent = navigator.userAgent.toLowerCase();
+    var isIE = (sAgent.indexOf('msie')!=-1); //IE6.0-7
+     
+	  if (f.show.checked==true)
+	  {  	  
+  	   if (isIE==true)
+  	   {
+  	  password_show.innerHTML='<input type="text" class="ssid_col_width" maxlength=63 size=20 id="http_passwd" name="http_passwd" value=<%nvram_get("http_password");%>>&nbsp;&nbsp;<input id="show" name="show" type="checkbox" checked="true" onClick="javascript:dispassword();">&nbsp;&nbsp;<?SetupWizard_120?>';
+	    password_confirm.innerHTML='<input type="text" class="ssid_col_width" maxlength=63 size=20 id="confirm_http_passwd" name="confirm_http_passwd" value=<%nvram_get("http_password");%> onblur="message();">'; 
+       }
+	     else
+	     {
+	       input_password.setAttribute('type','text');
+  	     confirm_password.setAttribute('type','text');
+       }
+      // input_password.type='text';     
+    }
+    else
+    {
+         if (isIE==true)
+  	   {
+  	    password_show.innerHTML='<input type="password" class="ssid_col_width" maxlength=63 size=20 id="http_passwd" name="http_passwd" value=<%nvram_get("http_password");%>>&nbsp;&nbsp;<input id="show" name="show" type="checkbox" onClick="javascript:dispassword();">&nbsp;&nbsp;<?SetupWizard_120?>';
+  	    password_confirm.innerHTML='<input type="password" class="ssid_col_width" maxlength=63 size=20 id="confirm_http_passwd" name="confirm_http_passwd" value=<%nvram_get("http_password");%> onblur="message();">';
+        }
+  	    else
+  	    {
+            input_password.setAttribute('type','password');
+        	  confirm_password.setAttribute('type','password');
+  	  }
+     
+    //input_password.type='password';
+    }
+}
+
+
+
+function ValidateForm(f) 
+{
+	var f=document.edit;
+
+	if ('<%nvram_get("auto_login");%>'  == '0'){
+
+		if(f.http_name.value == ''){
+			alert(translate_str("BasicSetup",87));
+			f.http_name.focus();
+			return ; 
+		}
+		
+		if(f.http_passwd.value == ''){
+			alert(translate_str("BasicSetup",88));
+			f.http_passwd.focus();
+			return ; 
+		}
+	}
+
+	if(f.http_passwd.value != f.confirm_http_passwd.value){
+		alert(translate_str("JavaScript",77));
+		f.confirm_http_passwd.focus();
+		return ; 
+	}
+
+	f.http_password.value = f.http_passwd.value;
+	
+	if (f.web_access_http.checked == true)
+		f.web_use_http.value=1;
+	else
+		f.web_use_http.value=0;		
+ 
+ 	f.http_username.value=f.http_name.value;
+ 
+	if (f.web_access_https.checked == true)
+		f.web_use_https.value=1;
+	else
+		f.web_use_https.value=0;
+
+	if (f.wireless_access[0].checked == true)
+		f.wireless_control.value = 1;
+	else
+		f.wireless_control.value = 0;	
+	
+	if (f.filter_Remote[0].checked == true) 
+	{
+		f.remote_mgmt_enabled.value=1;
+		
+		if (f.upgrade_Remote[0].checked)
+			f.remote_upgrade.value  = "1" ;
+		else
+			f.remote_upgrade.value  = "0" ;
+		
+		if ( f.allow_ip[0].checked == true) {
+			f.allow_remote_ip.value="0";
+			f.remote_mgmt_ip_start.value="0";
+			f.remote_mgmt_ip_end.value="0";
+		}
+		else {
+			f.allow_remote_ip.value="1";
+			if ( !AssembleRemoteIPAddressStart() ) { return ; }
+			if ( !AssembleRemoteIPAddressEnd() ) { return ; }
+		}
+
+
+		if ( f.remote_access_https[0].checked == true){
+			f.remote_use_http.value=1;
+			f.remote_use_https.value=0;
+		}
+		else{
+			f.remote_use_http.value=0;
+			f.remote_use_https.value=1;
+		}
+
+		if(!PortCheck(f.filter_remotePort))
+			return;
+		f.remote_mgmt_port.value=parseInt(f.filter_remotePort.value, 10);
+
+	}
+	else {
+		f.remote_mgmt_enabled.value=0;
+	}
+	
+	if(f.web_access_http.checked == false && f.web_access_https.checked == false) {
+		alert(translate_str("JavaScript",119));
+		return;
+	}
+	
+	if(f.filter_Remote[0].checked){
+		if(f.remote_access_https[0].checked == false && f.remote_access_https[1].checked == false) {
+			alert(translate_str("JavaScript",119));
+			return;
+		}
+	}
+
+	f.submit();
+}
+
+function gray_port(f)
+{
+var f=document.edit;
+	if(f.remote_access_https[0].checked == true && f.filter_Remote[0].checked == true)
+		f.filter_remotePort.disabled = false;
+	else
+		f.filter_remotePort.disabled = true;
+}
+
+function mouseOver(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("router").src = "rt_icon_bri.png";
+}
+
+function mouseOut(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("router").src = "rt_icon_bri.png";
+}
+
+
+
+var language_show = 0;
+function open_language()
+{
+	 var language_choice = document.getElementById('language');
+	 
+	if(language_show == '1') {
+		language_show = 0;
+		language_choice.style.visibility="hidden";
+	}
+	else {
+		language_show = 1;
+		language_choice.style.visibility="visible";
+	}
+}
+
+function apply_lang(e)
+{
+	var f1 = document.forms[1];
+	f1.language_str.value = e;
+ 	f1.submit();
+}
+
+function chage_color(e)
+{
+	e.style.color="#4F81BD";
+	e.style.textDecoration="underline"; 
+}
+
+function back_color(e)
+{
+	e.style.color="#B8B8B8";
+	e.style.textDecoration="none"; 
+}
+
+</Script>
+
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<!--form name="edit" action="post.cgi" method="post"-->
+<form name="edit" method="post" action="post_admin.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_edit_router_management.htm">
+<input type="hidden" name="redirect_timer" value="20000">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="http_password http_username web_use_http web_use_https wireless_control remote_mgmt_enabled remote_use_https remote_use_http remote_mgmt_port remote_upgrade allow_remote_ip remote_mgmt_ip_start remote_mgmt_ip_end">
+<input type="hidden" name="http_password">
+<input type="hidden" name="http_username">
+<input type="hidden" name="web_use_http" value="<%nvram_get("web_use_http");%>">
+<input type="hidden" name="web_use_https" value="<%nvram_get("web_use_https");%>">
+<input type="hidden" name="wireless_control" value="<%nvram_get("wireless_control");%>">
+<input type="hidden" name="remote_mgmt_enabled" value="<%nvram_get("remote_mgmt_enabled");%>">
+<input type="hidden" name="remote_use_https" value="<%nvram_get("remote_use_https");%>">
+<input type="hidden" name="remote_use_http" value="<%nvram_get("remote_use_http");%>">
+<input type="hidden" name="remote_mgmt_port" value="<%nvram_get("remote_mgmt_port");%>">
+<input type="hidden" name="remote_upgrade" value="<%nvram_get("remote_upgrade");%>">
+<input type="hidden" name="allow_remote_ip" value="<%nvram_get("allow_remote_ip");%>">
+<input type="hidden" name="remote_mgmt_ip_start" value="<%nvram_get("remote_mgmt_ip_start");%>">
+<input type="hidden" name="remote_mgmt_ip_end" value="<%nvram_get("remote_mgmt_ip_end");%>">
+<!--input type="hidden" name="cisco_web_assistant" value="<%nvram_get("cisco_web_assistant");%>">
+<input type="hidden" name="sip_alg" value="<%nvram_get("sip_alg");%>">
+<input type="hidden" name="upnp_enabled" value="<%nvram_get("upnp_enabled");%>">
+<input type="hidden" name="upnp_configure_allowed" value="<%nvram_get("upnp_configure_allowed");%>">
+<input type="hidden" name="upnp_disable_allowed" value="<%nvram_get("upnp_disable_allowed");%>"-->
+	<center>	 
+<table border="0" width="1000">
+	<tr>
+		<td>
+<%include_file("adv_logol_header.htm");%>
+
+  <div id="warp">
+      
+      <div class="Pointer_Routerpic"></div>
+			  				  <p  style="height:11px;"></p> 
+      <div class="status_background">
+				<p  style="height:30px;"></p> 
+				<p class="adv_title_hr"> <img src="hr_line.png"> </p>
+      		<p class="adv_title"><script>translate_strWrite("SetupWizard",75);</script></p>
+      		<div>
+      		<div style="padding:0px 0px 0px 50px;">
+          <table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+      				<tr><td colspan="5" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      				<tr height="42">
+      				<td align="right" width="250"><script>translate_strWrite("BasicSetup",77);</script>:</td>
+      				<td width="30">&nbsp;</td>
+      				<td align="left" width="300">
+      					<input type="text" class="ssid_col_width" maxlength=63 size=20 name="http_name" value=""></td>	
+      				</tr>
+      				<tr><td colspan="5" align="center" class="adv_title_hr"></td></tr>
+      				<tr height="42">
+      				<td align="right"><script>translate_strWrite("Management",6);</script>:</td>
+      				<td width="30">&nbsp;</td>
+      				<td id="password_show" align="left" width=330>
+      				<input type="password" class="ssid_col_width" maxlength=63 size=20 id="http_passwd" name="http_passwd" value="">&nbsp;&nbsp;
+              <input id="show" name="show" type="checkbox" onClick="javascript:dispassword();">&nbsp;&nbsp;<script>translate_strWrite("SetupWizard",120);</script></td>
+              </tr>      
+      				<tr height="42">
+      				<td align="right"><script>translate_strWrite("Management",7);</script>:</td>
+      				<td width="30">&nbsp;</td>
+      				<td id="password_confirm" align="left">
+      					<input type="password" class="ssid_col_width" maxlength=63 size=20 id="confirm_http_passwd" name="confirm_http_passwd" value="" onblur="message();"></td>
+      				</tr>		  
+      		
+      			<tr height="42">
+      				<td align="right"><script>translate_strWrite("Management",8);</script>:</td>
+      				<td width="30">&nbsp;</td>
+      				<td align="left">
+      					<input value="1" name="web_access_http" type="checkbox">
+                <script>translate_strWrite("Management",9);</script>&nbsp;&nbsp;
+                <input value="1" name="web_access_https" type="checkbox" onclick="handle_https(this.form)">
+                <script>translate_strWrite("Management",10);</script></td>
+      				</tr>		  
+      			
+      			<tr height="42">
+      				<td align="right"><script>translate_strWrite("Management",11);</script>:</td>
+      				<td width="30">&nbsp;</td>
+      				<td align="left">
+      					<input type=radio name=wireless_access value=1 onClick="RMCheck(document.forms[0]);">&nbsp;
+                <script>translate_strWrite("CheckBox",0);</script>&nbsp;&nbsp;
+                <input type=radio name=wireless_access value=0 onClick="RMCheck(document.forms[0]);">&nbsp;
+                <script>translate_strWrite("CheckBox",1);</script>&nbsp;
+      					</td>
+      				</tr>						 
+      			</table>
+      		</div>
+      		<p  style="height:30px;"></p> 
+      		<p class="adv_title_hr"> <img src="hr_line.png"> </p>
+      		<p class="adv_title"><script>translate_strWrite("SetupWizard",76);</script></p>
+      			<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+      			<tr>
+      				<tr><td colspan="5" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      				<tr height="42">
+      				<td align="right" width="250"><script>translate_strWrite("Management",12);</script>:</td>
+      				<td width="30">&nbsp;</td>
+      				<td align="left" width="285">
+      					<input type="radio" name=filter_Remote value=1 onClick="RMCheck(document.forms[0]);">&nbsp;
+					      <script>translate_strWrite("CheckBox",0);</script>&nbsp;&nbsp;
+                <input type="radio" name=filter_Remote value=0 onClick="RMCheck(document.forms[0]);">&nbsp;
+                <script>translate_strWrite("CheckBox",1);</script> &nbsp;
+      					</td>
+      				</tr>
+      			
+      			<tr height="42">
+      				<td align="right"><script>translate_strWrite("Management",8);</script>:</td>
+      				<td width="30">&nbsp;</td>
+      				<td align="left">
+      					<input name="remote_access_https" value="0" type="radio" onClick="gray_port(document.forms[0]);">&nbsp;
+                <script>translate_strWrite("Management",9);</script>&nbsp;&nbsp;
+					 			<input name="remote_access_https" value="1" type="radio" onClick="gray_port(document.forms[0]);">&nbsp;
+					      <script>translate_strWrite("Management",10);</script>
+      					</td>
+      				</tr>
+      				
+      			<tr height="42">
+      				<td align="right"><script>translate_strWrite("Management",14);</script>:</td>
+      				<td width="30">&nbsp;</td>
+      				<td align="left">
+      					<input type=radio name=upgrade_Remote value=1 >&nbsp;
+                <script>translate_strWrite("CheckBox",0);</script>&nbsp;&nbsp;
+                <input type=radio name=upgrade_Remote value=0 >&nbsp;
+                <script>translate_strWrite("CheckBox",1);</script>&nbsp;
+                </td>
+      				</tr>
+      		
+      		<tr height="42">
+      				<td align="right"><script>translate_strWrite("Management",15);</script>:</td>
+      				<td width="30">&nbsp;</td>
+      				<td align="left">
+      					<input name="allow_ip" type=radio value=1 onClick="RMIPCheck(document.forms[0]);">&nbsp;&nbsp;<script>translate_strWrite("DMZ",2);</script>
+                </td>
+      				</tr>	
+      		
+      		<tr height="42">
+      				<td align="right"></td>
+      				<td width="30">&nbsp;</td>
+      				<td align="left">
+      					<INPUT  type=radio value=0 name="allow_ip" onClick="RMIPCheck(document.forms[0]);">&nbsp;
+											  <INPUT class="ip_col_width" maxLength=3  name="rm_ipaddr_1" value="0">. 
+											  <INPUT class="ip_col_width" maxLength=3  name="rm_ipaddr_2" value="0">. 
+											  <INPUT class="ip_col_width" maxLength=3  name="rm_ipaddr_3" value="0">. 
+											  <INPUT class="ip_col_width" maxLength=3  name="rm_ipaddr_4" value="0">
+											  <script>translate_strWrite("SetupWizard",77);</script>&nbsp;&nbsp;
+										    <input class="ip_col_width" maxLength=3  name="rm_ipaddr_4_1" value="0">
+                </td>
+      				</tr>	
+            <tr height="42">
+      				<td align="right"><script>translate_strWrite("Management",16);</script>:</td>
+      				<td width="30">&nbsp;</td>
+      				<td align="left">
+      				<INPUT class="ip_col_width" maxLength=5 size=8 name="filter_remotePort" >
+                </td>
+      				</tr>	
+
+				      </table>  
+				      <p style="height:20px;"></p>    	
+				      <p class="status_end"></p>
+				  </div>     
+      </div>  
+      <div class="angle"></div>  
+             <div class="EZ_mid">  
+      		<p style="height:10px;"></p>      		 		  				    
+				  	<div class="Cancel_Save_button">
+				  <table border="0" cellspacing="0" cellpadding="0" width=335>
+				  	<tr height=23 width=600>
+				  		<td align="right" width=75>
+					  		<table border="0" cellspacing="0" cellpadding="0" width=75>
+									<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="adv_edit_router.htm">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",1);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										</tr>
+									</table>
+							</td>
+				  	<td align="center" width="60">&nbsp;<script>translate_strWrite("BasicSetup",162);</script>&nbsp;
+				  		</td>
+				  	<td align="left" width=200>
+				  		<table border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+									<td class="SW_LeftButton">&nbsp;</td>
+									<td class="SW_BottomButton"><a href="javascript:ValidateForm(document.forms[0]);">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",0);</script></font>&nbsp;</a></td>
+									<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+							</td>
+						</tr>
+				  </table>
+					</div>	  				    					    														    						    			    
+      </div>
+      
+        
+       <div style="height: 40px"></div>    
+		     <div class="EZ_foot">
+						<div class="EZ_foot_L"><img src="bottom_help_icon.png" style="position:relative;top:3pt;">&nbsp;<a href="help/<%nvram_get("language_str");%>/default.htm#RouterAutoLogin" target="_blank"><script>translate_strWrite("SetupWizard",64);</script></a>&nbsp;<img src="transparency.gif" style="width:15px;height:1px;"><a href="javascript:open_language();"><img src="bottom_language_icon.png" style="position:relative;top:3pt;">&nbsp;<script>translate_strWrite("BasicSetup",167);</script></a>&nbsp;&nbsp;
+							<span id="language" style="visibility:hidden;">
+								<a href="javascript:apply_lang('en');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">English</font></a>&nbsp;&nbsp;
+								<a href="javascript:apply_lang('fr');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Fran&ccedil;ais</font></a>&nbsp;&nbsp;
+								<!--a href="javascript:apply_lang('spa');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Spanish</font></a--></span>
+						</div>
+						<div class="EZ_foot_C"></div>
+						<div class="EZ_foot_R"></div>
+		      </div>
+         <div class="clear_float"> </div>
+  
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+		</td>
+	</tr>
+	</table>
+</center>
+</form>
+<form method="post" action="save.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_edit_router_management.htm">
+<input type="hidden" name="redirect_timer" value="0">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="language_str">
+<input type="hidden" name="language_str" value="<%nvram_get("language_str");%>">
+</form>
+<!--[if lt IE 7]>
+<script defer type="text/javascript" src="ie6fix.js"></script>
+<![endif]-->
+<script type="text/javascript">
+  document.getElementById("router").src = "rt_icon_bri.png";
+</script>
+</body>
+</html>

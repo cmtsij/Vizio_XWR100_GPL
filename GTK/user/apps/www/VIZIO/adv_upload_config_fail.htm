@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_112?></title>
+<%include_file("javascript.htm");%>
+
+<script language="JavaScript">
+function start_redirect()
+{
+	document.location.href = "adv_edit_router_fw_upgrade.htm";
+}
+function Init() { 
+setTimeout("start_redirect()", 3000); 
+} 
+</script>
+	
+</head>
+
+<body  onLoad="Init();">
+<form>
+
+	<center>	 
+<table border="0" width="1000">
+	<tr>
+		<td>
+	 
+ <table border="0" width="1000" height="120"  cellpadding="0" cellspacing="0">
+<tr height="50">
+	<td height="50"></td>
+	<td width="290" style="padding:20px 0px 0px 0px; text-align:left;"><img src="vizio_logo.png"></td>
+	<td colspan="6"></td>
+	<td width="151"><div  class="model_name"><%nvram_get("Model_Name");%></div></td>
+	<td width="50"></td>
+</tr>
+<tr height="70">
+	<td width="50" height="70"></td>
+	<td width="290" height="70"></td>
+	<td width="70" height="70"></td>
+	<td width="50" height="70"></td>
+	<td width="90" height="70"></td>
+	<td width="50" height="70"></td>
+	<td width="50" height="70"></td>
+	<td width="139" height="70"></td>
+	<td width="151" height="70" align="right"></td>
+	<td width="50" height="70"></td>
+</tr>
+</table>
+
+  <div id="warp">
+      <div class="status_title">&nbsp;</div>
+      <div class="status_background">
+      	<div class="status_content">
+      		<p style="height: 10px">&nbsp;</p>
+      		<center>
+<!----Add Pop-up windows start----->
+				<table BORDER=0 CELLSPACING=0 CELLPADDING=0  >
+					<tr>
+						<td HEIGHT=300 align="center"><font class="adv_title" style="color:red;">
+							<script>translate_strWrite("JavaScript",121);</script></font>
+							<br>
+						</td>
+					</tr>
+				</table>
+<!----Add Pop-up windows End----->
+			</center>
+		      <p class="status_end"></p>     
+      </div>  
+     </div>               
+          		
+         <div class="clear_float"> </div>
+  
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+		</td>
+	</tr>
+	</table>
+</center>
+</form>
+</body>
+</html>

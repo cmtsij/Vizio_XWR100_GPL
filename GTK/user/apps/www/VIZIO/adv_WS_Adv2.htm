@@ -1,0 +1,340 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_112?></title>
+<base target="_self">
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+
+<!--
+var f=document.AdWlSet;
+function WL1_CheckTxRate(f)
+{
+		if (f.wl1_wl_ndatarate.selectedIndex == '0')
+		{		
+		}
+		else
+		{	
+			f.wl1_wl_datarate.selectedIndex = '0';
+		}
+}
+
+
+var SEL_Header_v = '<SELECT name="wl1_wl_ndatarate" class="wireless_select_col_width_v2" onChange="WL1_CheckTxRate()">' ;
+var SEL_Footer = '</SELECT>';
+function DataShow()
+{
+	var v = "";
+
+	var Ch_1 = '<%nvram_get("wl1_channel");%>';
+
+	var Nband_1 = '<%nvram_get("wl1_radioband");%>';
+	v += SEL_Header_v;
+
+	
+		if (Nband_1 == '0')	{
+			v += 	'<OPTION value=-1>Auto</OPTION>' + 
+						'<OPTION value=0>0-6.5 Mbps</OPTION>' + 
+			      '<OPTION value=1>1-13 Mbps</OPTION>' + 
+						'<OPTION value=2>2-19.5 Mbps</OPTION>' + 
+						'<OPTION value=3>3-26 Mbps</OPTION>' +  
+						'<OPTION value=4>4-39 Mbps</OPTION>' + 
+						'<OPTION value=5>5-52 Mbps</OPTION>' + 
+						'<OPTION value=6>6-58.5 Mbps</OPTION>' + 
+						'<OPTION value=7>7-65 Mbps</OPTION>' + 
+						'<OPTION value=8>8-13 Mbps</OPTION>' + 
+						'<OPTION value=9>9-26 Mbps</OPTION>' + 
+						'<OPTION value=10>10-39 Mbps</OPTION>' + 
+						'<OPTION value=11>11-52 Mbps</OPTION>' + 
+						'<OPTION value=12>12-78 Mbps</OPTION>' + 
+						'<OPTION value=13>13-104 Mbps</OPTION>' + 
+						'<OPTION value=14>14-117 Mbps</OPTION>' + 
+						'<OPTION value=15>15-130 Mbps</OPTION>';
+		}
+		else	{
+		v += 	'<OPTION value=-1>Auto</OPTION>' + 
+					'<OPTION value=0>0-6.5 or 13.5 Mbps</OPTION>' + 
+		      '<OPTION value=1>1-13 or 27 Mbps</OPTION>' + 
+					'<OPTION value=2>2-19.5 or 40.5 Mbps</OPTION>' + 
+					'<OPTION value=3>3-26 or 54 Mbps</OPTION>' +  
+					'<OPTION value=4>4-39 or 81 Mbps</OPTION>' + 
+					'<OPTION value=5>5-52 or 108 Mbps</OPTION>' + 
+					'<OPTION value=6>6-58.5 or 121.5 Mbps</OPTION>' + 
+					'<OPTION value=7>7-65 or 135 Mbps</OPTION>' + 
+					'<OPTION value=8>8-13 or 27 Mbps</OPTION>' + 
+					'<OPTION value=9>9-26 or 54 Mbps</OPTION>' + 
+					'<OPTION value=10>10-39 or 81 Mbps</OPTION>' + 
+					'<OPTION value=11>11-52 or 108 Mbps</OPTION>' + 
+					'<OPTION value=12>12-78 or 162 Mbps</OPTION>' + 
+					'<OPTION value=13>13-104 or 216 Mbps</OPTION>' + 
+					'<OPTION value=14>14-117 or 243 Mbps</OPTION>' + 
+					'<OPTION value=15>15-130 or 270 Mbps</OPTION>' ;
+		}
+	
+	v += SEL_Footer;
+	v += '&nbsp;&nbsp;('+translate_str("ADWirelessSetting",3)+':'+ translate_str("BasicSetup", 18)+')';
+
+
+	layerWrite('myDiv2', null, v); 
+}
+function ValidateForm(f)
+{
+		var f=document.AdWlSet;		
+	if ( !CheckingBeaconInterval(f.wl1_wl_bcn) ) { return; }
+	if ( !CheckingDTIM(f.wl1_wl_dtim) ) { return; }
+	if ( !CheckingFrag(f.wl1_wl_frag) ) { return; }
+	if ( !CheckingRTSThreshold(f.wl1_wl_rts) ) { return; }	
+	if (!CheckQuote1(f.wl1_wl_bcn))	return;
+	if (!CheckQuote1(f.wl1_wl_dtim))	return;			
+	if (!CheckQuote1(f.wl1_wl_frag))	return;			
+	if (!CheckQuote1(f.wl1_wl_rts))	return;	
+		self.parent.document.forms[0].wl1_data1.value +="wl1_txPower wl1_ctsprotect wl1_apisolation wl1_authtype wl1_basicRate wl1_datarate wl1_datarate_index wl1_ndatarate wl1_rtsThPeriod wl1_beaconPeriod wl1_fragThPeriod wl1_dtimPeriod";	
+	if(f.wl1_ap_isolation[0].checked == true)
+			self.parent.document.forms[0].wl1_apisolation.value=1;
+	else
+			self.parent.document.forms[0].wl1_apisolation.value=0;	
+			self.parent.document.forms[0].wl1_basicRate.value=f.wl1_wl_basicrate.value;
+			self.parent.document.forms[0].wl1_ctsprotect.value=f.wl1_CTS_Pro_Mode.value;
+			self.parent.document.forms[0].wl1_datarate.value=f.wl1_wl_datarate.value;
+			self.parent.document.forms[0].wl1_datarate_index.value=f.wl1_wl_datarate.selectedIndex;
+			self.parent.document.forms[0].wl1_ndatarate.value=f.wl1_wl_ndatarate.value;
+			self.parent.document.forms[0].wl1_beaconPeriod.value=f.wl1_wl_bcn.value;
+			self.parent.document.forms[0].wl1_dtimPeriod.value=f.wl1_wl_dtim.value;
+			self.parent.document.forms[0].wl1_fragThPeriod.value=f.wl1_wl_frag.value;
+			self.parent.document.forms[0].wl1_rtsThPeriod.value=f.wl1_wl_rts.value;
+			self.parent.document.forms[0].wl1_authtype.value=f.wl1_authen_type.value;
+			self.parent.document.forms[0].wl1_txPower.value=f.wl1_tx_power.value;
+		
+  return true;
+}
+
+
+function InitValue(f)
+{
+	DataShow();
+
+	
+	if ('<%nvram_get("wl1_apisolation");%>' == '1')
+		f.wl1_ap_isolation[0].checked=true;
+	else
+		f.wl1_ap_isolation[1].checked=true;
+
+	var wl1_auth_type='<%nvram_get("wl1_authtype");%>';
+	if(wl1_auth_type=='SHARED')
+	    f.wl1_authen_type.selectedIndex=1; 
+	else 
+	    f.wl1_authen_type.selectedIndex=0; 
+		
+	var wl1_basic_rate='<%nvram_get("wl1_basicRate");%>';
+
+	if(wl1_basic_rate=='15')
+	    f.wl1_wl_basicrate.selectedIndex=1; 
+    else if(wl1_basic_rate=='3')
+	    f.wl1_wl_basicrate.selectedIndex=0; 
+	else
+	    f.wl1_wl_basicrate.selectedIndex=2; 
+	
+	var wl1_wl_cts_pro='<%nvram_get("wl1_ctsprotect");%>';
+	if(wl1_wl_cts_pro=='0')
+	    f.wl1_CTS_Pro_Mode.selectedIndex=0; 
+    else 
+	    f.wl1_CTS_Pro_Mode.selectedIndex=1; 
+	
+	var nrate1 = parseInt('<%nvram_get("wl1_ndatarate");%>',10);
+	if (nrate1 == '32')	{
+		if (f.wl_ndatarate.length =='19')
+			f.wl1_wl_ndatarate.selectedIndex = '18';
+		else
+			f.wl1_wl_ndatarate.selectedIndex = '1';
+	}
+	else
+		f.wl1_wl_ndatarate.selectedIndex = nrate1 + 1;
+		
+	var wl1_rate = parseInt('<%nvram_get("wl1_datarate_index");%>',10);
+		f.wl1_wl_datarate.selectedIndex = wl1_rate;
+	
+	var wl1_power = '<%nvram_get("wl1_txPower");%>';
+	if(wl1_power == '25')
+		f.wl1_tx_power.selectedIndex = 2;
+	else if(wl1_power == '50')
+		f.wl1_tx_power.selectedIndex = 1;
+	else
+		f.wl1_tx_power.selectedIndex = 0;
+		
+	f.wl1_wl_bcn.value = "<%nvram_get("wl1_beaconPeriod");%>";
+	f.wl1_wl_dtim.value = "<%nvram_get("wl1_dtimPeriod");%>";
+	f.wl1_wl_frag.value = "<%nvram_get("wl1_fragThPeriod");%>";
+	f.wl1_wl_rts.value = "<%nvram_get("wl1_rtsThPeriod");%>";
+	
+	showMix = getLayer("WS_Adv2");
+	showMix.height="450";
+}
+-->
+</Script>
+
+<style type="text/css">
+
+
+body{
+	margin:0px;
+	BACKGROUND:transparent none;
+	}
+
+</style>
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+	<DIV ID="searching" style="position:absolute;width:101.5%;height:150%;margin:0pt; padding:0pt; ;z-index:50;top:0pt;left:0pt;background-color:#000000;display:none;filter:alpha(opacity=50);-moz-opacity:0.5;opacity: 0.5;" >
+		<br><br><br><br><br><br><br><br>
+		</DIV>			
+			<DIV ID="searching_iframe" style="position:absolute;width:100%;height:100%;;z-index:60;top:100pt;left:0pt;display:none;">
+				<iframe width="400" id="WPS_search" name="WPS_search" height="200" src="" frameborder="2" marginheight="0" scrolling="no"><br>
+				</iframe>
+		</DIV>
+<form name="AdWlSet" method="post" action="post_wl.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value='<%nvram_get("lan_ipaddr");%>'>
+<input type="hidden" name="next_page" value="adv_WS_Adv2.htm">
+<input type="hidden" name="redirect_timer" value="5000">
+<input type="hidden" name="reboot" value="0">
+
+		 
+<table border="0" width="410" cellpadding="0" cellspacing="0">
+	<tr>
+		<td>
+
+  <div id="WS_WEP1" style="text-align:left;">
+  
+      <div class="iframe_background">     	
+      	<div class="iframe_status" style="line-height:35px;">	
+
+      		<table border="0" align="center" width="540" cellpadding="0" cellspacing="0">
+      							<tr height="35">
+      								<td colspan="3" width="540" class="status_title" style="text-align:left; padding:0px 0px 0px 140px;"><script>translate_strWrite("SetupWizard",60);</script></td>  								
+      								</tr>
+                    <tr height="35"> 
+                      <td width="190" align="right"><script>translate_strWrite("ADWirelessSetting",2);</script>:</td>
+                      <td width="30">&nbsp;</td>
+                      <td width="320" align="left"  class="default_text">
+												<INPUT type="radio" value="1" name="wl1_ap_isolation">&nbsp;<script>translate_strWrite("CheckBox",0);</script>&nbsp;&nbsp;
+		                  	<INPUT type="radio" value="0" name="wl1_ap_isolation">&nbsp;<script>translate_strWrite("CheckBox",1);</script>&nbsp;
+		                  	(<script>translate_strWrite("ADWirelessSetting",3);</script>:&nbsp;<script>translate_strWrite("CheckBox",1);</script>)
+                  	</td>
+                    </tr>
+                    <tr height="35"> 
+                      <td align="right"><script>translate_strWrite("ADWirelessSetting",4);</script>:</td>
+                      <td>&nbsp;</td>
+                      <td align="left"  class="default_text">
+													<select name="wl1_authen_type" class="wireless_select_col_width_v2">
+													<option value="WEPAUTO"><script>translate_strWrite("BasicSetup",18);</script>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+													<option value="SHARED" ><script>translate_strWrite("ADWirelessSetting",6);</script></option>
+													</select> &nbsp;(<script>translate_strWrite("ADWirelessSetting",3);</script>: <script>translate_strWrite("BasicSetup",18);</script>)
+											</td>
+                    </tr>
+                    <tr height="35">
+                    	<td align="right"><script>translate_strWrite("ADWirelessSetting",7);</script>:</td>
+                       <td>&nbsp;</td>
+                      <td align="left"  class="default_text">
+		                			<select name="wl1_wl_basicrate" class="wireless_select_col_width_v2">
+						            <option value="3">1 ~ 2 <script>translate_strWrite("ADWirelessSetting",8);</script>&nbsp;&nbsp;&nbsp;&nbsp;</option>
+						            <option value="15"><script>translate_strWrite("ADWirelessSetting",8);</script></option>
+						            <option value="351"><script>translate_strWrite("ADWirelessSetting",8);</script></option>
+						            </select> 
+											  &nbsp;(<script>translate_strWrite("ADWirelessSetting",3);</script>: <script>translate_strWrite("ADWirelessSetting",3);</script>)
+									  </td>
+                    <tr height="35">
+                    	<td align="right"><script>translate_strWrite("ADWirelessSetting",10);</script>:</td>
+                      <td>&nbsp;</td>
+                      <td align="left"  class="default_text">
+										  			<SELECT name="wl1_wl_datarate" class="wireless_select_col_width_v2"> 
+														<OPTION value=0><script>translate_strWrite("ADWirelessSetting",25);</script></OPTION>
+														<OPTION value=1>1 <script>translate_strWrite("ADWirelessSetting",8);</script></OPTION>
+														<OPTION value=2>2 <script>translate_strWrite("ADWirelessSetting",8);</script></OPTION>
+														<OPTION value=5.5>5.5 <script>translate_strWrite("ADWirelessSetting",8);</script></OPTION>
+														<OPTION value=6>6 <script>translate_strWrite("ADWirelessSetting",8);</script></OPTION>
+														<OPTION value=9>9 <script>translate_strWrite("ADWirelessSetting",8);</script></OPTION> 
+								           	<OPTION value=11>11 <script>translate_strWrite("ADWirelessSetting",8);</script></OPTION> 
+														<OPTION value=12>12 <script>translate_strWrite("ADWirelessSetting",8);</script></OPTION> 
+														<OPTION value=18>18 <script>translate_strWrite("ADWirelessSetting",8);</script></OPTION> 
+														<OPTION value=24>24 <script>translate_strWrite("ADWirelessSetting",8);</script></OPTION> 
+														<OPTION value=36>36 <script>translate_strWrite("ADWirelessSetting",8);</script></OPTION> 
+														<OPTION value=48>48 <script>translate_strWrite("ADWirelessSetting",8);</script></OPTION> 
+														<OPTION value=54>54 <script>translate_strWrite("ADWirelessSetting",8);</script>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</OPTION> 
+														</SELECT> &nbsp;(<script>translate_strWrite("ADWirelessSetting",3);</script>: <script>translate_strWrite("BasicSetup",18);</script>)
+												</td>
+                    </tr>
+                    <tr height="35"> 
+                      <td align="right"><script>translate_strWrite("ADWirelessSetting",24);</script>:</td>
+                       <td>&nbsp;</td>
+                      <td align="left"  class="default_text">
+                      		<span ID="myDiv2"></span>
+                      </td>
+                    </tr>
+                    <tr height="35">
+                      <td align="right"><script>translate_strWrite("ADWirelessSetting",11);</script>:</td>
+                       <td>&nbsp;</td>
+                      <td align="left"  class="default_text"><b>
+                        <SELECT size=1 name="wl1_tx_power" class="wireless_select_col_width_v2"> 
+			              <option value="100"><script>translate_strWrite("QoS",14);</script>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+			              <option value="50"><script>translate_strWrite("QoS",15);</script></option>
+			              <option value="25"><script>translate_strWrite("QoS",17);</script></option>
+			              </SELECT> &nbsp;(<script>translate_strWrite("ADWirelessSetting",3);</script>: <script>translate_strWrite("QoS",14);</script>)
+			              	</td>
+                    </tr>
+                     <tr height="35">
+                      <td align="right"><script>translate_strWrite("ADWirelessSetting",17);</script>:</td>
+                       <td>&nbsp;</td>
+                      <td align="left"  class="default_text"><b>
+                       <SELECT size=1 name="wl1_CTS_Pro_Mode" class="wireless_select_col_width_v2"> 
+				           		<option value="0"><script>translate_strWrite("CheckBox",0);</script></option>
+				            	<option value="2"><script>translate_strWrite("CheckBox",1);</script>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</option>
+				            	</SELECT> &nbsp;(<script>translate_strWrite("ADWirelessSetting",3);</script>: <script>translate_strWrite("CheckBox",1);</script>)
+			              	</td>
+                    </tr>
+                     <tr height="35">
+                      <td align="right"><script>translate_strWrite("ADWirelessSetting",18);</script>:</td>
+                       <td>&nbsp;</td>
+                      <td align="left"  class="default_text"><b>
+                       <input name="wl1_wl_bcn" class="mtu_col_width" maxlength="5" >
+										&nbsp; (<script>translate_strWrite("ADWirelessSetting",3);</script>: 100, <script>translate_strWrite("ADWirelessSetting",19);</script>,<script>translate_strWrite("ADWirelessSetting",20);</script>: 1~65535 )<p align="left"></p>
+			              	</td>
+                    </tr>
+                     <tr height="35">
+                      <td align="right"><script>translate_strWrite("ADWirelessSetting",21);</script>:</td>
+                       <td>&nbsp;</td>
+                      <td align="left"  class="default_text"><b>
+                        <input	 name="wl1_wl_dtim" class="mtu_col_width" maxlength="3" >						  
+										&nbsp; (<script>translate_strWrite("ADWirelessSetting",3);</script>: 1, <script>translate_strWrite("ADWirelessSetting",20);</script>: 1 - 255)
+			              	</td>
+                    </tr>
+                     <tr height="35">
+                      <td align="right"><script>translate_strWrite("ADWirelessSetting",22);</script>:</td>
+                       <td>&nbsp;</td>
+                      <td align="left"  class="default_text"><b>
+                      <input name="wl1_wl_frag" class="mtu_col_width" maxlength="4" >
+										&nbsp; (<script>translate_strWrite("ADWirelessSetting",3);</script>: 2346, <script>translate_strWrite("ADWirelessSetting",20);</script>: 256 - 2346)
+			              	</td>
+                    </tr>
+                     <tr height="35">
+                      <td align="right"><script>translate_strWrite("ADWirelessSetting",23);</script>:</td>
+                       <td>&nbsp;</td>
+                      <td align="left"  class="default_text"><b>
+                      <input name="wl1_wl_rts" class="mtu_col_width" maxlength="4" >
+										&nbsp; (<script>translate_strWrite("ADWirelessSetting",3);</script>: 2347,<script>translate_strWrite("ADWirelessSetting",20);</script>: 0 - 2347)
+			              	</td>
+                    </tr>
+                  </table>
+      	      						
+   </div>
+ </div>       
+
+  </div>
+		</td>
+	</tr>
+	</table>
+</form>
+
+</body>
+</html>

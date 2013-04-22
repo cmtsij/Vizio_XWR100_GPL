@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<meta http-equiv="Pragma" content="no-cache"> 
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
+</head>
+<script language="JavaScript" type="text/javascript" src="nsutil.js"></script>
+<script Language="JavaScript" type="text/javascript" src="language/<%nvram_get("language_str");%>/language.js"></script>
+<Script Language="JavaScript">
+
+	var asp ='<%remotefw_check();%>';
+	
+	if(asp == '1')
+		asp ='<%nvram_get("rmt_firmware_name");%>';
+		
+	var link ='<%nvram_get("rmt_upgrade_url");%>';
+
+function InitValue(f){
+	self.parent.document.webForm.CheckFirmware.value = translate_str("JavaScript",170);
+	self.parent.document.getElementById("fw_check_result").style.display="block"; 
+}
+
+</Script>
+<style type="text/css">
+
+
+body{
+	font-family: "Trebuchet", "Arial", "Helvetica", "sans-serif";
+	margin:0px;
+	background-color:transparent;
+}
+
+a:link {
+		font-size: 15px;
+		text-decoration: none;
+		font-weight: normal;
+		color: #5F81B0;
+}
+
+a:hover {
+		font-size: 15px;
+		text-decoration: none;
+		font-weight: normal;
+		color: #5F81B0;
+}
+
+a:visited {
+		font-size: 15px;
+		text-decoration: none;
+		font-weight: normal;
+		color: #5F81B0;
+}
+
+
+
+</style>
+
+</SCRIPT>
+<body cellspacing="0" cellpadding="0" onload="InitValue(document.forms[0]);">
+	<table border="0" cellspacing="0" cellpadding="0" style="width:430pt ">
+		<tr height=24>
+			<td style="font-size: 15px;height:auto;color:#B8B8B8;text-align:center;margin: auto auto;">
+				<SCRIPT>
+					if (asp == '0')	// Internet Fail
+					{
+						document.write(translate_str("JavaScript",151));
+						//document.write("<font color=\"red\">aaaaa</font>");
+					}
+					else if (asp == '2')	 //It is the latest
+					{
+						document.write("<font color=\"#FF0000\">");
+						document.write(translate_str("JavaScript",150));
+						document.write("</font>");
+					}
+					else{
+						url = "";
+						url += link;
+						url += asp ;
+						document.write(translate_str("JavaScript",168));
+						document.write("<font color=\"#ffffff\"><a href="+url+" target=new>");
+						document.write(translate_str("JavaScript",169));
+						document.write("</a></font>");
+					}
+						//document.write("Unknown error!");	
+				</SCRIPT>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>
+
+

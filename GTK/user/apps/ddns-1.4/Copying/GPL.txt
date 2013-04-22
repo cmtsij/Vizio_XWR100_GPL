@@ -1,0 +1,4 @@
+This program may be distributed under the GNU General Public License (GPL)
+
+Philipp Benner
+http://philippb.tk

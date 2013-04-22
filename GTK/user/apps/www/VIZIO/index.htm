@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_113?></title>
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+
+
+function redirect(f)
+{
+	
+			var connect_check='<%nvram_get("wan_connect");%>';
+			
+			if (connect_check==1)
+			 { 	
+			  	window.location.href="sw_wireless.htm";	
+			 }	
+			else
+			{
+				window.location.href="sw_wan_detect_no.htm";	
+			}	
+	
+}
+
+</script>
+
+
+</head>
+
+<body  onLoad="redirect();">
+
+  
+</body>
+</html>

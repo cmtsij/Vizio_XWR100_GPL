@@ -1,0 +1,44 @@
+Create an new SSL certificate for HTTP server
+
+1.Log into a Linux workstation to use openssl
+
+2.Create a private key: ca-key.pem
+
+openssl genrsa -out ca-key.pem 1024
+
+3.Create a certificate and sign it ourself: ca-cert.pem
+
+openssl req -new -x509 -key ca-key.pem -out ca-cert.pem -days 3650
+
+You can specify any length of days for expiration (3650 = 10 years)
+
+Then you need to input the following information:
+
+Country Name: TW
+State or Province Name: Taiwan
+Locality Name: Hsinchu
+Organization Name: Gemtek
+Organizational Unit Name: SWD
+Common Name: WRT600N.com
+Email Address: ignore(enter) or any
+
+These information can be seen by user through browser when SSL is open
+Common Name is recommended to use your router's domain name 
+so that there will be no warning in the browser's message when you use domain name to access GUI
+
+4.Create the "mini_httpd.pem" file for httpd to use:
+
+Simply concatenate ca-key.pem and ca-cert.pem into one file named "mini_httpd.pem" by text editor
+
+Example looks like this:
+
+-----BEGIN RSA PRIVATE KEY-----
+content...
+-----END RSA PRIVATE KEY-----
+-----BEGIN CERTIFICATE-----
+content...
+-----END CERTIFICATE-----
+
+5.Put "mini_httpd.pem" into httpd folder
+
+6.More information please refer to www.openssl.org

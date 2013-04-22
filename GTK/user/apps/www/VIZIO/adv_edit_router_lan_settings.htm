@@ -1,0 +1,466 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_118?></title>
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+
+var f=document.edit;
+
+function dhcps_enabled()
+{
+	if (document.forms[0].lan_proto[1].checked==true) {
+		document.forms[0].StartIP.disabled=1;
+		document.forms[0].NumOfUsers.disabled=1;
+		document.forms[0].Time.disabled=1;
+		document.forms[0].DHCP_DNS1_1.disabled=1;
+		document.forms[0].DHCP_DNS1_2.disabled=1;
+		document.forms[0].DHCP_DNS1_3.disabled=1;
+		document.forms[0].DHCP_DNS1_4.disabled=1;
+		document.forms[0].DHCP_DNS2_1.disabled=1;
+		document.forms[0].DHCP_DNS2_2.disabled=1;
+		document.forms[0].DHCP_DNS2_3.disabled=1;
+		document.forms[0].DHCP_DNS2_4.disabled=1;
+		document.forms[0].DHCP_DNS3_1.disabled=1;
+		document.forms[0].DHCP_DNS3_2.disabled=1;
+		document.forms[0].DHCP_DNS3_3.disabled=1;
+		document.forms[0].DHCP_DNS3_4.disabled=1;
+		document.forms[0].WINS_1.disabled=1;
+		document.forms[0].WINS_2.disabled=1;
+		document.forms[0].WINS_3.disabled=1;
+		document.forms[0].WINS_4.disabled=1;
+
+	}
+	else {
+		document.forms[0].StartIP.disabled=0;
+		document.forms[0].NumOfUsers.disabled=0;
+		document.forms[0].Time.disabled=0;
+		document.forms[0].DHCP_DNS1_1.disabled=0;
+		document.forms[0].DHCP_DNS1_2.disabled=0;
+		document.forms[0].DHCP_DNS1_3.disabled=0;
+		document.forms[0].DHCP_DNS1_4.disabled=0;
+		document.forms[0].DHCP_DNS2_1.disabled=0;
+		document.forms[0].DHCP_DNS2_2.disabled=0;
+		document.forms[0].DHCP_DNS2_3.disabled=0;
+		document.forms[0].DHCP_DNS2_4.disabled=0;
+		document.forms[0].DHCP_DNS3_1.disabled=0;
+		document.forms[0].DHCP_DNS3_2.disabled=0;
+		document.forms[0].DHCP_DNS3_3.disabled=0;
+		document.forms[0].DHCP_DNS3_4.disabled=0;
+		document.forms[0].WINS_1.disabled=0;
+		document.forms[0].WINS_2.disabled=0;
+		document.forms[0].WINS_3.disabled=0;
+		document.forms[0].WINS_4.disabled=0;
+
+	}
+}
+
+function InitValue(f)
+{
+   var f=document.edit;
+	  show_network_status();
+	
+	/*-----LAN Setting----*/
+	f.dhcp_res.value = translate_str("BasicSetup",172);
+	SplitLanIPAddress ('<%nvram_get("lan_ipaddr");%>');
+	f.sel_netmask.value= ('<%nvram_get("lan_netmask");%>');
+	f.rt_url_address.value='<%nvram_get("url_address");%>';
+	var lan_proto = '<%nvram_get("dhcp_enabled");%>';
+
+	if (lan_proto == '0')
+		f.lan_proto[1].checked=true;
+	else
+		f.lan_proto[0].checked=true;
+	dhcps_enabled();
+	
+	f.StartIP.value = '<%nvram_get("dhcp_start");%>';
+	GettingNumOfUser();
+	f.Time.value = '<%nvram_get("dhcp_leasetime");%>';
+	SplitDHCPDNS1Address ('<%nvram_get("lan_dns1");%>');
+	SplitDHCPDNS2Address ('<%nvram_get("lan_dns2");%>');
+	SplitDHCPDNS3Address ('<%nvram_get("lan_dns3");%>');
+	SplitDHCPWINSAddress ('<%nvram_get("lan_wins");%>');
+}
+
+function ValidateForm(f) 
+{
+	f.url_address.value = f.rt_url_address.value;
+	if ( !check_clientNumber(document.forms[0]) ) { return; }
+	if ( !AssembleLanIPAddress() ) { return; }
+
+
+
+	var ori_ip = "";
+	ori_ip += GetIPSegment ( "<%nvram_get("lan_ipaddr");%>" , 1 );
+	ori_ip += ".";
+	ori_ip += GetIPSegment ( "<%nvram_get("lan_ipaddr");%>" , 2 );
+	ori_ip += ".";
+	ori_ip += GetIPSegment ( "<%nvram_get("lan_ipaddr");%>" , 3 );
+	ori_ip += ".";
+	
+
+	var new_ip = "";
+	new_ip += f.lan_ipaddr_1.value ;
+	new_ip += ".";
+	new_ip += f.lan_ipaddr_2.value ;
+	new_ip += ".";
+	new_ip += f.lan_ipaddr_3.value ;;
+	new_ip += ".";
+
+	if(ori_ip == new_ip)
+		f.lan_ip_changed.value = "0";
+	else
+		f.lan_ip_changed.value = "1";
+
+
+	if(f.lan_proto[0].checked == 1)
+	{
+		var lease_time = parseInt(f.Time.value, 10);
+		if(!ValidatingDhcpReleaseTime())
+			return;
+		f.dhcp_leasetime.value=lease_time;
+		if ( !AssembleDhcpStartAddress(f)) { return ; }
+		if ( !AssembleDhcpEndAddress (f)) { return; }
+		if ( !AssembleDHCPDNS1Address() ) { return ; }
+		if ( !AssembleDHCPDNS2Address() ) { return ; }
+		if ( !AssembleDHCPDNS3Address() ) { return ; }
+		if ( !AssembleDHCPWINSAddress() ) { return ; }
+		f.dhcp_enabled.value=1;
+	}
+	else
+	{
+		f.dhcp_enabled.value=0;
+		f.data1.value="lan_ipaddr lan_netmask dhcp_enabled";
+	}
+
+	f.lan_netmask.value=f.sel_netmask.value;
+	f.dhcp_start.value = f.StartIP.value;
+	f.submit();
+}
+
+function mouseOver(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("router").src = "rt_icon_bri.png";
+}
+
+function mouseOut(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("router").src = "rt_icon_bri.png";
+}
+
+var language_show = 0;
+function open_language()
+{
+	 var language_choice = document.getElementById('language');
+	 
+	if(language_show == '1') {
+		language_show = 0;
+		language_choice.style.visibility="hidden";
+	}
+	else {
+		language_show = 1;
+		language_choice.style.visibility="visible";
+	}
+}
+
+function apply_lang(e)
+{
+	var f1 = document.forms[1];
+	f1.language_str.value = e;
+ 	f1.submit();
+}
+
+function chage_color(e)
+{
+	e.style.color="#4F81BD";
+	e.style.textDecoration="underline"; 
+}
+
+function back_color(e)
+{
+	e.style.color="#B8B8B8";
+	e.style.textDecoration="none"; 
+}
+
+
+
+</Script>
+
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="edit" action="post_lan.cgi" method="post">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_edit_router_lan_settings.htm">
+<input type="hidden" name="redirect_timer" value="10000">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="lan_ip_changed">
+<input type="hidden" name="data1" value="lan_ipaddr lan_netmask dhcp_enabled dhcp_start dhcp_end dhcp_leasetime lan_dns1 lan_dns2 lan_dns3 lan_wins url_address">
+<input type="hidden" name="lan_ipaddr">
+<input type="hidden" name="lan_netmask" value="<%nvram_get("lan_netmask");%>">
+<input type="hidden" name="dhcp_enabled">
+<input type="hidden" name="dhcp_leasetime">
+<input type="hidden" name="routername">
+<input type="hidden" name="dhcp_start" value="<%nvram_get("dhcp_start");%>">
+<input type="hidden" name="dhcp_end" value="<%nvram_get("dhcp_end");%>">
+<input type="hidden" name="lan_dhcps_dns">
+<input type="hidden" name="lan_dns1">
+<input type="hidden" name="lan_dns2">
+<input type="hidden" name="lan_dns3">
+<input type="hidden" name="lan_wins">
+<input type="hidden" name="url_address">
+<!--input type="hidden" name="language_str" value="<%nvram_get("language_str");%>"-->
+	<center>	 
+<table border="0" width="1000">
+	<tr>
+		<td>
+
+<%include_file("adv_logol_header.htm");%>
+
+  <div id="warp">
+      
+      <div class="Pointer_Routerpic"></div>
+			  				  <p  style="height:11px;"></p> 
+      <div class="status_background">
+				<p  style="height:30px;"></p> 
+				<p class="adv_title_hr"> <img src="hr_line.png"> </p>
+      		<p class="adv_title"><script>translate_strWrite("SetupWizard",73);</script></p>
+      		<div class="">
+      		<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+      			<tr><td align="center" colspan="5" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      			<tr height="42">
+      				<td align="right" width="250"><script>translate_strWrite("SetupWizard",66);</script></td>
+      				<td width="30">&nbsp;</td>
+      				<td align="left" width="250">
+      				<input type="text" class="ip_col_width" maxLength="3" size="6" name=lan_ipaddr_1 value="0">&nbsp;.
+      				<input type="text" class="ip_col_width" maxLength="3" size="6" name=lan_ipaddr_2 value="0">&nbsp;.
+      				<input type="text" class="ip_col_width" maxLength="3" size="6" name=lan_ipaddr_3 value="0">&nbsp;.
+      				<input type="text" class="ip_col_width" maxLength="3" size="6" name=lan_ipaddr_4 value="0">&nbsp;</td>	
+      				</tr>		  
+      			
+      			<tr height="42">
+      				<td align="right"><script>translate_strWrite("SetupWizard",74);</script></td>
+      				
+      				<td width="30">&nbsp;</td>
+      				<td align="left">
+      					<select name="sel_netmask" class="mask_select_col_width">
+								<option value="255.255.255.0" selected >255.255.255.0</option>
+								<option value="255.255.255.128">255.255.255.128</option>
+								<option value="255.255.255.192">255.255.255.192</option>
+								<option value="255.255.255.224">255.255.255.224</option>
+								<option value="255.255.255.240">255.255.255.240</option>
+								<option value="255.255.255.248">255.255.255.248</option>
+								<option value="255.255.255.252">255.255.255.252</option>
+								</select></td>
+      				</tr>		
+      				
+      			<tr height="42">
+      				<td align="right"><script>translate_strWrite("BasicSetup",178);</script>:</td>
+      				<td width="30">&nbsp;</td>
+      				<td align="left">
+      				<input class="mask_select_col_width" maxLength=39 size=26 name="rt_url_address" style="font-size:9pt">
+      					</td>
+      				</tr>				    
+      			
+      			<tr height="42">
+      				<td align="right"><script>translate_strWrite("BasicSetup",22);</script>:</td>
+      				<td width="30">&nbsp;</td>
+      				<td align="left">
+      				<input type=radio name="lan_proto" onclick="dhcps_enabled();" value="1">&nbsp;
+      				<script>translate_strWrite("CheckBox",0);</script>&nbsp;&nbsp;
+      				<input type=radio name="lan_proto" onclick="dhcps_enabled();" value="0">&nbsp;
+      				<script>translate_strWrite("CheckBox",1);</script>&nbsp;
+      				<input type=button name=dhcp_res onclick=self.open('Static_dhcp.htm','DHCPResTable','alwaysRaised,resizable,scrollbars').focus();>
+      					</td>
+      				</tr>	
+      			
+      			<tr height="42">
+      				<td align="right"><script>translate_strWrite("BasicSetup",24);</script>:</td>
+      				
+      				<td width="30">&nbsp;</td>
+      				<td align="left">
+      						<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>
+									&nbsp;.&nbsp;
+								  <script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>
+									&nbsp;.&nbsp;
+								  <script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>
+									&nbsp;.&nbsp;
+								  <input class="ip_col_width" maxLength=3  name=StartIP > 
+      					</td>
+      				</tr>
+      			<tr height="42">
+      				<td align="right"><script>translate_strWrite("BasicSetup",25);</script>:</td>
+      				<td width="30">&nbsp;</td>
+      				<td align="left">
+      					<INPUT class="ip_col_width"  maxLength=3  name="NumOfUsers" value="">
+                     </td>	
+      					
+      				</tr>	
+      			<tr height="42">
+      				<td align="right"><script>translate_strWrite("BasicSetup",26);</script>:</td>
+      				
+      				<td width="30">&nbsp;</td>
+      				<td align="left">
+      						<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>
+									&nbsp;.&nbsp;
+								  <script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>
+									&nbsp;.&nbsp;
+								  <script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>
+									&nbsp;.&nbsp;
+								  <script>
+										document.write('<%nvram_get("dhcp_start");%>' + ' ');
+										document.write("to");
+										document.write( ' '+'<%nvram_get("dhcp_end");%>');
+								  </script>
+      					</td>
+      				</tr>	
+      			<tr height="42">
+      				<td align="right"><script>translate_strWrite("BasicSetup",27);</script>:</td>
+      				<td width="30">&nbsp;</td>
+      				<td align="left">
+      					<input class="ip_col_width" maxlength=6  name=Time  value="0">
+								&nbsp;<script>translate_strWrite("BasicSetup",28);</script>
+							  <script>translate_strWrite("BasicSetup",29);</script>
+      					</td>
+      				</tr>	
+      			
+      			<tr height="42">
+      				<td align="right"><script>translate_strWrite("BasicSetup",30);</script>:</td>
+      				<td width="30">&nbsp;</td>
+      				<td align="left">
+                  <INPUT class="ip_col_width" maxLength=3  name="DHCP_DNS1_1" >
+								  .
+								  <INPUT class="ip_col_width" maxLength=3  name="DHCP_DNS1_2" >
+								  .
+								  <INPUT class="ip_col_width" maxLength=3  name="DHCP_DNS1_3" >
+								  .
+								  <INPUT class="ip_col_width" maxLength=3  name="DHCP_DNS1_4" >
+      					</td>
+      				</tr>	
+      				
+      			<tr height="42">
+      				<td align="right"><script>translate_strWrite("BasicSetup",31);</script>:</td>
+      				<td width="30">&nbsp;</td>
+      				<td align="left">
+                  <input class="ip_col_width" maxLength=3 size=1 name="DHCP_DNS2_1" >
+                  .
+                  <input class="ip_col_width" maxLength=3 size=1 name="DHCP_DNS2_2" >
+                  .
+                  <input class="ip_col_width" maxLength=3 size=1 name="DHCP_DNS2_3" >
+                  .
+                  <input class="ip_col_width" maxLength=3 size=1 name="DHCP_DNS2_4" >
+      					</td>
+      				</tr>	
+      			
+      			<tr height="42">
+      				<td align="right"><script>translate_strWrite("BasicSetup",32);</script>:</td>
+      				<td width="30">&nbsp;</td>
+      				<td align="left">
+                 	<input class="ip_col_width" maxLength=3 size=1 name="DHCP_DNS3_1" >
+                  .
+                  <input class="ip_col_width" maxLength=3 size=1 name="DHCP_DNS3_2" >
+                  .
+                  <input class="ip_col_width" maxLength=3 size=1 name="DHCP_DNS3_3" >
+                  .
+                  <input class="ip_col_width" maxLength=3 size=1 name="DHCP_DNS3_4" >
+      					</td>
+      				</tr>	
+      			
+      			<tr height="42">
+      				<td align="right"><script>translate_strWrite("BasicSetup",33);</script>:</td>
+      				<td width="30">&nbsp;</td>
+      				<td align="left">
+      					<input class="ip_col_width" maxlength=3  name="WINS_1" >
+                .
+                <input class="ip_col_width" maxlength=3  name="WINS_2" >
+                .
+                <input class="ip_col_width" maxlength=3  name="WINS_3" >
+                .
+                <input class="ip_col_width" maxlength=3  name="WINS_4" >
+      					</td>
+      				</tr>
+      				<tr height="42">
+	      				<td align="right"><script>translate_strWrite("BasicSetup",105);</script>:</td>
+	      				<td width="30">&nbsp;</td>
+	      				<td align="left"><%nvram_get("et0macaddr");%></td>
+      				</tr>
+      								  
+				      </table>  
+				      <p style="height:20px;"></p>    	
+				      <p class="status_end"></p>
+				  </div>     
+      </div>  
+            <div class="angle"></div>   
+             <div class="EZ_mid">  
+      		<p style="height:10px;"></p>      		 		  				    
+				  	<div class="Cancel_Save_button">
+				  <table border="0" cellspacing="0" cellpadding="0" width=335>
+				  	<tr height=23 width=600>
+				  		<td align="right" width=75>
+					  		<table border="0" cellspacing="0" cellpadding="0" width=75>
+									<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="adv_edit_router.htm">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",1);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										</tr>
+									</table>
+							</td>
+				  	<td align="center" width="60">&nbsp;<script>translate_strWrite("BasicSetup",162);</script>&nbsp;
+				  		</td>
+				  	<td align="left" width=200>
+				  		<table border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+									<td class="SW_LeftButton">&nbsp;</td>
+									<td class="SW_BottomButton"><a href="javascript:ValidateForm(document.forms[0]);">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",0);</script></font>&nbsp;</a></td>
+									<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+							</td>
+						</tr>
+				  </table>
+					</div>	  				    					    														    						    			    
+      </div>
+      
+        
+       <div style="height: 40px"></div>    
+		     <div class="EZ_foot">
+						<div class="EZ_foot_L"><img src="bottom_help_icon.png" style="position:relative;top:3pt;">&nbsp;<a href="help/<%nvram_get("language_str");%>/default.htm#RouterIP" target="_blank"><script>translate_strWrite("SetupWizard",64);</script></a>&nbsp;<img src="transparency.gif" style="width:15px;height:1px;"><a href="javascript:open_language();"><img src="bottom_language_icon.png" style="position:relative;top:3pt;">&nbsp;<script>translate_strWrite("BasicSetup",167);</script></a>&nbsp;&nbsp
+								<span id="language" style="visibility:hidden;">
+								<a href="javascript:apply_lang('en');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">English</font></a>&nbsp;&nbsp;
+								<a href="javascript:apply_lang('fr');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Fran&ccedil;ais</font></a>&nbsp;&nbsp;
+								<!--a href="javascript:apply_lang('spa');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Spanish</font></a--></span>
+						</div>
+						<div class="EZ_foot_C"></div>
+						<div class="EZ_foot_R"></div>
+		      </div>
+         <div class="clear_float"> </div>
+  
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+		</td>
+	</tr>
+	</table>
+</center>
+</form>
+<form method="post" action="save.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_edit_router_lan_settings.htm">
+<input type="hidden" name="redirect_timer" value="0">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="language_str">
+<input type="hidden" name="language_str" value="<%nvram_get("language_str");%>">
+</form>
+<!--[if lt IE 7]>
+<script defer type="text/javascript" src="ie6fix.js"></script>
+<![endif]-->
+<script type="text/javascript">
+  document.getElementById("router").src = "rt_icon_bri.png";
+</script>
+</body>
+</html>

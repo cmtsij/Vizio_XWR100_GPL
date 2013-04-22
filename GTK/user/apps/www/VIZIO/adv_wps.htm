@@ -1,0 +1,609 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_119?></title>
+<%include_file("javascript.htm");%>
+
+</head>
+
+<body  onLoad="InitValue();">
+<form  action="post_wl.cgi" method="post">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_welcome.htm">
+<input type="hidden" name="redirect_timer" value="7000">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value=" WPS_PIN wps_enabled wsc_config_state wl0_ssid wl1_ssid wl2_ssid wl0_sec_mode wl1_sec_mode wl2_sec_mode wl0_pskkey wl1_pskkey wl2_pskkey wl2_key1 wl0_wlmode wl1_wlmode wl2_wlmode">
+<input type="hidden" name="wl0_ssid" value="">
+<input type="hidden" name="wl1_ssid" value="">
+<input type="hidden" name="wl2_ssid" value="">
+<input type="hidden" name="wl0_sec_mode" value="">
+<input type="hidden" name="wl1_sec_mode" value="">
+<input type="hidden" name="wl2_sec_mode" value="">
+<input type="hidden" name="wl0_pskkey" value="">
+<input type="hidden" name="wl1_pskkey" value="">
+<input type="hidden" name="wl2_pskkey" value="">
+<input type="hidden" name="wl2_key1" value="">
+<input type="hidden" name="wl0_wlmode" value="">
+<input type="hidden" name="wl1_wlmode" value="">
+<input type="hidden" name="wl2_wlmode" value="">
+<input type="hidden" name="wps_enabled" value="">
+<input type="hidden" name="wsc_config_state" value="">
+<input type="hidden" name="WPS_PIN" >
+
+
+	<center>	 
+<table border="0" width="1000">
+	<tr>
+		<td>
+
+<%include_file("adv_logol_header.htm");%>
+
+
+  <div id="warp">
+  
+      <div class="Pointer_Wirelesspic"></div>
+			  <p  style="height:11px;"></p> 
+      <div class="status_background">
+					<p  style="height:40px;"></p> 
+      		<p class="adv_title"><script>translate_strWrite("JavaScript",152);</script></p>
+  
+      		 <p  class="adv_title_hr"><img src="hr_line.png"></p>
+      	<div class="wireless_content">
+      		 <p  style="height:30px;"></p> 
+			   	<div class="button_status">
+			   		<center>
+						<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;" width="700">
+							<tr>
+								<td align="center"><script>translate_strWrite("JavaScript",153);</script> <script>translate_strWrite("JavaScript",154);</script>
+								</td>
+							</tr>
+						</table>
+				
+      					 <p  style="height:30px;"></p> 
+      					 
+						<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;" >
+							<tr>
+								<td class="WirelessText_WPS" width="250">
+									<script>translate_strWrite("JavaScript",155);translate_strWrite("JavaScript",152);</script> <script>translate_strWrite("JavaScript",156);</script><br><br>
+								<script>
+                  	 var a=navigator.appVersion.split(";");
+                     var b=a[1].split(" ");
+                     if (b[2] == '6.0')
+                    {
+                         	var wps_enabled = "<%nvram_get("wps_enabled");%>";
+        								 	if(wps_enabled == '1')
+                           {
+                           	 document.write("<img id=\"wps_gif_dark\" name=\"wps_gif_dark\" src=\"wps_icon_dark.png\" border=0\">");
+                             document.write("<a href=\"javascript:PCB_Press();\"><img id=\"wps_gif_bri\" name=\"wps_gif_bri\" src=\"wps_icon_bri.png\"></a>");
+                          }
+        								  else{
+                             document.write("<a href=\"javascript:block_wps();\"><img src=\"wps_icon_dark.png\"></a>");
+                         }
+                    }
+                    else
+                    {
+    										var wps_enabled = "<%nvram_get("wps_enabled");%>";
+    
+    										if(wps_enabled == '1'){
+    											document.write("<img id=\"wps_gif\" name=\"wps_gif\" border=0 onMouseOver=document.wps_gif.src=\"wps_icon_bri.png\" onMouseOut=document.wps_gif.src=\"wps_icon_dark.png\" src=wps_icon_dark.png onclick=\"PCB_Press()\">");	
+    										}
+    										else{
+    											document.write("<img src=\"wps_icon_dark.png\" onclick=\"block_wps();\">");
+										    }
+										}
+									</script>
+								</td>
+								<td class="WirelessText_WPS" width="30">
+										<table cellpadding="0" cellspacing="0" border="0" align="right" style="color:#B8B8B8;" width="20" height="100%">
+											<tr height="30">  <td class="qos_liner_top">&nbsp;</td></tr>
+											<tr height="90"><td class="qos_liner_mid">&nbsp;</td></tr>
+											<tr height="30">  <td class="qos_liner_bottom">&nbsp;</td></tr>
+										</table>
+								</td>
+								<td class="WirelessText_WPS" width="250">
+									<script>translate_strWrite("JavaScript",155);translate_strWrite("JavaScript",152);</script> <script>translate_strWrite("JavaScript",157);</script>
+									<font style="line-height:8pt;"><br><br></font>
+									<input id="wl_enrollee_pin" type="text" class="ssid_col_width" maxlength="8" name="wl_enrollee_pin" value="" onkeypress="if(event.keyCode==13)return false;" >
+									<font style="line-height:8pt;"><br><br></font>
+									<script>translate_strWrite("JavaScript",159);</script><font style="line-height:8pt;"><br><br></font>
+									<!--input onClick="wps_register(document.forms[0]);" type=button name=btn_register style="font-family: Arial; font-size: 8pt"-->
+									<center>
+									<table border="0" cellpadding="0" cellspacing="0">
+										<tbody>
+											<tr height="23">
+												<td class="SW_LeftButton">&nbsp;</td>
+												<td class="SW_BottomButton" background="button_mid.png"><a href="javascript:onClick=wps_register();">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("SetupWizard",95);</script></font>&nbsp;</a></td>
+												<td class="SW_RightButton">&nbsp;</td>
+											</tr>
+										</tbody>
+									</table>
+			      					 <p  style="height:20px;"></p> 
+									</center>
+								</td>
+								<td class="WirelessText_WPS" width="30">
+									<table cellpadding="0" cellspacing="0" border="0" align="right" style="color:#B8B8B8;" width="20" height="100%">
+										<tr height="30">  <td class="qos_liner_top">&nbsp;</td></tr>
+											<tr height="90"><td class="qos_liner_mid">&nbsp;</td></tr>
+											<tr height="30">  <td class="qos_liner_bottom">&nbsp;</td></tr>
+									</table>
+								</td>
+								<td class="WirelessText_WPS" width="250">
+									<script>translate_strWrite("JavaScript",158);</script>
+									<script>translate_strWrite("JavaScript",159);</script><font style="line-height:8pt;"><br><br></font>
+									<font class="adv_title">
+										<script>document.write("<%nvram_get("wsc_device_pin");%>");</script>
+									</font>
+								</td>
+
+							</tr>
+						</table>
+
+					</center>
+				</div>
+
+		      <p class="status_end"></p>     
+		      
+      		 <p  style="height:20pt;"></p> 
+      		 	
+			   	<div class="button_status">
+			   		<center>
+						<div>
+							<DIV ID="searching" style="position:relative;width:80%;height:100pt;margin:0pt; padding:0pt; ;z-index:50;top:0pt;left:0pt;background-color:#000000;display:block;text-align:center" >
+								<center>
+								<div id="picture_wps" class="no_wps_status_png">&nbsp;&nbsp;&nbsp;</div>
+									<table style="width:210px;" border="0"  cellpadding="0" cellspacing="0">
+										<tr style="height:13px;">
+											<td>
+											</td>
+										</tr>
+										<tr id="warp2" style="height:9px; background-color:white; display:none;">
+											<td>
+												<div id="scroll" style="display:none; width:210px;">
+											   	<script>
+													browsertype=navigator.appName;
+													if(browsertype == 'Netscape'){
+														document.write('<div id="bar" style="position:relative; top:0px; left:0px;  width:2px; height:12px;background-image:url(scroll_bg.jpg);"></div>');
+													}
+													else{// if(browsertype == 'Microsoft Internet Explorer'){
+														document.write('<div id="bar" style="position:relative; top:0px;  left:350; width:2px; height:12px;background-image:url(scroll_bg.jpg);"></div>');
+													}
+												</script>
+												</div>								
+											</td>
+										</tr> 
+									</table>
+                  	<div id="wps_result_text_fail" style="display:none; background-color:#000000; font-size: 12pt;  color: #FF0000; font-weight: normal; text-align:center; width:100%">
+													<script>translate_strWrite("SetupWizard",96);</script>
+												</div>
+												<div id="wps_result_text_success" style="position:relative;display:none;background-color:#000000;font-size: 12pt;color: #6495ED;font-weight: normal; text-align:center; width:100%;">
+													<script>translate_strWrite("SetupWizard",97);</script>
+												</div> 
+								</center>
+
+							
+								<DIV ID="searching_iframe" style="width:100%;height:100%;;z-index:60;top:2pt;left:0pt;display:none;">
+									<!--iframe width="400" id="WPS_search" name="WPS_search" height="200" src="WPS_search.htm" frameborder="2" marginheight="0" scrolling="no"><br>
+									</iframe-->
+									<iframe width="400" id="WPS_search" name="WPS_search" height="200" frameborder="2" marginheight="0" scrolling="no"><br>
+									</iframe>
+							
+									<iframe width="400" id="WPS_searching_check" name="WPS_searching_check" height="200" frameborder="2" marginheight="0" scrolling="no"><br>
+									</iframe>
+
+								</DIV>
+								<DIV ID="searching_pin_iframe" style="position:relative;width:100%;height:100%;;z-index:60;top:100pt;left:0pt;display:none;">
+									<iframe width="400" id="WPS_PIN" name="WPS_PIN" height="200" frameborder="2" marginheight="0" scrolling="no"><br>
+									</iframe>
+								</DIV>
+
+							</DIV>
+							
+
+
+								<br>
+						<div>
+					</center>
+				</div>
+		      
+      </div> 
+   </div>
+ </div>       
+      <div class="EZ_mid">  
+				  	<div class="Back_button">
+				  	<p style="height:10px;"></p>  
+							  <table border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+								<td class="SW_LeftButton">&nbsp;</td>
+								<td class="SW_BottomButton"><a href="adv_status_wireless.htm">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("Management",27);</script></font>&nbsp;</a></td>
+								<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+							</div>
+				</div>	
+																			    						    			       
+      
+       <div style="height: 20px"></div>    
+		      <div class="EZ_foot">
+						<div class="EZ_foot_L"><img src="bottom_help_icon.png" style="position:relative;top:3pt;">&nbsp;<a href="help/<%nvram_get("language_str");%>/default.htm#WPS" target="_blank"><script>translate_strWrite("SetupWizard",64);</script></a>&nbsp;<img src="transparency.gif" style="width:15px;height:1px;"><a href="javascript:open_language();"><img src="bottom_language_icon.png" style="position:relative;top:3pt;">&nbsp;<script>translate_strWrite("BasicSetup",167);</script></a>&nbsp;&nbsp
+							<span id="language" style="visibility:hidden;">
+								<a href="javascript:apply_lang('en');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">English</font></a>&nbsp;&nbsp;
+								<a href="javascript:apply_lang('fr');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Fran&ccedil;ais</font></a>&nbsp;&nbsp;
+								<!--a href="javascript:apply_lang('spa');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Spanish</font></a--></span>
+						</div>
+						<div class="EZ_foot_C"></div>
+						<div class="EZ_foot_R"></div>
+		      </div>
+         <div class="clear_float"> </div>
+  
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+		</td>
+	</tr>
+	</table>
+</center>
+</form>
+
+<form method="post" action="save.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_welcome.htm">
+<input type="hidden" name="redirect_timer" value="0">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="language_str">
+<input type="hidden" name="language_str" value="<%nvram_get("language_str");%>">
+</form>
+
+<script type="text/javascript">
+   
+var WirelessMode = '<%nvram_get("wl0_enabled");%>';
+
+var WirelessMode_1 = '<%nvram_get("wl1_enabled");%>';
+
+
+function InitValue()
+{
+	  show_network_status();
+	$('#wl_enrollee_pin').val('<%nvram_get("wsc_sta_pin");%>');
+	$('#wl_enrollee_pin').attr("disabled","");
+	//document.getElementById("wps_status_png").style.display ="none" ;
+	//document.passForm[0].wl_enrollee_pin.value = '<%nvram_get("wsc_sta_pin");%>';
+	//document.passForm[0].wl_enrollee_pin.disabled = 0 ;
+	
+	var wps_enable = "<%nvram_get("wsc_mode");%>";    
+	
+		
+}
+
+	var barLayer = getLayer("bar");
+	var time_out_value = "1300";
+	var	CurTime=0; 
+	var t;	
+	var round = 0 ;
+	var wps_success = 0 ;
+
+function PCB_Press()
+{
+	time_out_value = "1300";
+	CurTime=0; 
+	t;	
+	round = 0 ;
+	wps_success = 0 ;
+
+	barLayer.style.width = 0 ;
+
+    $('#picture_wps').attr('class','show_wps_status_png');
+//    $('#picture_wps').removeClass('no_wps_status_png').addClass('show_wps_status_png');     
+	$('#wps_result_text_fail').hide();
+	$('#wps_result_text_success').hide();
+	$('#scroll').show();
+	$('#warp2').show();
+	$('#warp2').css("background-color","white");
+
+ /* document.getElementById("wps_status_png").style.display ="block" ;
+	document.getElementById("wps_status_png").src="wps_status.png" ;
+	document.getElementById("scroll").style.display="block" ;
+	document.getElementById("warp2").style.display ="block" ;
+	document.getElementById("wps_result_text_fail").style.display ="none" ;
+	document.getElementById("wps_result_text_success").style.display ="none" ;	
+
+	document.getElementById("wps_status_png").src="wps_connecting.png" ;
+	document.getElementById("scroll").style.display="block" ;
+	document.getElementById("warp2").style.display ="block" ; */
+
+
+	    timebegin();
+  $('#WPS_search').attr('src','WPS_searching.htm');
+	//document.getElementById("WPS_search").src="WPS_searching.htm" ;
+
+}
+
+function WPS_Status(t){
+	
+	if(t == '1'){	//Success
+		time_out_value = 1 ;
+		wps_success = 1 ;
+		$('#picture_wps').removeClass('show_wps_status_png').addClass('success_wps_status_png'); 
+		$('#scroll').hide();
+	  $('#warp2').show();
+	  $('#warp2').css("background-color","black");
+	  $('#wps_result_text_success').show(); 
+	  $('#wps_result_text_fail').hide();
+		//document.getElementById("wps_status_png").src="wps_successful.png" ;
+		//document.getElementById("scroll").style.display="none" ;
+		//document.getElementById("warp2").style.display ="block" ;
+    //		$("#warp2").css("background-color","red");
+		//document.getElementById("wps_result_text_success").style.display ="block" ;
+	}
+	else{			//Fail
+		$('#picture_wps').removeClass('show_wps_status_png').addClass('fail_wps_status_png');
+    $('#scroll').hide();
+	  $('#warp2').show();
+	  $('#warp2').css("background-color","black");
+    $('#wps_result_text_fail').show();
+   	$('#wps_result_text_success').hide();   
+		//document.getElementById("wps_status_png").src="wps_unsuccessful.png" ;
+		//document.getElementById("scroll").style.display="none" ;
+		//document.getElementById("warp2").style.display ="block" ;
+    //$("#warp2").css("background-color","red");
+		//document.getElementById("wps_result_text_fail").style.display ="block" ;
+
+	}
+}
+
+
+
+function timebegin()
+{
+//	var barLayer = getLayer("bar");
+
+	var mybar='|';
+	for(i=0; i<CurTime; i++) {
+		mybar+='|';  
+		barLayer.style.width = (CurTime*1.60) +"pt";
+	}
+
+	window.status=CurTime+'%'+ ' ' + mybar;
+	if(CurTime < 100){
+		t=setTimeout("timebegin()",time_out_value);
+
+		CurTime++;
+	}
+	else{
+		if (wps_success){
+		//Do nothing
+		}
+		else{
+			window.status="";
+			WPS_Status('0');
+		}
+	}
+
+	round++ ;
+	
+	if(round%10 == 0){
+	     get_searching_status()
+	  // $('#WPS_searching_check').attr('src','WPS_searching_check.htm');  
+		//document.getElementById("WPS_searching_check").src="WPS_searching_check.htm" ;
+		}
+		else{
+	$('#WPS_searching_check').attr('src','');  
+	}
+}
+
+
+function space_check(num){
+
+	for(i=0 ; i<num.value.length; i++){
+		ch = num.value.charAt(i);
+		if(ch == ' '){
+			alert(translate_str("BasicSetup",150));
+			num.value = "";	
+			num.focus();
+			return false;
+		}
+	}
+	return true;
+}
+	var WPS_PIN;
+	
+function wps_register(){
+	     
+	$('#warp2').css("background-color","white");
+	var legal = new RegExp(/^\d{4}[ -]?\d{4}$/);
+
+	if(legal.test($('#wl_enrollee_pin').val()))
+	{
+		if ($('#wl_enrollee_pin').val().match("-") || $('#wl_enrollee_pin').val().match(" "))
+		{
+			WPS_PIN = $('#wl_enrollee_pin').val().substr(0,4);
+			WPS_PIN = WPS_PIN.concat($('#wl_enrollee_pin').val().substr(5,4));
+			
+		}
+		else WPS_PIN = $('#wl_enrollee_pin').val();
+	}
+	else
+	{   
+		alert(translate_str("BasicSetup",176));
+		return ;
+	}
+
+	if ( !validChecksum(WPS_PIN))
+	{
+		alert(translate_str("BasicSetup",151));
+		return; 
+	}
+  	$('#wl_enrollee_pin').attr("disabled","disabled");
+
+
+	time_out_value = "1300";
+	CurTime=0; 
+	t;	
+	round = 0 ;                                 
+	wps_success = 0 ;
+//	var barLayer = getLayer("bar");
+	barLayer.style.width = 0 ;
+    $('#picture_wps').attr('class','show_wps_status_png');	
+ // $('#picture_wps').removeClass('no_wps_status_png').addClass('show_wps_status_png');     
+	$('#wps_result_text_fail').hide();
+	$('#wps_result_text_success').hide();
+//	$('#wps_status_png').attr('src','wps_connecting.png');
+	$('#scroll').show();
+	$('#warp2').show();
+	$('#WPS_PIN').val(WPS_PIN);	
+	$('#WPS_search').attr('src','WPS_pin_searching.htm');
+	
+		/*document.getElementById("wps_status_png").style.display ="block" ;
+	document.getElementById("wps_status_png").src="wps_status.png" ;
+	document.getElementById("scroll").style.display="block" ;
+	document.getElementById("warp2").style.display ="block" ;
+	document.getElementById("wps_result_text_fail").style.display ="none" ;
+	document.getElementById("wps_result_text_success").style.display ="none" ;	
+
+	document.getElementById("wps_status_png").src="wps_connecting.png" ;
+	document.getElementById("scroll").style.display="block" ;
+	document.getElementById("warp2").style.display ="block" ;*/
+	 timebegin();
+
+}
+function go_WPS_searching_check(){
+	self.WPS_searching_check.save_pin(WPS_PIN);
+}
+
+function validChecksum(PIN)
+{
+        var accum = 0;
+        accum += 3 * (parseInt(PIN / 10000000) % 10);
+        accum += 1 * (parseInt(PIN / 1000000) % 10);
+        accum += 3 * (parseInt(PIN / 100000) % 10);
+        accum += 1 * (parseInt(PIN / 10000) % 10);
+        accum += 3 * (parseInt(PIN / 1000) % 10);
+        accum += 1 * (parseInt(PIN / 100) % 10);
+        accum += 3 * (parseInt(PIN / 10) % 10);
+        accum += 1 * (parseInt(PIN / 1) % 10);
+    return (0 == (accum % 10));
+}
+
+function ValidateForm() 
+{
+			document.passForm.submit();
+}
+
+
+var language_show = 0;
+function open_language()
+{
+	 var language_choice = document.getElementById('language');
+	 
+	if(language_show == '1') {
+		language_show = 0;
+		language_choice.style.visibility="hidden";
+	}
+	else {
+		language_show = 1;
+		language_choice.style.visibility="visible";
+	}
+}
+
+function apply_lang(e)
+{
+	var f1 = document.forms[1];
+	f1.language_str.value = e;
+ 	f1.submit();
+}
+
+function chage_color(e)
+{
+	e.style.color="#4F81BD";
+	e.style.textDecoration="underline"; 
+}
+
+function back_color(e)
+{
+	e.style.color="#B8B8B8";
+	e.style.textDecoration="none"; 
+}
+
+function mouseOver(pic_id, pic_src)
+{
+
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("wireless").src = "signak_icon_bri.png";
+}
+
+function mouseOut(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("wireless").src = "signak_icon_bri.png";
+}
+
+   	function get_searching_status()
+		{
+			$.ajax({
+				type: "Get",
+				dataType: "html",
+				url: "WPS_searching_check.htm",
+				success: function(response){
+				if (response==1)
+				{
+	      WPS_Status(response);
+	      }
+	        
+				}
+	  	}); //end ajax call  		
+		}
+
+</script>
+<!--[if lt IE 7]> 
+  <script language="javascript">
+   $(document).ready(function(){
+  $("#internet").mouseover(function(){
+    $("#internet").hide();
+    $("#internet_bri").show();
+  });
+  $("#internet_bri").mouseout(function(){
+    $("#internet").show();
+    $("#internet_bri").hide(); 
+  });
+  $("#wireless").mouseover(function(){
+    $("#wireless").hide();
+    $("#wireless_bri").show();
+  });
+  $("#wireless_bri").mouseout(function(){
+    $("#wireless").show();
+    $("#wireless_bri").hide(); 
+  });
+  $("#router").mouseover(function(){
+    $("#router").hide();
+    $("#router_bri").show();
+  });
+  $("#router_bri").mouseout(function(){
+    $("#router").show();
+    $("#router_bri").hide(); 
+  }); 
+   $("#wps_gif_dark").mouseover(function(){
+    $("#wps_gif_dark").hide();
+    $("#wps_gif_bri").show();
+    });    
+     $("#wps_gif_bri").mouseout(function(){
+    $("#wps_gif_dark").show();
+    $("#wps_gif_bri").hide();
+    }); 
+      
+  $("#router_bri").hide();
+  $("#wireless_bri").hide();
+  $("#internet_bri").hide();
+  $("#wps_gif_bri").hide();
+  $("#pic_connect_state_online").hide();
+});
+    InitValue();       
+   document.getElementById("wireless").src = "signak_icon_bri.png"; 
+
+     </script>
+  <![endif]-->
+<script type="text/javascript">
+  document.getElementById("wireless").src = "signak_icon_bri.png";
+</script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_112?></title>
+<base target="_self">
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+
+var f=document.ws_wpa2enterprise;
+
+function ValidateForm(f)
+{
+	self.parent.document.forms[0].wl0_data1.value += " wl0_authRadiusIp wl0_authRadiusPort wl0_authRadiusPasswd wl0_sec_mode wl0_wpaenc wl0_key_renew";
+	f = document.forms[0];
+	
+	//if (!CheckSemicolon(f.RadiusSharedSecret))	
+	//	return;
+	if (!IPCheck_radius_1(f.radius_ipaddr_1))
+		return;
+	if (!IPCheck1(f.radius_ipaddr_2))
+		return;
+	if (!IPCheck1(f.radius_ipaddr_3))
+		return;
+	if (!IPCheck(f.radius_ipaddr_4))
+		return;						
+	if (!PortCheck(f.RadiusServerPort))		
+		return;
+	if (!CheckEmpty(f.RadiusSharedSecret, translate_str("WirelessSecurity",26)))
+		return;
+	f.RadiusServerIP.value = f.radius_ipaddr_1.value + "." +
+	 								f.radius_ipaddr_2.value + "." +
+	  								f.radius_ipaddr_3.value + "." +
+	   								f.radius_ipaddr_4.value;
+	   								
+	if(!valid_range(document.forms[0].key_renewal,600,7200,wlansec.rekey,document.forms[0].key_renewal.defaultValue))
+		return;
+	self.parent.document.forms[0].wl0_authRadiusIp.value = f.RadiusServerIP.value;
+	self.parent.document.forms[0].wl0_authRadiusPort.value = f.RadiusServerPort.value;
+	self.parent.document.forms[0].wl0_authRadiusPasswd.value = f.RadiusSharedSecret.value;
+	self.parent.document.forms[0].wl0_sec_mode.value = document.forms[0].wl_security.value;
+
+	if ( document.forms[0].wl_encryp_type.value == "0" ) {
+		self.parent.document.forms[0].wl0_sec_mode.value = document.forms[0].wl_security.value;
+		self.parent.document.forms[0].wl0_wpaenc.value = 0;
+	}
+	else {
+		self.parent.document.forms[0].wl0_sec_mode.value = "WPA1WPA2Radius";
+		self.parent.document.forms[0].wl0_wpaenc.value = 2;
+	}
+
+	self.parent.document.forms[0].wl0_key_renew.value = document.forms[0].key_renewal.value;
+	return true;
+}
+
+function InitValue(f)
+{
+	
+	if ( '<%nvram_get("wl0_wpaenc");%>' == '0' )
+		f.wl_encryp_type.value = 0;
+	else
+		f.wl_encryp_type.value = 1;
+
+	var RadiusServerIP = '<%nvram_get("wl0_authRadiusIp");%>';
+
+	f.radius_ipaddr_1.value = GetIPSegment(RadiusServerIP,1);
+	f.radius_ipaddr_2.value = GetIPSegment(RadiusServerIP,2);
+	f.radius_ipaddr_3.value = GetIPSegment(RadiusServerIP,3);
+	f.radius_ipaddr_4.value = GetIPSegment(RadiusServerIP,4);			
+	f.RadiusServerPort.value= '<%nvram_get("wl0_authRadiusPort");%>';
+	f.RadiusSharedSecret.value= '<%nvram_get("wl0_authRadiusPasswd");%>';
+	
+	f.key_renewal.value = '<%nvram_get("wl0_key_renew");%>';
+	showMix = getLayer("SSIDAuthMode");
+	showMix.height="250";
+}
+</Script>
+
+<style type="text/css">
+
+
+body{
+	margin:0px;
+	BACKGROUND:transparent none;
+	}
+
+</style>
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="ws_wpa2enterprise" method="post" action="">
+<input type="hidden" name="RadiusServerIP">
+<input type="hidden" name="RekeyMethod" value="TIME">
+<input type="hidden" name="wl_security_all">
+<input type="hidden" name="wl_encryp_type_all">
+<input type="hidden" name="wl_auth_mode_all">
+<input type="hidden" name="wl_ieee_8021x_all">
+<input type="hidden" name="wl_isolation_ssid_all">
+		 
+<table border="0" width="530" cellpadding="0" cellspacing="0">
+	<tr>
+		<td>
+
+  <div id="WS_WEP1" style="text-align:left;">
+  
+      <div class="iframe_background">     	
+      	<div class="iframe_status" style="line-height:35px;">	
+      		<table border="0" width="530" align="center" cellpadding="0" cellspacing="0">
+      			<tr height="35">
+      				<td colspan="3" width="450" class="status_title" align="center"><script>translate_strWrite("SetupWizard",59);</script></td>  								
+      			</tr>
+      			<tr>     	
+      				<td width="250" align="right"><script>translate_strWrite("WirelessSecurity",1);</script>:</td>
+      				<td width="30"></td>
+      				<td width="250" align="left">
+      					 <select name="wl_security"  class="wireless_select_col_width_v2" onChange="WirelessSecurityType ( this.value,<%nvram_get("wps_page");%> )">
+				           	<option value="wep"><script>translate_strWrite("WirelessSecurity",3);</script></font></option>
+						   		 	<option value="psk"><script>translate_strWrite("WirelessSecurity",4);</script></option>
+				            <option value="WPA2"><script>translate_strWrite("WirelessSecurity",5);</script></option>
+				            <option value="wparadius"><script>translate_strWrite("WirelessSecurity",7);</script></option>
+				            <option value="wpa2radius" selected><script>translate_strWrite("WirelessSecurity",8);</script></option>
+				            <option value="radius"><script>translate_strWrite("WirelessSecurity",9);</script></option>
+				           <option value="none"><script>translate_strWrite("WirelessSecurity",2);</script></option></option>					
+         				</select>        					
+      						</td></tr>
+      						
+      						
+      		
+      					<tr><td align="right"><script>translate_strWrite("WirelessSecurity",10);</script>:</td>
+      					<td width="10"></td>
+      					<td align="left">     							    								      								
+									<SELECT name="wl_encryp_type" class="wireless_select_col_width_v2">
+					            <OPTION value="0"><script>translate_strWrite("WirelessSecurity",21);</script></OPTION>
+					            <OPTION value="1"><script>translate_strWrite("WirelessSecurity",22);</script></OPTION>
+          				</SELECT>
+      						</td>
+      					</tr>
+      						<tr> 
+							        <td align="right"><script>translate_strWrite("WirelessSecurity",23);</script>:</td>
+							        <td width="10"></td>
+							        <td align="left">
+							          <input class="ip_col_width" maxLength=3  name="radius_ipaddr_1" value="0" >
+							          . 
+							          <input class="ip_col_width" maxLength=3  name="radius_ipaddr_2" value="0" >
+							          . 
+							          <input class="ip_col_width" maxLength=3  name="radius_ipaddr_3" value="0" >
+							          . 
+							          <input class="ip_col_width" maxLength=3  name="radius_ipaddr_4" value="0" >
+							          </td>
+							      </tr>	
+      					<tr> 
+						       <td align="right"><script>translate_strWrite("WirelessSecurity",24);</script>:</td> 
+						       <td width="10"></td>
+						        <td align="left">
+						          <input class="mtu_col_width" maxLength=5 size=5 name="RadiusServerPort" value="" >
+						        </td>
+						     </tr>
+      						<tr> 
+						        <td align="right"><script>translate_strWrite("WirelessSecurity",25);</script>:</td>
+						       	<td width="10"></td>
+						        <td align="left">
+						          <input class="key_col_width" maxLength="64" size="20" name="RadiusSharedSecret" value="" >
+						        </td>
+						      </tr>	
+      				 <tr> 
+					        <td align="right"><script>translate_strWrite("WirelessSecurity",18);</script>:</td>
+					       	<td width="10"></td>
+					        <td align="left">
+          <input class="key_col_width" maxlength="5" size="5" name="key_renewal" value=""  onBlur=valid_range(this,600,7200,wlansec.rekey,this.defaultValue)>
+  				&nbsp; 
+          <script>translate_strWrite("WirelessSecurity",19);</script>
+  			</td>
+      </tr>
+								
+      		</table>
+      	      						
+   </div>
+ </div>       
+
+  </div>
+		</td>
+	</tr>
+	</table>
+</form>
+
+
+
+</body>
+</html>

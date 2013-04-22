@@ -1,0 +1,12 @@
+April, 01. 2004 PM 03:39		Gemtek, PeterChen
+	1.	Just for the WAN status control ( LEDs ), because Linksys WRT55AG needn't this feature.
+		So I added a extra CFLAG, its name is "RemoveWANLedControl". If you don't add it, then it
+		will add the WAN status control SRC. If you add it, then it will not involve the WAN status control
+		SRC.
+	2.	So overall, this revision SRC tree integrate the Motorola WR850G and Linksys WRT55AG revisions
+		into the single SRC tree.
+
+April, 01 2004 PM 04:54		Gemtek, PeterChen
+	1.	Now, this SRC tree has involved the Gateway features.
+		Just for the Gateway, it's complete same as Moto revision, except the DHCP client must not
+		output any message on the console.

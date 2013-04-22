@@ -1,0 +1,60 @@
+
+--] updatedd by Philipp Benner http://philippb.tk
+
+
+----] Description
+
+Updatedd is a program which updates your dyndns settings for you, it enables 
+you to fully automatically update those kind of services in case
+that your ip changes and you dont have the time or recognize that it changed.
+
+----] How to compile/install
+
+Type:
+
+make
+make install
+
+thats all ;-)
+If you want to uninstall updatedd type:
+
+make uninstall
+
+
+----] The technical background
+
+Updatedd is divided into several dynamic librarys which where called
+from the main program. Each of these libraries is for one service.
+They are located at /usr/local/lib/updatedd/. There is a link in this
+folder called default.so which points to the default service.
+After installation it points to dyndns.so. You can edit this link, of course.
+But you can also use the non-default services by running updatedd
+with the -S <service> flag.
+
+Example:
+updatedd -S ovh
+
+The librarys have all a usage of its own. Thats why the services and
+protocols are very different.
+Type updatedd --help to get the usage of the default library or
+type updatedd -S <service> --help to get the usage of your chosen service.
+If only need one of these services (libraries) you can remove the other,
+but not the link default.so!
+
+
+----] Security advisory
+
+If you like your system you should not have updatedd suid root
+and only root should be able to change the default.so link.
+Otherwise it is possible for normal users to execute another
+library. Thus, not authorized users can get root.
+
+
+----] Where to download the newest version
+
+you may always get the newest sourcecode distribution from:
+http://www.teamunix.de/main.php?topic=dl/updatedd
+
+and at my privat homepage:
+http://philippb.tk
+

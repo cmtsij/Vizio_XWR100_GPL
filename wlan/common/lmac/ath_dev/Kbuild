@@ -1,0 +1,26 @@
+ifeq ($(obj),)
+obj := .
+endif
+
+DEPTH := ../../..
+
+include $(obj)/$(DEPTH)/linux/Makefile-linux.common
+
+INCS += -I$(HAL) -I$(HAL)/$(OS) -I$(ATH) -I$(ATH_RATE) -I$(ATH_PKTLOG) -I$(WLAN) -I$(IF_WLAN) -I$(ATH_DFS)
+
+obj-m += ath_dev.o
+
+EXTRA_CFLAGS+= $(INCS) $(COPTS) -Wno-unused-function
+
+ath_dev-objs := ath_beacon.o ath_desc.o ath_led.o \
+		ath_uapsd.o ath_main.o ath_power.o ath_recv.o \
+		ath_timer.o ath_xmit.o ath_ppm.o ath_config.o ath_rb.o
+ath_dev-y := $(OS)/ath_osdep.o $(OS)/ath_iw_handler.o $(OS)/ath_wbuf.o
+
+	ath_dev-objs += ath_antdiv.o
+
+ifeq ($(strip ${BUS}),AHB)
+ath_dev-y += $(OS)/ath_ahb.o
+else
+ath_dev-y += $(OS)/ath_pci.o
+endif

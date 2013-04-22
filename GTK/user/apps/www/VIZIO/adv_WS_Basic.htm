@@ -1,0 +1,493 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_112?></title>
+<base target="_self">
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+
+var f=document.wlanset;
+
+
+function UnableCheck(f)
+{
+	if (f.wl0_wl_mode.selectedIndex == '1' || f.wl0_wl_mode.selectedIndex == '4')	{	//Mixed & N-only
+		f.wl0_radio_band.disabled = false;
+	}
+	else {	// B-only & G-only & Disabled
+		f.wl0_radio_band.disabled = true;
+	}
+	
+	
+	if (f.wl0_radio_band.selectedIndex =='0')	{
+		f.wl0_wide_channel.disabled = true;
+		f.wl0_wl_channel.disabled = true;
+	}
+	else if (f.wl0_radio_band.selectedIndex =='1')	{
+		f.wl0_wide_channel.disabled = true;
+		f.wl0_wl_channel.disabled = false;
+	}
+	else	{
+		var wl0_ctrlsb = '<%nvram_get("wl0_nctrlsb");%>';
+		if (wl0_ctrlsb == 'none')	{
+			f.wl0_wide_channel.disabled = false;
+			f.wl0_wl_channel.disabled = true;
+		}
+		else	{
+			f.wl0_wide_channel.disabled = false;
+			f.wl0_wl_channel.disabled = false;
+		}
+	}
+	
+}
+
+function ValidateForm(f) 
+{ 
+	var f=document.wlanset;
+	self.parent.document.forms[0].wl0_data1.value += " wl0_mode wl0_wlmode wl0_enabled wl0_ssid wl0_channel wl0_WideChannel wl0_nctrlsb wl0_radioband wl0_ssid_bcast_enabled wl0_apisolation";
+ 	self.parent.document.forms[0].wl0_channel.value = f.wl0_wl_channel.value;
+ 	self.parent.document.forms[0].wl0_ssid.value = f.wl0_wl_ssid.value;
+ 	self.parent.document.forms[0].wl0_WideChannel.value = f.wl0_wide_channel.value;
+ 	self.parent.document.forms[0].wl0_radioband.value = f.wl0_radio_band.value;
+ 	
+ 	if(isBlank(f.wl0_wl_ssid.value)) 
+ 	{
+		alert(translate_str("RouterStatus",26) + ' : '+translate_str("BasicWireless",10));
+		f.wl0_wl_ssid.focus();
+		return;
+ 	}
+ 	
+ 	if(f.wl0_ap_isolation[0].checked == true)
+		self.parent.document.forms[0].wl0_apisolation.value=1;
+	else
+		self.parent.document.forms[0].wl0_apisolation.value=0;	
+
+
+ 	if(f.wl0_wl_hide_ssid[0].checked==true)
+		self.parent.document.forms[0].wl0_ssid_bcast_enabled.value = 1;
+ 	else
+		self.parent.document.forms[0].wl0_ssid_bcast_enabled.value = 0;
+
+	self.parent.document.forms[0].wl0_wlmode.value = f.wl0_wl_mode.value;
+	
+	if(self.parent.document.forms[0].wl0_wlmode.value== '0')
+		self.parent.document.forms[0].wl0_enabled.value=0;
+	else
+		self.parent.document.forms[0].wl0_enabled.value=1;
+	
+	if (f.wl0_wl_channel.selectedIndex == '0')
+	{	
+		if (f.wl0_wide_channel.selectedIndex == '0')
+			self.parent.document.forms[0].wl0_nctrlsb.value= 'none';
+		else
+			self.parent.document.forms[0].wl0_nctrlsb.value= 'lower';
+	}
+	else
+		self.parent.document.forms[0].wl0_nctrlsb.value='upper';
+	
+	if (f.wl0_wl_mode.selectedIndex == 1 || f.wl0_wl_mode.selectedIndex == 4)	{	
+		if (f.wl0_radio_band.selectedIndex == 2) {
+			if (f.wl0_wl_channel.selectedIndex == '0')
+			{	
+				if (f.wl0_wide_channel.selectedIndex == '0')
+					self.parent.document.forms[0].wl0_mode.value='-1';
+				else
+					self.parent.document.forms[0].wl0_mode.value="11NGHT40PLUS";
+			}
+			else
+				self.parent.document.forms[0].wl0_mode.value="11NGHT40MINUS";
+		}
+		else
+			self.parent.document.forms[0].wl0_mode.value="11NGHT20";
+	}
+	else if(f.wl0_wl_mode.selectedIndex == 2)
+		self.parent.document.forms[0].wl0_mode.value= "11G";
+
+	else if(f.wl0_wl_mode.selectedIndex == 3)
+		self.parent.document.forms[0].wl0_mode.value= "11B";
+
+	sec_mode0 = '<%nvram_get("wl0_sec_mode");%>';
+	
+	if(sec_mode0.toLowerCase().indexOf("Radius".toLowerCase(),0) != -1)
+		self.parent.document.forms[0].wps_enabled.value= 0;
+	else
+		self.parent.document.forms[0].wps_enabled.value= 1;
+
+
+	if(self.parent.document.forms[0].wl0_ssid.value != "VIZIO")
+		self.parent.document.forms[0].wsc_config_state.value= 1;
+
+	return true;
+}
+
+function isBlank(s) 
+{
+	for(var i = 0; i < s.length; i++) {
+		var c = s.charAt(i);
+		if((c !=' ') && (c!='\n') && (c !='\t')) 
+			return false;
+	}
+	return true;
+}
+
+
+function WL0_BandWidthChange(f)
+{
+	f.wl0_wide_channel.selectedIndex = 0;
+	WL0_ChannelShow(f.wl0_wide_channel.selectedIndex);
+	if (f.wl0_radio_band.selectedIndex =='0')	{
+		f.wl0_wide_channel.disabled = true;
+		f.wl0_wl_channel.disabled = true;
+	}
+	else if (f.wl0_radio_band.selectedIndex =='1')	{
+		f.wl0_wide_channel.disabled = true;
+		f.wl0_wl_channel.disabled = false;
+	}
+	else	{
+		f.wl0_wide_channel.disabled = false;
+		f.wl0_wl_channel.disabled = true;
+	}
+}
+
+
+
+var SelFooter = '</select>';
+var SelHeader_g = '<select name="wl0_wl_channel" class="wireless_select_col_width_v2">';
+function WL0_ModeChange(f)
+{
+	if (f.wl0_wl_mode.selectedIndex == '0')
+	{
+		f.wl0_wl_ssid.disabled = true;
+		f.wl0_wl_hide_ssid[0].disabled = true;
+		f.wl0_wl_hide_ssid[1].disabled = true;
+		f.wl0_radio_band.disabled = true;
+		f.wl0_wl_channel.disabled = true;
+		f.wl0_wide_channel.disabled = true;
+		f.wl0_ap_isolation[0].disabled = true;
+		f.wl0_ap_isolation[1].disabled = true;
+	}
+	else {
+		f.wl0_wl_ssid.disabled = false;
+		f.wl0_wl_hide_ssid[0].disabled = false;
+		f.wl0_wl_hide_ssid[1].disabled = false;
+		f.wl0_radio_band.disabled = false;
+		f.wl0_wl_channel.disabled = false;
+		f.wl0_wide_channel.disabled = false;
+		f.wl0_ap_isolation[0].disabled = false;
+		f.wl0_ap_isolation[1].disabled = false;
+		if (f.wl0_wl_mode.selectedIndex == '1' || f.wl0_wl_mode.selectedIndex == '4')	{	//Mixed & N-only
+			f.wl0_radio_band.disabled = false;
+			f.wl0_radio_band.selectedIndex = '0';
+		}
+		else {	// B-only & G-only & Disabled
+			f.wl0_radio_band.disabled = true;
+			f.wl0_radio_band.selectedIndex = '1';
+		}
+		WL0_BandWidthChange(f);
+	}
+}
+
+
+
+function WL0_Ch_setto_Auto()
+{
+	var f = document.forms[0];
+	if (f.wl0_wl_mode.selectedIndex == '1' || f.wl0_wl_mode.selectedIndex == '4')	{	
+		if (f.wl0_wl_channel.selectedIndex == '0')	{
+			f.wl0_radio_band.selectedIndex ='0';
+			f.wl0_wl_channel.disabled = true;
+		}
+	}
+}
+
+function WL0_ChChange(f)
+{
+	WL0_ChannelShow(f.wl0_wide_channel.selectedIndex);
+	if (f.wl0_wide_channel.selectedIndex == '0')	{
+		if (f.wl0_radio_band.selectedIndex == '2')
+			f.wl0_wl_channel.disabled = true;
+		else
+			f.wl0_wl_channel.disabled = false;		
+	}
+}
+
+
+function WL0_ChannelShow(n)
+{
+	var g = "";
+	if (n =='0')	{
+		g += 	'<select name="wl0_wl_channel" onChange="WL0_Ch_setto_Auto();" class="wireless_select_col_width_v2">' + 
+				'<option value="0">'+translate_str("BasicSetup",18)+'</option>' +
+				'<option value="1">1 - 2.412GHz</option>' +
+				'<option value="2">2 - 2.417GHz</option>' +
+				'<option value="3">3 - 2.422GHz</option>' +
+				'<option value="4">4 - 2.427GHz</option>' +
+				'<option value="5">5 - 2.432GHz</option>' +
+				'<option value="6">6 - 2.437GHz</option>' +
+				'<option value="7">7 - 2.442GHz</option>' +
+				'<option value="8">8 - 2.447GHz</option>' +
+				'<option value="9">9 - 2.452GHz</option>' +
+				'<option value="10">10 - 2.457GHz</option>' +
+				'<option value="11">11 - 2.462GHz</option>' +
+				SelFooter ;
+	}
+	else if (n =='1')	{
+	g += 	SelHeader_g +
+				'<option value="1">1 - 2.412GHz</option>' +
+				'<option value="5">5 - 2.432GHz</option>' +
+				SelFooter ;
+	}
+	else if (n =='2')	{
+	g += 	SelHeader_g + 
+				'<option value="2">2 - 2.417GHz</option>' +
+				'<option value="6">6 - 2.437GHz</option>' +
+				SelFooter ;
+	}
+	else if (n =='3')	{
+	g += 	SelHeader_g + 
+				'<option value="3">3 - 2.422GHz</option>' +
+				'<option value="7">7 - 2.442GHz</option>' +
+				SelFooter ;
+	}
+	else if (n =='4')	{
+	g += 	SelHeader_g + 
+				'<option value="4">4 - 2.427GHz</option>' +
+				'<option value="8">8 - 2.447GHz</option>' +
+				SelFooter ;
+	}
+	else if (n =='5')	{
+	g += 	SelHeader_g + 
+				'<option value="5">5 - 2.432GHz</option>' +
+				'<option value="9">9 - 2.452GHz</option>' +
+				SelFooter ;
+	}
+	else if (n =='6')	{
+	g += 	SelHeader_g +
+				'<option value="6">6 - 2.437GHz</option>' +
+				'<option value="10">10 - 2.457GHz</option>' +
+				SelFooter ;
+	}
+	else if (n =='7')	{
+	g += 	SelHeader_g +
+				'<option value="7">7 - 2.442GHz</option>' +
+				'<option value="11">11 - 2.462GHz</option>' +
+				SelFooter ;
+	}
+	else if (n =='8')	{
+	g += 	SelHeader_g +
+				'<option value="8">8 - 2.447GHz</option>' +
+				'<option value="12">12 - 2.467GHz</option>' +
+				SelFooter ;
+	}
+	else if (n =='9')	{
+	g += 	SelHeader_g +
+				'<option value="9">9 - 2.452GHz</option>' +
+				'<option value="13">13 - 2.472GHz</option>' +
+				SelFooter ;
+	}
+	layerWrite('wl0_show_channel', null,g);
+}
+
+
+function InitValue(f)
+{
+	var WL0_Wch = '<%nvram_get("wl0_WideChannel");%>';
+	
+	WL0_ChannelShow(WL0_Wch);
+
+	f.wl0_wide_channel.selectedIndex = WL0_Wch;
+
+	
+	f.wl0_wl_ssid.value = '<%nvram_get("wl0_ssid");%>';
+	
+	if ('<%nvram_get("wl0_apisolation");%>' == '1')
+		f.wl0_ap_isolation[0].checked=true;
+	else
+		f.wl0_ap_isolation[1].checked=true;
+
+	if ('<%nvram_get("wl0_ssid_bcast_enabled");%>' == '1')
+		f.wl0_wl_hide_ssid[0].checked = true;
+	else
+		f.wl0_wl_hide_ssid[1].checked = true;
+	
+	var WL0_nbw = '<%nvram_get("wl0_radioband");%>';
+
+	if ( WL0_nbw == '0')
+		f.wl0_radio_band.selectedIndex = 1;
+	else if (WL0_nbw == '2')
+		f.wl0_radio_band.selectedIndex = 2;
+	else
+		f.wl0_radio_band.selectedIndex = 0;
+
+
+	f.wl0_wl_mode.selectedIndex = '<%nvram_get("wl0_wlmode");%>';
+	
+	var WL0_ctrlsb = '<%nvram_get("wl0_nctrlsb");%>';
+	var WL0_ch = '<%nvram_get("wl0_channel");%>';
+	if (WL0_Wch == '0')	{					 										// Wide Ch: Auto
+		f.wl0_wl_channel.selectedIndex = WL0_ch;
+	}
+	else	{																				// Wide Ch: 3~9
+		f.wl0_wide_channel.selectedIndex = WL0_Wch;
+		if (WL0_ctrlsb =='lower')
+			f.wl0_wl_channel.selectedIndex = '0';
+		else	//upper
+			f.wl0_wl_channel.selectedIndex = '1';
+	}		
+	
+
+
+	UnableCheck(f);
+	if (f.wl0_wl_mode.selectedIndex == '0')
+	{
+		f.wl0_wl_ssid.disabled = true;
+		f.wl0_wl_hide_ssid[0].disabled = true;
+		f.wl0_wl_hide_ssid[1].disabled = true;
+		f.wl0_radio_band.disabled = true;
+		f.wl0_wl_channel.disabled = true;
+		f.wl0_wide_channel.disabled = true;
+		f.wl0_ap_isolation[0].disabled = true;
+		f.wl0_ap_isolation[1].disabled = true;
+	} else {
+		f.wl0_ap_isolation[0].disabled = false;
+		f.wl0_ap_isolation[1].disabled = false;
+	}
+
+		showMix = getLayer("WS_Basic");
+	showMix.height="300";
+	
+}
+-->
+
+</Script>
+
+<style type="text/css">
+
+
+body{
+	margin:0px;
+	BACKGROUND:transparent none;
+	}
+
+</style>
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+	<DIV ID="searching" style="position:absolute;width:101.5%;height:150%;margin:0pt; padding:0pt; ;z-index:50;top:0pt;left:0pt;background-color:#000000;display:none;filter:alpha(opacity=50);-moz-opacity:0.5;opacity: 0.5;" >
+		<br><br><br><br><br><br><br><br>
+		</DIV>			
+			<DIV ID="searching_iframe" style="position:absolute;width:100%;height:100%;;z-index:60;top:100pt;left:0pt;display:none;">
+				<iframe width="400" id="WPS_search" name="WPS_search" height="200" src="" frameborder="2" marginheight="0" scrolling="no"><br>
+				</iframe>
+		</DIV>
+<form name="wlanset" method="post" action="post_wl.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value='<%nvram_get("lan_ipaddr");%>'>
+<input type="hidden" name="next_page" value="adv_WS_Basic.htm">
+<input type="hidden" name="redirect_timer" value="5000">
+<input type="hidden" name="reboot" value="0">
+
+		 
+<table border="0" width="530" cellpadding="0" cellspacing="0">
+	<tr>
+		<td>
+
+  <div id="WS_WEP1" style="text-align:left;">
+  
+      <div class="iframe_background">     	
+      	<div class="iframe_status" style="line-height:35px;">	
+      			<table border="0" width="530" align="center" cellpadding="0" cellspacing="0">
+      							<tr height="20">
+      								<td colspan="3" class="status_title" align="center"></td>   								
+      								</tr>
+                    <tr> 
+                      <td width="250" align="right"><script>translate_strWrite("BasicWireless",2);</script>:</td>
+                      <td width="30">&nbsp;</td>
+                      <td width="250" align="left">
+										  <select name="wl0_wl_mode" class="wireless_select_col_width_v2" onChange="WL0_ModeChange(document.forms[0]);">
+											<option value="0"><script>translate_strWrite("BasicWireless",27);</script></option>				
+											<option value="1"><script>translate_strWrite("BasicWireless",3);</script></option>
+											<option value="2"><script>translate_strWrite("BasicWireless",5);</script></option>
+											<option value="3"><script>translate_strWrite("BasicWireless",4);</script></option>
+											<option value="4"><script>translate_strWrite("BasicWireless",26);</script></option>
+										  </select></td>
+                    </tr>
+                    <tr> 
+                      <td align="right"><script>translate_strWrite("BasicWireless",6);</script>:</td>
+                      <td>&nbsp;</td>
+                      <td align="left">
+										  <input name="wl0_wl_ssid" size="20" class="ssid_col_width" maxlength="32"><input type="text" size="2" id="ssid_hidden" style="visibility:hidden"></td>
+                    </tr>
+                    <tr>
+                    	<td align="right"><script>translate_strWrite("BasicWireless",33);</script>:</td>
+                       <td>&nbsp;</td>
+                      <td align="left">
+                			<select size="1" name="wl0_radio_band"  class="wireless_select_col_width_v2" onChange="WL0_BandWidthChange(document.forms[0]);">
+			                <option value="1"><script>translate_strWrite("BasicWireless",31);</script></option>
+			                <option value="0"><script>translate_strWrite("BasicWireless",29);</script></option>
+			                <option value="2"><script>translate_strWrite("BasicWireless",30);</script></option>
+			                </select></td>
+                    <tr>
+                    	<td align="right"><script>translate_strWrite("BasicWireless",32);</script>:</td>
+                      <td>&nbsp;</td>
+                      <td align="left">
+							  			<select name="wl0_wide_channel" class="wireless_select_col_width_v2"  	onChange="WL0_ChChange(document.forms[0]);">
+									  	<option value="0"><script>translate_strWrite("BasicSetup",18);</script></option>
+											<option value="1">3</option>
+											<option value="2">4</option>
+											<option value="3">5</option>
+											<option value="4">6</option>
+											<option value="5">7</option>
+											<option value="6">8</option>
+											<option value="7">9</option>
+					  					</select></td>
+                    </tr>
+                    <tr> 
+                      <td align="right"><script>translate_strWrite("BasicWireless",7);</script>:</td>
+                       <td>&nbsp;</td>
+                      <td align="left">
+                      	<span ID="wl0_show_channel"></span></td>
+                    </tr>
+                    <tr>
+                      <td align="right"><script>translate_strWrite("BasicWireless",8);</script>:</td>
+                       <td>&nbsp;</td>
+                      <td align="left">
+                        <input type="radio" name="wl0_wl_hide_ssid" value="0">&nbsp;
+                        <script>translate_strWrite("CheckBox",0);</script>&nbsp;&nbsp;
+                        <input type="radio" name="wl0_wl_hide_ssid" value="1">&nbsp;
+                        <script>translate_strWrite("CheckBox",1);</script>&nbsp;
+                      </td>
+                    </tr>
+                    
+                     <tr>
+                      <td align="right"><script>translate_strWrite("ADWirelessSetting",2);</script>:</td>
+                       <td>&nbsp;</td>
+                      <td align="left">
+                      <INPUT type="radio" value="1" name="wl0_ap_isolation">&nbsp;
+                      <script>translate_strWrite("CheckBox",0);</script>&nbsp;&nbsp;
+		                  <INPUT type="radio" value="0" name="wl0_ap_isolation">&nbsp;
+		                  <script>translate_strWrite("CheckBox",1);</script>&nbsp;
+		                
+                       </td>
+                    </tr>
+                     <tr>
+                      <td align="right"><script>translate_strWrite("BasicSetup",105);</script>:</td>
+                       <td>&nbsp;</td>
+                      <td align="left"><%nvram_get("wl0_hwaddr");%>
+                       </td>
+                    </tr>
+                  </table>
+      	      						
+   </div>
+ </div>       
+
+  </div>
+		</td>
+	</tr>
+	</table>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,646 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_112?></title>
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+
+var f=document.edit;
+var f1=document.forms[1];
+var f2=document.forms[2];
+
+function ValidateForm_fac()
+{
+	var txt = translate_str("Restore",3);
+		flag =confirm(""+txt+"");
+	if (flag){
+			document.restore_default.submit();
+	}
+}
+
+
+function checklog(f1)
+{
+	var f1=document.forms[1];
+/*
+	if (f1.log_selected[1].checked == 1) 
+	{
+		f1.View.disabled=true;
+		//f1.log_ipaddr_4.disabled=true;
+	}else
+	{
+		f1.View.disabled=false;
+		//f1.log_ipaddr_4.disabled=false;
+	}
+*/
+}
+
+function InitValue(f)
+{
+	/* ----- FW Upgrade ----- */
+	var f=document.edit;
+
+	  show_network_status();
+	  
+	CurTime=0;
+  if (('<%nvram_get("remote_upgrade");%>'=='0') && ('<%nvram_get("client_from_remote");%>'=='1'))
+		document.forms[0].Upgrade.disabled = 1; 
+	  document.forms[0].Upgrade.value=translate_str("Upgrade",1);
+	
+	/* ----- Log ----- */
+	var f1=document.forms[1];
+	
+	if (f1.log_enabled.value == 1){
+		f1.log_selected[0].checked = 1;
+		f1.View.disabled=0;
+	}
+	else{
+		f1.log_selected[1].checked = 1;
+		f1.View.disabled=1;
+	}
+
+	f1.View.value = translate_str("Report",2); 
+	/*f1.log_ipaddr_4.value = GetIPSegment ( '<%nvram_get("log_ipaddr");%>' , 4 );*/
+	
+	checklog(f1);
+	
+	document.webForm.CheckFirmware.value = translate_str("JavaScript",170);
+	
+	
+	
+	/* ----- Backup & Restore ----- */
+	document.forms[1].Backup.value = translate_str("Management",17);
+	document.forms[1].Restore.value = translate_str("Management",18);	
+	document.forms[1].Restore_fac.value = translate_str("Restore",1);
+
+}
+
+
+
+function ValidateForm(f1) 
+{
+var f1=document.forms[1];
+
+	if (f1.log_selected[0].checked == 1) {
+		f1.log_enabled.value=1;
+
+	}
+	else {
+		f1.log_enabled.value=0;
+	}
+	
+			f1.submit();
+}
+
+
+function start_time_count()
+{
+	timebegin();
+}
+
+var bar_timer;
+var upgrade_status;
+
+function timebegin() {    
+  barLayer = getLayer("bar");
+  percentLayer = getLayer("percent");
+  mybar='|';                                                                                                                                                                                                                                                                                                   
+
+	browsertype=navigator.appName;
+	if(browsertype == 'Netscape'){
+		TimeParameter = 3.19;
+	}
+	else{
+		TimeParameter = 3.11
+	}
+
+  for(i=0; i<CurTime; i++) {                                                                                                                                                                                                                                                                                    
+    mybar+='|';  
+  }
+  barLayer.style.width = (CurTime*TimeParameter) +"px";
+  percentLayer.innerHTML = "<font face=\"Arial\" style=\"font-size: 8pt\" color=\"#179AD6\">" +CurTime+ "%</font>";                                                                                                                                                                                                                                                                                     
+  window.status=CurTime+'%'+ ' ' + mybar;                                                                                                                                                                                                                                                               
+  if(CurTime < 100){                                                                                                                                                                                                                                                                                           
+    bar_timer=setTimeout("timebegin()",time_out_value);                                                                                                                                                                                                                                                                            
+    CurTime++;
+    get_upgrade_result();
+  }
+  else{ 
+      clearTimeout(bar_timer);                                                                                                                                                                                                                                                                            
+      window.status="";
+      show_result(upgrade_status);
+  }                                                                              
+}
+function testback()
+{
+	document.location.href="config.bin";
+}
+
+function testrestore()
+{
+	window.open('adv_upload_config.htm', 'Restore', 'rezisable,scrollbars,width=1050,height=480');
+}
+function validate ()
+{
+	var f = document.webForm;
+
+//+++Eric add PM 07:36 2007/12/11
+  var format = "" ;
+  
+  browsertype=navigator.userAgent.toUpperCase();
+	
+
+  if(browsertype.indexOf("WINDOWS") >=0)	{
+	  
+	  var file_path = f.firmware_file.value ;
+	
+	  if(browsertype.indexOf("FIREFOX/3") >=0)	{}
+	  else if(browsertype.indexOf("CHROME") >=0)	{}
+	  else if(browsertype.indexOf("SAFARI") >=0)	{}        	
+	  else	{
+	  	format=file_path.match(/^[a-zA-Z]{1}:\\.*/);
+	
+			if(format == null)	{
+				alert(translate_str("Upgrade",10));
+		return false;
+			}
+		}
+  }
+  else	{
+  	//alert("OS != Windows");
+  }
+
+//---Eric add PM 07:36 2007/12/11	
+	
+	var ext = f.firmware_file.value.substring(f.firmware_file.value.lastIndexOf('.') + 1,f.firmware_file.value.length);
+	if ( f.firmware_file.value == "" ) 
+	{
+		alert(translate_str("Upgrade",6));
+		return false;
+	}
+	if ( ext != "bin")
+	{
+		alert(translate_str("Upgrade",7) + "\".bin\"");
+		return;
+	}
+
+	f.Upgrade.disabled = true ;
+	
+	if('<%nvram_get("client_from_remote");%>'=='1')
+		time_out_value = 4500;
+	else
+		time_out_value = 1200;
+
+	start_time_count();
+	ajaxFileUpload();
+	document.getElementById("upgrading_div").style.display = "block";
+	document.getElementById("percent").style.display = "block";
+	document.getElementById("Layertable").style.display = "block";
+	document.getElementById("upgrade_text").style.display = "block";
+	
+	return true;
+}
+
+var check_fw_timer;
+function checkfw()
+{
+	var f = document.forms[0] ;
+	document.getElementById("fw_check_result").style.display="none"; 
+	f.CheckFirmware.value = translate_str("JavaScript",171);
+	check_fw_timer=setTimeout(check_result,"2000");
+}
+
+function check_result()	{
+	var f = document.forms[0] ;
+//	f.CheckFirmware.value = translate_str("JavaScript",170);
+	document.getElementById("fw_check_result").src = "fw_check_result.htm";
+
+	 clearTimeout(check_fw_timer); 
+}
+
+function mouseOver(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("router").src = "rt_icon_bri.png";
+}
+
+function mouseOut(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("router").src = "rt_icon_bri.png";
+}
+
+var language_show = 0;
+function open_language()
+{
+	 var language_choice = document.getElementById('language');
+	 
+	if(language_show == '1') {
+		language_show = 0;
+		language_choice.style.visibility="hidden";
+	}
+	else {
+		language_show = 1;
+		language_choice.style.visibility="visible";
+	}
+}
+
+function apply_lang(e)
+{
+	var f2 = document.forms[2];
+	f2.language_str.value = e;
+ 	f2.submit();
+}
+
+function chage_color(e)
+{
+	e.style.color="#4F81BD";
+	e.style.textDecoration="underline"; 
+}
+
+function back_color(e)
+{
+	e.style.color="#B8B8B8";
+	e.style.textDecoration="none"; 
+}
+
+function ajaxFileUpload()
+	{
+		$.ajaxFileUpload
+		(
+			{
+				url:'firmware_upload.cgi', 
+				secureuri:false,
+				fileElementId:'firmware_file',
+				dataType: 'json',
+				success: function (data, status)
+				{
+				},
+				error: function (data, status, e)
+				{
+				}
+			}
+		)
+	} 
+
+	function get_upgrade_result()
+		{
+			$.ajax({
+				type: "Get",
+				dataType: "html",
+				url: "adv_submit_upgrade.htm",
+				success: function(response){
+					if (response == 1)
+						upgrade_status = 1;
+				}
+	  	}); //end ajax call  
+		}
+
+  function show_result(result)
+    {
+      
+      	if (result==1)
+      	  {
+      	     $('#upgrade_text').html(translate_str("Upgrade",9));      
+      	  	 $('#upgrade_text').removeClass('Upgrading').addClass('Upgrade_success');
+      	  	 
+      	  }
+      	else
+      	   {
+      	    $('#upgrade_text').html(translate_str("Upgrade",8));    
+      	    $('#upgrade_text').removeClass('Upgrading').addClass('Upgrade_fail');
+      	    } 
+      	        
+	document.getElementById("upgrading_div").style.display = "none";      	        
+    }  
+
+</Script>
+
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="webForm" ENCTYPE="multipart/form-data" method="post" action="">
+	<center>	 
+<table border="0" width="1000">
+	<tr>
+		<td>
+			
+<%include_file("adv_logol_header.htm");%>
+  <div id="warp">
+      
+      <div class="Pointer_Routerpic"></div>
+			  				  <p  style="height:11px;"></p> 
+      <div class="status_background">
+				<p  style="height:30px;"></p> 
+				<p class="adv_title_hr"> <img src="hr_line.png"> </p>
+      		<p class="adv_title"><script>translate_strWrite("SubMenuBar",2);</script></p>
+      		<div class="Router_Status">
+      		<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;width:615pt;">
+      			<tr>
+      				<td colspan="4" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+
+
+      			<tr style="height:20pt;">
+      					<td colspan="4" align="center">&nbsp;</td></tr>
+
+      			<tr style="height:20pt;">
+      					<td colspan="4" align="center">
+	      					<iframe id="fw_check_result" frameborder="0" marginheight="0" scrolling="no" allowtransparency="true" style="display:none;height:20pt;width:430pt;border: 0px none;"></iframe>
+      				</td></tr>
+      			<tr>
+<!--
+      					<td>&nbsp;</td>
+      					<td width="30">&nbsp;</td>
+-->
+      					<td colspan="2" align="center">
+      					<input style="width: 250px;" class="submitBtn" name="CheckFirmware" onclick="checkfw()" type="button">
+      				</td></tr>
+               <tr valign="middle" style="height:15px;">
+					<table border="0" cellspacing="0" cellpadding="0" align="center" valign="middle">
+      		      		<td align="right" width="320" valign="bottom"><script>translate_strWrite("Upgrade",0);</script> :</td>
+      		      		<td width="30">&nbsp;</td>
+						<td align="left"  valign="middle">
+						<script language="JavaScript" type="text/javascript">
+							var nAgt = navigator.userAgent;
+							if(!(nAgt.indexOf("Chrome") == -1) || !(nAgt.indexOf("Safari") == -1)){
+								if (('<%nvram_get("remote_upgrade");%>'=='0') && ('<%nvram_get("client_from_remote");%>'=='1'))
+									document.write ("<br><input type=\"file\" size=\"25\" name=\"firmware_file\" id=\"firmware_file\" style=\"font-size: 10.5pt;color:#B8B8B8;font-weight: normal; \" disabled>");
+								else
+									document.write ("<br><input type=\"file\" size=\"25\" name=\"firmware_file\" id=\"firmware_file\" style=\"font-size: 10.5pt;color:#B8B8B8;font-weight: normal;\">");
+							}
+							else{
+								
+								if(!(nAgt.indexOf("Firefox") == -1))
+									document.write ("<br>");
+								
+								if (('<%nvram_get("remote_upgrade");%>'=='0') && ('<%nvram_get("client_from_remote");%>'=='1'))
+									document.write ("<input type=\"file\" size=\"25\" name=\"firmware_file\" id=\"firmware_file\" disabled>");
+								else
+									document.write ("<input type=\"file\" size=\"25\" name=\"firmware_file\" id=\"firmware_file\">");
+							}
+							
+							document.write ("&nbsp;");
+							
+											
+						</script>
+  					</td>
+					<td align="left" valign="middle">
+						<script language="JavaScript" type="text/javascript">
+						
+							if(!(nAgt.indexOf("MSIE") == -1))
+							{
+								if (('<%nvram_get("remote_upgrade");%>'=='0') && ('<%nvram_get("client_from_remote");%>'=='1'))
+									document.write ("<input name=\"Upgrade\" type=\"button\" onClick=\"return validate();\" disabled>");
+								else
+									document.write ("<input name=\"Upgrade\" type=\"button\" onClick=\"return validate();\" >");
+							}
+							else
+							{
+								if (('<%nvram_get("remote_upgrade");%>'=='0') && ('<%nvram_get("client_from_remote");%>'=='1'))
+									document.write ("<br><input name=\"Upgrade\" type=\"button\" onClick=\"return validate();\" disabled>");
+								else
+									document.write ("<br><input name=\"Upgrade\" type=\"button\" onClick=\"return validate();\" >");
+						    }
+						</script>
+					</td>
+				
+					</table>
+              </tr>
+      					 
+      			<tr>
+					<table border="0" cellspacing="0" cellpadding="0" align="center" valign="middle">
+					<tr>
+      				<td align="center" colspan="4">
+
+	                  <table width="410" border="0" cellpadding="0" cellspacing="0" >
+	                    <tr> 
+	                      <td height="25">
+
+							<div id="Layertable" style="position:relative; left:30px; top:25px; width:300px; height:20px; display:none;">
+								<table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#000000" id="AutoNumber19" width="350">
+								  <tr>
+									<td width="325" height="25" align="center" bordercolor="#000000" style="background-color:#FFFFFF ; border-left-style: solid; border-left-width: 1; border-top-style: solid; border-top-width: 1; border-bottom-style: solid; border-bottom-width: 1">&nbsp;</td>
+									<td height="25" width="25" align="center" style="border-left-style: solid; border-left-width: 1">&nbsp;</td>
+								  </tr>
+								</table>
+							</div>
+						<div id="scroll" style="width:311px;text-align:left;"> 
+								<script>
+									browsertype=navigator.appName;
+									browserversion=navigator.appVersion;
+									if(browsertype == 'Netscape'){
+										if (browserversion.indexOf("Safari") != -1)
+											document.write('<div id="bar" style="position:relative; top:8px; left:33px; background-color: #179AD6; width:0px; height:19px;"></div>');
+										else
+											document.write('<div id="bar" style="position:relative; top:8px; left:33px; background-color: #179AD6; width:0px; height:22px;"></div>');
+									}
+									else{
+										if (browserversion.indexOf("MSIE 6.0") != -1)
+											document.write('<div id="bar" style="position:relative; top:-1px; left:18px; background-color: #179AD6; width:0px; height:19px;"></div>');
+										else
+											document.write('<div id="bar" style="position:relative; top:12px; left:42px; background-color: #179AD6; width:0px; height:19px;"></div>');
+									}
+								</script>
+						</div>
+
+								<script>
+									browsertype=navigator.appName;
+									browserversion=navigator.appVersion;
+									if(browsertype == 'Netscape'){
+										document.write('<div id="percent" style="position:relative; top:-10px; left:370px; width: 35px; display:none;"><font face="Arial" style="font-size: 8pt" color="#000000">0%</font></div>');
+									}
+									else{
+										if (browserversion.indexOf("MSIE 6.0") != -1)
+											document.write('<div id="percent" style="position:relative; top:-18px; left:210px; width: 35px; display:none;"><font face="Arial" style="font-size: 8pt" color="#000000">0%</font></div>');
+										else
+											document.write('<div id="percent" style="position:relative; top:-5px; left:230px; width: 35px; display:none;"><font face="Arial" style="font-size: 8pt" color="#000000">0%</font></div>');
+									}
+								</script>
+					
+							</td>
+						  </td></tr>
+	                    </tr>
+	                    <tr> 
+	                      <td height="25" align="center">
+                            <div id="upgrade_text" class="Upgrading">
+                            <script>translate_strWrite("Upgrade",4);</script>
+                            </div>
+                       </td>
+	                      </tr>
+						 </tr>
+	                  </table>
+      				
+					</table>
+      			</tr>			 
+      			</table>
+      			</form>
+					<form name="edit"action="post_connlog.cgi"method="post">
+					<input type="hidden" name="command" value="device_data">
+					<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+					<input type="hidden" name="redirect_timer" value="5000">
+					<input type="hidden" name="reboot" value="0">
+					<input type="hidden" name="next_page" value="adv_edit_router_fw_upgrade.htm">
+					<input type="hidden" name="data1" value="log_enabled">
+					<input type="hidden" name="log_enabled" value='<%nvram_get("log_enabled");%>'>
+					<!--input type="hidden" name="log_ipaddr" value='<%nvram_get("log_ipaddr");%>'-->
+      		
+      		<p class="adv_title_hr"> <img src="hr_line.png"> </p>
+      		<p class="adv_title"><script>translate_strWrite("SetupWizard",102);</script></p>
+					<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+      			<tr><td colspan="5" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      		<tr height="42">
+      				<!--td align="right" width="300">&nbsp;</td-->
+      				<td align="center" colspan="5">&nbsp;
+      				<INPUT onclick="ValidateForm_fac();" type=button name="Restore_fac">
+                </td>
+      				</tr>      
+				      </table>  
+      		
+      		<p  style="height:30px;"></p> 
+      		<p class="adv_title_hr"> <img src="hr_line.png"> </p>
+      		<p class="adv_title"><script>translate_strWrite("Report",0);</script></p>
+      			<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+      			<tr><td colspan="5" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      				<tr height="42">
+      				<!--td align="right">
+      				&nbsp;</td-->
+      				<td align="center" colspan="5">&nbsp;
+      					<input onclick=checklog(document.forms[1]); type=radio value="1" name=log_selected>&nbsp;                 
+					    	<script>translate_strWrite("CheckBox",0);</script>&nbsp;&nbsp;
+		                <input onclick=checklog(document.forms[1]); type=radio value="0"  name=log_selected checked>&nbsp;
+		                	<script>translate_strWrite("CheckBox",1);</script>&nbsp;
+      					</td>
+      				</tr>	
+      			
+      			<!--tr height="42">
+      				<td align="right"><script>translate_strWrite("Report",1);</script> :</td>
+      				<td align="left" colspan="4">&nbsp;
+      					<script language="JavaScript" type="text/JavaScript">dw(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>.
+                      <script language="JavaScript" type="text/JavaScript">dw(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>.
+                      <script language="JavaScript" type="text/JavaScript">dw(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>.
+                      <input class="ip_col_width" type="text" size=3 maxlength=3 name="log_ipaddr_4">(<script>translate_strWrite("Report",12);</script>)
+      					</td>
+      				</tr-->
+      				
+      			<tr height="42">
+      				<!--td align="right">&nbsp;</td-->
+      				<td align="center" colspan="5">&nbsp;
+      					<input onclick="self.open('viewlog.htm','','resizable,menubar=no,scrollbars=no,location=no,width=1000,height=650,top=100,left=100').focus();" type=button  name=View  disabled>
+                </td>
+      				</tr>	
+					</table> 
+					<p  style="height:30px;"></p> 
+					<p class="adv_title_hr"> <img src="hr_line.png"> </p>
+      		<p class="adv_title"><script>translate_strWrite("SetupWizard",72);</script></p>
+					<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+      			<tr><td colspan="5" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      		<tr height="42">
+      				<!--td align="right" width="300">&nbsp;</td-->
+      				<td align="center" colspan="5">&nbsp;
+      				<input  onclick="testback();" name="Backup" type="button">&nbsp; 
+							<input  onclick="testrestore();" name="Restore" type="button">
+                </td>
+      				</tr>	
+      		
+				      </table>  
+				      
+				      <p style="height:20px;"></p>    
+				      
+					  				      
+				      <p class="status_end"></p>
+				  </div>     
+      </div>  
+        <div class="angle"></div> 
+             <div class="EZ_mid">  
+      		<p style="height:10px;"></p>      		 		  				    
+				  	<div class="Cancel_Save_button">
+				  <table border="0" cellspacing="0" cellpadding="0" width=335>
+				  	<tr height=23 width=600>
+				  		<td align="right" width=75>
+					  		<table border="0" cellspacing="0" cellpadding="0" width=75>
+									<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="adv_edit_router.htm">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",1);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										</tr>
+									</table>
+							</td>
+				  	<td align="center" width="60">&nbsp;<script>translate_strWrite("BasicSetup",162);</script>&nbsp;
+				  		</td>
+				  	<td align="left" width=200>
+				  		<table border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+									<td class="SW_LeftButton">&nbsp;</td>
+									<td class="SW_BottomButton"><a href="javascript:ValidateForm(document.forms[1]);">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",0);</script></font>&nbsp;</a></td>
+									<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+							</td>
+						</tr>
+				  </table>
+					</div>	  				    					    														    						    			    
+      </div>
+      
+        
+       <div style="height: 40px"></div>    
+		     <div class="EZ_foot">
+						<div class="EZ_foot_L"><img src="bottom_help_icon.png" style="position:relative;top:3pt;">&nbsp;<a href="help/<%nvram_get("language_str");%>/default.htm#Firmware" target="_blank"><script>translate_strWrite("SetupWizard",64);</script></a>&nbsp;<img src="transparency.gif" style="width:15px;height:1px;"><a href="javascript:open_language();"><img src="bottom_language_icon.png" style="position:relative;top:3pt;">&nbsp;<script>translate_strWrite("BasicSetup",167);</script></a>&nbsp;&nbsp							
+								<span id="language" style="visibility:hidden;">
+								<a href="javascript:apply_lang('en');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">English</font></a>&nbsp;&nbsp;
+								<a href="javascript:apply_lang('fr');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Fran&ccedil;ais</font></a>&nbsp;&nbsp;
+								<!--a href="javascript:apply_lang('spa');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Spanish</font></a--></span>
+						</div>
+						<div class="EZ_foot_C"></div>
+						<div class="EZ_foot_R"></div>
+		      </div>
+         <div class="clear_float"> </div>
+  
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+		</td>
+	</tr>
+	</table>
+</center>
+</form>
+
+	<DIV ID="upgrading_div" style="position:absolute;width:100%;height:130%;z-index:20;top:0pt;left:0;display:none; " >
+	<center><p>
+		<table border=0 cellspacing=0 cellpadding=0 width=100%>
+			<tr>
+				<th height=400><P>
+				<STRONG><FONT face="Arial, Helvetica, sans-serif"size=5>&nbsp;</STRONG></P>
+				<P><FONT face="Arial, Helvetica, sans-serif" color=black><BR></FONT></P></th>
+			</tr>
+		</table>
+	</center>
+	</DIV>
+	
+<form method="post" action="save.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_edit_router_fw_upgrade.htm">
+<input type="hidden" name="redirect_timer" value="0">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="language_str">
+<input type="hidden" name="language_str" value="<%nvram_get("language_str");%>">
+</form>
+<form name="restore_default" method="post" action="restore_default.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="redirect_timer" value="60000">
+<input type="hidden" name="reboot" value="1">
+<input type="hidden" name="next_page" value="index.htm">
+<input type="hidden" name="data1" value="restore_defaults">
+<input type="hidden" name="restore_defaults" value="1">
+</form>
+
+<!--[if lt IE 7]>
+<script defer type="text/javascript" src="ie6fix.js"></script>
+<![endif]-->
+<script type="text/javascript">
+  document.getElementById("router").src = "rt_icon_bri.png";
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+ifeq ($(obj),)
+obj := $(shell pwd)
+endif
+
+DEPTH := ../..
+
+#
+# for target_objs-y, we must use relative path
+#
+IF_ATH_NET80211 := $(DEPTH)/if_ath_net80211
+
+include $(obj)/$(DEPTH)/linux/Makefile.inc
+
+ifeq ($(strip ${BUS}),AHB)
+BUSNAME=ahb
+else
+BUSNAME=pci
+endif
+
+INCS += -I$(HAL) -I$(HAL)/$(OS) -I$(ATH) -I$(ATH_RATE) -I$(ATH_PKTLOG) -I$(obj)/$(DEPTH) -I$(WLAN) -I$(IF_WLAN)
+
+obj-m += ath_$(BUSNAME).o
+
+EXTRA_CFLAGS+= $(INCS) $(COPTS) -Wno-unused-function -Wno-undef
+
+ath_$(BUSNAME)-objs := ath_linux.o if_ath_$(BUSNAME).o
+ath_$(BUSNAME)-y := $(IF_ATH_NET80211)/if_ath.o $(IF_ATH_NET80211)/if_ath_cwm.o $(IF_ATH_NET80211)/if_ath_amsdu.o $(IF_ATH_NET80211)/if_ath_limit_legacy.o
+  
+
+ifeq ($(strip ${ATH_WLAN_COMBINE}),1)
+
+INCS += -I$(ATH_DFS) -I$(ATH_HAL)
+
+ath_$(BUSNAME)-y += ../../common/lmac/ath_dev/ath_beacon.o ../../common/lmac/ath_dev/ath_desc.o ../../common/lmac/ath_dev/ath_led.o \
+        ../../common/lmac/ath_dev/ath_main.o ../../common/lmac/ath_dev/ath_power.o ../../common/lmac/ath_dev/ath_recv.o \
+        ../../common/lmac/ath_dev/ath_timer.o ../../common/lmac/ath_dev/ath_xmit.o ../../common/lmac/ath_dev/ath_ppm.o \
+        ../../common/lmac/ath_dev/ath_uapsd.o ../../common/lmac/ath_dev/ath_config.o ../../common/lmac/ath_dev/$(OS)/ath_osdep.o \
+        ../../common/lmac/ath_dev/$(OS)/ath_iw_handler.o ../../common/lmac/ath_dev/$(OS)/ath_wbuf.o  ../../common/lmac/ath_dev/$(OS)/ath_pci.o
+
+AH_SUPPORT_AR5416?=1        # 5416 support
+
+ifeq ($(strip ${AH_SUPPORT_AR5212}),1)
+COPTS += -DAH_SUPPORT_AR5212=1
+endif
+
+ifeq ($(strip ${AH_SUPPORT_AR5416}),1)
+COPTS += -DAH_SUPPORT_AR5416=1
+endif
+
+ifeq ($(strip $(AH_SUPPORT_AR5212)),1)
+ath_rate_objs += ../../common/lmac/ratectrl/ar5212Phy.o
+endif
+
+ifeq ($(strip $(AH_SUPPORT_AR5416)),1)
+ath_rate_objs += ../../common/lmac/ratectrl/ar5416Phy.o
+endif
+
+ath_$(BUSNAME)-y += ../../common/lmac/ratectrl/ratectrl.o \
+        ../../common/lmac/ratectrl/ratectrl_11n.o ../../common/lmac/ratectrl/ratectrl_11nViVo.o ../../common/lmac/ratectrl/if_athrate.o $(ath_rate_objs)
+
+ath_$(BUSNAME)-y += ../net80211/if_media.o \
+           ../net80211/ieee80211.o ../net80211/ieee80211_beacon.o ../net80211/ieee80211_crypto.o \
+           ../net80211/ieee80211_crypto_none.o ../net80211/ieee80211_input.o ../net80211/ieee80211_node.o \
+           ../net80211/ieee80211_output.o ../net80211/ieee80211_power.o ../net80211/ieee80211_proto.o \
+           ../net80211/ieee80211_scan.o ../net80211/ieee80211_wireless.o ../net80211/ieee80211_linux.o \
+           ../net80211/ieee80211_crypto_wep.o ../net80211/ieee80211_crypto_tkip.o \
+           ../net80211/ieee80211_crypto_ccmp.o ../net80211/ieee80211_acl.o ../net80211/ieee80211_xauth.o \
+           ../net80211/ieee80211_scan_ap.o ../net80211/ieee80211_scan_sta.o ../net80211/ieee80211_hbr.o
+endif

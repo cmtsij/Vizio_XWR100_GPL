@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_113?></title>
+<%include_file("javascript.htm");%>
+<Script Language="JavaScript">
+	
+	
+var timer = window.setInterval(get_wan_status,5000);
+var off_line_timer="30000";
+var off_timer;
+	
+function InitValue()
+{
+	timebegin();
+  off_timer=setTimeout("offline_message()", off_line_timer);
+  $("#pic_connect_state").removeClass().addClass("network_status_on");			
+}
+
+var time_out_value = "290";
+var	CurTime=0; 
+var t;
+
+
+function timebegin()
+{
+			  barLayer = getLayer("bar");
+		
+			  mybar='|';                                                                                                                                                                                                                                                                                                   
+			  for(i=0; i<CurTime; i++) {                                                                                                                                                                                                                                                                                    
+			    mybar+='|';  
+				barLayer.style.width = (CurTime*2.80) +"px";
+		
+			  }                                                                                                                                                                                                                                                                                     
+			  window.status=CurTime+'%'+ ' ' + mybar;                                                                                                                                                                                                                                                               
+			  if(CurTime < 100){                                                                                                                                                                                                                                                                                           
+			   t=setTimeout("timebegin()",time_out_value);
+			                                                                                                                                                                                                                                                                     
+			    CurTime++;                                                                                                                                                                                                                                                                                                 
+			  }
+			  else{                                                                                                                                                                                                                                                                                                        
+			    window.status="";                                                                                                                                                                                                                                                                                          
+			
+			  }
+}
+
+
+function ChangeButton(wan_status)
+{
+  var connect_check=wan_status;
+  var img_connect=document.getElementById("pic_connect_state");
+	var connect_text=document.getElementById('connect_text');
+
+  	
+  
+  if (connect_check==1 )
+  {
+  		img_connect.src="internet_online.png";
+  		connect_text.style.color = "#37578E";  
+			connect_text.innerHTML=translate_str("SetupWizard",25);
+			 $('#class_button').removeClass('Cancel_button').addClass('Continue_button');
+      $('#button').attr('href', 'sw_wireless.htm');
+      $('#button_text').text(translate_str("SetupWizard",100));      				
+			CurTime=100;
+      window.clearInterval(timer);
+      clearTimeout(off_timer);
+  }
+
+
+
+
+
+
+  
+}
+
+function offline_message()
+{
+ 	var img_connect=document.getElementById("pic_connect_state");
+	var connect_text=document.getElementById('connect_text');
+   	
+  	img_connect.src="internet_offline.png";
+		connect_text.style.color = "#FC4B4B";
+    $('#class_button').removeClass('Cancel_button').addClass('Retry_button'); 
+    $('#button_text').text(translate_str("SetupWizard",101));
+    $('#button').attr('href', 'sw_wan_detect_no.htm');	     	
+		connect_text.innerHTML=translate_str("SetupWizard",26); 
+    clearTimeout(off_timer);
+    
+  if ('<%nvram_get("sw_wan_detect_count");%>' == '1')
+  {
+    $('#class_button').removeClass('Cancel_button').addClass('Continue_button'); 
+	$('#button').attr('href', 'sw_wireless.htm');
+	$('#button_text').text(translate_str("SetupWizard",100));   
+
+  }
+}
+
+function stopCount()
+{
+  var img_connect=document.getElementById("pic_connect_state");
+	var connect_text=document.getElementById('connect_text');
+
+	  clearTimeout(t);
+	 	img_connect.src="internet_offline.png";
+		connect_text.style.color = "#FC4B4B";  	
+		connect_text.innerHTML=translate_str("SetupWizard",121); 
+    $('#class_button').removeClass('Cancel_button').addClass('Continue_button');
+    $('#button').attr('href', 'sw_wireless.htm');
+    $('#button_text').text(translate_str("SetupWizard",100));			
+  
+	  window.clearInterval(timer);
+	  clearTimeout(off_timer);
+}
+
+  //$().ready(function() {
+  
+function get_wan_status()
+{
+	$.ajax({
+		type: "Get",
+		dataType: "html",
+		url: "get_wan_status.htm",
+		success: function(response){
+			    	ChangeButton(response);
+		}
+	}); //end ajax call  			
+}
+    
+  //});	
+					  
+
+var language_show = 0;
+function open_language()
+{
+	 var language_choice = document.getElementById('language');
+	 
+	if(language_show == '1') {
+		language_show = 0;
+		language_choice.style.visibility="hidden";
+	}
+	else {
+		language_show = 1;
+		language_choice.style.visibility="visible";
+	}
+}
+
+function apply_lang(e)
+{
+	var f1 = document.forms[1];
+	f1.language_str.value = e;
+ 	f1.submit();
+}
+
+function chage_color(e)
+{
+	e.style.color="#4F81BD";
+	e.style.textDecoration="underline"; 
+}
+
+function back_color(e)
+{
+	e.style.color="#B8B8B8";
+	e.style.textDecoration="none"; 
+}
+
+
+</Script>
+	
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="wan_detect" action="post.cgi" method="post">
+
+<center>	 
+<table border="0" width="1000" >
+	<tr>
+		<td>
+	 	 
+
+      
+<%include_file("sw_logol_header.htm");%>
+
+ <div id="warp"> 
+					<div class="status_title"><script>translate_strWrite("SetupWizard",23);</script></div> 
+      <div class="status_background">
+      <div class="status_content">
+      		<p style="height: 40px">&nbsp;</p>  
+		      <p><script>translate_strWrite("SetupWizard",24);</script></p>                 
+		      <p style="height: 20px">&nbsp;</p>       
+		      <p><img src="ez_wan_detec.png"></p>
+		      
+							<div id="warp2">    
+						   	<script>
+								browsertype=navigator.appName;
+								if(browsertype == 'Netscape'){
+									document.write('<div id="bar" style="position:relative; top:-46px; left:0px; background-image:url(scroll_bg.jpg);  background-repeat: repeat-x; ; width:0px; height:12px;"></div>');
+								}
+								else{// if(browsertype == 'Microsoft Internet Explorer'){
+									document.write('<div id="bar" style="position:relative; top:-47px;  left:350; background-image:url(scroll_bg.jpg);  background-repeat: repeat-x; width:0px; height:12px;"></div>');
+								}
+							</script>
+						</div>
+					<p>&nbsp;</p>  
+		      <p id="connect_text" class="status_blue">&nbsp;</p>
+		      <p class="status_end"></p>     
+      </div>                                                      
+    </div>      
+        <div class="angle"></div>      
+      
+      <div class="EZ_mid"> 
+      		<p style="height:10px;"></p>      		 		  				    		
+          <div id="class_button" class="Cancel_button">    		 		  				    
+          <table border="0" cellspacing="0" cellpadding="0">
+									<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a id="button" href="javascript:stopCount();">&nbsp;<span id="button_text"><script>translate_strWrite("BottomButton",1);</script></span>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										</tr>
+							</table>   
+           </div>       				    														    						    			    
+      </div>
+       
+  <div style="height: 50px"></div>    
+     		<div class="EZ_foot">
+						<div class="EZ_foot_L"><img src="bottom_help_icon.png" style="position:relative;top:3pt;">&nbsp;<a href="help/<%nvram_get("language_str");%>/default.htm#SettingUp" target="_blank"><script>translate_strWrite("SetupWizard",64);</script></a>&nbsp;<img src="transparency.gif" style="width:15px;height:1px;"><a href="javascript:open_language();"><img src="bottom_language_icon.png" style="position:relative;top:3pt;">&nbsp;<script>translate_strWrite("BasicSetup",167);</script></a>&nbsp;&nbsp;
+								<span id="language" style="visibility:hidden;">
+								<a href="javascript:apply_lang('en');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">English</font></a>&nbsp;&nbsp;
+								<a href="javascript:apply_lang('fr');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Fran&ccedil;ais</font></a>&nbsp;&nbsp;
+								<!--a href="javascript:apply_lang('spa');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Spanish</font></a--></span>
+						</div>
+						<div class="EZ_foot_C"></div>
+						<div class="EZ_foot_R"><a class="EZ_mid_text" href="adv_welcome.htm"><img src="bottom_adv_icon.png" style="position:relative;top:3pt;"><script>translate_strWrite("SetupWizard",99);</script>&nbsp;&nbsp;&nbsp;&nbsp;<a></div>
+		      </div>
+				<div class="clear_float"> </div>
+        
+  </div>
+		</td>
+	</tr>
+	</table>
+	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+</center>
+</form>
+
+<form method="post" action="save.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="sw_wan_detect.htm">
+<input type="hidden" name="redirect_timer" value="0">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="language_str">
+<input type="hidden" name="language_str" value="<%nvram_get("language_str");%>">
+</form>
+<!--[if lt IE 7]>
+<script language="javascript">
+  $(document).ready(function(){
+    $("#pic_connect_state_online").hide();   	
+  });
+
+  function ChangeButton(wan_status)
+  {
+    var connect_check=wan_status;
+    var img_connect=document.getElementById("pic_connect_state");
+  	var connect_text=document.getElementById('connect_text');
+  
+    	
+    
+    if (connect_check==1)
+    {
+        $("#pic_connect_state").hide();
+        $("#pic_connect_state_online").show();  
+        img_connect.src="internet_online.png";
+        connect_text.style.color = "#37578E";  
+  			connect_text.innerHTML=translate_str("SetupWizard",25);
+  		  $('#class_button').removeClass('Cancel_button').addClass('Continue_button');
+        $('#button').attr('href', 'sw_wireless.htm');
+        $('#button_text').text(translate_str("SetupWizard",100));      				
+  			CurTime=100;
+        window.clearInterval(timer);
+        clearTimeout(off_timer);
+  		}
+  }  
+</script>
+<![endif]-->
+</body>
+</html>

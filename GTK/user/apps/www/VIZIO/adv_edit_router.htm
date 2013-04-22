@@ -1,0 +1,355 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_118?></title>
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+
+var f=document.edit;
+function InitValue(f)
+{
+var f=document.edit;
+	  show_network_status();
+	  
+	if ('<%nvram_get("auto_login");%>'==1)
+		f.autologin[0].checked = true;
+	else
+		f.autologin[1].checked = true;
+		
+	if ('<%nvram_get("firewall_enabled");%>'==1 )
+		f.firewall_on[0].checked = true;
+	else
+		f.firewall_on[1].checked = true;
+	
+}
+
+function open_usb_storage(f)
+{
+	var path = '<%nvram_get("usb_device0");%>';
+	var OSName="Unknown OS";
+	if (navigator.appVersion.indexOf("Win")!=-1) OSName="Windows";
+	if (navigator.appVersion.indexOf("Mac")!=-1) OSName="MacOS";
+	if (OSName=="Windows")
+	{
+		if (navigator.appName == 'Netscape')
+			window.open('file://///<%nvram_get("lan_ipaddr");%>/' + (path == 'default') ? 'Default0' : path + '/');
+		else
+			window.open('file://///<%nvram_get("lan_ipaddr");%>/');
+	}
+	else if (OSName=="MacOS")  //only For MAC OS
+		window.open('smb://<%nvram_get("lan_ipaddr");%>/');
+	else;
+}
+
+function ValidateForm(f) 
+{
+		var http_username='<%nvram_get("http_username");%>';
+		var http_password='<%nvram_get("http_password");%>';
+		
+		if (f.autologin[0].checked == true)
+				f.auto_login.value=1;
+		else
+				f.auto_login.value=0;
+				
+		if (f.firewall_on[0].checked == true)
+				f.firewall_enabled.value=1;
+		else
+				f.firewall_enabled.value=0;
+		
+		if (f.auto_login.value==0)
+		{
+			if (http_username=="" || http_password=="")
+			{
+						alert(translate_str("SetupWizard",91));
+						return;
+			}
+		}
+		
+	 f.submit();
+}
+
+function mouseOver(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("router").src = "rt_icon_bri.png";
+}
+
+function mouseOut(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("router").src = "rt_icon_bri.png";
+}
+
+var language_show = 0;
+function open_language()
+{
+	 var language_choice = document.getElementById('language');
+	 
+	if(language_show == '1') {
+		language_show = 0;
+		language_choice.style.visibility="hidden";
+	}
+	else {
+		language_show = 1;
+		language_choice.style.visibility="visible";
+	}
+}
+
+function apply_lang(e)
+{
+	var f1 = document.forms[1];
+	f1.language_str.value = e;
+ 	f1.submit();
+}
+
+function chage_color(e)
+{
+	e.style.color="#4F81BD";
+	e.style.textDecoration="underline"; 
+}
+
+function back_color(e)
+{
+	e.style.color="#B8B8B8";
+	e.style.textDecoration="none"; 
+}
+
+
+
+</Script>
+
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="edit" action="post_iptable.cgi" method="post">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="redirect_timer" value="5000">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="next_page" value="adv_edit_router.htm">
+<input type="hidden" name="data1" value="auto_login firewall_enabled">
+<input type="hidden" name="auto_login" value="<%nvram_get("auto_login");%>">
+<input type="hidden" name="firewall_enabled" value="<%nvram_get("firewall_enabled");%>">
+	<center>	 
+<table border="0" width="1000">
+	<tr>
+		<td>
+			
+	
+<%include_file("adv_logol_header.htm");%>
+
+  <div id="warp">
+      
+      <div class="Pointer_Routerpic"></div>
+			  				  <p  style="height:11px;"></p> 
+      <div class="status_background">
+				<p  style="height:30px;"></p> 
+      		<p class="adv_title"><script>translate_strWrite("SetupWizard",65);</script></p>
+      		<div class="button_status">
+      			<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+      				<tr><td align="center" colspan="5" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      				<tr height="42" valign="middle">
+      					<td align="right" width="350"><script>translate_strWrite("SetupWizard",66);</script> </td>
+      					<td>&nbsp;</td>
+      					<td align="left" width="200"><script>dw("<%nvram_get("lan_ipaddr");%>");</script></td>
+      					<td>&nbsp;</td>
+      					<td align="left" width="150">     						
+      					
+      					<table border="0" border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="adv_edit_router_lan_settings.htm">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("SetupWizard",61);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+      				     						
+      						</td>
+      					</tr>
+      				<tr><td align="center" colspan="5" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      				<tr height="42">
+      					<td align="right"><script>translate_strWrite("SetupWizard",67);</script></td>
+      					<td>&nbsp;</td>
+      					<td align="left"><!--Check for upgrade--><script>dw("<%nvram_get("fw_version");%>");</script></td>
+      					<td>&nbsp;</td>
+      					<td align="left">
+      					<table border="0" border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="adv_edit_router_fw_upgrade.htm">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("SetupWizard",61);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+								</td>
+      					</tr>
+      				<tr><td align="center" colspan="5" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      				<tr height="42">
+      					<td align="right"><script>translate_strWrite("SetupWizard",68);</script></td>
+      					<td width="30">&nbsp;</td>
+      					<td align="left">
+      						<input type=radio  name="firewall_on" onClick="" checked>&nbsp;<script>translate_strWrite("CheckBox",0);</script> &nbsp;&nbsp;
+      						<input type=radio name="firewall_on" onClick="">&nbsp;<script>translate_strWrite("CheckBox",1);</script>&nbsp;</td>
+				      	<td>&nbsp;</td>
+      					<td align="left">
+      					<table border="0" border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="adv_security.htm">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("SetupWizard",61);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+								</td>
+      					</tr>	
+      				 <tr><td align="center" colspan="5" class="adv_title_hr"><img src="hr_line.png"></td></tr>    				
+      				<tr height="42">
+      					<td align="right"><script>translate_strWrite("SetupWizard",69);</script></td>
+      					<td width="30">&nbsp;</td>
+      					<td align="left">
+				      	<input type=radio  name="autologin" onClick="" checked>&nbsp;<script>translate_strWrite("CheckBox",0);</script> &nbsp;&nbsp;
+      					<input type=radio name="autologin" onClick="">&nbsp;<script>translate_strWrite("CheckBox",1);</script>&nbsp;</td>
+				      	<td>&nbsp;</td>
+      					<td align="left">
+      					<table border="0" border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="adv_edit_router_management.htm">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("SetupWizard",61);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+								</td>
+      					</tr>
+ 							<tr><td align="center" colspan="5" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+ 							<tr height="42">
+      					<td align="right"><script>translate_strWrite("SetupWizard",70);</script></td>
+      					<td>&nbsp;</td>
+      					<td align="left">
+      					<table border="0" border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton">
+											<SCRIPT>
+												var dev_name = '<%nvram_get("usb_storage_name");%>';
+												if(dev_name == "")	{
+													dw("<font onmouseout=\"javascript:back_color_no_underline(this);\" onmouseover=\"javascript:chage_color_no_underline(this);\">");
+													dw("&nbsp;&nbsp;");
+													translate_strWrite("SetupWizard",122);
+													dw("</font>");
+												}
+												else{
+													dw("<a href=\"javascript:open_usb_storage(document.forms[0]);\">");
+													dw("<font onmouseout=\"javascript:back_color_no_underline(this);\" onmouseover=\"javascript:chage_color_no_underline(this);\">");
+													dw("&nbsp;&nbsp;");
+													dw(dev_name);
+													dw("</font></a>");
+												}
+											</SCRIPT>
+											&nbsp;</td>
+										<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+      					</td>
+      					<td>&nbsp;</td>
+      					<td align="center"></td>
+      					</tr>
+ 							<tr><td align="center" colspan="5" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      				<tr height="42">
+      					<td align="right"><%localtime();%></td>
+      					<td>&nbsp;</td>
+      					<td align="left">
+      					<table border="0" border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="javascript:reboot(document.forms[2]);">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",12)</script></font>&nbsp;</td>
+										<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+      					</td>
+      					<td>&nbsp;</td>
+      					<td align="center"></td>
+      					</tr>
+      				<tr><td align="center" colspan="5" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      				      					
+      				</table>
+	
+				   <p style="line-heigt:42px;">&nbsp;</p>
+				      <p class="status_end"></p>
+				  </div>     
+      </div>  
+      <div class="angle"></div>   
+             <div class="EZ_mid">  
+      		<p style="height:10px;"></p>      		 		  				    
+				  	<div class="Cancel_Save_button">
+				  <table border="0" cellspacing="0" cellpadding="0" width=335>
+				  	<tr height=23 width=600>
+				  		<td align="right" width=75>
+					  		<table border="0" cellspacing="0" cellpadding="0" width=75>
+									<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="adv_welcome.htm">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",1);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										</tr>
+									</table>
+							</td>
+				  	<td align="center" width="60">&nbsp;<script>translate_strWrite("BasicSetup",162);</script>&nbsp;
+				  		</td>
+				  	<td align="left" width=200>
+				  		<table border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+									<td class="SW_LeftButton">&nbsp;</td>
+									<td class="SW_BottomButton"><a href="javascript:ValidateForm(document.forms[0]);">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",0);</script></font>&nbsp;</a></td>
+									<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+							</td>
+						</tr>
+				  </table>
+					</div>	  				    					    														    						    			    
+      </div>
+      
+
+       <div style="height: 50px"></div>    
+		     <div class="EZ_foot">
+						<div class="EZ_foot_L"><img src="bottom_help_icon.png" style="position:relative;top:3pt;">&nbsp;<a href="help/<%nvram_get("language_str");%>/default.htm#RouterMenu" target="_blank"><script>translate_strWrite("SetupWizard",64);</script></a>&nbsp;<img src="transparency.gif" style="width:15px;height:1px;"><a href="javascript:open_language();"><img src="bottom_language_icon.png" style="position:relative;top:3pt;">&nbsp;<script>translate_strWrite("BasicSetup",167);</script></a>&nbsp;&nbsp
+							<span id="language" style="visibility:hidden;">
+								<a href="javascript:apply_lang('en');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">English</font></a>&nbsp;&nbsp;
+								<a href="javascript:apply_lang('fr');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Fran&ccedil;ais</font></a>&nbsp;&nbsp;
+								<!--a href="javascript:apply_lang('spa');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Spanish</font></a--></span>
+						</div>
+						<div class="EZ_foot_C"></div>
+						<div class="EZ_foot_R"></div>
+		      </div>
+         <div class="clear_float"> </div>
+  
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+		</td>
+	</tr>
+	</table>
+</center>
+</form>
+<form method="post" action="save.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_edit_router.htm">
+<input type="hidden" name="redirect_timer" value="0">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="language_str">
+<input type="hidden" name="language_str" value="<%nvram_get("language_str");%>">
+</form>
+<form method="post" action="post.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="redirect_timer" value="60000">
+<input type="hidden" name="reboot" value="1">
+<input type="hidden" name="next_page" value="adv_edit_router.htm">
+<input type="hidden" name="data1" value="">
+</form>
+<!--[if lt IE 7]>
+<script defer type="text/javascript" src="ie6fix.js"></script>
+<![endif]-->
+<script type="text/javascript">
+  document.getElementById("router").src = "rt_icon_bri.png";
+</script>
+</body>
+</html>

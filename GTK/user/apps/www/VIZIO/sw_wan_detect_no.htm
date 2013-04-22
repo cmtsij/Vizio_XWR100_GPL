@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_113?></title>
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+function InitValue()
+{
+	  show_network_status();
+}
+
+var language_show = 0;
+function open_language()
+{
+	 var language_choice = document.getElementById('language');
+	 
+	if(language_show == '1') {
+		language_show = 0;
+		language_choice.style.visibility="hidden";
+	}
+	else {
+		language_show = 1;
+		language_choice.style.visibility="visible";
+	}
+}
+
+function apply_lang(e)
+{
+	var f1 = document.forms[1];
+	f1.language_str.value = e;
+ 	f1.submit();
+}
+
+function chage_color(e)
+{
+	e.style.color="#4F81BD";
+	e.style.textDecoration="underline"; 
+}
+
+function back_color(e)
+{
+	e.style.color="#B8B8B8";
+	e.style.textDecoration="none"; 
+}
+
+</Script>
+	
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="wan_detect" action="post.cgi" method="post">
+
+	<center>	 
+<table border="0" width="1000" >
+	<tr>
+		<td>
+<%include_file("sw_logol_header.htm");%>	 		 
+	
+  <div id="warp">
+      <div class="status_title"><script>translate_strWrite("SetupWizard",0);</script></div>
+      <div class="status_background">
+      	<div class="status_content">
+      		<p style="height: 10px">&nbsp;</p> 
+		      <p><script>translate_strWrite("SetupWizard",1);</script></p>          
+		      <p><script>translate_strWrite("SetupWizard",2);</script></p>
+		      <p class="status_text"><script>translate_strWrite("SetupWizard",3);</script></p>
+		      <p style="height: 20px">&nbsp;</p>       
+		      <p><img src="ez_wan_detec_fail.jpg"></p>
+		      <p style="height: 20px">&nbsp;</p> 
+		      <p><script>translate_strWrite("SetupWizard",4);</script></p>
+		      <p><script>translate_strWrite("SetupWizard",5);</script></p>
+		      <p><script>translate_strWrite("SetupWizard",6);</script></p>
+		      <p class="status_text"><script>translate_strWrite("SetupWizard",7);</script></p>
+		      <p style="height: 10px">&nbsp;</p>
+		      <p><script>translate_strWrite("SetupWizard",8);</script></p>
+		        
+     </div> 
+        <p class="status_end">&nbsp;</p> 
+     
+     </div> 
+      <div class="angle"></div> 
+      <div class="EZ_mid">
+      			<p style="height:10px;"></p>
+		    			<div class="Retry_button">
+		    			<table border="0" cellspacing="0" cellpadding="0">
+									<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="sw_wan_detect.htm">&nbsp;<script>translate_strWrite("SetupWizard",101);</script>&nbsp;</td>
+										<td class="SW_RightButton">&nbsp;</td>
+										</tr>
+							</table>
+		    			
+		    			</div>	    				    							
+      		<p style="height:20px;"></p>
+      	<p><a class="EZ_mid_text" href="sw_pppoe.htm"><u><script>translate_strWrite("SetupWizard",9);</script></u></a></p>
+      </div>
+                   
+   
+        
+       <div style="height: 40px"></div>    
+		      <div class="EZ_foot">
+						<div class="EZ_foot_L"><img src="bottom_help_icon.png" style="position:relative;top:3pt;">&nbsp;<a href="help/<%nvram_get("language_str");%>/default.htm#SettingUp" target="_blank"><script>translate_strWrite("SetupWizard",64);</script></a>&nbsp;<img src="transparency.gif" style="width:15px;height:1px;"><a href="javascript:open_language();"><img src="bottom_language_icon.png" style="position:relative;top:4pt;">&nbsp;<script>translate_strWrite("BasicSetup",167);</script></a>&nbsp;&nbsp
+								<span id="language" style="visibility:hidden;">
+								<a href="javascript:apply_lang('en');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">English</font></a>&nbsp;&nbsp;
+								<a href="javascript:apply_lang('fr');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Fran&ccedil;ais</font></a>&nbsp;&nbsp;
+								<!--a href="javascript:apply_lang('spa');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Spanish</font></a--></span>
+						</div>
+						<div class="EZ_foot_C"></div>
+						<div class="EZ_foot_R"><a class="EZ_mid_text" href="adv_welcome.htm"><img src="bottom_adv_icon.png" style="position:relative;top:3pt;"><font style="font-size:9pt;"><script>translate_strWrite("SetupWizard",99);</script></font>&nbsp;&nbsp;&nbsp;&nbsp;</a></div>
+		      </div>
+         <div class="clear_float"> </div>
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+		</td>
+	</tr>
+	</table>
+</center>
+</form>
+
+<form method="post" action="save.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="sw_wan_detect_no.htm">
+<input type="hidden" name="redirect_timer" value="0">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="language_str">
+<input type="hidden" name="language_str" value="<%nvram_get("language_str");%>">
+</form>
+<!--[if lt IE 7]>
+<script language="javascript">
+  $(document).ready(function(){
+    $("#pic_connect_state_online").hide();  
+    var connect_check='<%nvram_get("wan_connect");%>';
+  	if (connect_check==1)
+  	 { 	
+      $("#pic_connect_state").hide();
+      $("#pic_connect_state_online").show();	
+  	 }    	
+  });
+</script>
+
+<![endif]-->
+</body>
+</html>

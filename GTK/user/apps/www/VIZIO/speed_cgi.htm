@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_113?></title>
+<%include_file("javascript.htm");%>
+</head>
+
+<Script Language="JavaScript">
+
+function ValidateForm(f) 
+{
+
+	f.submit();
+}
+
+
+</Script>
+
+</head>
+
+<body onload="ValidateForm(document.forms[0]);" >
+<form name="edit" action="bandwidth.cgi" method="post">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="speed_cgi_result.htm">
+<input type="hidden" name="redirect_timer" value="7000">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value=" ">
+
+
+</form>
+	
+
+	
+</body>
+</html>

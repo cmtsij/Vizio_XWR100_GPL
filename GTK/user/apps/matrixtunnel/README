@@ -1,0 +1,44 @@
+
+matrixtunnel
+
+NAME
+			matrixtunnel - MatrixSSL tunnel.
+			
+SYNOPSIS
+			matrixtunnel [options]
+
+DESCRIPTION
+			Simple example program for MatrixSSL.
+			Accepts a HTTPS request and echos the response back to the sender.
+
+[options]
+	    -A      Certificate Authority file
+	    
+	    -p      private key and certificate chain PEM file name
+	    
+	    -c      client mode. remote is ssl, local plain
+	    
+	    -v      validate certificate
+	    
+	    -d      listen locally on this [host:]port
+	    
+	    -r      connect to remote machine on [host:]port
+	    
+	    -P      create a pidfile
+	    
+	    -f      foreground mode
+	    
+	    -D      syslog level (0...7)
+	    
+	    -o			append logmessages to a file instead of stdout/syslog
+	    
+	    -h			help
+
+											
+NOTE
+			example:    matrixtunnel -A /etc/certSrv.pem -p /etc/privkeySrv.pem -d 443 -r 80\n
+			debug mode: matrixtunnel -f -A /etc/certSrv.pem -p /etc/privkeySrv.pem -d 443 -r 80 -D 7 &
+			You can change the location "/etc/certSrv.pem" & "/etc/privkeySrv.pem" in Makefile
+			
+Issue			
+			Safari via "matrixtunnel" : sometimes GUI would download incomplete.

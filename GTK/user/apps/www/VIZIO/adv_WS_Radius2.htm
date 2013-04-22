@@ -1,0 +1,510 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_112?></title>
+<base target="_self">
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+
+var f=document.radius;
+
+function ignoreSpaces ( string )
+{
+	var temp = "";
+	string = '' + string;
+	splitstring = string.split(" ");
+
+	for ( i = 0 ; i < splitstring.length ; i++ ) 
+	{
+		temp += splitstring[i];
+	}
+
+	return temp;
+}
+
+function ValidateKeyLength( )
+{
+	var f = document.forms[0] ;
+
+	var  wl_key_id = f.wl_key_id.value;
+	if(eval("f.wl_key"+wl_key_id).value.length == 0)
+	{
+		alert(translate_str("WirelessSecurity",30) + wl_key_id + translate_str("WirelessSecurity",31));
+		return false;
+	}			
+	if ( f.wl_key_length.value == "40"  ) 
+	{		
+		if ( f.wl_key1.value.length == 0 ) 
+		{
+			f.wl_key1.value = '';
+		} 
+		else if ( f.wl_key1.value.length != 10 ) 
+		{
+      alert(translate_str("WirelessSecurity",30) + "1" + translate_str("WirelessSecurity",31));
+			return false;
+		}
+	} 
+	else if ( f.wl_key_length.value == "104"  ) 
+	{
+		if ( f.wl_key1.value.length == 0 ) 
+		{
+			f.wl_key1.value = '';
+		} 
+		else if ( f.wl_key1.value.length != 26 ) 
+		{
+			alert(translate_str("WirelessSecurity",30) + "1" + translate_str("WirelessSecurity",31));
+			return false;
+		}
+	}
+
+	if ( f.wl_key_length.value == "40"  ) 
+	{		
+		if ( f.wl_key2.value.length == 0 ) 
+		{
+			f.wl_key2.value = '';
+		} 
+		else if ( f.wl_key2.value.length != 10 ) 
+		{
+			alert(translate_str("WirelessSecurity",30) + "2" + translate_str("WirelessSecurity",31));
+			return false;
+		}
+	} 
+	else if ( f.wl_key_length.value == "104"  ) 
+	{
+		if ( f.wl_key2.value.length == 0 ) 
+		{
+			f.wl_key2.value = '';
+		} 
+		else if ( f.wl_key2.value.length != 26 ) 
+		{
+			alert(translate_str("WirelessSecurity",30) + "2" + translate_str("WirelessSecurity",31));
+			return false;
+		}
+	}
+
+	if ( f.wl_key_length.value == "40"  ) 
+	{		
+		if ( f.wl_key3.value.length == 0 ) 
+		{
+			f.wl_key3.value = '';
+		} 
+		else if ( f.wl_key3.value.length != 10 ) 
+		{
+			alert(translate_str("WirelessSecurity",30) + "3" + translate_str("WirelessSecurity",31));
+			return false;
+		}
+	} 
+	else if ( f.wl_key_length.value == "104"  ) 
+	{
+		if ( f.wl_key3.value.length == 0 ) 
+		{
+			f.wl_key3.value = '';
+		} 
+		else if ( f.wl_key3.value.length != 26 ) 
+		{
+			alert(translate_str("WirelessSecurity",30) + "3" + translate_str("WirelessSecurity",31));
+			return false;
+		}
+	}
+
+	if ( f.wl_key_length.value == "40"  ) 
+	{		
+		if ( f.wl_key4.value.length == 0 ) 
+		{
+			f.wl_key4.value = '';
+		} 
+		else if ( f.wl_key4.value.length != 10 ) 
+		{
+			alert(translate_str("WirelessSecurity",30) + "4" + translate_str("WirelessSecurity",31));
+			return false;
+		}
+	} 
+	else if ( f.wl_key_length.value == "104"  ) 
+	{
+		if ( f.wl_key4.value.length == 0 ) 
+		{
+			f.wl_key4.value = '';
+		} 
+		else if ( f.wl_key4.value.length != 26 ) 
+		{
+			alert(translate_str("WirelessSecurity",30) + "4" + translate_str("WirelessSecurity",31));
+			return false;
+		}
+	}
+	return true;
+}
+
+function ValidateHexKey()
+{
+	var oldkey = document.forms[0].wl_key1.value;
+	for ( iln = 0 ; iln < oldkey.length ; iln++ ) 
+	{
+    ch = oldkey.charAt(iln).toLowerCase();
+	  if (ch >= '0' && ch <= '9' || ch >= 'a' && ch <= 'f') 
+		{}
+	  else 
+		{
+	   	alert (translate_str("WirelessSecurity",36) + "\"" + ch + "\" " + translate_str("WirelessSecurity",37) + "\"" + oldkey + "\"");
+	   	return false;
+	  }
+	}
+	var oldkey = document.forms[0].wl_key2.value;
+	for ( iln = 0 ; iln < oldkey.length ; iln++ ) 
+	{
+    	ch = oldkey.charAt(iln).toLowerCase();
+		
+	  	if (ch >= '0' && ch <= '9' || ch >= 'a' && ch <= 'f') 
+		{}
+	  	else 
+		{
+	    	alert (translate_str("WirelessSecurity",36) + "\"" + ch + "\" " + translate_str("WirelessSecurity",37) + "\"" + oldkey + "\"");
+	    	return false;
+	  	}
+	}
+	var oldkey = document.forms[0].wl_key3.value;
+	for ( iln = 0 ; iln < oldkey.length ; iln++ ) 
+	{
+    	ch = oldkey.charAt(iln).toLowerCase();
+		
+	  	if (ch >= '0' && ch <= '9' || ch >= 'a' && ch <= 'f') 
+		{}
+	  	else 
+		{
+	    	alert (translate_str("WirelessSecurity",36) + "\"" + ch + "\" " + translate_str("WirelessSecurity",37) + "\"" + oldkey + "\"");
+	    	return false;
+	  	}
+	}
+	var oldkey = document.forms[0].wl_key4.value;
+	for ( iln = 0 ; iln < oldkey.length ; iln++ ) 
+	{
+    	ch = oldkey.charAt(iln).toLowerCase();
+		
+	  	if (ch >= '0' && ch <= '9' || ch >= 'a' && ch <= 'f') 
+		{}
+	  	else 
+		{
+	    	alert (translate_str("WirelessSecurity",36) + "\"" + ch + "\" " + translate_str("WirelessSecurity",37) + "\"" + oldkey + "\"");
+	    	return false;
+	  	}
+	}
+	return true;
+}
+
+function ValidateForm(f)
+{
+	self.parent.document.forms[0].wl1_data1.value += " wl1_authRadiusIp wl1_authRadiusPort wl1_authRadiusPasswd wl1_sec_mode wl1_keylength wl1_key1 wl1_key2 wl1_key3 wl1_key4 wl1_txkey";
+		
+	f = document.forms[0];
+	if (!IPCheck_radius_1(f.radius_ipaddr_1))
+		return;
+	if (!IPCheck1(f.radius_ipaddr_2))
+		return;
+	if (!IPCheck1(f.radius_ipaddr_3))
+		return;
+	if (!IPCheck(f.radius_ipaddr_4))
+		return;						
+	if (!PortCheck(f.RadiusServerPort))		
+		return;
+	if (!CheckEmpty(f.RadiusSharedSecret, translate_str("WirelessSecurity",26)))
+		return;
+	f.RadiusServerIP.value = f.radius_ipaddr_1.value + "." +
+	 								f.radius_ipaddr_2.value + "." +
+	  								f.radius_ipaddr_3.value + "." +
+	   								f.radius_ipaddr_4.value;
+	   								
+	self.parent.document.forms[0].wl1_authRadiusIp.value = f.RadiusServerIP.value;
+	self.parent.document.forms[0].wl1_authRadiusPort.value = f.RadiusServerPort.value;
+	self.parent.document.forms[0].wl1_authRadiusPasswd.value = f.RadiusSharedSecret.value;
+	
+	if ( ValidateKeyLength() == false ) {
+		return;
+	}
+	if ( ValidateHexKey() == false ) {
+		return;
+	}
+	if ( (f.wl_key1.value == '') && (f.wl_key2.value == '') && (f.wl_key3.value == '') && (f.wl_key4.value == '') ) 
+	{
+	  alert(translate_str("WirelessSecurity",32));
+		return;
+	}
+	self.parent.document.forms[0].wl1_sec_mode.value = "radius";
+	self.parent.document.forms[0].wl1_keylength.value = f.wl_key_length.value;
+	self.parent.document.forms[0].wl1_txkey.value = f.wl_key_id.value;
+	self.parent.document.forms[0].wl1_key1.value = f.wl_key1.value;
+	self.parent.document.forms[0].wl1_key2.value = f.wl_key2.value;
+	self.parent.document.forms[0].wl1_key3.value = f.wl_key3.value;
+	self.parent.document.forms[0].wl1_key4.value = f.wl_key4.value;
+	return true;
+}
+function ChangeKeyLength()
+{
+	var f = document.forms[0];
+	var keylength;
+	var key1='', key2='', key3='', key4='';
+	
+	if ( f.wl_key_length.options[f.wl_key_length.selectedIndex].value == "40" ) 
+	{
+		f.wl_key1.maxLength = 10;
+		f.wl_key2.maxLength = 10;
+		f.wl_key3.maxLength = 10;
+		f.wl_key4.maxLength = 10;
+		keylength=10;		
+	} 
+	else 
+	{
+		f.wl_key1.maxLength = 26;
+		f.wl_key2.maxLength = 26;
+		f.wl_key3.maxLength = 26;
+		f.wl_key4.maxLength = 26;
+		keylength=26;		
+	}
+
+	for (var i=0; i< keylength; i++)
+	{
+		key1 += f.wl_key1.value.charAt(i);
+		key2 += f.wl_key2.value.charAt(i);
+		key3 += f.wl_key3.value.charAt(i);
+		key4 += f.wl_key4.value.charAt(i);
+	}
+	
+	f.wl_key1.value = key1;
+	f.wl_key2.value = key2;
+	f.wl_key3.value = key3;
+	f.wl_key4.value = key4;
+	return true;   
+}
+function InitValue(f)
+{
+  
+	f.GenerateBtn.value = "Generate";
+	var RadiusServerIP = '<%nvram_get("wl1_authRadiusIp");%>';
+	f.radius_ipaddr_1.value = GetIPSegment(RadiusServerIP,1);
+	f.radius_ipaddr_2.value = GetIPSegment(RadiusServerIP,2);
+	f.radius_ipaddr_3.value = GetIPSegment(RadiusServerIP,3);
+	f.radius_ipaddr_4.value = GetIPSegment(RadiusServerIP,4);			
+	f.RadiusServerPort.value= '<%nvram_get("wl1_authRadiusPort");%>';
+	f.RadiusSharedSecret.value= '<%nvram_get("wl1_authRadiusPasswd");%>';
+
+	var f = document.forms[0] ;
+	var wl_key_length = '<%nvram_get("wl1_keylength");%>';
+	if (wl_key_length == '104')
+		f.wl_key_length.selectedIndex = 1;
+	else
+		f.wl_key_length.selectedIndex = 0;		
+	ChangeKeyLength();
+	
+	var key1 = '<%nvram_get("wl1_key1");%>';
+	var key2 = '<%nvram_get("wl1_key2");%>';
+	var key3 = '<%nvram_get("wl1_key3");%>';
+	var key4 = '<%nvram_get("wl1_key4");%>';				
+	if(key1 == '0') 
+		f.wl_key1.value = "";
+	else
+	f.wl_key1.value = key1;
+		
+	if(key2 == '0') 
+		f.wl_key2.value = "";
+	else
+	f.wl_key2.value = key2;
+
+	if(key3 == '0') 
+		f.wl_key3.value = "";
+	else
+	f.wl_key3.value = key3;
+		
+	if(key4 == '0') 
+		f.wl_key4.value = "";
+	else
+	f.wl_key4.value = key4;	
+	showMix = getLayer("SSIDAuthMode1");
+	showMix.height="424";
+
+	f.GenerateBtn.value=translate_str("WirelessSecurity",16);
+}
+function passphrase_submit()
+{
+	if (document.forms[0].passphrase_key.value == "")
+	{
+		alert(translate_str("WirelessSecurity",35));
+		return;
+	}
+	else
+	{	
+		document.passphrase.wl1_txkey.value = document.forms[0].wl_key_id.value;
+		document.passphrase.wl1_keylength.value = document.forms[0].wl_key_length.value;
+		document.passphrase.passphrase_key.value = document.forms[0].passphrase_key.value;
+		document.passphrase.wl_mode.value = "1";
+		document.passphrase.submit();
+	}
+}
+</Script>
+
+<style type="text/css">
+
+
+body{
+	margin:0px;
+	BACKGROUND:transparent none;
+	}
+
+</style>
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="radius" method="post" action="">
+<input type="hidden" name="wl_encryp_type" value='WEP'>
+<input type="hidden" name="RekeyMethod" value="DISABLE">
+<input type="hidden" name="RadiusServerIP">
+<input type="hidden" name="wl_security_all">
+<input type="hidden" name="wl_auth_mode_all">
+<input type="hidden" name="wl_encryp_type_all">
+<input type="hidden" name="wl_key_id_all">
+<input type="hidden" name="wl_key1_all">
+<input type="hidden" name="wl_key2_all">
+<input type="hidden" name="wl_key3_all">
+<input type="hidden" name="wl_key4_all">
+<input type="hidden" name="wl_ieee_8021x_all">
+<input type="hidden" name="wl_isolation_ssid_all"> 
+		 
+<table border="0" width="410"  cellpadding="0" cellspacing="0">
+	<tr>
+		<td>
+
+  <div id="WS_WEP1" style="text-align:left;  height:auto;">
+  
+      <div class="iframe_background">     	
+      	<div class="iframe_status" style="line-height:35px;">	
+      		<table border="0" width="530" align="center" cellpadding="0" cellspacing="0">
+      			<tr height="35">
+      				<td colspan="3" width="450" class="status_title" align="center"><script>translate_strWrite("SetupWizard",59);</script></td>  								
+      			</tr>
+      			<tr height="35">     	
+      				<td width="250" align="right"><script>translate_strWrite("WirelessSecurity",1);</script>:</td>
+      				<td width="30"></td>
+      				<td width="250" align="left">
+      					 <select name="wl_security"  class="wireless_select_col_width_v2" onChange="WirelessSecurityType1 ( this.value,<%nvram_get("wps_page");%> )">
+				           	<option value="wep"><script>translate_strWrite("WirelessSecurity",3);</script></font></option>
+						   		 	<option value="psk"><script>translate_strWrite("WirelessSecurity",4);</script></option>
+				            <option value="WPA2"><script>translate_strWrite("WirelessSecurity",5);</script></option>
+				            <option value="wparadius"><script>translate_strWrite("WirelessSecurity",7);</script></option>
+				            <option value="wpa2radius"><script>translate_strWrite("WirelessSecurity",8);</script></option>
+				            <option value="radius" selected><script>translate_strWrite("WirelessSecurity",9);</script></option>
+				           <option value="none"><script>translate_strWrite("WirelessSecurity",2);</script></option></option>					
+         				</select>        					
+      						</td></tr>
+      						      						     	      
+      						<tr height="35"> 
+							        <td align="right"><script>translate_strWrite("WirelessSecurity",23);</script>:</td>
+							        <td width="10"></td>
+							        <td align="left">
+							          <input class="ip_col_width" maxLength=3  name="radius_ipaddr_1" value="0" >
+							          . 
+							          <input class="ip_col_width" maxLength=3  name="radius_ipaddr_2" value="0" >
+							          . 
+							          <input class="ip_col_width" maxLength=3  name="radius_ipaddr_3" value="0" >
+							          . 
+							          <input class="ip_col_width" maxLength=3  name="radius_ipaddr_4" value="0" >
+							          </td>
+							      </tr>	
+      					<tr height="35"> 
+						       <td align="right"><script>translate_strWrite("WirelessSecurity",24);</script>:</td> 
+						       <td width="10"></td>
+						        <td align="left">
+						          <input class="mtu_col_width" maxLength=5 size=5 name="RadiusServerPort" value="" >
+						        </td>
+						     </tr>
+      						<tr height="35"> 
+						        <td align="right"><script>translate_strWrite("WirelessSecurity",25);</script>:</td>
+						       	<td width="10"></td>
+						        <td align="left">
+						          <input class="key_col_width" maxLength="64" size="20" name="RadiusSharedSecret" value="" >
+						        </td>
+						      </tr>
+						     <tr height="35"><td align="right"><script>translate_strWrite("WirelessSecurity",10);</script>:</td>
+      					<td width="10"></td>
+      					<td align="left"> 
+      						 <select name="wl_key_length" class="wireless_select_col_width_v2" onChange="ChangeKeyLength();">
+					            <OPTION value=40><script>translate_strWrite("WirelessSecurity",14);</script></OPTION>
+					            <OPTION value=104><script>translate_strWrite("WirelessSecurity",15);</script></OPTION>
+					          </select>
+      					
+      						</td>
+      					</tr>
+      					  <tr height="35"><td align="right"><script>translate_strWrite("WirelessSecurity",11);</script>:</td>
+      					<td width="10"></td>
+      					<td align="left"> 
+      						  <input maxLength=32 class="key_col_width" name="passphrase_key" size="24"  value="<%nvram_get("passphrase_key");%>">
+          	&nbsp; 
+          	<input type="button" name="GenerateBtn" value="" onclick="passphrase_submit();" style="width:75px;">
+      					
+      						</td>
+      					</tr>     					
+      				 <tr height="35"> 
+					        <td align="right"><script>translate_strWrite("WirelessSecurity",12);</script>1:</td>
+					       	<td width="10"></td>
+					        <td align="left">
+          						 <input name="wl_key1"  class="key_col_width" type="text">
+  								</td>
+      					</tr>
+      					<tr height="35"> 
+					        <td align="right"><script>translate_strWrite("WirelessSecurity",12);</script>2:</td>
+					       	<td width="10"></td>
+					        <td align="left">
+          						 <input name="wl_key2"  class="key_col_width" type="text">
+  								</td>
+      					</tr>
+      					<tr height="35"> 
+					        <td align="right"><script>translate_strWrite("WirelessSecurity",12);</script>3:</td>
+					       	<td width="10"></td>
+					        <td align="left">
+          						 <input name="wl_key3"  class="key_col_width" type="text">
+  								</td>
+      					</tr>
+      					<tr height="35"> 
+					        <td align="right"><script>translate_strWrite("WirelessSecurity",12);</script>4:</td>
+					       	<td width="10"></td>
+					        <td align="left">
+          						 <input name="wl_key4"  class="key_col_width" type="text">
+  								</td>
+      					</tr>
+								<tr height="35"> 
+					        <td align="right"><script>translate_strWrite("WirelessSecurity",12);</script>4:</td>
+					       	<td width="10"></td>
+					        <td align="left">
+          						 <SELECT class="Key_select_col_width" size=1 name="wl_key_id" >
+												<script>
+													var NAME = new Array("1","2","3","4");
+													var STRING = new Array("1","2","3","4");
+													var wl_key = '<%nvram_get("wl0_txkey");%>';
+													var selected;
+													for(i=0;i<NAME.length;i++) {
+														if(wl_key == STRING[i]) selected = "selected";
+														else 			   selected = "";
+														document.write("<OPTION value="+NAME[i]+" "+selected+">"+STRING[i]+"</OPTION>");
+													}
+												</script>
+												</SELECT>
+  								</td>
+      					</tr>     					
+      		</table>     	      						
+  		 </div>
+ 		</div>       
+  </div>
+		</td>
+	</tr>
+	</table>
+</form>
+<form name="passphrase" method="post" action="wep_passphrase.cgi">
+	<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+	<input type="hidden" name="next_page" value="adv_WS_Radius2.htm">
+	<input type="hidden" name="reboot" value="0">
+	<input type="hidden" name="passphrase" value="true">
+	<input type="hidden" name="wl1_keylength">
+	<input type="hidden" name="passphrase_key">
+	<input type="hidden" name="wl1_txkey">
+	<input type="hidden" name="wl_mode">
+</form>
+</body>
+</html>

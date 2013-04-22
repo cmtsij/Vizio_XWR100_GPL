@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_112?></title>
+<base target="_self">
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+
+var f=document.ws_none;
+
+function ValidateForm(f)
+{
+	self.parent.document.forms[0].wl1_data1.value += " wl1_sec_mode";
+	self.parent.document.forms[0].wl1_sec_mode.value = document.forms[0].wl_security.value;
+	return true;
+}
+
+function InitValue(f)
+{
+	showMix = getLayer("SSIDAuthMode1");
+	showMix.height="130";
+}
+
+</Script>
+
+<style type="text/css">
+
+
+body{
+	margin:0px;
+	BACKGROUND:transparent none;
+	}
+
+</style>
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="ws_none" method="post">
+<input type="hidden" name="wl_encryp_type" value='NONE'>
+<input type="hidden" name="RekeyMethod" value="DISABLE">
+
+<input type="hidden" name="wl_security_all">
+<input type="hidden" name="wl_encryp_type_all">
+<input type="hidden" name="wl_auth_mode_all">
+<input type="hidden" name="wl_ieee_8021x_all">
+<input type="hidden" name="wl_isolation_ssid_all">
+		 
+<table border="0" width="530" cellpadding="0" cellspacing="0">
+	<tr>
+		<td>
+
+  <div id="WS_WEP1" style="text-align:left;>
+  
+      <div class="iframe_background">     	
+      	<div class="iframe_status" style="line-height:35px;">	
+      		<table border="0" width="530" align="center" cellpadding="0" cellspacing="0">
+      			<tr height="35">
+      				<td colspan="3" width="450" class="status_title" align="center"><script>translate_strWrite("SetupWizard",59);</script></td>  								
+      			</tr>
+      			<tr>     	
+      				<td width="250" align="right"><script>translate_strWrite("WirelessSecurity",1);</script>:</td>
+      				<td width="30"></td>
+      				<td width="250" align="left">
+      					<select name="wl_security"  class="wireless_select_col_width_v2" onChange="WirelessSecurityType1 ( this.value,<%nvram_get("wps_page");%> )">
+				           	<option value="wep"><script>translate_strWrite("WirelessSecurity",3);</script></font></option>
+						   		 	<option value="psk"><script>translate_strWrite("WirelessSecurity",4);</script></option>
+				            <option value="WPA2"><script>translate_strWrite("WirelessSecurity",5);</script></option>
+				            <option value="wparadius"><script>translate_strWrite("WirelessSecurity",7);</script></option>
+				            <option value="wpa2radius"><script>translate_strWrite("WirelessSecurity",8);</script></option>
+				            <option value="radius"><script>translate_strWrite("WirelessSecurity",9);</script></option>
+				           <option value="none"  selected><script>translate_strWrite("WirelessSecurity",2);</script></option></option>					
+         				</select>     									
+      						</td></tr>
+      		
+      					
+						
+      		</table>
+      	      						
+   </div>
+ </div>       
+
+  </div>
+		</td>
+	</tr>
+	</table>
+</form>
+
+</body>
+</html>

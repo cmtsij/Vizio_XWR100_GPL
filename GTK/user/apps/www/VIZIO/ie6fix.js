@@ -1,0 +1,32 @@
+$(document).ready(function(){
+  $("#internet").mouseover(function(){
+    $("#internet").hide();
+    $("#internet_bri").show();
+  });
+  $("#internet_bri").mouseout(function(){
+    $("#internet").show();
+    $("#internet_bri").hide(); 
+  });
+  $("#wireless").mouseover(function(){
+    $("#wireless").hide();
+    $("#wireless_bri").show();
+  });
+  $("#wireless_bri").mouseout(function(){
+    $("#wireless").show();
+    $("#wireless_bri").hide(); 
+  });
+  $("#router").mouseover(function(){
+    $("#router").hide();
+    $("#router_bri").show();
+  });
+  $("#router_bri").mouseout(function(){
+    $("#router").show();
+    $("#router_bri").hide(); 
+  });    
+  $("#router_bri").hide();
+  $("#wireless_bri").hide();
+  $("#internet_bri").hide();
+  $("#pic_connect_state_online").hide();
+  $("#pic_connect_state").removeClass().addClass("network_status_on");
+});
+InitValue();  

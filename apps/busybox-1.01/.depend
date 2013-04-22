@@ -1,0 +1,1057 @@
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/rx.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/rx.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/dc.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/dc.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/factoryreset.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/factoryreset.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/crontab.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/crontab.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/devfsd.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/devfsd.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/devfsd/modload.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/devfsd/verbose.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/debug.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/devfsd/fg/np.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/file.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/modules/devfs.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/adjtimex.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/adjtimex.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/crond.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/crond.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/crond/call/sendmail.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/last.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/last.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/watchdog.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/watchdog.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/strings.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/strings.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/hdparm.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/hdparm.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/hdparm/get/identity.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/hdparm/hdio/getset/dma.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/hdparm/hdio/unregister/hwif.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/hdparm/hdio/scan/hwif.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/hdparm/hdio/tristate/hwif.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/hdparm/hdio/drive/reset.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/time.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/time.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/mt.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/mt.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/makedevs.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/miscutils/makedevs.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/applets/applets.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/applets/applets.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/usage.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/usage.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/applets.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/applets.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/applets.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/applets.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/suid.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/suid/config.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/grp_.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/grp_.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/suid/config/quiet.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/file.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/applets/busybox.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/applets/busybox.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/locale/support.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/installer.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/init.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/autowidth.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libpwdgrp/pwd_grp.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libpwdgrp/pwd_grp.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/grp_.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/grp_.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/shadow_.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/shadow_.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/procps/sysctl.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/procps/sysctl.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/procps/kill.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/procps/kill.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/killall.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/procps/renice.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/procps/renice.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/procps/free.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/procps/free.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/procps/uptime.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/procps/uptime.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/procps/top.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/procps/top.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/use/termios.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/selinux.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/procps/ps.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/procps/ps.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/selinux.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/procps/pidof.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/procps/pidof.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/ar.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/ar.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/bunzip2.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/bunzip2.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/dpkg.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/dpkg.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/deb/tar/gz.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/deb/tar/bz2.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/gzip.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/gzip.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/gunzip.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/rpm2cpio.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/rpm2cpio.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/uncompress.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/uncompress.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/dpkg_deb.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/dpkg_deb.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/deb/tar/gz.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/deb/tar/bz2.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/tar.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/tar.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/tar/create.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/tar/from.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/tar/gzip.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/tar/compress.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/tar/bzip2.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/tar/long/options.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/unzip.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/unzip.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/get_header_tar_bz2.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/get_header_tar_bz2.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/get_header_cpio.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/get_header_cpio.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/init_handle.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/init_handle.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/unpack_ar_archive.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/unpack_ar_archive.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/decompress_uncompress.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/decompress_uncompress.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/config.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/config.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/filter_accept_all.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/filter_accept_all.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/archive_xread_all_eof.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/archive_xread_all_eof.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/filter_accept_list.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/filter_accept_list.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/decompress_bunzip2.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/decompress_bunzip2.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/data_extract_all.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/data_extract_all.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/header_verbose_list.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/header_verbose_list.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/open_transformer.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/open_transformer.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/filter_accept_reject_list.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/filter_accept_reject_list.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/seek_by_jump.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/seek_by_jump.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/unarchive/tape.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/archive_xread_all.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/archive_xread_all.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/header_list.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/header_list.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/check_header_gzip.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/check_header_gzip.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/data_extract_to_buffer.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/data_extract_to_buffer.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/data_align.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/data_align.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/find_list_entry.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/find_list_entry.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/get_header_tar.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/get_header_tar.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/tar/gnu/extensions.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/tar/oldgnu/compatability.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/data_extract_to_stdout.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/data_extract_to_stdout.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/data_skip.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/data_skip.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/get_header_ar.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/get_header_ar.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ar/long/filenames.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/filter_accept_list_reassign.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/filter_accept_list_reassign.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/deb/tar/gz.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/deb/tar/bz2.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/seek_by_char.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/seek_by_char.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/header_skip.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/header_skip.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/get_header_tar_gz.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/get_header_tar_gz.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/decompress_unzip.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/libunarchive/decompress_unzip.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/config.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/config.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/gunzip.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/gunzip.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/gunzip/uncompress.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/rpm.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/rpm.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/cpio.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/archival/cpio.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/shell/msh.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/shell/msh.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/command/editing.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/sh/fancy/prompt.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/sh/extra/quiet.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/sh/standalone/shell.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/shell/ash.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/shell/ash.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/ash/job/control.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/ash/alias.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/ash/optimize/for/size.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/ash/math/support.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/ash/cmdcmd.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/ash/getopts.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/sh/extra/quiet.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/ash/mail.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/ash/math/support/64.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/ash/random/support.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/locale/support.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/command/savehistory.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/command/editing.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/sh/fancy/prompt.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/sh/standalone/shell.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/command/tab/completion.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/shell/lash.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/shell/lash.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/locale/support.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/lash/pipe/n/redirects.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/sh/fancy/prompt.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/lash/job/control.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/command/editing.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/sh/standalone/shell.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/sh/extra/quiet.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/shell/hush.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/shell/hush.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/sh/fancy/prompt.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/command/editing.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/sh/standalone/shell.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/sh/extra/quiet.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/shell/cmdedit.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/shell/cmdedit.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/../shell/cmdedit.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/../shell/cmdedit.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/locale/support.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/command/tab/completion.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/command/editing.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/command/username/completion.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/sh/fancy/prompt.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/getusername/and/homedir.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/command/history.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/nonprintable/inverse/put.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/ash.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/command/savehistory.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/init/poweroff.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/init/poweroff.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/init.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/init/init.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/init/init.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/syslogd.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/init/coredumps.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/extra/quiet.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/init/swapon.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/use/inittab.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/initrd.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/init/reboot.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/init/reboot.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/init.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/init/mesg.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/init/mesg.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/init/halt.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/init/halt.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/init.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/init/init_shared.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/init/init_shared.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/initrd.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/init.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/getty.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/getty.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/utmp.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/syslogd.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/wtmp.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/vlock.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/vlock.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/shadowpasswds.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/delline.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/delline.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/passwd.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/passwd.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/shadowpasswds.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/su.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/su.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/utmp.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/selinux.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/deluser.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/deluser.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/shadowpasswds.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/login.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/login.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/selinux.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/utmp.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/securetty.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/wheel/group.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/wtmp.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/addgroup.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/addgroup.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/grp_.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/grp_.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/shadowpasswds.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/adduser.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/sulogin.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/sulogin.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/shadowpasswds.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/adduser.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/adduser.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/shadowpasswds.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/addgroup.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/delgroup.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/loginutils/delgroup.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/deluser.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/shadowpasswds.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/findutils/xargs.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/findutils/xargs.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/xargs/support/confirmation.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/xargs/support/quotes.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/xargs/support/termopt.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/xargs/support/zero/term.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/findutils/find.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/findutils/find.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/find/type.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/find/perm.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/find/mtime.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/find/xdev.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/find/newer.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/find/inum.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/findutils/grep.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/findutils/grep.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/grep/context.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/grep/egrep/alias.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/grep/fgrep/alias.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/editors/sed.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/editors/sed.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/editors/patch.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/editors/patch.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/editors/vi.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/editors/vi.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/locale/support.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/vi/optimize/cursor.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/vi/use/signals.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/vi/crashme.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/vi/dot/cmd.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/vi/yankmark.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/vi/readonly.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/vi/search.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/vi/colon.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/vi/win/resize.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/vi/setopts.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/vi/set.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/editors/awk.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/editors/awk.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/awk/math.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/modutils/rmmod.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/modutils/rmmod.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/2/6/modules.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/query/module/interface.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/modutils/lsmod.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/modutils/lsmod.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/check/tainted/module.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/query/module/interface.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/modutils/modprobe.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/modutils/modprobe.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/2/6/modules.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/modutils/insmod.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/modutils/insmod.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/2/4/modules.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/2/6/modules.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/insmod/loadinkmem.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/insmod/version/checking.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/use/list.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/list/archtype.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/use/single.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/use/plt/entries.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/use/got/entries.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/use/plt/list.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/got/entry/size.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/plt/entry/size.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/check/tainted/module.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/insmod/ksymoops/symbols.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/insmod/load/map.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/insmod/load/map/full.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/getopt.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/getopt.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/fdformat.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/fdformat.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/losetup.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/losetup.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/pivot_root.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/pivot_root.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/more.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/more.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/use/termios.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/mkfs_minix.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/mkfs_minix.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/minix2.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/umount.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/umount.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/mount/force.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/mount/loop.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/mtab/support.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/fbset.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/fbset.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/fbset/fancy.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/fbset/readmode.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/nfsmount.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/nfsmount.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/fdisk.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/fdisk.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/sun/label.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/sgi/label.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/aix/label.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/osf/label.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/fdisk/writable.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/fdisk/advanced.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/weird/partition/types.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/fdisk/blksize.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/fsck_minix.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/fsck_minix.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/minix2.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/freeramdisk.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/freeramdisk.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/fdflush.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/fdflush.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/mkswap.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/mkswap.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/swaponoff.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/swaponoff.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/dmesg.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/dmesg.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/mount.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/mount.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/nfsmount.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/mount/loop.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/mtab/support.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/hexdump.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/hexdump.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/dump.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/dump.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/hwclock.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/hwclock.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/hwclock/longoptions.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/rdate.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/util-linux/rdate.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/ifupdown.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/ifupdown.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ifupdown/mapping.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ifupdown/ip.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ifupdown/ipx.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ifupdown/ipv6.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ifupdown/ipv4.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/ping.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/ping.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/fancy/ping.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/telnetd.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/telnetd.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ipv6.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/login.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/telnetd/inetd.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/devpts.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/brctl.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/brctl.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/iptunnel.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/iptunnel.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/ftpgetput.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/ftpgetput.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/ftpget.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/ftpput.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/inetd.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/inetd.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/inetd/support/biltin/echo.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/inetd/support/biltin/discard.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/inetd/support/biltin/time.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/inetd/support/biltin/daytime.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/inetd/support/biltin/chargen.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/tftp.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/tftp.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/tftp/blocksize.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/tftp/debug.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/tftp/get.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/tftp/put.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/netstat.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/netstat.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/inet_common.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/inet_common.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/route.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ipv6.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/ip.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/ip.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ip/address.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ip/route.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ip/link.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ip/tunnel.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/nslookup.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/nslookup.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/httpd.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/httpd.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/lfs.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/httpd/usage/from/inetd/only.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/httpd/basic/auth.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/httpd/cgi.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/httpd/config/with/mime/types.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/httpd/encode/url/str.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/httpd/set/remote/port/to/env.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/httpd/auth/md5.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/httpd/reload/config/sighup.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/httpd/setuid.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/ipcalc.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/ipcalc.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ipcalc/fancy.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/libiproute/iptunnel.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/libiproute/iptunnel.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/libiproute/ll_addr.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/libiproute/ll_addr.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/libiproute/ipaddress.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/libiproute/ipaddress.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/libiproute/utils.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/libiproute/utils.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/libiproute/iplink.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/libiproute/iplink.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/libiproute/ip_parse_common_args.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/libiproute/ip_parse_common_args.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/libiproute/libnetlink.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/libiproute/libnetlink.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/libiproute/iproute.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/libiproute/iproute.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/ping6.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/ping6.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/fancy/ping6.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/fancy/ping.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/wget.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/wget.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/wget/statusbar.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/wget/authentication.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/wget/ip6/literal.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/ifconfig.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/ifconfig.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/inet_common.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/inet_common.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ifconfig/slip.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ipv6.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ifconfig/broadcast/plus.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ifconfig/hw.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ifconfig/memstart/ioaddr/irq.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ifconfig/status.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/ipaddr.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/ipaddr.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/route.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/route.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/inet_common.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/inet_common.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ipv6.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/telnet.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/telnet.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/telnet/ttype.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/telnet/autologin.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/autowidth.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/vconfig.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/vconfig.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/traceroute.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/traceroute.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/inet_common.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/inet_common.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/traceroute/verbose.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/traceroute.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/traceroute/so/debug.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/hostname.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/hostname.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/iplink.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/iplink.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/arping.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/arping.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/nc.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/nc.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/nameif.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/nameif.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/iproute.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/networking/iproute.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/ln.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/ln.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/tr.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/tr.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/md5_sha1_sum.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/md5_sha1_sum.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/md5/sha1/sum/check.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/md5sum.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/sha1sum.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/realpath.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/realpath.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/uuencode.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/uuencode.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/cp.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/cp.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/logname.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/logname.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/dirname.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/dirname.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/mknod.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/mknod.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/rm.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/rm.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/true.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/true.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/libcoreutils/xgetoptfile_sort_uniq.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/libcoreutils/xgetoptfile_sort_uniq.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/libcoreutils/cp_mv_stat.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/libcoreutils/cp_mv_stat.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/libcoreutils/getopt_mk_fifo_nod.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/libcoreutils/getopt_mk_fifo_nod.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/env.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/env.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/date.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/date.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/date/isofmt.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/uname.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/uname.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/printf.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/printf.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/rmdir.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/rmdir.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/cmp.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/cmp.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/false.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/false.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/tail.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/tail.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/fancy/tail.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/echo.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/echo.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/fancy/echo.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/mkfifo.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/mkfifo.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/who.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/who.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/stty.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/stty.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/uudecode.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/uudecode.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/chroot.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/chroot.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/seq.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/seq.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/yes.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/yes.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/cat.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/cat.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/dd.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/dd.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/whoami.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/whoami.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/ls.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/ls.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/selinux.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ls/timestamps.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ls/sortfiles.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ls/followlinks.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/human/readable.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ls/filetypes.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ls/color.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/autowidth.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ls/recursive.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/locale/support.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ls/username.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/install.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/install.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/mv.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/mv.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/expr.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/expr.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/watch.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/watch.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/chmod.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/chmod.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/dos2unix.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/dos2unix.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/pwd.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/pwd.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/usleep.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/usleep.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/sleep.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/sleep.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/fancy/sleep.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/mkdir.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/mkdir.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/basename.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/basename.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/du.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/du.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/human/readable.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/du/defalt/blocksize/1k.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/tee.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/tee.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/tee/use/block/io.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/od.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/od.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/dump.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/dump.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/df.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/df.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/human/readable.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/length.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/length.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/sync.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/sync.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/id.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/id.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/selinux.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/wc.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/wc.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/locale/support.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/hostid.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/hostid.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/test.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/test.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/test/64.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/cut.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/cut.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/head.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/head.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/fancy/head.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/uniq.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/uniq.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/cal.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/cal.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/locale/support.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/fold.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/fold.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/touch.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/touch.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/sort.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/sort.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/chgrp.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/chgrp.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/chown.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/chown.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/tty.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/coreutils/tty.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/sysklogd/logger.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/sysklogd/logger.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/syslogd.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/sysklogd/logread.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/sysklogd/logread.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/logread/reduced/locking.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/sysklogd/klogd.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/sysklogd/klogd.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/sysklogd/syslogd.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/sysklogd/syslogd.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/rotate/logfile.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/remote/log.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ipc/syslog.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ipc/syslog/buffer/size.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/xreadlink.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/xreadlink.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/vfork_daemon_rexec.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/vfork_daemon_rexec.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/mtab.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/mtab.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/perror_msg.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/perror_msg.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/xgethostbyname2.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/xgethostbyname2.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ipv6.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/print_file.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/print_file.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/xregcomp.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/xregcomp.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/llist_add_to.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/llist_add_to.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/unarchive.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/run_shell.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/run_shell.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/selinux.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/wfopen.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/wfopen.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/change_identity.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/change_identity.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/get_console.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/get_console.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/make_directory.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/make_directory.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/perror_msg_and_die.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/perror_msg_and_die.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/simplify_path.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/simplify_path.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/setup_environment.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/setup_environment.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/xgetcwd.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/xgetcwd.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/loop.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/loop.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/chomp.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/chomp.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/full_read.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/full_read.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/error_msg.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/error_msg.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/vherror_msg.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/vherror_msg.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/printf.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/printf.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/create_icmp6_socket.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/create_icmp6_socket.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ipv6.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/inet_common.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/inet_common.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/inet_common.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/inet_common.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ipv6.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/xgethostbyname.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/xgethostbyname.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/dump.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/dump.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/dump.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/dump.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/xgetularg.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/xgetularg.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/error_msg_and_die.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/error_msg_and_die.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/xgetlarg.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/xgetlarg.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/get_line_from_file.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/get_line_from_file.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/vperror_msg.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/vperror_msg.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/isdirectory.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/isdirectory.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/trim.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/trim.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/safe_strtol.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/safe_strtol.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/verror_msg.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/verror_msg.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/safe_read.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/safe_read.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/kernel_version.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/kernel_version.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/find_root_device.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/find_root_device.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/devfs.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/skip_whitespace.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/skip_whitespace.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/login.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/login.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/find_pid_by_name.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/find_pid_by_name.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/selinux.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/hash_fd.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/hash_fd.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/sha1sum.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/md5sum.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/perror_nomsg.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/perror_nomsg.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/xconnect.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/xconnect.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/ask_confirmation.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/ask_confirmation.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/safe_write.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/safe_write.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/fgets_str.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/fgets_str.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/safe_strncpy.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/safe_strncpy.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/mtab_file.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/mtab_file.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/mtab/support.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/mtab/filename.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/default_error_retval.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/default_error_retval.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/remove_file.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/remove_file.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/interface.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/interface.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/inet_common.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/inet_common.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/ipv6.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/pwd2spwd.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/pwd2spwd.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/shadow_.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/shadow_.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/herror_msg.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/herror_msg.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/module_syscalls.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/module_syscalls.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/process_escape_sequence.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/process_escape_sequence.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/parse_number.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/parse_number.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/pw_encrypt.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/pw_encrypt.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/sha1/passwords.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/inode_hash.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/inode_hash.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/qmodule.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/qmodule.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/speed_table.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/speed_table.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/create_icmp_socket.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/create_icmp_socket.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/vdprintf.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/vdprintf.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/read_package_field.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/read_package_field.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/get_terminal_width_height.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/get_terminal_width_height.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/autowidth.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/fclose_nonstdin.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/fclose_nonstdin.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/human_readable.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/human_readable.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/herror_msg_and_die.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/herror_msg_and_die.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/my_getpwnam.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/my_getpwnam.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/grp_.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/grp_.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/my_getug.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/my_getug.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/copyfd.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/copyfd.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/device_open.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/device_open.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/copy_file.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/copy_file.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/preserve/hardlinks.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/obscure.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/obscure.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/procps.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/procps.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/selinux.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/my_getgrgid.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/my_getgrgid.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/grp_.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/grp_.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/fflush_stdout_and_exit.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/fflush_stdout_and_exit.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/syscalls.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/syscalls.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/run_parts.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/run_parts.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/restricted_shell.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/restricted_shell.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/xfuncs.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/xfuncs.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/getopt_ulflags.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/getopt_ulflags.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/concat_subpath_file.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/concat_subpath_file.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/recursive_action.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/recursive_action.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/last_char_is.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/last_char_is.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/messages.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/messages.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/parse_mode.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/parse_mode.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/my_getgrnam.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/my_getgrnam.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/grp_.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/grp_.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/full_write.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/full_write.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/perror_nomsg_and_die.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/perror_nomsg_and_die.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/find_mount_point.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/find_mount_point.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/my_getpwuid.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/my_getpwuid.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/concat_path_file.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/concat_path_file.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/wfopen_input.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/wfopen_input.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/warn_ignoring_args.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/warn_ignoring_args.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/bb_asprintf.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/bb_asprintf.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/correct_password.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/libbb/correct_password.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/shadowpasswds.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/console-tools/dumpkmap.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/console-tools/dumpkmap.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/console-tools/clear.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/console-tools/clear.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/console-tools/openvt.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/console-tools/openvt.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/console-tools/reset.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/console-tools/reset.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/console-tools/loadfont.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/console-tools/loadfont.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/console-tools/chvt.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/console-tools/chvt.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/console-tools/loadkmap.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/console-tools/loadkmap.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/console-tools/deallocvt.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/console-tools/deallocvt.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/console-tools/setkeycodes.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/console-tools/setkeycodes.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/debianutils/which.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/debianutils/which.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/debianutils/start_stop_daemon.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/debianutils/start_stop_daemon.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/pwd_.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/debianutils/pipe_progress.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/debianutils/pipe_progress.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/debianutils/readlink.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/debianutils/readlink.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h) \
+   $(wildcard /home2/oder/VIZIO_1.01.01/config/feature/clean/up.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/debianutils/mktemp.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/debianutils/mktemp.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/busybox.h)
+/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/debianutils/run_parts.o: /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/debianutils/run_parts.c \
+ /home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h $(dep_/home2/oder/VIZIO_1.01.01/apps/busybox-1.01/include/libbb.h)

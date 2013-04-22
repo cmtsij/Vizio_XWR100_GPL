@@ -1,0 +1,1504 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_117?></title>
+<%include_file("javascript.htm");%>
+
+
+<Script Language="JavaScript">
+
+var f=document.edit;
+
+var x=new Array(
+"aa",
+"bb",
+"cc",
+"dd",
+"ee",
+"11"
+);
+
+var dns = new Array(3);
+dns[0] = "0.0.0.0";
+dns[1] = "0.0.0.0";
+dns[2] = "0.0.0.0";
+
+var lan_dns = new Array(3);
+lan_dns[0] = '<%nvram_get("lan_dns1");%>';
+lan_dns[1] = '<%nvram_get("lan_dns2");%>';
+lan_dns[2] = '<%nvram_get("lan_dns3");%>';
+
+var wan_dns = new Array(3);
+wan_dns[0] = '<%nvram_get("wan_dns1");%>';
+wan_dns[1] = '<%nvram_get("wan_dns2");%>';
+wan_dns[2] = '<%nvram_get("wan_dns3");%>';
+
+String.prototype.eliminateSpace=eliminateSpace;
+
+var dayligh = <%nvram_get("timezone_daylightsaving");%> ;
+var time_zone_select = parseInt('<%nvram_get("timezone_index");%>',10)-1;
+
+function MTUCheck(f,wan_type)
+{
+	if (eval("f.is_auto_mtu_"+wan_type).selectedIndex==1)
+	  eval("f.mtu_"+wan_type).disabled = 0;
+	else 
+ 	  eval("f.mtu_"+wan_type).disabled = 1;
+}
+
+function eliminateSpace() 
+{
+    return this.replace(/[\s]+/g, "");
+}
+
+
+function copyto(f) 
+{ 
+	f.cloneMAC_1.value = x[0];
+	f.cloneMAC_2.value = x[1];
+	f.cloneMAC_3.value = x[2];
+	f.cloneMAC_4.value = x[3];
+	f.cloneMAC_5.value = x[4];
+	f.cloneMAC_6.value = x[5];
+	
+	f.MACloneSys[0].checked = true; 
+}
+
+function AssembleMACloneAddress ()
+{
+	if ( !(MACheck(document.forms[0].cloneMAC_1)) )
+    	return 0;
+
+	if ( !(MACheck(document.forms[0].cloneMAC_2)) )
+		return 0;
+
+	if ( !(MACheck(document.forms[0].cloneMAC_3)) )
+		return 0;
+
+	if ( !(MACheck(document.forms[0].cloneMAC_4)) )
+		return 0;
+
+	if ( !(MACheck(document.forms[0].cloneMAC_5)) )
+		return 0;
+
+	if ( !(MACheck(document.forms[0].cloneMAC_6)) )
+		return 0;
+
+	document.forms[0].wan_mac.value = document.forms[0].cloneMAC_1.value + ':' +
+					document.forms[0].cloneMAC_2.value + ':' +
+					document.forms[0].cloneMAC_3.value + ':' +
+					document.forms[0].cloneMAC_4.value + ':' +
+					document.forms[0].cloneMAC_5.value + ':' +
+					document.forms[0].cloneMAC_6.value;
+	if (	!(macsCheck1(document.forms[0].wan_mac)) )
+		return 0;
+	return true;
+}
+
+
+function ShowMACloneAddr(f, MACloneAddress)
+{
+	if (MACloneAddress == "") {
+		f.cloneMAC_1.value = "00";
+		f.cloneMAC_2.value = "00";
+		f.cloneMAC_3.value = "00";
+		f.cloneMAC_4.value = "00";
+		f.cloneMAC_5.value = "00";
+		f.cloneMAC_6.value = "00";
+	}
+	else{
+	f.cloneMAC_1.value = GetMACSegment(MACloneAddress, 1);
+	f.cloneMAC_2.value = GetMACSegment(MACloneAddress, 2);
+	f.cloneMAC_3.value = GetMACSegment(MACloneAddress, 3);
+	f.cloneMAC_4.value = GetMACSegment(MACloneAddress, 4);
+	f.cloneMAC_5.value = GetMACSegment(MACloneAddress, 5);
+	f.cloneMAC_6.value = GetMACSegment(MACloneAddress, 6);	
+	}
+}   
+
+
+function Mac_change(f)
+{
+	if (f.MACloneSys[0].checked == true)
+	{
+		f.cloneMAC_1.disabled = 0;
+		f.cloneMAC_2.disabled = 0;
+		f.cloneMAC_3.disabled = 0;
+		f.cloneMAC_4.disabled = 0;
+		f.cloneMAC_5.disabled = 0;
+		f.cloneMAC_6.disabled = 0;
+		f.CloneMyMACBtn.disabled = 0;
+	}
+	else
+	{
+		f.cloneMAC_1.disabled = 1;
+		f.cloneMAC_2.disabled = 1;
+		f.cloneMAC_3.disabled = 1;
+		f.cloneMAC_4.disabled = 1;
+		f.cloneMAC_5.disabled = 1;
+		f.cloneMAC_6.disabled = 1;
+    f.CloneMyMACBtn.disabled = 1;
+  }
+}
+function DDNS_change(index){
+	f = document.forms[0];
+	if(index == ""){
+
+		if('<%nvram_get("ddns_enabled");%>' == "1"){
+			if('<%nvram_get("dyn_ddns_enabled");%>' == "1")
+				index = '1';
+
+			if('<%nvram_get("tzo_ddns_enabled");%>' == "1")
+				index = '2';
+		}
+		else{
+			index = '0' ;
+		}
+	}
+
+	if(index == "0"){
+		document.getElementById("ddns_disable").style.display   = "block" ;
+		document.getElementById("ddns_dyndns").style.display 	 = "none" ;
+		document.getElementById("ddns_tzo").style.display   	 = "none" ;
+		f.DDNSEnable[0].checked = true ;
+	}
+
+	if(index == "1"){
+		document.getElementById("ddns_dyndns").style.display 	 = "block" ;
+		document.getElementById("ddns_disable").style.display   = "none" ;
+		document.getElementById("ddns_tzo").style.display  	 = "none" ;
+		f.DDNSEnable[1].checked = true ;
+	}
+
+	if(index == "2"){
+		document.getElementById("ddns_tzo").style.display  	 = "block" ;
+		document.getElementById("ddns_disable").style.display   = "none" ;
+		document.getElementById("ddns_dyndns").style.display 	 = "none" ;
+		f.DDNSEnable[2].checked = true ;
+	}
+
+}
+
+function wan_connection_type(wan_proto_type){
+
+
+	if(wan_proto_type == "" || wan_proto_type == "0")
+		wan_proto_type = '<%nvram_get("wan_proto");%>';
+
+
+
+	if(wan_proto_type == "dhcp"){
+		document.getElementById("wan_dhcp").style.display   = "block" ;
+		document.getElementById("wan_static").style.display = "none" ;
+		document.getElementById("wan_pppoe").style.display  = "none" ;
+		f.wan_proto.selectedIndex = '0' ;
+	}
+
+	if(wan_proto_type == "static"){
+		document.getElementById("wan_static").style.display = "block" ;
+		document.getElementById("wan_dhcp").style.display   = "none" ;
+		document.getElementById("wan_pppoe").style.display  = "none" ;
+		f.wan_proto.selectedIndex = '1' ;
+	}
+
+	if(wan_proto_type == "pppoe"){
+		document.getElementById("wan_pppoe").style.display  = "block" ;
+		document.getElementById("wan_dhcp").style.display   = "none" ;
+		document.getElementById("wan_static").style.display = "none" ;
+		f.wan_proto.selectedIndex = '2' ;
+	}
+	
+
+}
+
+function dialOnDemand_click(t){
+	
+	if(t == 0){
+		document.forms[0].idletime.disabled=0;
+		document.forms[0].Keep.disabled=1;
+	}
+	else{
+		document.forms[0].idletime.disabled=1;
+		document.forms[0].Keep.disabled=0;	
+	}
+}
+
+function InitValue_wan_dhcp(){
+	var j = 0;
+	for(i = 0; i < 3; i++)
+	{
+		if(lan_dns[i] != '0.0.0.0')
+			dns[j++] = lan_dns[i];
+	}
+
+	var i = 0;
+	for(; j < 3; j++)
+	{
+		while(i < 3)
+		{
+			if(wan_dns[i] != '0.0.0.0' && wan_dns[i] != '')
+				dns[j] = wan_dns[i];
+			i++;
+			if(dns[j] != '0.0.0.0')
+				break;
+		}
+	}
+	
+	var mtu, mtu_auto;
+
+	mtu = '<%nvram_get("wan_mtu");%>';
+	mtu_auto = '<%nvram_get("mtu_auto_sel");%>';
+	if (mtu == "1500" && mtu_auto == '1')
+	{
+		f.is_auto_mtu_dhcp.selectedIndex=0;
+		f.mtu_dhcp.value = '<%nvram_get("wan_mtu");%>';
+	}
+	else
+	{
+		f.is_auto_mtu_dhcp.selectedIndex=1;
+		f.mtu_dhcp.value = '<%nvram_get("wan_mtu");%>';
+	}
+	if (f.is_auto_mtu_dhcp.selectedIndex==1)
+	    f.mtu_dhcp.disabled = 0;
+	else 
+		f.mtu_dhcp.disabled = 1;
+	
+}
+
+function InitValue_wan_static(){
+	SplitWanIPAddress('<%nvram_get("wan_ipaddr");%>');
+	SplitWanSubnetMask('<%nvram_get("wan_netmask");%>');
+	SplitWanGateway('<%nvram_get("wan_gateway");%>');
+	SplitWanDNS0('<%nvram_get("wan_dns1");%>');
+	SplitWanDNS1('<%nvram_get("wan_dns2");%>');
+	SplitWanDNS2('<%nvram_get("wan_dns3");%>');
+	
+	var mtu, mtu_auto;
+
+	mtu = '<%nvram_get("wan_mtu");%>';
+	mtu_auto = '<%nvram_get("mtu_auto_sel");%>';
+	if (mtu == "1500" && mtu_auto == '1')
+	{
+		f.is_auto_mtu_static.selectedIndex=0;
+		f.mtu_static.value = '<%nvram_get("wan_mtu");%>';
+	}
+	else
+	{
+		f.is_auto_mtu_static.selectedIndex=1;
+		f.mtu_static.value = '<%nvram_get("wan_mtu");%>';
+	}
+	if (f.is_auto_mtu_static.selectedIndex==1)
+	    f.mtu_static.disabled = 0;
+	else 
+		f.mtu_static.disabled = 1;
+}
+
+function InitValue_wan_pppoe(f){
+
+	f.pppoe_username.value ='<%nvram_get("pppoe_username");%>';
+	f.pppoe_password.value ='<%nvram_get("pppoe_password");%>';	
+	f.pppoe_service_name.value ='<%nvram_get("pppoe_service_name");%>';	
+	
+	if ('<%nvram_get("pppoe_idle_time");%>' == 0) {
+		f.idletime.value = '<%nvram_get("pppoe_idle_time");%>';
+	} 
+	else {
+		f.idletime.value = '<%nvram_get("pppoe_idle_time");%>';
+	}
+
+	if ('<%nvram_get("pppoe_redial_time");%>' == 0) {
+		f.Keep.value = '<%nvram_get("pppoe_redial_time");%>';
+	} else {
+		f.Keep.value = '<%nvram_get("pppoe_redial_time");%>';
+	}
+
+	if ('<%nvram_get("pppoe_demand");%>' == 1){
+		f.dialOnDemand[0].checked = true;
+		document.forms[0].idletime.disabled=0;
+		document.forms[0].Keep.disabled=1;
+	}
+	else{
+		f.dialOnDemand[1].checked = true;	
+		document.forms[0].idletime.disabled=1;
+		document.forms[0].Keep.disabled=0;
+	}
+
+	var mtu, mtu_auto;
+	
+	mtu = '<%nvram_get("pppoe_mtu");%>';
+	mtu_auto = '<%nvram_get("mtu_auto_sel");%>';
+	if (mtu == "1492" && mtu_auto == '1')
+	{
+		f.is_auto_mtu_pppoe.selectedIndex=0;
+		f.mtu_pppoe.value = '<%nvram_get("pppoe_mtu");%>';
+	}
+	else
+	{
+		f.is_auto_mtu_pppoe.selectedIndex=1;
+		f.mtu_pppoe.value = '<%nvram_get("pppoe_mtu");%>';
+	}
+	if (f.is_auto_mtu_pppoe.selectedIndex==1)
+	    f.mtu_pppoe.disabled = 0;
+	else 
+		f.mtu_pppoe.disabled = 1;
+
+}
+
+function InitValue_Mac_clone(f){
+
+	var oldmac='<%nvram_get("wan_mac");%>';
+	var newmac='<%get_my_mac();%>';
+	x[0]=newmac.substring(0,2);
+	x[1]=newmac.substring(3,5);
+	x[2]=newmac.substring(6,8);
+	x[3]=newmac.substring(9,11);
+	x[4]=newmac.substring(12,14);
+	x[5]=newmac.substring(15,17);
+	var MAClonesys = '<%nvram_get("mac_clone_enabled");%>';
+	var client_from_remote = '<%nvram_get("client_from_remote");%>';
+
+	if(client_from_remote == '1') {
+		for(i = 0; i < f.MACloneSys.length; i ++) {
+			f.MACloneSys[i].disabled = true;
+		}
+	}
+	if (MAClonesys == '1')
+		f.MACloneSys[0].checked = true;
+	else
+		f.MACloneSys[1].checked = true;
+	Mac_change(f);
+	ShowMACloneAddr(f, oldmac);
+	f.CloneMyMACBtn.value=translate_str("MACClone",2);
+
+}
+	
+function InitValue_dyndns(f){
+	f.DYNDDNSUsername.value = '<%nvram_get("dyn_ddns_username");%>';
+	f.DYNDDNSPassword.value = '<%nvram_get("dyn_ddns_password");%>';
+	f.DYNDDNSHostname.value = '<%nvram_get("dyn_ddns_domain");%>';
+
+	if ('<%nvram_get("dyn_ddns_wild_card");%>' == 'on')	// Disabled
+		f.DYNDDNSWildCard[0].checked = true;
+	else
+		f.DYNDDNSWildCard[1].checked = true;
+		
+	f.Static.value=translate_str("DDNS",27);
+	
+	var dns_type = '<%nvram_get("dyn_ddns_enabled");%>';
+	var ddns_on = '<%nvram_get("ddns_enabled");%>';
+	if(f.DYNDDNSUsername.value == "" || f.DYNDDNSPassword.value == "" || f.DYNDDNSHostname.value =="")
+		f.Static.disabled = 1 ;
+	else if (dns_type == '0' || ddns_on == '0')
+		f.Static.disabled = 1 ;
+	else
+		f.Static.disabled = 0 ;
+
+	var dns_MX = '<%nvram_get("DYNDDNSBackupMX");%>';
+	if(dns_MX == '1')
+		f.DYNDDNSBackupMX[0].checked = 1;
+	else
+		f.DYNDDNSBackupMX[1].checked = 1;
+
+	var  maix_ex = '<%nvram_get("DYNDDNSSystem");%>';
+	if(maix_ex == 'statdns')
+		f.DYNDDNSSystem.selectedIndex = 1 ;
+	else if(maix_ex == 'custom')
+		f.DYNDDNSSystem.selectedIndex = 2 ;
+	else
+		f.DYNDDNSSystem.selectedIndex = 0 ;
+ 
+}
+
+function InitValue_dyntzo(f){
+
+
+	f.TZODDNSUsername.value = '<%nvram_get("tzo_ddns_username");%>';
+	f.TZODDNSPassword.value = '<%nvram_get("tzo_ddns_password");%>';
+	f.TZODDNSHostname.value = '<%nvram_get("tzo_ddns_domain");%>';
+	f.Static.value=translate_str("DDNS",27);
+	
+	var dns_type = '<%nvram_get("tzo_ddns_enabled");%>';
+	var ddns_on = '<%nvram_get("ddns_enabled");%>';
+	if(f.TZODDNSUsername.value == "" || f.TZODDNSPassword.value == "" || f.TZODDNSHostname.value ==""){
+		f.Static.disabled = 1 ;
+	}
+	else if (dns_type == '0' || ddns_on == '0'){
+		f.Static.disabled = 1 ;
+	}
+	else{
+		f.Static.disabled = 0 ;
+	}
+}
+
+function InitValue_timezone(f){
+	if ('<%nvram_get("timezone_daylightsaving");%>'=='1')
+		f.Daylight.checked=true;
+	else
+		f.Daylight.checked=false;
+
+	if( '<%nvram_get("web_extra_lang");%>' == '1' )
+	{
+			f.language.options[f.language.options.length] = new Option('<%nvram_get_hex("web_lang_desc");%>','newlang');
+	}
+
+	/*-----Time Setting-----*/
+	//passForm.timeZone.selectedIndex =  time_zone_select;
+	Setdaylightsaving(f,dayligh,time_zone_select);
+
+}
+
+function InitValue(f)
+{
+  var f=document.edit;
+  
+	  show_network_status();
+	  
+	wan_connection_type('<%nvram_get("wan_proto");%>')
+	DDNS_change('');  
+	InitValue_wan_dhcp();
+	InitValue_wan_static(f); 
+	InitValue_wan_pppoe(f);
+	InitValue_Mac_clone(f); 
+	InitValue_dyndns(f);
+	InitValue_dyntzo(f);
+	InitValue_timezone(f);  
+}
+
+function ValidateForm_wan_dhcp(f){
+	if (!checkNum(f.mtu_dhcp)) return 0;
+	
+	if (f.is_auto_mtu_dhcp.value == 1)	{
+		f.wan_mtu.value = "1500";
+		f.mtu_auto_sel.value = '1';
+	}
+	else
+	{
+		if (f.mtu_dhcp.value < 576 || f.mtu_dhcp.value > 1500 || f.mtu_dhcp.value == "")
+		{
+			alert(translate_str("BasicSetup",92));
+			f.mtu_dhcp.focus();
+			return 0;
+		}
+		else	{
+			f.wan_mtu.value = f.mtu_dhcp.value;
+			f.mtu_auto_sel.value = '0';
+		}
+	}
+	
+	f.data1.value += " wan_proto wan_ipaddr wan_netmask wan_gateway wan_dns1 wan_dns2 wan_dns3 wan_mtu mtu_auto_sel";
+	f.wan_ipaddr.value="0.0.0.0";
+	f.wan_netmask.value="0.0.0.0";
+	f.wan_gateway.value="0.0.0.0";
+	f.wan_dns1.value="0.0.0.0";
+	f.wan_dns2.value="0.0.0.0";
+	f.wan_dns3.value="0.0.0.0";
+	
+
+
+	return 1; 
+}
+
+function ValidateForm_wan_static(f){
+
+	if (!checkNum(f.mtu_static)) return 0;
+	
+	if (f.is_auto_mtu_static.value == 1)	{
+		f.wan_mtu.value = "1500";
+		f.mtu_auto_sel.value = '1';
+	}
+	else
+	{
+		if (f.mtu_static.value < 576 || f.mtu_static.value > 1500 || f.mtu_static.value == "")
+		{
+			alert(translate_str("BasicSetup",92));
+			f.mtu_static.focus();
+			return 0;
+		}
+		else	{
+			f.wan_mtu.value = f.mtu_static.value;
+			f.mtu_auto_sel.value = '0';
+		}
+	}
+	
+	if ( !AssembleWanIPAddress() ) { return 0; }
+	if ( !AssembleWanSubnetMask() ) { return 0; }
+	if ( !AssembleWanGateway() ) { return 0; }
+	if ( !AssembleWanDNS0() ) { return 0; }
+	if ( !AssembleWanDNS1() ) { return 0; }
+	if ( !AssembleWanDNS2() ) { return 0; }
+	
+	if(document.forms[0].wan_gateway.value == document.forms[0].wan_ipaddr.value){
+		alert(translate_str("JavaScript",115));
+		return 0;
+	}
+	
+	if ( !SubnetCheck(f.wan_ipaddr, f.wan_netmask, f.wan_gateway) )	{	return 0;}
+
+	f.data1.value += " wan_proto wan_ipaddr wan_netmask wan_gateway wan_dns1 wan_dns2 wan_dns3 wan_mtu mtu_auto_sel";
+
+	return 1; 
+}
+
+function ValidateForm_wan_pppoe(f){
+
+	if (!CheckQuote1(f.pppoe_username)) return 0;
+	if (!CheckQuote(f.pppoe_password)) return 0;	
+	if (f.pppoe_username.value=="") {
+		alert(translate_str("BasicSetup",87));
+		f.pppoe_username.focus();
+		return 0 ;
+	}
+	if (f.pppoe_password.value=="") {
+		alert(translate_str("BasicSetup",88));
+		f.pppoe_password.focus();
+		return 0;
+	}
+	if (!CheckQuote1(f.pppoe_service_name)) return;
+
+	if (f.dialOnDemand[0].checked == true) {
+		f.pppoe_demand.value=1;
+		if (f.idletime.value != "") {
+			var idletime = parseInt(f.idletime.value, 10);
+			if (isNaN(idletime) || !(idletime > 0 && idletime <=120)) {
+				alert(translate_str("BasicSetup",169));
+				f.idletime.focus();
+				return 0 ;
+			}
+			f.pppoe_idle_time.value = idletime;
+			f.pppoe_redial_time.value = f.Keep.value;
+		}
+		else {
+			alert(translate_str("BasicSetup",169));
+			f.idletime.focus();
+			return 0;
+		}
+	}
+	else {
+		f.pppoe_demand.value=0;
+		if (f.Keep.value != "") {
+			var Keep = parseInt(f.Keep.value, 10);
+			if (isNaN(Keep) || !(Keep >= 30 && Keep <=3600)) {
+				alert(translate_str("BasicSetup",170));
+				f.Keep.focus();
+				return 0;
+			}
+			f.pppoe_redial_time.value = Keep;
+			f.pppoe_idle_time.value = f.idletime.value;
+		}
+		else {
+			alert(translate_str("BasicSetup",170));
+			f.Keep.focus();
+			return 0;
+		}
+	}
+
+	if (!checkNum(f.mtu_pppoe)) return 0;
+	
+	if (f.is_auto_mtu_pppoe.value == 1)	{
+		f.pppoe_mtu.value = "1492";
+		f.mtu_auto_sel.value = '1';
+	}
+	else
+	{
+		if (f.mtu_pppoe.value < 576 || f.mtu_pppoe.value > 1492 || f.mtu_pppoe.value == "")
+		{
+			alert(translate_str("BasicSetup",171));
+			f.mtu_pppoe.focus();
+			return 0;
+		}
+		else
+		{
+			f.pppoe_mtu.value = f.mtu_pppoe.value;
+			f.mtu_auto_sel.value = '0';
+		}
+	}
+	
+	f.data1.value += " wan_proto pppoe_username pppoe_password pppoe_service_name pppoe_demand pppoe_idle_time pppoe_redial_time wan_ipaddr wan_netmask wan_gateway wan_dns1 wan_dns2 wan_dns3 pppoe_mtu mtu_auto_sel";
+
+	f.wan_ipaddr.value="0.0.0.0";
+	f.wan_netmask.value="0.0.0.0";
+	f.wan_gateway.value="0.0.0.0";
+	f.wan_dns1.value="0.0.0.0";
+	f.wan_dns2.value="0.0.0.0";
+	f.wan_dns3.value="0.0.0.0";
+
+
+	return 1 ;
+}
+
+function ValidateForm_mac_clone(f){
+
+	if (f.MACloneSys[0].checked == true)	{
+		f.mac_clone_enabled.value = 1;
+		if ( !AssembleMACloneAddress() ) {
+			return 0;
+		}
+	}
+	else
+		f.mac_clone_enabled.value = 0;
+
+	f.data1.value += " wan_mac mac_clone_enabled";
+
+	return 1; 
+}
+
+function ValidateForm_dyndis(f){
+
+	f.data1.value += " ddns_enabled DYNDNSDDNSok TZODDNSok" ;
+	f.ddns_enabled.value = "0" ;
+	f.DYNDNSDDNSok.value = "0" ;
+	f.TZODDNSok.value = "0" ;
+
+	return 1; 
+}
+
+function ValidateForm_dyndns(f){
+
+	if (!CheckQuote1(f.DYNDDNSUsername)) return 0;
+	//if (!CheckQuote1(f.DYNDDNSPassword)) return 0;
+	if (!CheckQuote1(f.DYNDDNSHostname)) return 0;
+	if (!CheckEmpty(f.DYNDDNSUsername, translate_str("DDNS",8)))
+		return 0;
+	if (!CheckEmpty(f.DYNDDNSPassword, translate_str("DDNS",9)))
+		return 0;
+	if (!CheckEmpty(f.DYNDDNSHostname, translate_str("DDNS",10)))
+		return 0;
+	f.dyn_ddns_username.value = f.DYNDDNSUsername.value;
+	f.dyn_ddns_password.value = f.DYNDDNSPassword.value;
+	f.dyn_ddns_domain.value = f.DYNDDNSHostname.value;
+
+	if (f.DYNDDNSWildCard[0].checked == true)
+		f.dyn_ddns_wild_card.value = 'on';
+	else
+		f.dyn_ddns_wild_card.value = 'off';
+
+	f.data1.value += " ddns_enabled tzo_ddns_enabled dyn_ddns_enabled dyn_ddns_username dyn_ddns_password dyn_ddns_domain dyn_ddns_wild_card DYNDDNSSystem DYNDDNSMailEx DYNDDNSBackupMX DYNDNSDDNSok";
+	f.ddns_enabled.value = "1" ;
+	f.DYNDNSDDNSok.value = "Connecting to DynDNS server..." ;
+	f.tzo_ddns_enabled.value = "0" ;
+	f.dyn_ddns_enabled.value = "1" ;
+
+	return 1; 
+}
+
+function ValidateForm_dyntzo(f){
+
+	if (!CheckQuote1(f.TZODDNSUsername)) return 0;
+	if (!CheckQuote1(f.TZODDNSPassword)) return 0;
+	if (!CheckQuote1(f.TZODDNSHostname)) return 0;
+	f.TZODDNSHostname.value = f.TZODDNSHostname.value.eliminateSpace();
+	if (!CheckEmpty(f.TZODDNSUsername, translate_str("DDNS",14)))
+		return 0;
+	if (!CheckEmpty(f.TZODDNSPassword, translate_str("DDNS",15)))
+		return 0;
+	if (!CheckEmpty(f.TZODDNSHostname, translate_str("JavaScript",11)))
+		return 0;
+		
+	f.tzo_ddns_username.value = f.TZODDNSUsername.value;
+	f.tzo_ddns_password.value = f.TZODDNSPassword.value;
+	f.tzo_ddns_domain.value = f.TZODDNSHostname.value;
+
+	f.data1.value += " ddns_enabled dyn_ddns_enabled tzo_ddns_enabled tzo_ddns_username tzo_ddns_password tzo_ddns_domain TZODDNSok";
+	f.ddns_enabled.value = "1" ;
+	f.TZODDNSok.value = "Connecting to TZO server..." ;
+	f.tzo_ddns_enabled.value = "1" ;
+	f.dyn_ddns_enabled.value = "0" ;
+
+
+	return 1; 
+}
+
+function ValidateForm_timezone(f){
+
+	time_tmp=f.timeZone.value;
+	time_tmp=time_tmp.substring(0,3);
+	f.timezone_index.value=time_tmp;
+	f.timezone_diff.value=f.timeZone.value;
+	if (f.Daylight.checked==true)
+		f.timezone_daylightsaving.value=1;
+	else
+		f.timezone_daylightsaving.value=0;
+
+	f.data1.value += " timezone_index timezone_diff timezone_daylightsaving";
+
+	return 1; 
+}
+
+function ValidateForm(f) 
+{
+	if(f.wan_proto.selectedIndex == "0"){
+		if(!ValidateForm_wan_dhcp(f))		return;
+	}
+	else if(f.wan_proto.selectedIndex == "1"){
+		if(!ValidateForm_wan_static(f))		return;	
+	}
+	else if(f.wan_proto.selectedIndex == "2"){
+		if(!ValidateForm_wan_pppoe(f))		return;	
+	}
+
+	if(!ValidateForm_mac_clone(f))return;
+	
+	
+	if(f.DDNSEnable[0].checked == true){
+		if(!ValidateForm_dyndis(f))return;
+	}
+	else if(f.DDNSEnable[1].checked == true){
+		if(!ValidateForm_dyndns(f))return;
+	}
+	else if(f.DDNSEnable[2].checked == true){
+		if(!ValidateForm_dyntzo(f))return;
+	}
+
+	if(!ValidateForm_timezone(f))return;
+
+	f.submit();
+}
+
+function mouseOver(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("internet").src = "internet_icon_bri.png";
+}
+
+function mouseOut(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("internet").src = "internet_icon_bri.png";
+}
+
+var language_show = 0;
+function open_language()
+{
+	 var language_choice = document.getElementById('language');
+	 
+	if(language_show == '1') {
+		language_show = 0;
+		language_choice.style.visibility="hidden";
+	}
+	else {
+		language_show = 1;
+		language_choice.style.visibility="visible";
+	}
+}
+
+function apply_lang(e)
+{
+	var f1 = document.forms[1];
+	f1.language_str.value = e;
+ 	f1.submit();
+}
+
+function chage_color(e)
+{
+	e.style.color="#4F81BD";
+	e.style.textDecoration="underline"; 
+}
+
+function back_color(e)
+{
+	e.style.color="#B8B8B8";
+	e.style.textDecoration="none"; 
+}
+function ConnectForm(f)
+{
+	f.submit();
+}
+</Script>
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="edit" action="post.cgi" method="post">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_edit_internet_wan.htm">
+<input type="hidden" name="redirect_timer" value="15000">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="">
+<input type="hidden" name="wan_ipaddr">
+<input type="hidden" name="wan_netmask">
+<input type="hidden" name="wan_gateway">
+<input type="hidden" name="wan_dns1">
+<input type="hidden" name="wan_dns2">
+<input type="hidden" name="wan_dns3">
+<input type="hidden" name="wan_mtu">
+<input type="hidden" name="mtu_auto_sel">
+<input type="hidden" name="pppoe_demand">
+<input type="hidden" name="pppoe_idle_time">
+<input type="hidden" name="pppoe_redial_time">
+<input type="hidden" name="pppoe_mtu">
+<input type="hidden" name="mac_clone_enabled">
+<input type="hidden" name="wan_mac">
+<input type="hidden" name="ddns_enabled">
+<input type="hidden" name="DYNDNSDDNSok">
+<input type="hidden" name="TZODDNSok">
+<input type="hidden" name="tzo_ddns_enabled">
+<input type="hidden" name="dyn_ddns_enabled">
+<input type="hidden" name="dyn_ddns_username">
+<input type="hidden" name="dyn_ddns_password">
+<input type="hidden" name="dyn_ddns_domain">
+<input type="hidden" name="dyn_ddns_wild_card">
+<input type="hidden" name="tzo_ddns_username">
+<input type="hidden" name="tzo_ddns_password">
+<input type="hidden" name="tzo_ddns_domain">
+<input type="hidden" name="timezone_index">
+<input type="hidden" name="timezone_diff">
+<input type="hidden" name="timezone_daylightsaving">
+<center>
+ 			 
+<table border="0" width="1000" >
+	<tr>
+		<td>
+
+<%include_file("adv_logol_header.htm");%>
+
+   <div id="warp"> 
+     
+      <div class="Pointer_Internetpic"></div>
+			<p  style="height:11px;"></p>   
+      <div class="status_background">
+			<p  style="height:30px;"></p>
+			<p  class="adv_title_hr"><img src="hr_line.png"></p>
+      		<p class="adv_title"><script>translate_strWrite("SetupWizard",52);</script></p>
+
+      		<div class="Router_status">
+  
+      			<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+      				<tr height="2"><td colspan="4" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      				<tr height="32">
+      					<td colspan="4" align="center">
+	                      <select name="wan_proto" onchange="wan_connection_type ( this.value )" class="wan_select_col_width">
+	                        <option value="dhcp" selected><script>translate_strWrite("BasicSetup",9);</script></option>
+	                        <option value="static"><script>translate_strWrite("BasicSetup",10);</script></option>
+	                        <option value="pppoe"><script>translate_strWrite("BasicSetup",11);</script></option>
+	                      </select>
+      					</td>
+      			    </tr>
+							<tr height="2"><td colspan="4" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      				<tr>
+      					<td colspan="4" align="center">
+      						<DIV ID="wan_dhcp" style="display:none;">
+      							<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+				      				<tr height="32">
+				      					<td width="250" align="right"><script>translate_strWrite("BasicSetup",110);</script>:</td>
+				      					<td width="30">&nbsp;</td>
+				      					<td align="left" width="250"><%nvram_get("wan_ipaddr");%></td>
+				      			    </tr>
+
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("BasicSetup",21);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left"><%nvram_get("wan_netmask");%></td>
+				      			    </tr>
+				      			    
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("BasicSetup",73);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left"><%nvram_get("wan_gateway");%></td>
+				      			    </tr>
+				      			    
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("BasicSetup",112);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left"><%nvram_get("wan_dns1");%></td>
+				      			    </tr>
+
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("BasicSetup",113);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left"><%nvram_get("wan_dns2");%></td>
+				      			    </tr>
+				      			    
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("BasicSetup",16);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left">
+											<select onChange="MTUCheck(document.forms[0],'dhcp');" size=1 name=is_auto_mtu_dhcp class="mtu_select_col_width">
+												<option selected value="1">
+												<script>translate_strWrite("BasicSetup",18);</script>
+												</option>
+												<option value="0">
+												<script>translate_strWrite("BasicSetup",17);</script>
+												</option>
+											</select>
+											&nbsp;
+											<script>translate_strWrite("BasicSetup",19);</script>:
+											<input class="mtu_col_width" maxlength=4 size=2 name="mtu_dhcp" >
+				      					</td>
+				      			    </tr>
+      							</table>
+			      			</div><!--End wan_dhcp--->
+			      			
+      						<DIV ID="wan_static" style="display:none;">
+      							<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+				      				<tr height="32">
+				      					<td width="250" align="right"><script>translate_strWrite("BasicSetup",110);</script>:</td>
+				      					<td width="30">&nbsp;</td>
+				      					<td align="left" width="250">
+										  <input class="ip_col_width" maxlength="3"  name="wan_ipaddr_1" value="0">
+										  . 
+										  <input class="ip_col_width" maxlength="3"  name="wan_ipaddr_2" value="0" >
+										  . 
+										  <input class="ip_col_width" maxlength="3"  name="wan_ipaddr_3" value="0" >
+										  . 
+										  <input class="ip_col_width" maxlength="3"  name="wan_ipaddr_4" value="0" >
+				      					</td>
+				      			    </tr>
+
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("BasicSetup",72);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left">
+										  <input class="ip_col_width" maxlength="3"  name="wan_netmask_1" value="255" >
+										  . 
+										  <input class="ip_col_width" maxlength="3"  name="wan_netmask_2" value="255" >
+
+										  . 
+										  <input class="ip_col_width" maxlength="3"  name="wan_netmask_3" value="255" >
+										  . 
+										  <input class="ip_col_width" maxlength="3"  name="wan_netmask_4" value="0" >
+
+				      					</td>
+				      			    </tr>
+
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("BasicSetup",73);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left">
+										  <input class="ip_col_width" maxlength="3"  name="wan_gateway_1" value="0" >
+										  . 
+										  <input class="ip_col_width" maxlength="3"  name="wan_gateway_2" value="0" >
+										  . 
+										  <input class="ip_col_width" maxlength="3"  name="wan_gateway_3" value="0" >
+										  . 
+										  <input class="ip_col_width" maxlength="3"  name="wan_gateway_4" value="0" >
+
+				      					</td>
+				      			    </tr>
+
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("BasicSetup",74);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left">
+										  <input class="ip_col_width" maxlength="3"  name="wan_dns0_1" value="0" >
+										  . 
+										  <input class="ip_col_width" maxlength="3"  name="wan_dns0_2" value="0" >
+										  . 
+										  <input class="ip_col_width" maxlength="3"  name="wan_dns0_3" value="0" >
+										  . 
+										  <input class="ip_col_width" maxlength="3"  name="wan_dns0_4" value="0" >
+
+				      					</td>
+				      			    </tr>
+
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("BasicSetup",75);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left">
+										  <input class="ip_col_width" maxlength="3"  name="wan_dns1_1" value="0" >
+										  . 
+										  <input class="ip_col_width" maxlength="3"  name="wan_dns1_2" value="0" >
+										  . 
+										  <input class="ip_col_width" maxlength="3"  name="wan_dns1_3" value="0" >
+
+										  . 
+										  <input class="ip_col_width" maxlength="3"  name="wan_dns1_4" value="0" >
+
+				      					</td>
+				      			    </tr>
+
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("BasicSetup",76);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left">
+										  <input class="ip_col_width" maxlength="3"  name="wan_dns2_1" value="0" >
+										  . 
+										  <input class="ip_col_width" maxlength="3"  name="wan_dns2_2" value="0" >
+										  . 
+										  <input class="ip_col_width" maxlength="3"  name="wan_dns2_3" value="0" >
+										  . 
+										  <input class="ip_col_width" maxlength="3"  name="wan_dns2_4" value="0" >
+
+				      					</td>
+				      			    </tr>
+				      			    
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("BasicSetup",16);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left">
+											<select onChange="MTUCheck(document.forms[0],'static');" size=1 name=is_auto_mtu_static  class="mtu_select_col_width">
+												<option selected value="1">
+												<script>translate_strWrite("BasicSetup",18);</script>
+												</option>
+												<option value="0">
+												<script>translate_strWrite("BasicSetup",17);</script>
+												</option>
+											</select>
+											&nbsp;
+											<script>translate_strWrite("BasicSetup",19);</script>:
+											<input class="mtu_col_width" maxlength=4 size=2 name="mtu_static" >
+				      					</td>
+				      			    </tr>
+      							</table>
+			      			</div><!--End wan_static--->
+			      			
+      						<DIV ID="wan_pppoe" style="display:none;">
+      							<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+				      				<tr height="32">
+				      					<td width="350" align="right"><script>translate_strWrite("BasicSetup",110);</script>:</td>
+				      					<td width="30">&nbsp;</td>
+				      					<td align="left" width="350"><%nvram_get("wan_ipaddr");%></td>
+				      			    </tr>
+
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("BasicSetup",21);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left"><%nvram_get("wan_netmask");%></td>
+				      			    </tr>
+				      			    
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("BasicSetup",73);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left"><%nvram_get("wan_gateway");%></td>
+				      			    </tr>
+				      			    
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("BasicSetup",112);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left"><%nvram_get("wan_dns1");%></td>
+				      			    </tr>
+
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("BasicSetup",113);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left"><%nvram_get("wan_dns2");%></td>
+				      			    </tr>      							
+      							
+									<tr height="32">
+										<td align="right"><script>translate_strWrite("BasicSetup",77);</script>:</td>
+										<td>&nbsp;</td>
+										<td align="left"><input name="pppoe_username" maxlength="63" value="" type="text" class="key_col_width"></td>
+									</tr>
+
+									<tr height="32">
+										<td align="right"><script>translate_strWrite("BasicSetup",78);</script>:</td>
+										<td>&nbsp;</td>
+										<td align="left"><input name="pppoe_password" maxlength="63" value="" type="password" class="key_col_width"></td>
+									</tr>
+
+									<tr height="32">
+										<td align="right"><script>translate_strWrite("BasicSetup",177);</script>:</td>
+										<td>&nbsp;</td>
+										<td align="left"><input name="pppoe_service_name" maxlength="63" value="" type="text" class="key_col_width"></td>
+									</tr>
+
+									<tr height="32">
+										<td align="right">&nbsp;</td>
+										<td>&nbsp;</td>
+										<td align="left" colspan="2"><input name="dialOnDemand" value="0" onclick="dialOnDemand_click(0);" type="radio">
+											<script>translate_strWrite("BasicSetup",79);</script>
+											<script>translate_strWrite("BasicSetup",80);</script>
+											&nbsp;<font style="font-size: 8pt;" face="Arial">
+											<input disabled="disabled" class="mtu_col_width" name="idletime" value=""  maxlength="4" type="text">
+											</font>&nbsp;<script>translate_strWrite("BasicSetup",81);</script></font>
+										</td>
+									</tr>
+
+									<tr height="32">
+										<td align="right">&nbsp;</td>
+										<td>&nbsp;</td>
+										<td align="left"><input name="dialOnDemand" value="1" onclick="dialOnDemand_click(1);" type="radio">
+											<script>translate_strWrite("BasicSetup",82);</script>
+											<script>translate_strWrite("BasicSetup",83);</script>
+												<input type="text" class="mtu_col_width" maxlength="4" size="2" name="Keep">
+											&nbsp;
+											<script>translate_strWrite("BasicSetup",84);</script>
+										</td>
+									</tr>
+									
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("BasicSetup",16);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left">
+											<select onChange="MTUCheck(document.forms[0],'pppoe');" size=1 name=is_auto_mtu_pppoe  class="mtu_select_col_width">
+												<option selected value="1">
+												<script>translate_strWrite("BasicSetup",18);</script>
+												</option>
+												<option value="0">
+												<script>translate_strWrite("BasicSetup",17);</script>
+												</option>
+											</select>
+											&nbsp;
+											<script>translate_strWrite("BasicSetup",19);</script>:
+											<input class="mtu_col_width" maxlength=4 size=2 name="mtu_pppoe" >
+				      					</td>
+				      			    </tr>
+      							</table>
+			      			</div><!--End wan_pppoe--->
+			      			
+      					</td>
+      			    </tr>
+
+      			</table>
+
+      </div>
+      
+      
+      
+	  
+			<p  style="height:30px;"></p>
+				<p  class="adv_title_hr"><img src="hr_line.png"></p>
+      		<p class="adv_title"><script>translate_strWrite("SetupWizard",53);</script></p>
+
+      		<div class="Router_status">
+      			
+      			<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+ 							<tr height="2"><td colspan="4" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      				<tr height="32">
+      					<td colspan="4" align="center">
+							<input name="MACloneSys" onclick="Mac_change(document.forms[0]);" value="1" type="radio">&nbsp;
+							<script>translate_strWrite("CheckBox",0);</script>&nbsp;&nbsp;
+							<input name="MACloneSys" onclick="Mac_change(document.forms[0]);" value="0" type="radio">&nbsp;
+							<script>translate_strWrite("CheckBox",1);</script>&nbsp;
+						</td>
+      			    </tr>
+						<tr height="2"><td colspan="4" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      				<tr height="32">
+      					<td width="250" align="right"><script>translate_strWrite("MACClone",1);</script>:</td>
+      					<td width="30">&nbsp;</td>
+      					<td align="left" width="250">
+							<input disabled="disabled" class="mac_col_width" name="cloneMAC_1"  maxlength="2" >
+							. 
+							<input disabled="disabled" class="mac_col_width" name="cloneMAC_2"  maxlength="2" >
+							. 
+							<input disabled="disabled" class="mac_col_width" name="cloneMAC_3"  maxlength="2" >
+							. 
+							<input disabled="disabled" class="mac_col_width" name="cloneMAC_4"  maxlength="2" >
+							. 
+							<input disabled="disabled" class="mac_col_width" name="cloneMAC_5"  maxlength="2" >
+							. 
+							<input disabled="disabled" class="mac_col_width" name="cloneMAC_6"  maxlength="2" >
+      					</td>
+      			    </tr>
+
+      				<tr height="32">
+      					<td align="right">&nbsp;</td>
+      					<td >&nbsp;</td>
+      					<td align="left"><input disabled="disabled" name="CloneMyMACBtn" value="Clone My PC's MAC" onclick="copyto(document.forms[0]);" type="button"></td>
+      			    </tr>
+								<tr height="32">
+									<td width="250" align="right"><script>translate_strWrite("SetupWizard",125);</script>:</td>
+									<td width="30">&nbsp;</td>
+									<td align="left" width="250"><%nvram_get("wan_mac");%>
+									</td>
+								</tr>
+
+      			</table>
+      </div>
+
+			<p  style="height:30px;"></p>
+			<p  class="adv_title_hr"><img src="hr_line.png"></p>
+      		<p class="adv_title"><script>translate_strWrite("DDNS",0);</script></p>
+
+      		<div class="Router_status">
+      			<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+						<tr height="2"><td colspan="4" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      				<tr height="32">
+      					<td colspan="4" align="center">
+      					  <input type="radio" name ="DDNSEnable" onClick="DDNS_change(this.value);" value="0">
+      					  <script>translate_strWrite("CheckBox",1);</script>&nbsp;&nbsp;
+      					  <input type="radio" name ="DDNSEnable" onClick="DDNS_change(this.value);" value="1">
+      					  <script>translate_strWrite("DDNS",2);</script>&nbsp;&nbsp;
+      					  <input type="radio" name ="DDNSEnable" onClick="DDNS_change(this.value);" value="2">
+      					  <script>translate_strWrite("DDNS",3);</script>
+	                      <!--select name="DDNSEnable" onchange="DDNS_change(this.value);" class="ddns_select_col_width">
+	                        <option value="0"></option>
+	                        <option value="1"></option>
+	                        <option value="2"></option>
+	                      </select-->
+						</td>
+      			    </tr>
+							<tr height="2"><td colspan="4" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      				<tr>
+      					<td colspan="4" align="center">
+							<DIV ID="ddns_disable" style="display:none;">
+							
+							</div><!--End ddns_disable-->
+							
+							<DIV ID="ddns_dyndns" style="display:none;">
+								<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+				      				<tr height="32">
+				      					<td width="250" align="right"><script>translate_strWrite("DDNS",7);</script>:</td>
+				      					<td width="30">&nbsp;</td>
+				      					<td align="left" width="250"><input name="DYNDDNSUsername" value="<%nvram_get("dyn_ddns_username");%>" maxlength="32" type="text" class="wireless_select_col_width"></td>
+				      			    </tr>
+
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("BasicSetup",78);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left"><input name="DYNDDNSPassword" value="<%nvram_get("dyn_ddns_password");%>" maxlength="32" type="password" class="wireless_select_col_width"></td>
+				      			    </tr>
+
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("BasicSetup",14);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left"><input name="DYNDDNSHostname" value="<%nvram_get("dyn_ddns_domain");%>" maxlength="32" type="text" class="wireless_select_col_width"></td>
+				      			    </tr>
+
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("DDNS",18);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left">
+											<select name="DYNDDNSSystem" class="ddns_select_col_width" >
+												<option value="dyndns"><script>translate_strWrite("DDNS",22);</script></option>
+												<option value="statdns" selected="selected"><script>translate_strWrite("DDNS",23);</script></option>
+												<option value="custom"><script>translate_strWrite("DDNS",24);</script></option>
+											</select>
+				      					</td>
+				      			    </tr>
+
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("DDNS",19);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left"><input name="DYNDDNSMailEx" value="<%nvram_get("DYNDDNSMailEx");%>" maxlength="32" type="text" class="wireless_select_col_width"></td>
+				      			    </tr>
+
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("DDNS",20);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left">
+											<input name="DYNDDNSBackupMX" value="1" type="radio">
+											<script>translate_strWrite("DDNS",25);</script>&nbsp;&nbsp;
+											<input name="DYNDDNSBackupMX" value="0" type="radio">
+											<script>translate_strWrite("DDNS",26);</script>
+				      					</td>
+				      			    </tr>
+
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("DDNS",21);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left">
+											<input name="DYNDDNSWildCard" value="on" type="radio">
+											<script>translate_strWrite("DDNS",25);</script>&nbsp;&nbsp;
+											<input name="DYNDDNSWildCard" value="off" type="radio">
+											<script>translate_strWrite("DDNS",26);</script></font>
+				      					</td>
+				      			    </tr>
+
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("DDNS",13);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left"><script>dw('<%nvram_get("wan_ipaddr");%>');</script></td>
+				      			    </tr>
+				      			    
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("TopMenuBar",0);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left">
+											<script>
+						                      	var f = document.forms[0] ;
+												var dns_type = '<%nvram_get("dyn_ddns_enabled");%>';
+												var ddns_on = '<%nvram_get("ddns_enabled");%>';
+												if(f.DYNDDNSUsername.value == "" || f.DYNDDNSPassword.value == "" || f.DYNDDNSHostname.value =="" || dns_type == '0' || ddns_on == '0')
+													ShowDYNDDNS('0');
+												else
+													ShowDYNDDNS('<%nvram_get("DYNDNSDDNSok");%>');
+											</script>
+				      					</td>
+				      			    </tr>
+				    						<tr height="2"><td colspan="4" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+								</table>
+							</div><!--End ddns_dyndns-->
+							
+							<DIV ID="ddns_tzo" style="display:none;">
+								<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+				      				<tr height="32">
+				      					<td width="250" align="right"><script>translate_strWrite("DDNS",11);</script>:</td>
+				      					<td width="30">&nbsp;</td>
+				      					<td align="left" width="250"><input name="TZODDNSUsername" value="" maxlength="32" type="text" class="wireless_select_col_width"></td>
+				      			    </tr>
+
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("DDNS",12);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left"><input name="TZODDNSPassword" value="" maxlength="32" type="password" class="wireless_select_col_width"></td>
+				      			    </tr>
+
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("BasicSetup",15);</script>:</td>
+				      					<td>&nbsp;</td>
+				      					<td align="left"><input name="TZODDNSHostname" value="" maxlength="32" type="text" class="wireless_select_col_width"></td>
+				      			    </tr>
+				      			    
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("DDNS",13);</script>:</td>
+				      					<td >&nbsp;</td>
+				      					<td align="left"><script>dw('<%nvram_get("wan_ipaddr");%>');</script></td>
+				      			    </tr>
+				      			    
+				      				<tr height="32">
+				      					<td align="right"><script>translate_strWrite("TopMenuBar",0);</script>:</td>
+				      					<td >&nbsp;</td>
+				      					<td align="left"><script>ShowTZODDNS('<%nvram_get("tzo_ddns_enabled");%>','<%nvram_get("TZODDNSok");%>');</script></td></td>
+				      			    </tr>
+				      			    
+				      				<tr height="32">
+				      					<td align="right">&nbsp;</td>
+				      					<td >&nbsp;</td>
+				      					<td align="left"><input  onclick="ConnectForm(document.forms[2]);" name="Static" type="button"></td>
+				      			    </tr>
+				      				<tr height="2"><td colspan="4" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+ 								</table>
+							</div><!--End ddns_tzo-->
+      					</td>
+      			    </tr>
+
+      			</table>
+      </div>
+
+			<p  style="height:30px;"></p>
+			<p  class="adv_title_hr"><img src="hr_line.png"></p>
+      		<p class="adv_title"><script>translate_strWrite("JavaScript",163);</script></p>
+
+      		<div class="Router_status">
+      			
+      			<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+					<tr height="2"><td colspan="4" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+					<tr height="32">
+						<td colspan="4" align="center">
+							<select name="timeZone" onchange="Setdaylightsaving(this.form,dayligh,time_zone_select);" class="timezone_select_col_width">
+								<option value="001+12:00"<% asp_TZ(1); %>>(GMT-12:00) <?BasicSetup_35?>
+								<option value="002+11:00"<% asp_TZ(2); %>>(GMT-11:00) <?BasicSetup_36?>
+								<option value="003+10:00"<% asp_TZ(3); %>>(GMT-10:00) <?BasicSetup_37?>
+								<option value="004+09:00"<% asp_TZ(4); %>>(GMT-09:00) <?BasicSetup_38?>
+								<option value="005+08:00"<% asp_TZ(5); %>>(GMT-08:00) <?BasicSetup_39?>
+								<option value="006+07:00"<% asp_TZ(6); %>>(GMT-07:00) <?BasicSetup_40?>
+								<option value="007+07:00"<% asp_TZ(7); %>>(GMT-07:00) <?BasicSetup_41?>
+								<option value="008+06:00"<% asp_TZ(8); %>>(GMT-06:00) <?BasicSetup_42?>
+								<option value="009+06:00"<% asp_TZ(9); %>>(GMT-06:00) <?BasicSetup_43?>
+								<option value="010+05:00" <% asp_TZ(10); %>>(GMT-05:00) <?BasicSetup_44?></option>
+								<option value="011+05:00" <% asp_TZ(11); %>>(GMT-05:00) <?BasicSetup_45?></option>
+								<option value="012+04:00" <% asp_TZ(12); %>>(GMT-04:00) <?BasicSetup_46?></option>
+								<option value="013+04:00" <% asp_TZ(13); %>>(GMT-04:00) <?BasicSetup_47?></option>
+								<option value="014+03:00" <% asp_TZ(14); %>>(GMT-03:00) <?BasicSetup_48?></option>
+								<option value="015+03:00" <% asp_TZ(15); %>>(GMT-03:00) <?BasicSetup_49?></option>
+								<option value="016+02:00" <% asp_TZ(16); %>>(GMT-02:00) <?BasicSetup_50?></option>
+								<option value="017+01:00" <% asp_TZ(17); %>>(GMT-01:00) <?BasicSetup_51?></option>
+								<option value="018+00:00" <% asp_TZ(18); %>>(GMT) <?BasicSetup_52?></option>
+								<option value="019+00:00" <% asp_TZ(19); %>>(GMT) <?BasicSetup_53?></option>
+								<option value="020-01:00" <% asp_TZ(20); %>>(GMT+01:00) <?BasicSetup_54?></option>
+								<option value="021-01:00" <% asp_TZ(21); %>>(GMT+01:00) <?BasicSetup_55?></option>
+								<option value="022-02:00" <% asp_TZ(22); %>>(GMT+02:00) <?BasicSetup_56?></option>
+								<option value="023-02:00" <% asp_TZ(23); %>>(GMT+02:00) <?BasicSetup_57?></option>
+								<option value="024-03:00" <% asp_TZ(24); %>>(GMT+03:00) <?BasicSetup_58?></option>
+								<option value="025-04:00" <% asp_TZ(25); %>>(GMT+04:00) <?BasicSetup_59?></option>
+								<option value="026-05:00" <% asp_TZ(26); %>>(GMT+05:00) <?BasicSetup_60?></option>
+								<option value="027-06:00" <% asp_TZ(27); %>>(GMT+06:00) <?BasicSetup_61?></option>
+								<option value="028-07:00" <% asp_TZ(28); %>>(GMT+07:00) <?BasicSetup_62?></option>
+								<option value="029-08:00" <% asp_TZ(29); %>>(GMT+08:00) <?BasicSetup_63?></option>
+								<option value="030-08:00" <% asp_TZ(30); %>>(GMT+08:00) <?BasicSetup_64?></option>
+								<option value="031-09:00" <% asp_TZ(31); %>>(GMT+09:00) <?BasicSetup_65?></option>
+								<option value="032-10:00" <% asp_TZ(32); %>>(GMT+10:00) <?BasicSetup_66?></option>
+								<option value="033-10:00" <% asp_TZ(33); %>>(GMT+10:00) <?BasicSetup_67?></option>
+								<option value="034-11:00" <% asp_TZ(34); %>>(GMT+11:00) <?BasicSetup_68?></option>
+								<option value="035-12:00" <% asp_TZ(35); %>>(GMT+12:00) <?BasicSetup_69?></option>
+								<option value="036-12:00" <% asp_TZ(36); %>>(GMT+12:00) <?BasicSetup_70?></option>
+							</select>                 
+
+						</td>
+					</tr>
+      			    
+					<tr height="2"><td colspan="4" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      			    
+      				<tr>
+      					<td colspan="4" align="center">
+							<input type="checkbox" name="Daylight" >
+	                        <font face="Arial" style="font-size: 8pt">
+	                        <script>translate_strWrite("BasicSetup",34);</script>              
+      					</td>
+      			    </tr>
+      			</table>
+
+		     <p style="line-heigt:42px;">&nbsp;</p>
+
+		      <p class="status_end"></p>    
+      </div>    
+   </div> 
+       <div class="angle"></div>
+          <div class="EZ_mid">  
+      		<p style="height:10px;"></p>      		 		  				    
+				  	<div class="Cancel_Save_button">
+				  <table border="0" cellspacing="0" cellpadding="0" width=335>
+				  	<tr height=23 width=600>
+				  		<td align="right" width=75>
+					  		<table border="0" cellspacing="0" cellpadding="0" width=75>
+									<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="adv_edit_internet.htm">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",1);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										</tr>
+									</table>
+							</td>
+				  	<td align="center" width="60">&nbsp;<script>translate_strWrite("BasicSetup",162);</script>&nbsp;
+				  		</td>
+				  	<td align="left" width=200>
+				  		<table border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+									<td class="SW_LeftButton">&nbsp;</td>
+									<td class="SW_BottomButton"><a href="javascript:ValidateForm(document.forms[0]);">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",0);</script></font>&nbsp;</a></td>
+									<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+							</td>
+						</tr>
+				  </table>
+					</div>	  				    					    														    						    			    
+      </div>
+      
+
+        
+       <div style="height: 50px"></div>    
+		    <div class="EZ_foot">
+						<div class="EZ_foot_L"><img src="bottom_help_icon.png" style="position:relative;top:3pt;">&nbsp;<a href="help/<%nvram_get("language_str");%>/default.htm#InternetAddress" target="_blank"><script>translate_strWrite("SetupWizard",64);</script></a>&nbsp;<img src="transparency.gif" style="width:15px;height:1px;"><a href="javascript:open_language();"><img src="bottom_language_icon.png" style="position:relative;top:3pt;">&nbsp;<script>translate_strWrite("BasicSetup",167);</script></a>&nbsp;&nbsp
+							<span id="language" style="visibility:hidden;">
+								<a href="javascript:apply_lang('en');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">English</font></a>&nbsp;&nbsp;
+								<a href="javascript:apply_lang('fr');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Fran&ccedil;ais</font></a>&nbsp;&nbsp;
+								<!--a href="javascript:apply_lang('spa');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Spanish</font></a--></span>
+						</div>
+						<div class="EZ_foot_C"></div>
+						<div class="EZ_foot_R">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		      </div>
+         <div class="clear_float"> </div>
+  
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+
+		</td>
+	</tr>
+	</table>
+</center>
+	</form>
+	<form method="post" action="save.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_edit_internet_wan.htm">
+<input type="hidden" name="redirect_timer" value="0">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="language_str">
+<input type="hidden" name="language_str" value="<%nvram_get("language_str");%>">
+</form>
+<form method="post" action="connect_ddns.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value='<%nvram_get("lan_ipaddr");%>'>
+<input type="hidden" name="next_page" value="adv_edit_internet_wan.htm">
+<input type="hidden" name="redirect_timer" value="0">
+<input type="hidden" name="reboot" value="0">
+</form>    
+<!--[if lt IE 7]>
+<script defer type="text/javascript" src="ie6fix.js"></script>
+<![endif]-->
+<script type="text/javascript">
+  document.getElementById("internet").src = "internet_icon_bri.png";
+</script>
+</body>
+</html>

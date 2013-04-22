@@ -1,0 +1,2668 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_118?></title>
+<%include_file("javascript.htm");%>
+
+
+<Script Language="JavaScript">
+
+var f=document.edit;
+var count_tri = 0 ;
+var count_pfw = 0 ;
+var page = '<%nvram_get("adv_security_page");%>';
+
+if(page == '')
+	page = '1';
+
+var lan_ipaddr ='<%nvram_get("lan_ipaddr");%>';
+var tmp = lan_ipaddr.split(".");
+var lan_ipaddr_prefix = tmp[0] + "." + tmp[1] + "." + tmp[2] + ".";
+var DataArray = new Array();
+var myData = [
+	["None", "---", "---", "---"],
+	["FTP", "21", "21", "TCP"],
+	["Telnet", "23", "23", "TCP"],
+	["SMTP", "25", "25", "TCP"],
+	["DNS", "53", "53", "<?SingalPortFW_15?>"],
+	["TFTP", "69", "69", "UDP"],
+	["Finger", "79", "79", "TCP"],
+	["HTTP", "80", "80", "TCP"],
+	["POP3", "110", "110", "TCP"],
+	["NNTP", "119", "119", "TCP"],
+	["SNMP", "161", "161", "UDP"]
+	];
+	
+var myData2 = [
+	["None", "---", "---", "---"],
+	["FTP", "21", "21", "0"],
+	["Telnet", "23", "23", "0"],
+	["SMTP", "25", "25", "0"],
+	["DNS", "53", "53", " 2"],
+	["TFTP", "69", "69", "1"],
+	["Finger", "79", "79", "0"],
+	["HTTP", "80", "80", "0"],
+	["POP3", "110", "110", "0"],
+	["NNTP", "119", "119", "0"],
+	["SNMP", "161", "161", "1"]
+	];
+		
+var TBLHeader = "<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse: collapse;WORD-BREAK: break-all\" bordercolor=\"#2971B9\" id=\"AutoNumber3\" width=\"430\">";
+var TBLFooter = "</table>" ;
+var TRHeader =  "<tr>" ;
+var TRFooter = "</tr>" ;
+var TDHeader = "<td height=\"25\" align=\"center\" valign=\"middle\" class=\"MainTd\">" ;
+var TDFooter = "</td>" ;
+function Data(name, external, internal, protocol) 
+{
+	this.Name = name;
+	this.External = external;
+	this.Internal = internal ;
+	this.Protocol = protocol ;
+}
+function DataShow(type, j) {
+//+++Eric Add PM 08:00 2008/1/7
+	var n ;
+	if(type != "None"){
+		for(n = 1 ; n <=3 ; n++){
+			if(n == j)	continue;
+				
+			if(type == eval("document.forms[0].description_"+n).value){
+				alert(translate_str("JavaScript",110));
+				eval("document.forms[0].description_"+j).selectedIndex=0;
+				DataShow("None", j)
+				return ;
+			}
+		}
+	}
+//---Eric Add PM 08:00 2008/1/7
+	var v = "";
+	var div_nu1 = "";
+	var div_nu2 = "";
+	var div_nu3 = "";
+	for (var i=0; i<DataArray.length; i++) 
+	{
+		div_nu1 = "myDiv" + j +"_1";
+		div_nu2 = "myDiv" + j +"_2";
+		div_nu3 = "myDiv" + j +"_3";
+		if(type==DataArray[i].Name) {
+			layerWrite(div_nu1, null, DataArray[i].External);
+			layerWrite(div_nu2, null, DataArray[i].Internal);
+			layerWrite(div_nu3, null, DataArray[i].Protocol);
+			eval("document.forms[0].description_"+j).value=type;
+			eval("document.forms[0].external_"+j).value=DataArray[i].External;
+			eval("document.forms[0].internal_"+j).value=DataArray[i].Internal;
+			if(DataArray[i].Protocol=="TCP")
+				eval("document.forms[0].protocol_"+j).value="0";
+			else if(DataArray[i].Protocol=="UDP")
+				eval("document.forms[0].protocol_"+j).value="1";
+			else
+				eval("document.forms[0].protocol_"+j).value="2";
+			break;
+		}
+	}
+	if(type=="None")
+	{
+		eval("document.forms[0].ToIP_"+j).value="0";
+		eval("document.forms[0].enable_"+j).checked=false;
+		eval("document.forms[0].external_"+j).value="0";
+		eval("document.forms[0].internal_"+j).value="0";
+		eval("document.forms[0].protocol_"+j).value="";
+	}
+}
+function DataInit(f) {
+	var f=document.edit;
+	var v = "";
+	var div_nu1 = "";
+	var div_nu2 = "";
+	var div_nu3 = "";
+	for (var i=1; i<=3	; i++) 
+	{
+		div_nu1 = "myDiv" + i +"_1";
+		div_nu2 = "myDiv" + i +"_2";
+		div_nu3 = "myDiv" + i +"_3";
+		if(eval("f.spdesc"+i).value=="None" || eval("f.spdesc"+i).value=="") {
+			layerWrite(div_nu1, null, "---");
+			layerWrite(div_nu2, null, "---");
+			layerWrite(div_nu3, null, "---");
+			eval("document.forms[0].external_"+i).value="";
+			eval("document.forms[0].internal_"+i).value="";
+			eval("document.forms[0].protocol_"+i).value="";
+		}
+		else {
+			layerWrite(div_nu1, null, eval("f.spexp"+i).value);
+			layerWrite(div_nu2, null, eval("f.spinp"+i).value);
+			if(eval("f.sppl"+i).value=="0")
+				layerWrite(div_nu3, null, "TCP");
+			else if(eval("f.sppl"+i).value=="1")
+				layerWrite(div_nu3, null, "UDP");
+			else
+				layerWrite(div_nu3, null, "<?SingalPortFW_15?>");
+			eval("document.forms[0].external_"+i).value=eval("f.spexp"+i).value;
+			eval("document.forms[0].internal_"+i).value=eval("f.spinp"+i).value;
+			eval("document.forms[0].protocol_"+i).value=eval("f.sppl"+i).value;
+		}
+		if(eval("f.spdesc"+i).value=="FTP")
+			eval("f.description_"+i).selectedIndex=1;
+		else if(eval("f.spdesc"+i).value=="Telnet")
+			eval("f.description_"+i).selectedIndex=2;
+		else if(eval("f.spdesc"+i).value=="SMTP")
+			eval("f.description_"+i).selectedIndex=3;
+		else if(eval("f.spdesc"+i).value=="DNS")
+			eval("f.description_"+i).selectedIndex=4;
+		else if(eval("f.spdesc"+i).value=="TFTP")
+			eval("f.description_"+i).selectedIndex=5;
+		else if(eval("f.spdesc"+i).value=="Finger")
+			eval("f.description_"+i).selectedIndex=6;
+		else if(eval("f.spdesc"+i).value=="HTTP")
+			eval("f.description_"+i).selectedIndex=7;
+		else if(eval("f.spdesc"+i).value=="POP3")
+			eval("f.description_"+i).selectedIndex=8;
+		else if(eval("f.spdesc"+i).value=="NNTP")
+			eval("f.description_"+i).selectedIndex=9;
+		else if(eval("f.spdesc"+i).value=="SNMP")
+			eval("f.description_"+i).selectedIndex=10;
+		else
+			eval("f.description_"+i).selectedIndex=0;
+
+		eval("f.ToIP_"+i).value=GetIPSegment(eval("f.spip"+i).value,4);
+		if(eval("f.spen"+i).value=="1")
+			eval("f.enable_"+i).checked=true;
+		else
+			eval("f.enable_"+i).checked=false;
+	}
+}
+
+function empty_to_zero(f,end_c){
+	var f=document.edit;
+	for(i=4 ;i<end_c;i++) {
+
+		if( eval("f.spexp"+i).value == "")
+			eval("f.external_"+i).value= '0';
+
+		if( eval("f.spinp"+i).value == "")
+			eval("f.internal_"+i).value= '0';
+	}
+}
+
+function DataShow_ptg_def()
+{
+	var v="";
+	var f = document.forms[0];
+	var i,j;
+	/*var ptfp = "<%nvram_get("ptsp1");%>";*/
+	var ForwardPortStart; 
+	
+		v 	+= 	"<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"forward_tbl\">";
+		v 	+= 	"<tr>";
+		v 	+=	"<td width=\"150\" height=\"25\" align=\"center\"><b>" + translate_str("AccessRestriction",34); + "</b></td>";
+		v	+=	"<td width=\"150\" height=\"25\" align=\"center\"><b>" + translate_str("PortRangeTrigger",1)+"</b></td>";
+		v	+=	"<td width=\"150\" height=\"25\" align=\"center\"><b>" + translate_str("PortRangeTrigger",2)+"</b></td>";
+		v	+=	"<td width=\"50\" height=\"25\" align=\"center\"><b>" + translate_str("CheckBox",0)+"</b></td>";
+		v 	+=	"</tr>";
+
+	for (i=0;i<5;i++){
+	
+		v	+= 	"<tr align=\"center\">";
+		v 	+=	"<td height=\"25\">";
+		v	+=	'<input maxlength=12 class=\"ssid_col_width\" name=\"AppName' + i + '\">';
+		v	+=	"</td>";
+		
+		v 	+=	"<td height=\"25\">";
+		v 	+= 	'<input class=\"mtu_col_width\" maxlength=5 size=2 value=0 name=\"TriggerPortStart' + i + "\">" + translate_str("QoS",3);
+		v 	+=	'<input class=\"mtu_col_width\" maxlength=5 size=2 value=0 name=\"TriggerPortEnd'+i + "\">";
+		v	+=	"</td>";
+		
+		v	+=	"<td height=\"25\">";
+		v 	+=	'<input class=\"mtu_col_width\" maxlength=5 size=2 value=\"\" name=\"ForwardPortStart' + i + "\">" +	translate_str("QoS",3);
+		v 	+= 	'<input class=\"mtu_col_width\" maxlength=5 size=2 value=\"\" name=\"ForwardPortEnd' + i + "\">";
+		v 	+=	"</td>";
+		
+		v	+=	"<td height=\"25\">";
+		v	+=	'<input type=checkbox value=1 name=\"TriggerEnable'+ i + "\">";
+		v	+=	"</td>";
+		v 	+=	"</tr>";
+	
+	}
+	v +=	"</table>";
+	
+	layerWrite('div_ptg_def', null, v);
+}
+var v_ptg_add = "" ;
+var v_pfw_add = "" ;
+
+function DataShow_pfw_add(new_count)
+{
+
+	var f = document.forms[0];
+
+		v_pfw_add 	+= 	"<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"forward_tbl\">";
+		v_pfw_add 	+= 	"<tr align=\"center\">";
+		
+		v_pfw_add 	+=	"<td width=\"131\" height=\"25\" align=\"center\" valign=\"middle\">";
+		v_pfw_add	+=	'<input maxlength=12 class=\"ssid_col_width\" name=\"description_' + new_count + '\">';
+		v_pfw_add	+=	"</td>";
+		
+		v_pfw_add 	+=	"<td width=\"96\" height=\"25\" align=\"center\" valign=\"middle\">";
+		v_pfw_add 	+=	'<input class=\"mtu_col_width\" maxlength=5 value=0 name=\"external_'+ new_count + "\">";
+		v_pfw_add	+=	"</td>";
+		
+		v_pfw_add	+=	"<td width=\"96\" height=\"25\" align=\"center\" valign=\"middle\">";
+		v_pfw_add 	+= 	'<input class=\"mtu_col_width\" maxlength=5 value=\"0\" name=\"internal_' + new_count + "\">";
+		v_pfw_add 	+=	"</td>";
+		
+		v_pfw_add	+=	"<td width=\"62\" valign=\"middle\" align=\"center\">";
+		v_pfw_add	+=	"<SELECT size=1 name=\"protocol_"+ new_count +"\" class=\"protocol_select_col_width\" >";
+		v_pfw_add	+=	"		<option value=\"0\"><?SingalPortFW_16?></option>";
+		v_pfw_add	+=	"		<option value=\"1\"><?SingalPortFW_17?></option>";
+		v_pfw_add	+=	"		<option value=\"2\"><?SingalPortFW_15?></option>";
+	    v_pfw_add	+=	"</SELECT>";
+		v_pfw_add	+=	"</td>";
+
+		v_pfw_add	+=	"<td width=\"160\" valign=\"middle\" align=\"center\">";
+		v_pfw_add	+=	GetIPSegment('<%nvram_get("lan_ipaddr");%>' , 1 )+"&nbsp;.&nbsp;";
+		v_pfw_add	+=	GetIPSegment('<%nvram_get("lan_ipaddr");%>' , 2 )+"&nbsp;.&nbsp;";
+		v_pfw_add	+=	GetIPSegment('<%nvram_get("lan_ipaddr");%>' , 3 )+"&nbsp;.&nbsp;";
+		v_pfw_add 	+= 	'<input class=\"ip_col_width\" maxlength=5 value=\"0\" name=\"ToIP_' + new_count + "\">";
+		v_pfw_add	+=	"</td>";
+
+		v_pfw_add	+=	"<td width=\"42\" height=\"25\" align=\"center\" valign=\"middle\">";
+		v_pfw_add	+=	'<input type=checkbox value=1 name=\"enable_'+ new_count + "\">";
+		v_pfw_add	+=	"</td>";
+
+		
+		v_pfw_add	+=	"</tr>";
+		v_pfw_add 	+=	"</table>";
+
+	layerWrite('div_pfw_add', null, v_pfw_add);
+	
+	
+	
+//	var i = new_count ;
+	for(i=7 ;i<=new_count;i++) {
+
+		eval("f.description_"+i).value=eval("f.spdesc"+i).value;
+		
+		if( eval("f.spexp"+i).value == ""){
+			eval("f.external_"+i).value= '0';
+		}
+		else{
+			eval("f.external_"+i).value=eval("f.spexp"+i).value;
+		}
+
+		if( eval("f.spinp"+i).value == "")
+			eval("f.internal_"+i).value= '0';
+		else
+			eval("f.internal_"+i).value=eval("f.spinp"+i).value;
+
+		if(eval("f.sppl"+i).value=='0'){
+			eval("f.protocol_"+i).selectedIndex=0;
+		}		
+		else if(eval("f.sppl"+i).value=='1'){
+			eval("f.protocol_"+i).selectedIndex=1;
+		}		
+		else if(eval("f.sppl"+i).value=='2'){
+			eval("f.protocol_"+i).selectedIndex=2;
+		}
+		else
+			eval("f.protocol_"+i).selectedIndex=2;
+
+		if(eval("f.spen"+i).value=="1")
+			eval("f.enable_"+i).checked=true;
+		else
+			eval("f.enable_"+i).checked=false;
+			
+		eval("f.ToIP_"+i).value=GetIPSegment(eval("f.spip"+i).value,4);
+
+	}	
+}
+
+
+function DataShow_ptg_add(new_count)
+{
+
+	var f = document.forms[0];
+
+	/*var ptfp = "<%nvram_get("ptsp1");%>";*/
+	
+	new_count = new_count -1 ;
+	var ForwardPortStart; 
+
+		v_ptg_add 	+= 	"<table border=\"1\" cellpadding=\"0\" cellspacing=\"0\" class=\"forward_tbl\">";
+		v_ptg_add 	+= 	"<tr align=\"center\">";
+		v_ptg_add 	+=	"<td width=\"150\" height=\"25\" align=\"center\">";
+		v_ptg_add	+=	'<input maxlength=12 class=\"ssid_col_width\" name=\"AppName' + new_count + '\">';
+		v_ptg_add	+=	"</td>";
+		
+		v_ptg_add 	+=	"<td width=\"150\" height=\"25\" align=\"center\">";
+		v_ptg_add 	+= 	'<input class=\"mtu_col_width\" maxlength=5 value=0 name=\"TriggerPortStart' + new_count + "\">" + translate_str("QoS",3);
+		v_ptg_add 	+=	'<input class=\"mtu_col_width\" maxlength=5 value=0 name=\"TriggerPortEnd'+ new_count + "\">";
+		v_ptg_add	+=	"</td>";
+		
+		v_ptg_add	+=	"<td width=\"150\"  height=\"25\" align=\"center\">";
+		v_ptg_add 	+=	'<input class=\"mtu_col_width\" maxlength=5 value=\"0\" name=\"ForwardPortStart' + new_count + "\">" +	translate_str("QoS",3);
+		v_ptg_add 	+= 	'<input class=\"mtu_col_width\" maxlength=5 value=\"0\" name=\"ForwardPortEnd' + new_count + "\">";
+		v_ptg_add 	+=	"</td>";
+		
+		v_ptg_add	+=	"<td width=\"50\"  height=\"25\" align=\"center\">";
+		v_ptg_add	+=	'<input type=checkbox value=1 name=\"TriggerEnable'+ new_count + "\">";
+
+		v_ptg_add	+=	"</td>";
+		v_ptg_add	+=	"</tr>";
+		v_ptg_add 	+=	"</table>";
+
+	layerWrite('div_ptg_add', null, v_ptg_add);
+
+	for(i = 5 ; i <= new_count ; i++){
+		port_start=GetPortSegment(eval("f.ptir"+i).value,1);
+		port_end=GetPortSegment(eval("f.ptir"+i).value,2);
+		if (eval("f.pten"+i).value == 1)
+			eval("f.TriggerEnable"+i).checked = true;
+		else
+			eval("f.TriggerEnable"+i).checked = false;
+			
+		eval("f.TriggerPortStart"+i).value = (port_start=='')?"0":port_start;
+		eval("f.TriggerPortEnd"+i).value = (port_end=='')?"0":port_end;
+
+		eval("f.AppName"+i).value=eval("f.ptna"+i).value;
+
+		
+
+		eval("f.ForwardPortStart"+i).value=(eval("f.ptsp"+i).value=='')?"0":eval("f.ptsp"+i).value;
+		eval("f.ForwardPortEnd"+i).value=(eval("f.ptfp"+i).value=='')?"0":eval("f.ptfp"+i).value;
+	}
+	
+}
+
+function check_pfw_default_count(f){
+	var f=document.edit;
+	count_pfw = 0 ;
+
+	for(i=4 ;i<= 15;i++) {
+		if( eval("f.spdesc"+i).value == "" && ( ( eval("f.spen"+i).value=="0") || (eval("f.spen"+i).value=="") )) {
+
+		}
+		else{
+			count_pfw ++ ;
+		}
+	}
+
+
+	if(count_pfw <= 3){
+		count_pfw = 6 ;	
+	}
+	else{
+		count_pfw += 3 ;
+	}
+
+}
+
+
+function check_ptg_default_count(f){
+	var f=document.edit;
+	for (i=0;i<=9;i++)
+	{
+		port_start=GetPortSegment(eval("f.ptir"+i).value,1);
+		port_end=GetPortSegment(eval("f.ptir"+i).value,2);
+		
+		if(eval("f.ptna"+i).value == "" &&
+		   	(port_start == "0" || port_start == "") &&
+		   	(port_end == "0" || port_end == "") &&
+		   	(eval("f.ptsp"+i).value == "0" || eval("f.ptsp"+i).value == "") &&
+		   	(eval("f.ptfp"+i).value == "0" || eval("f.ptfp"+i).value == "") )
+		{
+			count_tri = i ;
+			break ;
+	   	}
+		count_tri++;
+
+	}
+	
+	if(count_tri <= 5)
+		count_tri = 5 ;
+	
+
+}
+
+function more_pfw(f)
+{
+	var f=document.edit;
+	for (i=4;i<=count_pfw;i++)
+	{
+		if(eval("f.description_"+i).value == ""){
+			alert(translate_str("JavaScript",165));
+			eval("f.description_"+i).focus();
+			return ;
+		}
+
+		if (eval("f.enable_"+i).checked == true) {
+		
+			eval("f.spdesc"+i).value=eval("f.description_"+i).value;
+			eval("f.spexp"+i).value=eval("f.external_"+i).value ;
+			eval("f.spinp"+i).value=eval("f.internal_"+i).value;
+			eval("f.sppl"+i).value=eval("f.protocol_"+i).value;
+			eval("f.spip"+i).value=lan_ipaddr_prefix + eval("f.ToIP_"+i).value;
+			eval("f.spen"+i).value="1";
+
+		}
+		else {
+			eval("f.spdesc"+i).value=eval("f.description_"+i).value;
+			eval("f.spexp"+i).value=eval("f.external_"+i).value ;
+			eval("f.spinp"+i).value=eval("f.internal_"+i).value;
+			eval("f.sppl"+i).value=eval("f.protocol_"+i).value;
+			eval("f.spip"+i).value=lan_ipaddr_prefix + eval("f.ToIP_"+i).value;
+			eval("f.spen"+i).value="0";
+		}
+	}
+	count_pfw++;
+
+	if (count_pfw <= 16)	{
+		DataShow_pfw_add(count_pfw);
+	}
+	else{
+		alert(translate_str("SetupWizard",110));
+		count_pfw--;
+	}
+	
+}
+
+
+function more_ptg(f)
+{
+	var f=document.edit;
+	for (i=0;i<count_tri;i++)
+	{
+		if(eval("f.AppName"+i).value == ""){
+			alert(translate_str("JavaScript",165));
+			eval("f.AppName"+i).focus();
+			return ;
+		}
+
+		if (eval("f.TriggerEnable"+i).checked == true) {
+			eval("f.ptna"+i).value=eval("f.AppName"+i).value;
+			eval("f.ptir"+i).value=eval("f.TriggerPortStart"+i).value+ "-" +eval("f.TriggerPortEnd"+i).value;
+			eval("f.ptsp"+i).value=eval("f.ForwardPortStart"+i).value;
+			eval("f.ptfp"+i).value=eval("f.ForwardPortEnd"+i).value;
+			eval("f.pten"+i).value=1;
+		}
+		else {
+			eval("f.ptna"+i).value=eval("f.AppName"+i).value;
+			eval("f.ptir"+i).value=eval("f.TriggerPortStart"+i).value+ "-" +eval("f.TriggerPortEnd"+i).value;
+			eval("f.ptsp"+i).value=eval("f.ForwardPortStart"+i).value;
+			eval("f.ptfp"+i).value=eval("f.ForwardPortEnd"+i).value;
+			eval("f.pten"+i).value=0;
+		}
+	}
+	count_tri++;
+
+	if (count_tri <= 10)	{
+		DataShow_ptg_add(count_tri);
+	}
+	else{
+		alert(translate_str("SetupWizard",110));
+		count_tri--;
+	}
+	
+}
+
+function GetPortSegment (PortString, SegmentNum)
+{
+	var f=document.edit;
+	var	DMZ = PortString;
+	var	Counter = 0;
+
+	PortString = "";
+	if (DMZ=="")
+		return "0";
+	for ( iln = 0 ; iln < DMZ.length ; iln++ ) {
+      		ch = DMZ.charAt ( iln );
+		if ( ch != '-' ) { PortString = PortString + ch; }
+		else {
+			Counter = Counter + 1;
+
+			if ( Counter == SegmentNum ) { break; }
+			else { PortString = ""; }
+		}
+	}
+
+	return PortString;
+}
+
+function isBlank(s) 
+{
+	for(i=0;i<s.length;i++)	
+	{
+		c=s.charAt(i);
+		if((c!=' ')&&(c!='\n')&&(c!='\t'))
+			return false;
+	}
+	return true;
+}
+
+function SplitDMZSourceIP (f)
+{
+	var dmz_src_start='<%nvram_get("dmz_src_ipaddr_start");%>';
+	document.forms[0].dmz_src_1.value = GetIPSegment ( dmz_src_start , 1 );
+	document.forms[0].dmz_src_2.value = GetIPSegment ( dmz_src_start , 2 );
+	document.forms[0].dmz_src_3.value = GetIPSegment ( dmz_src_start , 3 );
+	document.forms[0].dmz_src_4.value = GetIPSegment ( dmz_src_start , 4 );
+}
+function Destinationcheck(f)
+{
+   var f = document.forms[0];
+   if(f.Destination[0].checked == true)
+   {
+		f.dmz_ipaddr_4.disabled = 0;
+		f.mac.disabled = 1;
+	  f.dhcp_select_button.disabled = 1;
+   }
+   else 
+   {
+		f.dmz_ipaddr_4.disabled = 1;
+		f.mac.disabled = 0;
+	  f.dhcp_select_button.disabled = 0;
+   }  
+}
+function sourceCheck(f)
+{
+	var f = document.forms[0];
+    if(f.source[0].checked == true)
+    {
+    	f.dmz_src_1.disabled = 1;
+		f.dmz_src_2.disabled = 1;
+		f.dmz_src_3.disabled = 1;
+		f.dmz_src_4.disabled = 1;
+		f.dmz_src_4_1.disabled = 1;
+    }
+    else
+    {
+    	f.dmz_src_1.disabled = 0;
+		f.dmz_src_2.disabled = 0;
+		f.dmz_src_3.disabled = 0;
+		f.dmz_src_4.disabled = 0;
+		f.dmz_src_4_1.disabled = 0;
+	} 
+}
+
+function SWDMZCheck(f)
+{
+	var f = document.forms[0];
+	if (f.DMZEnableFlag[0].checked == true)
+	{
+	  	f.source[0].disabled = 0;
+	  	f.source[1].disabled = 0;
+	  	f.Destination[0].disabled = 0;
+	  	f.Destination[1].disabled = 0;
+			sourceCheck(document.forms[0]);
+			Destinationcheck(document.forms[0]);
+	} 
+	else
+	{
+      f.dmz_ipaddr_4.disabled = 1;	
+	  	f.dmz_src_1.disabled = 1;
+	  	f.dmz_src_2.disabled = 1;
+	  	f.dmz_src_3.disabled = 1;
+	  	f.dmz_src_4.disabled = 1;
+	  	f.dmz_src_4_1.disabled = 1;
+	  	f.mac.disabled = 1;
+	  	f.source[0].disabled = 1;
+	  	f.source[1].disabled = 1;
+	  	f.Destination[0].disabled = 1;
+	  	f.Destination[1].disabled = 1;
+	  	f.dhcp_select_button.disabled = 1;
+	}  
+}
+function InitValue_port_for(f){
+	var f=document.edit;
+
+	for( i=0 ; i<myData.length ; i++ )
+		DataArray[DataArray.length++] = new Data(myData[i][0], myData[i][1], myData[i][2], myData[i][3]);
+
+
+	check_pfw_default_count(f);
+	
+	for(t = 7 ; t <= count_pfw ; t++){
+		DataShow_pfw_add((t));	
+	}
+	
+	DataInit(f);
+	
+	for(i=4 ;i<=6;i++) {
+		eval("f.description_"+i).value=eval("f.spdesc"+i).value;
+
+		if( eval("f.spexp"+i).value == "")
+			eval("f.external_"+i).value= '0';		
+		else
+			eval("f.external_"+i).value=eval("f.spexp"+i).value;
+
+		if( eval("f.spinp"+i).value == "")
+			eval("f.internal_"+i).value= '0';
+		else
+			eval("f.internal_"+i).value=eval("f.spinp"+i).value;
+
+		if(eval("f.sppl"+i).value=='0'){
+			eval("f.protocol_"+i).selectedIndex=0;
+		}		
+		else if(eval("f.sppl"+i).value=='1'){
+			eval("f.protocol_"+i).selectedIndex=1;
+		}		
+		else if(eval("f.sppl"+i).value=='2'){
+			eval("f.protocol_"+i).selectedIndex=2;
+		}
+		else
+			eval("f.protocol_"+i).selectedIndex=2;
+
+		if(eval("f.spen"+i).value=="1")
+			eval("f.enable_"+i).checked=true;
+		else
+			eval("f.enable_"+i).checked=false;
+		eval("f.ToIP_"+i).value=GetIPSegment(eval("f.spip"+i).value,4);
+	}
+}
+function InitValue_port_tri(f){
+	
+	var i,port_start,port_end;
+	check_ptg_default_count(f);
+	DataShow_ptg_def();
+	for(t = 5 ; t <= count_tri-1 ; t++){
+		DataShow_ptg_add((t+1));	
+	}
+	//for (i=0;i<10;i++)
+	for (i=0;i<5;i++)
+	{
+		
+		//if (eval("f.pten"+i).value == 1)	{
+		port_start=GetPortSegment(eval("f.ptir"+i).value,1);
+		port_end=GetPortSegment(eval("f.ptir"+i).value,2);
+		if (eval("f.pten"+i).value == 1){
+			eval("f.TriggerEnable"+i).checked = true;
+		}
+		else
+			eval("f.TriggerEnable"+i).checked = false;
+			
+		eval("f.TriggerPortStart"+i).value = (port_start=='')?"0":port_start;
+		eval("f.TriggerPortEnd"+i).value = (port_end=='')?"0":port_end;
+
+		eval("f.AppName"+i).value=eval("f.ptna"+i).value;
+
+		eval("f.ForwardPortStart"+i).value=(eval("f.ptsp"+i).value=='')?"0":eval("f.ptsp"+i).value;
+		eval("f.ForwardPortEnd"+i).value=(eval("f.ptfp"+i).value=='')?"0":eval("f.ptfp"+i).value;
+	}	
+}
+function InitValue_firewall(f){
+	var f=document.edit;
+	// Firewall
+	if (f.fw_spi_enabled.value == '1')
+		f.spi_filter[0].checked = true;
+	else
+		f.spi_filter[1].checked = true;
+	
+	// Internet Filter
+	if (f.remote_ping_enabled.value == '0')
+		f.remote_ping.checked = true;
+	else
+		f.remote_ping.checked = false;
+	if (f.filter_multi.value=='1')
+		f.filter_multicast.checked = true;
+	else
+		f.filter_multicast.checked = false;
+	if (f.filter_iNAT.value=='1')
+		f.filter_nat.checked = true;
+	else
+		f.filter_nat.checked = false;
+	if (f.filter_IDNT.value=='1')
+		f.filter_idnt.checked = true;
+	else
+		f.filter_idnt.checked = false;
+		
+	// Web Filter
+	if (f.fw_proxy_enabled.value == '1')
+		f.proxy_filter.checked = true;
+	else
+		f.proxy_filter.checked = false;
+	if (f.fw_java_enabled.value=='1')
+		f.java_filter.checked = true;
+	else
+		f.java_filter.checked = false;
+	if (f.fw_activex_enabled.value=='1')
+		f.activex_filter.checked = true;
+	else
+		f.activex_filter.checked = false;
+	if (f.fw_cookies_enabled.value=='1')
+		f.cookies_filter.checked = true;
+	else
+		f.cookies_filter.checked = false;
+}
+function InitValue_dmz(f){
+	var f=document.edit;
+	f.dhcp_select_button.value = translate_str("BasicSetup",96);
+	var dmz_dest_ip = '<%nvram_get("dmz_dest_ip");%>';
+	var DMZEnableFlag = '<%nvram_get("dmz_enabled");%>';
+	if ( DMZEnableFlag == '1' ) 
+		f.DMZEnableFlag[0].checked = true;
+	else
+		f.DMZEnableFlag[1].checked = true;
+	SplitDMZSourceIP (f);
+	f.dmz_src_4_1.value = GetIPSegment('<%nvram_get("dmz_src_ipaddr_end");%>', 4);
+	f.dmz_ipaddr_4.value = GetIPSegment(dmz_dest_ip, 4);
+	if ('<%nvram_get("dmz_dest_mac");%>'=='')
+		f.mac.value ="00:00:00:00:00:00";
+	else
+		f.mac.value = '<%nvram_get("dmz_dest_mac");%>';
+	
+	if ( '<%nvram_get("dmz_src_ipaddr");%>' == '1' ) 
+	   f.source[1].checked = true;
+    else
+	   f.source[0].checked = true;
+    if ( '<%nvram_get("dmz_dest");%>' == '1' ) 
+       f.Destination[1].checked = true;
+	else
+        f.Destination[0].checked = true;
+    SWDMZCheck(f);    
+}
+
+function InitValue(f)
+{
+	var f=document.edit;
+	  show_network_status();
+
+	div_change(page);
+	InitValue_port_for(f);
+	InitValue_port_tri(f);
+	InitValue_firewall(f);
+	InitValue_dmz(f);
+
+}
+
+function ValidateForm_port_for(f){
+	var f=document.edit;
+	var i=1;
+	while(i<=count_pfw)
+	{
+		if (!CheckQuote1(eval("f.description_"+i))) return 0;
+
+			/*    IP address can not eqaul to router Lan IP*/
+			var lan_ip = "<%nvram_get("lan_ipaddr");%>";
+			var lan_ip_poisition = lan_ip.lastIndexOf(".",lan_ip.length);
+			var ip4 = lan_ip.substring(lan_ip_poisition+1,lan_ip.length);
+
+			if (eval("f.ToIP_"+i).value == ip4)	{
+				alert(translate_str("JavaScript",107));
+				eval("f.ToIP_"+i).focus();
+				return 0;
+			}
+						
+//+++Eric add PM 03:31 2008/1/9
+/*
+      0       1    2     3
+0	["FTP", "21", "21", "TCP"],
+1	["Telnet", "23", "23", "TCP"],
+2	["SMTP", "25", "25", "TCP"],
+3	["DNS", "53", "53", " Both"],
+4	["TFTP", "69", "69", "UDP"],
+5	["Finger", "79", "79", "TCP"],
+6	["HTTP", "80", "80", "TCP"],
+7	["POP3", "110", "110", "TCP"],
+8	["NNTP", "119", "119", "TCP"],
+9	["SNMP", "161", "161", "UDP"]
+	*/
+						
+						var ext = "f.external_" ;
+						var inte = "f.internal_" ; 
+						var pro = "f.protocol_" ; 
+						var des = "f.description_" ; 
+						
+			if(i>3)	{
+				
+				/* Check the default option with manaually add*/
+					for(var u=1 ; u<=count_pfw ; u++){
+
+						if(eval(ext+i).value == "0" && eval(inte+i).value == "0")
+							continue ;
+							
+						if(u != i){
+							if((eval(ext+u).value != "" ) && (eval(ext+i).value == eval(inte+i).value) && (eval(inte+i).value == eval(ext+u).value ) && ( eval(pro+i).value == eval(pro+u).value || eval(pro+i).value == 2 || eval(pro+u).value == 2)){
+							alert(translate_str("JavaScript",110));
+							if(u<=3)
+						
+							eval(des+u).focus();
+							else
+								eval(ext+u).focus();
+							
+					return 0;
+						}
+					}
+					}
+
+					/* Check tif there are some manually add the same  */
+					var k;
+					for(k=6 ; k < i ; k++){
+						
+						if(eval(ext+k).value == "" || eval(inte+k).value == "")
+							continue ;
+						
+						if(eval(ext+i).value == eval(ext+k).value && eval(inte+i).value == eval(inte+k).value && (eval(pro+i).value == eval(pro+k).value || eval(pro+i).value == 2 || eval(pro+k).value == 2)){
+							alert(translate_str("JavaScript",110));
+							empty_to_zero(document.forms[0],i);
+							eval(ext+i).focus();
+							return 0 ;
+						
+						}
+					}
+				}
+//---Eric add PM 03:31 2008/1/9	
+				
+		if(eval("f.enable_"+i).checked==true)
+		{
+			if(i>3)	{
+				if(!PortCheck(eval("f.external_"+i)))
+					return 0;
+				if(!PortCheck(eval("f.internal_"+i)))
+					return 0;
+				
+			}
+			if(!IPCheck(eval("f.ToIP_"+i)))
+				return 0;
+
+			eval("f.spdesc"+i).value=eval("f.description_"+i).value;
+			eval("f.spexp"+i).value=eval("f.external_"+i).value;
+			eval("f.spinp"+i).value=eval("f.internal_"+i).value;
+			eval("f.sppl"+i).value=eval("f.protocol_"+i).value;
+			eval("f.spip"+i).value=lan_ipaddr_prefix + eval("f.ToIP_"+i).value;
+			eval("f.spen"+i).value="1";
+		}
+		else {
+			if(i>3)	{
+				if( eval("f.external_"+i).value == "0" && eval("f.internal_"+i).value == "0"){
+					eval("f.spexp"+i).value = "";
+					eval("f.spinp"+i).value = "";
+					eval("f.external_"+i).value = "";
+					eval("f.internal_"+i).value = "";
+				}
+				else{
+					eval("f.spexp"+i).value=eval("f.external_"+i).value;
+					eval("f.spinp"+i).value=eval("f.internal_"+i).value;
+				}
+			
+				if(!PortCheck1(eval("f.external_"+i)))
+					return 0;
+				if(!PortCheck1(eval("f.internal_"+i)))
+					return 0;
+					
+			}
+			if(!IPCheck1(eval("f.ToIP_"+i)))
+				return 0;
+
+			eval("f.spdesc"+i).value=eval("f.description_"+i).value;
+			eval("f.spexp"+i).value=eval("f.external_"+i).value;
+			eval("f.spinp"+i).value=eval("f.internal_"+i).value;
+			eval("f.sppl"+i).value=eval("f.protocol_"+i).value;
+			eval("f.spip"+i).value=lan_ipaddr_prefix + eval("f.ToIP_"+i).value;
+			eval("f.spen"+i).value="0";
+		}
+		if(!SpecialCharCheck(eval("f.description_"+i), "Application Name"))
+			return 0;
+		i++;
+	}//End While i < 16
+
+	for (i=4;i<count_pfw;i++)
+	{
+		if(eval("f.spdesc"+i).value == "" &&
+		   eval("f.spexp"+i).value == "" &&
+		   eval("f.spinp"+i).value == "" &&
+		   //eval("f.sppl"+i).value == "" &&
+		   //eval("f.ToIP_"+i).value == "0" 
+		   eval("f.spen"+i).value == "0" 
+		  )
+		 {	
+			for(k = i ; k< count_pfw ; k++){
+				
+			eval("f.spdesc"+k).value = eval("f.spdesc"+(k+1)).value;
+			eval("f.spexp"+k).value  = eval("f.spexp"+(k+1)).value;
+			eval("f.spinp"+k).value  = eval("f.spinp"+(k+1)).value;
+			eval("f.sppl"+k).value   = eval("f.sppl"+(k+1)).value;
+			eval("f.spip"+k).value   = eval("f.spip"+(k+1)).value
+			eval("f.spen"+k).value   = eval("f.spen"+(k+1)).value ;
+			}
+			
+			eval("f.spdesc"+(count_pfw)).value = "";
+			eval("f.spexp"+(count_pfw)).value = "";
+			eval("f.spinp"+(count_pfw)).value = "";
+			eval("f.sppl"+(count_pfw)).value = "";
+			eval("f.spip"+(count_pfw)).value = "";
+			eval("f.spen"+(count_pfw)).value = "";
+			count_pfw-- ;
+			i-- ;
+		}
+		else{
+			continue ;
+		}
+
+	}
+
+
+
+	f.data1.value += " spip1 spip2 spip3 spip4 spip5 spip6 spip7 spip8 spip9 spip10 spip11 spip12 spip13 spip14 spip15 spdesc1 spdesc2 spdesc3 spdesc4 spdesc5 spdesc6 spdesc7 spdesc8 spdesc9 spdesc10 spdesc11 spdesc12 spdesc13 spdesc14 spdesc15 spexp1 spexp2 spexp3 spexp4 spexp5 spexp6 spexp7 spexp8 spexp9 spexp10 spexp11 spexp12 spexp13 spexp14 spexp15 spinp1 spinp2 spinp3 spinp4 spinp5 spinp6 spinp7 spinp8 spinp9 spinp10 spinp11 spinp12 spinp13 spinp14 spinp15 spen1 spen2 spen3 spen4 spen5 spen6 spen7 spen8 spen9 spen10 spen11 spen12 spen13 spen14 spen15 sppl1 sppl2 sppl3 sppl4 sppl5 sppl6 sppl7 sppl8 sppl9 sppl10 sppl11 sppl12 sppl13 sppl14 sppl15 ";
+	return 1;
+}
+
+function ValidateForm_port_tri(f){
+	var i;
+	//for (i=0;i<10;i++)
+	for (i=0;i<count_tri;i++)
+	{
+		if (eval("f.TriggerEnable"+i).checked == true) {
+			if(eval("f.AppName"+i).value == ""){alert(translate_str("JavaScript",165));return 0 ;}
+			if(!isBlank(eval("f.AppName"+i), "Application Name")) { return 0; }
+			if(!PortCheck2(eval("f.TriggerPortStart"+i),eval("f.TriggerPortEnd"+i), "Trigger")) { return 0; }
+			if(!PortCheck2(eval("f.ForwardPortStart"+i),eval("f.ForwardPortEnd"+i), "Forward")) { return 0; }
+			if (!PortCheck(eval("f.TriggerPortStart"+i)) || !PortCheck(eval("f.TriggerPortEnd"+i)) || !PortCheck(eval("f.ForwardPortStart"+i)) || !PortCheck(eval("f.ForwardPortEnd"+i))) { return 0; }
+		}
+//		else {
+//			if (!PortCheck_Ping(eval("f.TriggerPortStart"+i)) || !PortCheck_Ping(eval("f.TriggerPortEnd"+i)) || !PortCheck_Ping(eval("f.ForwardPortStart"+i)) || !PortCheck_Ping(eval("f.ForwardPortEnd"+i))) { return 0; }
+//		}
+		
+		if (!CheckQuote1(eval("f.AppName"+i))){ return 0; }
+		
+		if(!SpecialCharCheck(eval("f.AppName"+i), "Application Name"))
+			return 0;
+	}
+	//for (i=0;i<10;i++)
+	for (i=0;i<count_tri;i++)
+	{
+		if (eval("f.TriggerEnable"+i).checked == true) {
+			eval("f.ptna"+i).value=eval("f.AppName"+i).value;
+			eval("f.ptir"+i).value=eval("f.TriggerPortStart"+i).value+ "-" +eval("f.TriggerPortEnd"+i).value;
+			eval("f.ptsp"+i).value=eval("f.ForwardPortStart"+i).value;
+			eval("f.ptfp"+i).value=eval("f.ForwardPortEnd"+i).value;
+			eval("f.pten"+i).value=1;
+		}
+		else {
+			eval("f.ptna"+i).value=eval("f.AppName"+i).value;
+			eval("f.ptir"+i).value=eval("f.TriggerPortStart"+i).value+ "-" +eval("f.TriggerPortEnd"+i).value;
+			eval("f.ptsp"+i).value=eval("f.ForwardPortStart"+i).value;
+			eval("f.ptfp"+i).value=eval("f.ForwardPortEnd"+i).value;
+			eval("f.pten"+i).value=0;
+		}
+	}
+
+	for (i=0;i<count_tri;i++)
+	{
+	
+/*		alert("\n1"
+		+eval("f.ptna"+i).value+"\n2"
+		+eval("f.ptir"+i).value+"\n3"
+		+eval("f.ptsp"+i).value+"\n4"
+		+eval("f.ptsp"+i).value+"\n5"
+		+eval("f.pten"+i).value+"\n6"
+		);
+*/	
+		if(eval("f.ptna"+i).value == "" &&
+		   eval("f.ptir"+i).value == "0-0" &&
+		   eval("f.ptsp"+i).value == "0" &&
+		   eval("f.ptfp"+i).value == "0" &&
+		   eval("f.pten"+i).value == "0" 
+		  )
+		 {
+//			alert(translate_str("SetupWizard",115));
+			for(k = i ; k< count_tri-1 ; k++){
+				
+				eval("f.ptna"+k).value=eval("f.ptna"+(k+1)).value;
+				eval("f.ptir"+k).value=eval("f.ptir"+(k+1)).value;
+				eval("f.ptsp"+k).value=eval("f.ptsp"+(k+1)).value;
+				eval("f.ptfp"+k).value=eval("f.ptfp"+(k+1)).value;
+				eval("f.pten"+k).value=eval("f.pten"+(k+1)).value;
+			}
+			
+			eval("f.ptna"+(count_tri-1)).value = "";
+			eval("f.ptir"+(count_tri-1)).value = "-";
+			eval("f.ptsp"+(count_tri-1)).value = "";
+			eval("f.ptfp"+(count_tri-1)).value = "";
+			eval("f.pten"+(count_tri-1)).value = "0";
+			count_tri-- ;
+			i-- ;
+		}
+		else{
+			continue ;
+		}
+
+	}
+	
+	f.data1.value += " ptna0 ptna1 ptna2 ptna3 ptna4 ptna5 ptna6 ptna7 ptna8 ptna9 ptit0 ptit1 ptit2 ptit3 ptit4 ptit5 ptit6 ptit7 ptit8 ptit9 ptir0 ptir1 ptir2 ptir3 ptir4 ptir5 ptir6 ptir7 ptir8 ptir9 ptot0 ptot1 ptot2 ptot3 ptot4 ptot5 ptot6 ptot7 ptot8 ptot9 ptsp0 ptsp1 ptsp2 ptsp3 ptsp4 ptsp5 ptsp6 ptsp7 ptsp8 ptsp9 ptfp0 ptfp1 ptfp2 ptfp3 ptfp4 ptfp5 ptfp6 ptfp7 ptfp8 ptfp9 pten0 pten1 pten2 pten3 pten4 pten5 pten6 pten7 pten8 pten9";
+	return 1 ;
+}
+
+function ValidateForm_firewall(f){
+	
+	// Firewall
+	if (f.spi_filter[0].checked == true)
+		f.fw_spi_enabled.value = 1;
+	else
+		f.fw_spi_enabled.value = 0;
+		
+	// Internet Filter
+	if (f.remote_ping.checked==true)
+		f.remote_ping_enabled.value=0;
+	else
+		f.remote_ping_enabled.value=1;
+	if (f.filter_multicast.checked==true)
+		f.filter_multi.value=1;
+	else
+		f.filter_multi.value=0;
+	if (f.filter_nat.checked==true)
+		f.filter_iNAT.value=1;
+	else
+		f.filter_iNAT.value=0;
+	if (f.filter_idnt.checked==true)
+		f.filter_IDNT.value=1;
+	else
+		f.filter_IDNT.value=0;
+		
+	// Web Filter
+	if (f.proxy_filter.checked==true)
+		f.fw_proxy_enabled.value=1;
+	else
+		f.fw_proxy_enabled.value=0;
+	if (f.java_filter.checked==true)
+		f.fw_java_enabled.value=1;
+	else
+		f.fw_java_enabled.value=0;
+	if (f.activex_filter.checked==true)
+		f.fw_activex_enabled.value=1;
+	else
+		f.fw_activex_enabled.value=0;
+	if (f.cookies_filter.checked==true)
+		f.fw_cookies_enabled.value=1;
+	else
+		f.fw_cookies_enabled.value=0;
+
+	f.data1.value += " fw_spi_enabled remote_ping_enabled filter_multi filter_iNAT filter_IDNT fw_proxy_enabled fw_java_enabled fw_activex_enabled fw_cookies_enabled";
+
+	return 1;
+}
+
+function ValidateForm_dmz(f){
+	if(f.DMZEnableFlag[0].checked==true) {
+		var mac_list = f.mac.value.split(":");
+		if ( f.Destination[0].checked == true) {
+			if ( !VerifyDmzIP(f))
+				return 0;
+			document.forms[0].dmz_dest_mac.value="00:00:00:00:00:00";
+			document.forms[0].dmz_dest.value = 0;
+			if ( f.dmz_dest_ip.value == lan_ipaddr ) {
+				alert(translate_str("JavaScript",116));
+				f.dmz_ipaddr_4.focus();
+				return 0;
+			}
+		}
+		else {
+			//for (j=0;j<6;j++) {
+				if(!macsCheck1(f.mac)) {
+					f.mac.focus();
+					return 0;
+				}
+			//}
+			document.forms[0].dmz_dest_mac.value=f.mac.value;
+			f.dmz_dest_ip.value="0.0.0.0";
+			document.forms[0].dmz_dest.value = 1;
+		}
+		
+		if ( f.source[1].checked == true){
+			var start = parseInt(f.dmz_src_4.value,10);
+			var end = parseInt(f.dmz_src_4_1.value,10);
+			if(end < start) {
+				alert(translate_str("DMZ",5));
+				return 0;
+			}
+			if ( !AssembleSrcStartIP(f))
+				return 0;
+			if ( !AssembleSrcEndIP(f))
+				return 0;
+			document.forms[0].dmz_src_ipaddr.value = 1;
+		}
+		else {
+			document.forms[0].dmz_src_ipaddr_start.value="0.0.0.0";
+			document.forms[0].dmz_src_ipaddr_end.value="0.0.0.0";
+			document.forms[0].dmz_src_ipaddr.value = 0;
+		}
+		if (document.forms[0].DMZEnableFlag[0].checked)
+			document.forms[0].dmz_enabled.value = 1;
+		else
+			document.forms[0].dmz_enabled.value = 0;
+	}
+	else 
+		document.forms[0].dmz_enabled.value = 0;	
+		
+	f.data1.value += " dmz_dest_ip dmz_dest dmz_enabled dmz_dest_mac dmz_src_ipaddr dmz_src_ipaddr_start dmz_src_ipaddr_end dmz_l4fwd_enabled dmz_icmpfwd_enabled";
+	return 1;
+}
+
+
+function ValidateForm(f) 
+{
+	if(page == '1'){
+		if(!ValidateForm_port_for(f))		return;
+	}
+	else if(page == '2'){
+		if(!ValidateForm_port_tri(f))		return;
+	}
+	else if(page == '3'){
+		if(!ValidateForm_firewall(f))		return;
+	}
+	else if(page == '4'){
+		if(!ValidateForm_dmz(f))		return;
+	}
+    
+    f.adv_security_page.value = page ;
+    f.submit();
+
+}
+
+var active_win = null;
+
+function ViewActive()
+{
+	active_win = self.open('Dhcp_Client_Select.htm','ActiveTable','alwaysRaised,resizable,scrollbars,width=1100,height=440');
+	active_win.focus();
+}
+
+
+function div_change(div_change){
+
+	page = div_change ;
+
+	if(page == "1"){
+		document.getElementById("pfw").style.display = "block";
+		document.getElementById("ptg").style.display = "none";
+		document.getElementById("flw").style.display = "none";
+		document.getElementById("dmz").style.display = "none";
+		document.getElementById("btn_pf").style.display = "none";
+		document.getElementById("btn_pt").style.display = "block";
+		document.getElementById("btn_fw").style.display = "block";
+		document.getElementById("btn_dmz").style.display = "block";
+	}
+	else if(page == "2"){
+		document.getElementById("pfw").style.display = "none";
+		document.getElementById("ptg").style.display = "block";
+		document.getElementById("flw").style.display = "none";
+		document.getElementById("dmz").style.display = "none";
+		document.getElementById("btn_pf").style.display = "block";
+		document.getElementById("btn_pt").style.display = "none";
+		document.getElementById("btn_fw").style.display = "block";
+		document.getElementById("btn_dmz").style.display = "block";
+	}
+	else if(page == "3"){
+		document.getElementById("pfw").style.display = "none";
+		document.getElementById("ptg").style.display = "none";
+		document.getElementById("flw").style.display = "block";
+		document.getElementById("dmz").style.display = "none";
+		document.getElementById("btn_pf").style.display = "block";
+		document.getElementById("btn_pt").style.display = "block";
+		document.getElementById("btn_fw").style.display = "none";
+		document.getElementById("btn_dmz").style.display = "block";
+	}
+	else if(page == "4"){
+		document.getElementById("pfw").style.display = "none";
+		document.getElementById("ptg").style.display = "none";
+		document.getElementById("flw").style.display = "none";
+		document.getElementById("dmz").style.display = "block";
+		document.getElementById("btn_pf").style.display = "block";
+		document.getElementById("btn_pt").style.display = "block";
+		document.getElementById("btn_fw").style.display = "block";
+		document.getElementById("btn_dmz").style.display = "none";
+	}
+
+}
+
+function adv_security(page){
+	
+	f = document.forms[0];
+
+	count_tri = 0 ;
+	count_pfw = 0 ;
+	v_ptg_add = "" ;
+	v_pfw_add = "" ;
+	if(page == '1'){
+		InitValue_port_for(f);
+	}
+	else if(page == '2'){
+		InitValue_port_tri(f);
+	}
+	else if(page == '3'){
+		InitValue_firewall(f);
+	}
+	else if(page == '4'){
+		InitValue_dmz(f);
+	}
+
+//	location.reload();
+}
+
+
+
+function mouseOver(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("router").src = "rt_icon_bri.png";
+}
+
+function mouseOut(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("router").src = "rt_icon_bri.png";
+}
+
+var language_show = 0;
+function open_language()
+{
+	 var language_choice = document.getElementById('language');
+	 
+	if(language_show == '1') {
+		language_show = 0;
+		language_choice.style.visibility="hidden";
+	}
+	else {
+		language_show = 1;
+		language_choice.style.visibility="visible";
+	}
+}
+
+function apply_lang(e)
+{
+	var f1 = document.forms[1];
+	f1.language_str.value = e;
+ 	f1.submit();
+}
+
+function chage_color(e)
+{
+	e.style.color="#4F81BD";
+	e.style.textDecoration="underline"; 
+}
+
+function back_color(e)
+{
+	e.style.color="#B8B8B8";
+	e.style.textDecoration="none"; 
+}
+
+
+</Script>
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="edit" action="post_iptable.cgi" method="post">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_security.htm">
+<input type="hidden" name="redirect_timer" value="5000">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value=" adv_security_page"> 
+<input type="hidden" name="adv_security_page" >
+<!--input type="hidden" name="data1" value="spip1 spip2 spip3 spip4 spip5 spip6 spip7 spip8 spip9 spip10 spip11 spip12 spip13 spip14 spip15 spdesc1 spdesc2 spdesc3 spdesc4 spdesc5 spdesc6 spdesc7 spdesc8 spdesc9 spdesc10 spdesc11 spdesc12 spdesc13 spdesc14 spdesc15 spexp1 spexp2 spexp3 spexp4 spexp5 spexp6 spexp7 spexp8 spexp9 spexp10 spexp11 spexp12 spexp13 spexp14 spexp15 spinp1 spinp2 spinp3 spinp4 spinp5 spinp6 spinp7 spinp8 spinp9 spinp10 spinp11 spinp12 spinp13 spinp14 spinp15 spen1 spen2 spen3 spen4 spen5 spen6 spen7 spen8 spen9 spen10 spen11 spen12 spen13 spen14 spen15 sppl1 sppl2 sppl3 sppl4 sppl5 sppl6 sppl7 sppl8 sppl9 sppl10 sppl11 sppl12 sppl13 sppl14 sppl15 "--> 
+  
+<input type="hidden" name="spip1" value='<%nvram_get("spip1");%>'>
+<input type="hidden" name="spip2" value='<%nvram_get("spip2");%>'>
+<input type="hidden" name="spip3" value='<%nvram_get("spip3");%>'>
+<input type="hidden" name="spip4" value='<%nvram_get("spip4");%>'>
+<input type="hidden" name="spip5" value='<%nvram_get("spip5");%>'>
+<input type="hidden" name="spip6" value='<%nvram_get("spip6");%>'>
+<input type="hidden" name="spip7" value='<%nvram_get("spip7");%>'>
+<input type="hidden" name="spip8" value='<%nvram_get("spip8");%>'>
+<input type="hidden" name="spip9" value='<%nvram_get("spip9");%>'>
+<input type="hidden" name="spip10" value='<%nvram_get("spip10");%>'>
+<input type="hidden" name="spip11" value='<%nvram_get("spip11");%>'>
+<input type="hidden" name="spip12" value='<%nvram_get("spip12");%>'>
+<input type="hidden" name="spip13" value='<%nvram_get("spip13");%>'>
+<input type="hidden" name="spip14" value='<%nvram_get("spip14");%>'>
+<input type="hidden" name="spip15" value='<%nvram_get("spip15");%>'>  
+<input type="hidden" name="spdesc1" value='<%nvram_get("spdesc1");%>'>
+<input type="hidden" name="spdesc2" value='<%nvram_get("spdesc2");%>'>
+<input type="hidden" name="spdesc3" value='<%nvram_get("spdesc3");%>'>
+<input type="hidden" name="spdesc4" value='<%nvram_get("spdesc4");%>'>
+<input type="hidden" name="spdesc5" value='<%nvram_get("spdesc5");%>'>
+<input type="hidden" name="spdesc6" value='<%nvram_get("spdesc6");%>'>
+<input type="hidden" name="spdesc7" value='<%nvram_get("spdesc7");%>'>
+<input type="hidden" name="spdesc8" value='<%nvram_get("spdesc8");%>'>
+<input type="hidden" name="spdesc9" value='<%nvram_get("spdesc9");%>'>
+<input type="hidden" name="spdesc10" value='<%nvram_get("spdesc10");%>'>
+<input type="hidden" name="spdesc11" value='<%nvram_get("spdesc11");%>'>
+<input type="hidden" name="spdesc12" value='<%nvram_get("spdesc12");%>'>
+<input type="hidden" name="spdesc13" value='<%nvram_get("spdesc13");%>'>
+<input type="hidden" name="spdesc14" value='<%nvram_get("spdesc14");%>'>
+<input type="hidden" name="spdesc15" value='<%nvram_get("spdesc15");%>'>
+<input type="hidden" name="spexp1" value='<%nvram_get("spexp1");%>'>
+<input type="hidden" name="spexp2" value='<%nvram_get("spexp2");%>'>
+<input type="hidden" name="spexp3" value='<%nvram_get("spexp3");%>'>
+<input type="hidden" name="spexp4" value='<%nvram_get("spexp4");%>'>
+<input type="hidden" name="spexp5" value='<%nvram_get("spexp5");%>'>
+<input type="hidden" name="spexp6" value='<%nvram_get("spexp6");%>'>
+<input type="hidden" name="spexp7" value='<%nvram_get("spexp7");%>'>
+<input type="hidden" name="spexp8" value='<%nvram_get("spexp8");%>'>
+<input type="hidden" name="spexp9" value='<%nvram_get("spexp9");%>'>
+<input type="hidden" name="spexp10" value='<%nvram_get("spexp10");%>'>
+<input type="hidden" name="spexp11" value='<%nvram_get("spexp11");%>'>
+<input type="hidden" name="spexp12" value='<%nvram_get("spexp12");%>'>
+<input type="hidden" name="spexp13" value='<%nvram_get("spexp13");%>'>
+<input type="hidden" name="spexp14" value='<%nvram_get("spexp14");%>'>
+<input type="hidden" name="spexp15" value='<%nvram_get("spexp15");%>'>  
+<input type="hidden" name="spinp1" value='<%nvram_get("spinp1");%>'>
+<input type="hidden" name="spinp2" value='<%nvram_get("spinp2");%>'>
+<input type="hidden" name="spinp3" value='<%nvram_get("spinp3");%>'>
+<input type="hidden" name="spinp4" value='<%nvram_get("spinp4");%>'>
+<input type="hidden" name="spinp5" value='<%nvram_get("spinp5");%>'>
+<input type="hidden" name="spinp6" value='<%nvram_get("spinp6");%>'>
+<input type="hidden" name="spinp7" value='<%nvram_get("spinp7");%>'>
+<input type="hidden" name="spinp8" value='<%nvram_get("spinp8");%>'>
+<input type="hidden" name="spinp9" value='<%nvram_get("spinp9");%>'>
+<input type="hidden" name="spinp10" value='<%nvram_get("spinp10");%>'>
+<input type="hidden" name="spinp11" value='<%nvram_get("spinp11");%>'>
+<input type="hidden" name="spinp12" value='<%nvram_get("spinp12");%>'>
+<input type="hidden" name="spinp13" value='<%nvram_get("spinp13");%>'>
+<input type="hidden" name="spinp14" value='<%nvram_get("spinp14");%>'>
+<input type="hidden" name="spinp15" value='<%nvram_get("spinp15");%>'>
+<input type="hidden" name="spen1" value='<%nvram_get("spen1");%>'>
+<input type="hidden" name="spen2" value='<%nvram_get("spen2");%>'>
+<input type="hidden" name="spen3" value='<%nvram_get("spen3");%>'>
+<input type="hidden" name="spen4" value='<%nvram_get("spen4");%>'>
+<input type="hidden" name="spen5" value='<%nvram_get("spen5");%>'>
+<input type="hidden" name="spen6" value='<%nvram_get("spen6");%>'>
+<input type="hidden" name="spen7" value='<%nvram_get("spen7");%>'>
+<input type="hidden" name="spen8" value='<%nvram_get("spen8");%>'>
+<input type="hidden" name="spen9" value='<%nvram_get("spen9");%>'>
+<input type="hidden" name="spen10" value='<%nvram_get("spen10");%>'>
+<input type="hidden" name="spen11" value='<%nvram_get("spen11");%>'>
+<input type="hidden" name="spen12" value='<%nvram_get("spen12");%>'>
+<input type="hidden" name="spen13" value='<%nvram_get("spen13");%>'>
+<input type="hidden" name="spen14" value='<%nvram_get("spen14");%>'>
+<input type="hidden" name="spen15" value='<%nvram_get("spen15");%>'>
+<input type="hidden" name="sppl1" value='<%nvram_get("sppl1");%>'>
+<input type="hidden" name="sppl2" value='<%nvram_get("sppl2");%>'>
+<input type="hidden" name="sppl3" value='<%nvram_get("sppl3");%>'>
+<input type="hidden" name="sppl4" value='<%nvram_get("sppl4");%>'>
+<input type="hidden" name="sppl5" value='<%nvram_get("sppl5");%>'>
+<input type="hidden" name="sppl6" value='<%nvram_get("sppl6");%>'>
+<input type="hidden" name="sppl7" value='<%nvram_get("sppl7");%>'>
+<input type="hidden" name="sppl8" value='<%nvram_get("sppl8");%>'>
+<input type="hidden" name="sppl9" value='<%nvram_get("sppl9");%>'>
+<input type="hidden" name="sppl10" value='<%nvram_get("sppl10");%>'>
+<input type="hidden" name="sppl11" value='<%nvram_get("sppl11");%>'>
+<input type="hidden" name="sppl12" value='<%nvram_get("sppl12");%>'>
+<input type="hidden" name="sppl13" value='<%nvram_get("sppl13");%>'>
+<input type="hidden" name="sppl14" value='<%nvram_get("sppl14");%>'>
+<input type="hidden" name="sppl15" value='<%nvram_get("sppl15");%>'>
+
+
+<!--input type="hidden" name="data1" value="ptna0 ptna1 ptna2 ptna3 ptna4 ptna5 ptna6 ptna7 ptna8 ptna9 ptit0 ptit1 ptit2 ptit3 ptit4 ptit5 ptit6 ptit7 ptit8 ptit9 ptir0 ptir1 ptir2 ptir3 ptir4 ptir5 ptir6 ptir7 ptir8 ptir9 ptot0 ptot1 ptot2 ptot3 ptot4 ptot5 ptot6 ptot7 ptot8 ptot9 ptsp0 ptsp1 ptsp2 ptsp3 ptsp4 ptsp5 ptsp6 ptsp7 ptsp8 ptsp9 ptfp0 ptfp1 ptfp2 ptfp3 ptfp4 ptfp5 ptfp6 ptfp7 ptfp8 ptfp9 pten0 pten1 pten2 pten3 pten4 pten5 pten6 pten7 pten8 pten9"--> 
+
+<input type="hidden" name="ptna0" value='<%nvram_get("ptna0");%>'>
+<input type="hidden" name="ptna1" value='<%nvram_get("ptna1");%>'>
+<input type="hidden" name="ptna2" value='<%nvram_get("ptna2");%>'>
+<input type="hidden" name="ptna3" value='<%nvram_get("ptna3");%>'>
+<input type="hidden" name="ptna4" value='<%nvram_get("ptna4");%>'>
+<input type="hidden" name="ptna5" value='<%nvram_get("ptna5");%>'>
+<input type="hidden" name="ptna6" value='<%nvram_get("ptna6");%>'>
+<input type="hidden" name="ptna7" value='<%nvram_get("ptna7");%>'>
+<input type="hidden" name="ptna8" value='<%nvram_get("ptna8");%>'>
+<input type="hidden" name="ptna9" value='<%nvram_get("ptna9");%>'>
+<input type="hidden" name="ptit0" value='<%nvram_get("ptit0");%>'>
+<input type="hidden" name="ptit1" value='<%nvram_get("ptit1");%>'>
+<input type="hidden" name="ptit2" value='<%nvram_get("ptit2");%>'>
+<input type="hidden" name="ptit3" value='<%nvram_get("ptit3");%>'>
+<input type="hidden" name="ptit4" value='<%nvram_get("ptit4");%>'>
+<input type="hidden" name="ptit5" value='<%nvram_get("ptit5");%>'>
+<input type="hidden" name="ptit6" value='<%nvram_get("ptit6");%>'>
+<input type="hidden" name="ptit7" value='<%nvram_get("ptit7");%>'>
+<input type="hidden" name="ptit8" value='<%nvram_get("ptit8");%>'>
+<input type="hidden" name="ptit9" value='<%nvram_get("ptit9");%>'>
+<input type="hidden" name="ptir0" value='<%nvram_get("ptir0");%>'>
+<input type="hidden" name="ptir1" value='<%nvram_get("ptir1");%>'>
+<input type="hidden" name="ptir2" value='<%nvram_get("ptir2");%>'>
+<input type="hidden" name="ptir3" value='<%nvram_get("ptir3");%>'>
+<input type="hidden" name="ptir4" value='<%nvram_get("ptir4");%>'>
+<input type="hidden" name="ptir5" value='<%nvram_get("ptir5");%>'>
+<input type="hidden" name="ptir6" value='<%nvram_get("ptir6");%>'>
+<input type="hidden" name="ptir7" value='<%nvram_get("ptir7");%>'>
+<input type="hidden" name="ptir8" value='<%nvram_get("ptir8");%>'>
+<input type="hidden" name="ptir9" value='<%nvram_get("ptir9");%>'>
+<input type="hidden" name="ptot0" value='<%nvram_get("ptot0");%>'>
+<input type="hidden" name="ptot1" value='<%nvram_get("ptot1");%>'>
+<input type="hidden" name="ptot2" value='<%nvram_get("ptot2");%>'>
+<input type="hidden" name="ptot3" value='<%nvram_get("ptot3");%>'>
+<input type="hidden" name="ptot4" value='<%nvram_get("ptot4");%>'>
+<input type="hidden" name="ptot5" value='<%nvram_get("ptot5");%>'>
+<input type="hidden" name="ptot6" value='<%nvram_get("ptot6");%>'>
+<input type="hidden" name="ptot7" value='<%nvram_get("ptot7");%>'>
+<input type="hidden" name="ptot8" value='<%nvram_get("ptot8");%>'>
+<input type="hidden" name="ptot9" value='<%nvram_get("ptot9");%>'>
+<input type="hidden" name="ptsp0" value='<%nvram_get("ptsp0");%>'>
+<input type="hidden" name="ptsp1" value='<%nvram_get("ptsp1");%>'>
+<input type="hidden" name="ptsp2" value='<%nvram_get("ptsp2");%>'>
+<input type="hidden" name="ptsp3" value='<%nvram_get("ptsp3");%>'>
+<input type="hidden" name="ptsp4" value='<%nvram_get("ptsp4");%>'>
+<input type="hidden" name="ptsp5" value='<%nvram_get("ptsp5");%>'>
+<input type="hidden" name="ptsp6" value='<%nvram_get("ptsp6");%>'>
+<input type="hidden" name="ptsp7" value='<%nvram_get("ptsp7");%>'>
+<input type="hidden" name="ptsp8" value='<%nvram_get("ptsp8");%>'>
+<input type="hidden" name="ptsp9" value='<%nvram_get("ptsp9");%>'>
+<input type="hidden" name="ptfp0" value='<%nvram_get("ptfp0");%>'>
+<input type="hidden" name="ptfp1" value='<%nvram_get("ptfp1");%>'>
+<input type="hidden" name="ptfp2" value='<%nvram_get("ptfp2");%>'>
+<input type="hidden" name="ptfp3" value='<%nvram_get("ptfp3");%>'>
+<input type="hidden" name="ptfp4" value='<%nvram_get("ptfp4");%>'>
+<input type="hidden" name="ptfp5" value='<%nvram_get("ptfp5");%>'>
+<input type="hidden" name="ptfp6" value='<%nvram_get("ptfp6");%>'>
+<input type="hidden" name="ptfp7" value='<%nvram_get("ptfp7");%>'>
+<input type="hidden" name="ptfp8" value='<%nvram_get("ptfp8");%>'>
+<input type="hidden" name="ptfp9" value='<%nvram_get("ptfp9");%>'>
+<input type="hidden" name="pten0" value='<%nvram_get("pten0");%>'>
+<input type="hidden" name="pten1" value='<%nvram_get("pten1");%>'>
+<input type="hidden" name="pten2" value='<%nvram_get("pten2");%>'>
+<input type="hidden" name="pten3" value='<%nvram_get("pten3");%>'>
+<input type="hidden" name="pten4" value='<%nvram_get("pten4");%>'>
+<input type="hidden" name="pten5" value='<%nvram_get("pten5");%>'>
+<input type="hidden" name="pten6" value='<%nvram_get("pten6");%>'>
+<input type="hidden" name="pten7" value='<%nvram_get("pten7");%>'>
+<input type="hidden" name="pten8" value='<%nvram_get("pten8");%>'>
+<input type="hidden" name="pten9" value='<%nvram_get("pten9");%>'>
+
+<INPUT type="hidden" name="external_1">
+<INPUT type="hidden" name="internal_1">
+<input type="hidden" name="protocol_1"> 
+<INPUT type="hidden" name="external_2">
+<INPUT type="hidden" name="internal_2">
+<input type="hidden" name="protocol_2"> 
+<INPUT type="hidden" name="external_3">
+<INPUT type="hidden" name="internal_3">
+<input type="hidden" name="protocol_3"> 
+<!---INPUT type="hidden" name="external_4">
+<INPUT type="hidden" name="internal_4">
+<input type="hidden" name="protocol_4"> 
+<INPUT type="hidden" name="external_5">
+<INPUT type="hidden" name="internal_5">
+<input type="hidden" name="protocol_5"--> 
+<input type="hidden" name="action" value="Apply"> 
+
+<!--input type="hidden" name="data1" value="fw_spi_enabled remote_ping_enabled filter_multi filter_iNAT filter_IDNT fw_proxy_enabled fw_java_enabled fw_activex_enabled fw_cookies_enabled"-->
+<input type="hidden" name="fw_spi_enabled" value='<%nvram_get("fw_spi_enabled");%>'>
+<input type="hidden" name="remote_ping_enabled" value='<%nvram_get("remote_ping_enabled");%>'>
+<input type="hidden" name="filter_multi" value='<%nvram_get("filter_multi");%>'>
+<input type="hidden" name="filter_iNAT" value='<%nvram_get("filter_iNAT");%>'>
+<input type="hidden" name="filter_IDNT" value='<%nvram_get("filter_IDNT");%>'>
+<input type="hidden" name="fw_proxy_enabled" value='<%nvram_get("fw_proxy_enabled");%>'>
+<input type="hidden" name="fw_java_enabled" value='<%nvram_get("fw_java_enabled");%>'>
+<input type="hidden" name="fw_activex_enabled" value='<%nvram_get("fw_activex_enabled");%>'>
+<input type="hidden" name="fw_cookies_enabled" value='<%nvram_get("fw_cookies_enabled");%>'>
+
+
+<!--input type="hidden" name="data1" value="dmz_dest_ip dmz_dest dmz_enabled dmz_dest_mac dmz_src_ipaddr dmz_src_ipaddr_start dmz_src_ipaddr_end dmz_l4fwd_enabled dmz_icmpfwd_enabled"-->
+<input type="hidden" name="dmz_dest_ip" value="<%nvram_get("dmz_dest_ip");%>">
+<input type="hidden" name="dmz_dest" value="<%nvram_get("dmz_dest");%>">
+<input type="hidden" name="dmz_enabled" value="<%nvram_get("dmz_enabled");%>">
+<input type="hidden" name="dmz_dest_mac" value="<%nvram_get("dmz_dest_mac");%>">
+<input type="hidden" name="dmz_src_ipaddr" value="<%nvram_get("dmz_src_ipaddr");%>">
+<input type="hidden" name="dmz_src_ipaddr_start" value="<%nvram_get("dmz_src_ipaddr_start");%>">
+<input type="hidden" name="dmz_src_ipaddr_end" value="<%nvram_get("dmz_src_ipaddr_end");%>">
+<input type="hidden" name="dmz_l4fwd_enabled" value="<%nvram_get("dmz_l4fwd_enabled");%>">
+<input type="hidden" name="dmz_icmpfwd_enabled" value="<%nvram_get("dmz_icmpfwd_enabled");%>">
+
+<center>
+ 			 
+<table border="0" width="1000" >
+	<tr>
+		<td>
+
+<%include_file("adv_logol_header.htm");%>
+   <div id="warp"> 
+     
+      <div class="Pointer_Routerpic"></div>
+			<p  style="height:11px;"></p> 
+      <div class="status_background">
+			<p  style="height:30px;"></p> 
+
+
+      		<div class="Router_status" id="pfw" style="display:none;">
+  			  <p class="adv_title_hr"> <img src="hr_line.png"></p>
+		      <p class="adv_title"><script>translate_strWrite("SetupWizard",80);</script>&nbsp;</p>
+			     <p class="adv_title_hr"> <img src="hr_line.png"></p>
+      			<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+					<tr height="14"><td colspan="4" align="center" class="adv_title_hr">&nbsp;</td></tr>
+      				<tr height="32">
+      					<td colspan="4">
+
+						<table border="1" cellpadding="0" cellspacing="0" class="forward_tbl">
+							<tr>
+							  <td width="131" height="25" align="center" valign="middle"><b><script>translate_strWrite("AccessRestriction",34);</script></b></td>
+							  <td width="96" height="25" align="center" valign="middle"><b><script>translate_strWrite("PortForward",16);</script></b></td>
+							  <td width="96" height="25" align="center" valign="middle"><b><script>translate_strWrite("PortForward",17);</script></b></td>
+							  <td width="62" valign="middle" align="center"><b><script>translate_strWrite("AccessRestriction",36);</script></b></td>
+							  <td width="160" valign="middle" align="center"><b><script>translate_strWrite("PortForward",18);</script></b> </td>
+							  <td width="42" height="25" align="center" valign="middle"><b><script>translate_strWrite("CheckBox",0);</script></b></td>
+							</tr>
+
+							<tr>
+							  <td width="131" height="25" align="center" valign="middle">
+								<select name="description_1" onchange="DataShow(this.value,1);" size=1 id="description_1" class="select_col_width" >
+								<option value="None" selected><?SingalPortFW_1?></option>
+								<option value="FTP"><?SingalPortFW_2?></option>
+								<option value="Telnet"><?SingalPortFW_3?></option>
+								<option value="SMTP"><?SingalPortFW_4?></option>
+								<option value="DNS"><?SingalPortFW_5?></option>
+								<option value="TFTP"><?SingalPortFW_6?></option>
+								<option value="Finger"><?SingalPortFW_7?></option>
+								<option value="HTTP"><?SingalPortFW_8?></option>
+								<option value="POP3"><?SingalPortFW_9?></option>
+								<option value="NNTP"><?SingalPortFW_10?></option>
+								<option value="SNMP"><?SingalPortFW_11?></option>
+								</select>
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<DIV ID="myDiv1_1">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<DIV ID="myDiv1_2">
+							  </td>
+							  <td width="62" valign="middle" align="center">
+							  	<DIV ID="myDiv1_3">
+							  </td>
+							  <td width="160" valign="middle" align="center">
+		                      	<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>
+								.
+								<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>
+								.
+		                  		<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>
+								.
+		                 		<INPUT class="ip_col_width" maxLength=3  name="ToIP_1">
+							  </td>
+							  <td width="42" height="25" align="center" valign="middle">
+							  	<input type="checkbox" name="enable_1">
+							  </td>
+							</tr>
+
+							<tr>
+							  <td width="131" height="25" align="center" valign="middle">
+								<select name="description_2" onchange="DataShow(this.value,2);" size=1 id="description_2" class="select_col_width" >
+								<option value="None" selected><?SingalPortFW_1?></option>
+								<option value="FTP"><?SingalPortFW_2?></option>
+								<option value="Telnet"><?SingalPortFW_3?></option>
+								<option value="SMTP"><?SingalPortFW_4?></option>
+								<option value="DNS"><?SingalPortFW_5?></option>
+								<option value="TFTP"><?SingalPortFW_6?></option>
+								<option value="Finger"><?SingalPortFW_7?></option>
+								<option value="HTTP"><?SingalPortFW_8?></option>
+								<option value="POP3"><?SingalPortFW_9?></option>
+								<option value="NNTP"><?SingalPortFW_10?></option>
+								<option value="SNMP"><?SingalPortFW_11?></option>
+								</select>
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<DIV ID="myDiv2_1">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<DIV ID="myDiv2_2">
+							  </td>
+							  <td width="62" valign="middle" align="center">
+							  	<DIV ID="myDiv2_3">
+							  </td>
+							  <td width="160" valign="middle" align="center">
+		                      	<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>
+								.
+								<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>
+								.
+		                  		<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>
+								.
+		                 		<INPUT class="ip_col_width" maxLength=3  name="ToIP_2">
+							  </td>
+							  <td width="42" height="25" align="center" valign="middle">
+							  	<input type="checkbox" name="enable_2">
+							  </td>
+							</tr>
+							
+							<tr>
+							  <td width="131" height="25" align="center" valign="middle">
+								<select name="description_3" onchange="DataShow(this.value,3);" size=1 id="description_3" class="select_col_width" >
+								<option value="None" selected><?SingalPortFW_1?></option>
+								<option value="FTP"><?SingalPortFW_2?></option>
+								<option value="Telnet"><?SingalPortFW_3?></option>
+								<option value="SMTP"><?SingalPortFW_4?></option>
+								<option value="DNS"><?SingalPortFW_5?></option>
+								<option value="TFTP"><?SingalPortFW_6?></option>
+								<option value="Finger"><?SingalPortFW_7?></option>
+								<option value="HTTP"><?SingalPortFW_8?></option>
+								<option value="POP3"><?SingalPortFW_9?></option>
+								<option value="NNTP"><?SingalPortFW_10?></option>
+								<option value="SNMP"><?SingalPortFW_11?></option>
+								</select>
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<DIV ID="myDiv3_1">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<DIV ID="myDiv3_2">
+							  </td>
+							  <td width="62" valign="middle" align="center">
+							  	<DIV ID="myDiv3_3">
+							  </td>
+							  <td width="160" valign="middle" align="center">
+		                      	<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>
+								.
+								<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>
+								.
+		                  		<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>
+								.
+		                 		<INPUT class="ip_col_width" maxLength=3  name="ToIP_3">
+							  </td>
+							  <td width="42" height="25" align="center" valign="middle">
+							  	<input type="checkbox" name="enable_3">
+							  </td>
+							</tr>
+							
+							<!--tr>
+							  <td width="131" height="25" align="center" valign="middle">
+								<select name="description_4" onchange="DataShow(this.value,4);" size=1 id="description_4" class="select_col_width" >
+								<option value="None" selected><?SingalPortFW_1?></option>
+								<option value="FTP"><?SingalPortFW_2?></option>
+								<option value="Telnet"><?SingalPortFW_3?></option>
+								<option value="SMTP"><?SingalPortFW_4?></option>
+								<option value="DNS"><?SingalPortFW_5?></option>
+								<option value="TFTP"><?SingalPortFW_6?></option>
+								<option value="Finger"><?SingalPortFW_7?></option>
+								<option value="HTTP"><?SingalPortFW_8?></option>
+								<option value="POP3"><?SingalPortFW_9?></option>
+								<option value="NNTP"><?SingalPortFW_10?></option>
+								<option value="SNMP"><?SingalPortFW_11?></option>
+								</select>
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<DIV ID="myDiv4_1">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<DIV ID="myDiv4_2">
+							  </td>
+							  <td width="62" valign="middle" align="center">
+							  	<DIV ID="myDiv4_3">
+							  </td>
+							  <td width="160" valign="middle" align="center">
+		                      	<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>
+								.
+								<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>
+								.
+		                  		<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>
+								.
+		                 		<INPUT class="ip_col_width" maxLength=3  name="ToIP_4">
+							  </td>
+							  <td width="42" height="25" align="center" valign="middle">
+							  	<input type="checkbox" name="enable_4">
+							  </td>
+							</tr>
+							
+							<tr>
+							  <td width="131" height="25" align="center" valign="middle">
+								<select name="description_5" onchange="DataShow(this.value,5);" size=1 id="description_5" class="select_col_width" >
+								<option value="None" selected><?SingalPortFW_1?></option>
+								<option value="FTP"><?SingalPortFW_2?></option>
+								<option value="Telnet"><?SingalPortFW_3?></option>
+								<option value="SMTP"><?SingalPortFW_4?></option>
+								<option value="DNS"><?SingalPortFW_5?></option>
+								<option value="TFTP"><?SingalPortFW_6?></option>
+								<option value="Finger"><?SingalPortFW_7?></option>
+								<option value="HTTP"><?SingalPortFW_8?></option>
+								<option value="POP3"><?SingalPortFW_9?></option>
+								<option value="NNTP"><?SingalPortFW_10?></option>
+								<option value="SNMP"><?SingalPortFW_11?></option>
+								</select>
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<DIV ID="myDiv5_1">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<DIV ID="myDiv5_2">
+							  </td>
+							  <td width="62" valign="middle" align="center">
+							  	<DIV ID="myDiv5_3">
+							  </td>
+							  <td width="160" valign="middle" align="center">
+		                      	<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>
+								.
+								<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>
+								.
+		                  		<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>
+								.
+		                 		<INPUT class="ip_col_width" maxLength=3  name="ToIP_5">
+							  </td>
+							  <td width="42" height="25" align="center" valign="middle">
+							  	<input type="checkbox" name="enable_5">
+							  </td>
+							</tr-->
+							<tr>
+							  <td width="131" height="25" align="center" valign="middle">
+								<input type="text" name="description_4" maxlength="22" class="ssid_col_width">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT type="text" class="mtu_col_width" maxLength=5 name="external_4" value="">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT class="mtu_col_width" maxLength=5 name="internal_4">
+							  </td>
+							  <td width="62" valign="middle" align="center">
+							    <SELECT size=1 name="protocol_4" class="protocol_select_col_width" >
+										<option value="0"><?SingalPortFW_16?></option>
+										<option value="1"><?SingalPortFW_17?></option>
+										<option value="2"><?SingalPortFW_15?></option>
+							    </SELECT>
+							  </td>
+							  <td width="160" valign="middle" align="center">
+		                      	<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>
+								.
+								<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>
+								.
+		                  		<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>
+								.
+		                 		<INPUT class="ip_col_width" maxLength=3  name="ToIP_4">
+							  </td>
+							  <td width="42" height="25" align="center" valign="middle">
+							  	<input type="checkbox" name="enable_4">
+							  </td>
+							</tr>
+							<tr>
+							  <td width="131" height="25" align="center" valign="middle">
+								<input type="text" name="description_5" maxlength="22" class="ssid_col_width">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT type="text" class="mtu_col_width" maxLength=5 name="external_5" value="">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT class="mtu_col_width" maxLength=5 name="internal_5">
+							  </td>
+							  <td width="62" valign="middle" align="center">
+							    <SELECT size=1 name="protocol_5" class="protocol_select_col_width" >
+										<option value="0"><?SingalPortFW_16?></option>
+										<option value="1"><?SingalPortFW_17?></option>
+										<option value="2"><?SingalPortFW_15?></option>
+							    </SELECT>
+							  </td>
+							  <td width="160" valign="middle" align="center">
+		                      	<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>
+								.
+								<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>
+								.
+		                  		<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>
+								.
+		                 		<INPUT class="ip_col_width" maxLength=3  name="ToIP_5">
+							  </td>
+							  <td width="42" height="25" align="center" valign="middle">
+							  	<input type="checkbox" name="enable_5">
+							  </td>
+							</tr>
+							
+							<tr>
+							  <td width="131" height="25" align="center" valign="middle">
+								<input type="text" name="description_6" maxlength="22" class="ssid_col_width">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT type="text" class="mtu_col_width" maxLength=5 name="external_6" value="XX">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT class="mtu_col_width" maxLength=5 name="internal_6">
+							  </td>
+							  <td width="62" valign="middle" align="center">
+							    <SELECT size=1 name="protocol_6" class="protocol_select_col_width" >
+										<option value="0"><?SingalPortFW_16?></option>
+										<option value="1"><?SingalPortFW_17?></option>
+										<option value="2"><?SingalPortFW_15?></option>
+							    </SELECT>
+							  </td>
+							  <td width="160" valign="middle" align="center">
+		                      	<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>
+								.
+								<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>
+								.
+		                  		<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>
+								.
+		                 		<INPUT class="ip_col_width" maxLength=3  name="ToIP_6">
+							  </td>
+							  <td width="42" height="25" align="center" valign="middle">
+							  	<input type="checkbox" name="enable_6">
+							  </td>
+							</tr>
+							
+							<!--tr>
+							  <td width="131" height="25" align="center" valign="middle">
+								<input type="text" name="description_7" maxlength="22" class="ssid_col_width">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT maxLength=5 class="mtu_col_width" name="external_7">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT class="mtu_col_width" maxLength=5 name="internal_7">
+							  </td>
+							  <td width="62" valign="middle" align="center">
+							    <SELECT size=1 name="protocol_7" class="protocol_select_col_width" >
+										<option value="0"><?SingalPortFW_16?></option>
+										<option value="1"><?SingalPortFW_17?></option>
+										<option value="2"><?SingalPortFW_15?></option>
+							    </SELECT>
+							  </td>
+							  <td width="160" valign="middle" align="center">
+		                      	<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>
+								.
+								<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>
+								.
+		                  		<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>
+								.
+		                 		<INPUT class="ip_col_width" maxLength=3  name="ToIP_7">
+							  </td>
+							  <td width="42" height="25" align="center" valign="middle">
+							  	<input type="checkbox" name="enable_7">
+							  </td>
+							</tr>
+							
+							<tr>
+							  <td width="131" height="25" align="center" valign="middle">
+								<input type="text" name="description_8" maxlength="22" class="ssid_col_width">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT maxLength=5 class="mtu_col_width" name="external_8">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT class="mtu_col_width" maxLength=5 name="internal_8">
+							  </td>
+							  <td width="62" valign="middle" align="center">
+							    <SELECT size=1 name="protocol_8" class="protocol_select_col_width" >
+										<option value="0"><?SingalPortFW_16?></option>
+										<option value="1"><?SingalPortFW_17?></option>
+										<option value="2"><?SingalPortFW_15?></option>
+							    </SELECT>
+							  </td>
+							  <td width="160" valign="middle" align="center">
+		                      	<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>
+								.
+								<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>
+								.
+		                  		<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>
+								.
+		                 		<INPUT class="ip_col_width" maxLength=3  name="ToIP_8">
+							  </td>
+							  <td width="42" height="25" align="center" valign="middle">
+							  	<input type="checkbox" name="enable_8">
+							  </td>
+							</tr>
+							
+							<tr>
+							  <td width="131" height="25" align="center" valign="middle">
+								<input type="text" name="description_9" maxlength="22" class="ssid_col_width">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT maxLength=5 class="mtu_col_width" name="external_9">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT class="mtu_col_width" maxLength=5 name="internal_9">
+							  </td>
+							  <td width="62" valign="middle" align="center">
+							    <SELECT size=1 name="protocol_9" class="protocol_select_col_width" >
+										<option value="0"><?SingalPortFW_16?></option>
+										<option value="1"><?SingalPortFW_17?></option>
+										<option value="2"><?SingalPortFW_15?></option>
+							    </SELECT>
+							  </td>
+							  <td width="160" valign="middle" align="center">
+		                      	<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>
+								.
+								<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>
+								.
+		                  		<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>
+								.
+		                 		<INPUT class="ip_col_width" maxLength=3  name="ToIP_9">
+							  </td>
+							  <td width="42" height="25" align="center" valign="middle">
+							  	<input type="checkbox" name="enable_9">
+							  </td>
+							</tr>
+							
+							<tr>
+							  <td width="131" height="25" align="center" valign="middle">
+								<input type="text" name="description_10" maxlength="22" class="ssid_col_width">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT maxLength=5 class="mtu_col_width" name="external_10">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT class="mtu_col_width" maxLength=5 name="internal_10">
+							  </td>
+							  <td width="62" valign="middle" align="center">
+							    <SELECT size=1 name="protocol_10" class="protocol_select_col_width" >
+										<option value="0"><?SingalPortFW_16?></option>
+										<option value="1"><?SingalPortFW_17?></option>
+										<option value="2"><?SingalPortFW_15?></option>
+							    </SELECT>
+							  </td>
+							  <td width="160" valign="middle" align="center">
+		                      	<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>
+								.
+								<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>
+								.
+		                  		<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>
+								.
+		                 		<INPUT class="ip_col_width" maxLength=3  name="ToIP_10">
+							  </td>
+							  <td width="42" height="25" align="center" valign="middle">
+							  	<input type="checkbox" name="enable_10">
+							  </td>
+							</tr>
+							
+							<tr>
+							  <td width="131" height="25" align="center" valign="middle">
+								<input type="text" name="description_11" maxlength="22" class="ssid_col_width">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT maxLength=5 class="mtu_col_width" name="external_11">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT class="mtu_col_width" maxLength=5 name="internal_11">
+							  </td>
+							  <td width="62" valign="middle" align="center">
+							    <SELECT size=1 name="protocol_11" class="protocol_select_col_width" >
+										<option value="0"><?SingalPortFW_16?></option>
+										<option value="1"><?SingalPortFW_17?></option>
+										<option value="2"><?SingalPortFW_15?></option>
+							    </SELECT>
+							  </td>
+							  <td width="160" valign="middle" align="center">
+		                      	<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>
+								.
+								<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>
+								.
+		                  		<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>
+								.
+		                 		<INPUT class="ip_col_width" maxLength=3  name="ToIP_11">
+							  </td>
+							  <td width="42" height="25" align="center" valign="middle">
+							  	<input type="checkbox" name="enable_11">
+							  </td>
+							</tr>
+							
+							<tr>
+							  <td width="131" height="25" align="center" valign="middle">
+								<input type="text" name="description_12" maxlength="22" class="ssid_col_width">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT maxLength=5 class="mtu_col_width" name="external_12">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT class="mtu_col_width" maxLength=5 name="internal_12">
+							  </td>
+							  <td width="62" valign="middle" align="center">
+							    <SELECT size=1 name="protocol_12" class="protocol_select_col_width" >
+										<option value="0"><?SingalPortFW_16?></option>
+										<option value="1"><?SingalPortFW_17?></option>
+										<option value="2"><?SingalPortFW_15?></option>
+							    </SELECT>
+							  </td>
+							  <td width="160" valign="middle" align="center">
+		                      	<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>
+								.
+								<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>
+								.
+		                  		<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>
+								.
+		                 		<INPUT class="ip_col_width" maxLength=3  name="ToIP_12">
+							  </td>
+							  <td width="42" height="25" align="center" valign="middle">
+							  	<input type="checkbox" name="enable_12">
+							  </td>
+							</tr>
+							
+							<tr>
+							  <td width="131" height="25" align="center" valign="middle">
+								<input type="text" name="description_13" maxlength="22" class="ssid_col_width">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT maxLength=5 class="mtu_col_width" name="external_13">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT class="mtu_col_width" maxLength=5 name="internal_13">
+							  </td>
+							  <td width="62" valign="middle" align="center">
+							    <SELECT size=1 name="protocol_13" class="protocol_select_col_width" >
+										<option value="0"><?SingalPortFW_16?></option>
+										<option value="1"><?SingalPortFW_17?></option>
+										<option value="2"><?SingalPortFW_15?></option>
+							    </SELECT>
+							  </td>
+							  <td width="160" valign="middle" align="center">
+		                      	<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>
+								.
+								<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>
+								.
+		                  		<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>
+								.
+		                 		<INPUT class="ip_col_width" maxLength=3  name="ToIP_13">
+							  </td>
+							  <td width="42" height="25" align="center" valign="middle">
+							  	<input type="checkbox" name="enable_13">
+							  </td>
+							</tr>
+							
+							<tr>
+							  <td width="131" height="25" align="center" valign="middle">
+								<input type="text" name="description_14" maxlength="22" class="ssid_col_width">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT maxLength=5 class="mtu_col_width" name="external_14">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT class="mtu_col_width" maxLength=5 name="internal_14">
+							  </td>
+							  <td width="62" valign="middle" align="center">
+							    <SELECT size=1 name="protocol_14" class="protocol_select_col_width" >
+										<option value="0"><?SingalPortFW_16?></option>
+										<option value="1"><?SingalPortFW_17?></option>
+										<option value="2"><?SingalPortFW_15?></option>
+							    </SELECT>
+							  </td>
+							  <td width="160" valign="middle" align="center">
+		                      	<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>
+								.
+								<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>
+								.
+		                  		<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>
+								.
+		                 		<INPUT class="ip_col_width" maxLength=3  name="ToIP_14">
+							  </td>
+							  <td width="42" height="25" align="center" valign="middle">
+							  	<input type="checkbox" name="enable_14">
+							  </td>
+							</tr>
+							
+							<tr>
+							  <td width="131" height="25" align="center" valign="middle">
+								<input type="text" name="description_15" maxlength="22" class="ssid_col_width">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT maxLength=5 class="mtu_col_width" name="external_15">
+							  </td>
+							  <td width="96" height="25" align="center" valign="middle">
+							  	<INPUT class="mtu_col_width" maxLength=5 name="internal_15">
+							  </td>
+							  <td width="62" valign="middle" align="center">
+							    <SELECT size=1 name="protocol_15" class="protocol_select_col_width" >
+										<option value="0"><?SingalPortFW_16?></option>
+										<option value="1"><?SingalPortFW_17?></option>
+										<option value="2"><?SingalPortFW_15?></option>
+							    </SELECT>
+							  </td>
+							  <td width="160" valign="middle" align="center">
+		                      	<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>
+								.
+								<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>
+								.
+		                  		<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>
+								.
+		                 		<INPUT class="ip_col_width" maxLength=3  name="ToIP_15">
+							  </td>
+							  <td width="42" height="25" align="center" valign="middle">
+							  	<input type="checkbox" name="enable_15">
+							  </td>
+							</tr-->
+							
+						</table>
+						<div id="div_pfw_add"></div>
+      					</td>
+							</tr>
+							
+      				<tr  style="height:21pt;">
+   					<td colspan="4" align="right">
+		      			<table cellpadding="0" cellspacing="0" border="0" align="right" style="color:#B8B8B8;line-height:18pt;">
+		      				<tr>
+		      					<td>
+										<!--table border="0" cellspacing="0" cellpadding="0" style="height:18pt;">
+											<tr background="green">
+											<td class="SW_LeftButton">&nbsp;</td>
+											<td background="button_mid.png" class="PoPMainTd"><a href="javascript:more_pfw(document.forms[0]);">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("SetupWizard",114);</script></font>&nbsp;</a></td>
+											<td class="SW_RightButton">&nbsp;</td>
+											</tr>
+										</table-->
+										
+									<table border="0" cellpadding="0" cellspacing="0">
+										<tbody>
+											<tr height="23">
+												<td class="SW_LeftButton">&nbsp;</td>
+												<td class="SW_BottomButton">
+													<a href="javascript:onclick=more_pfw(document.forms[0]);">
+													&nbsp;<font style="color: rgb(184, 184, 184);" onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("SetupWizard",114);</script></font>&nbsp;</a></td>
+												<td class="SW_RightButton">&nbsp;</td>
+											</tr>
+										</tbody>
+									</table>
+
+		      					</td>
+		      				</tr>
+						</table>
+      					</td>
+      			    </tr>
+      			</table>
+      
+
+
+		     <p style="line-heigt:42px;">&nbsp;</p>
+      </div>
+
+<!--////////// Port Trigger Starts Here 	//////////-->
+
+      		<div class="Router_status" id="ptg" style="display:none;">
+      			<p class="adv_title_hr"> <img src="hr_line.png"></p>
+    	  		<p class="adv_title"><script>translate_strWrite("SetupWizard",81);</script>&nbsp;</p>
+    	  		<p class="adv_title_hr"> <img src="hr_line.png"></p>
+      			<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+					<tr height="14"><td colspan="4" align="center" class="adv_title_hr">&nbsp;</td></tr>
+      				<tr height="32">
+      					<td colspan="4">
+      					<div id="div_ptg_def">
+							<!--table width="500" border="1" cellpadding="0" cellspacing="0" class="forward_tbl">        
+								<tr>
+									<td width=35% height="25" align="center"><b>
+										<script>translate_strWrite("AccessRestriction",34);</script></b></td>
+									<td width=26% height="25" align="center"><b>
+										<script>translate_strWrite("PortRangeTrigger",1);</script></b></td>
+									<td width=28% height="25" align="center"><b>
+										<script>translate_strWrite("PortRangeTrigger",2);</script></b></td>
+									<td height="25" align="center"><b>
+										<script>translate_strWrite("CheckBox",0);</script></b></td>
+								</tr>
+								<tr align="center">
+								  <td height="23">
+								    <input maxlength=12 class="ssid_col_width" name="AppName0">
+								  </td>
+
+								  <td height="23">
+								    <input class="mtu_col_width" maxlength=5 size=2 value=0 name="TriggerPortStart0"><script>translate_strWrite("QoS",3);</script>
+								    <input class="mtu_col_width" maxlength=5 size=2 value=0 name="TriggerPortEnd0">
+								  </td>
+
+								  <td height="23">
+								    <input class="mtu_col_width" maxlength=5 size=2 value="<%nvram_get("ptsp0");%>" name="ForwardPortStart0"><script>translate_strWrite("QoS",3);</script>
+								    <input class="mtu_col_width" maxlength=5 size=2 value="<%nvram_get("ptfp0");%>" name="ForwardPortEnd0">
+								  </td>
+								  <td height="23">
+								    <input type=checkbox value=1 name="TriggerEnable0">
+								  </td>
+								</tr>
+								<tr align="center">
+								  <td height="25">
+								    <input maxlength=12 class="ssid_col_width" name="AppName1">
+								  </td>
+
+								  <td height="25">
+								    <input class="mtu_col_width" maxlength=5 size=2 value=0 name="TriggerPortStart1"><script>translate_strWrite("QoS",3);</script>                  		
+									 <input class="mtu_col_width" maxlength=5 size=2 value=0 name="TriggerPortEnd1">
+								  </td>
+
+								  <td height="25">
+								    <input class="mtu_col_width" maxlength=5 size=2 value="<%nvram_get("ptsp1");%>" name="ForwardPortStart1"><script>translate_strWrite("QoS",3);</script>      
+								    <input class="mtu_col_width" maxlength=5 size=2 value="<%nvram_get("ptfp1");%>" name="ForwardPortEnd1">
+								  </td>
+								  <td height="25">
+								    <input type=checkbox value=1 name="TriggerEnable1">
+								  </td>
+								</tr>
+								<tr align="center">
+								  <td height="25">
+								    <input maxlength=12 class="ssid_col_width" name="AppName2">
+								  </td>
+
+								  <td height="25">
+								    <input class="mtu_col_width" maxlength=5 size=2 value=0 name="TriggerPortStart2"><script>translate_strWrite("QoS",3);</script>    
+								    <input class="mtu_col_width" maxlength=5 size=2 value=0 name="TriggerPortEnd2">
+								  </td>
+
+								  <td height="25">
+								    <input class="mtu_col_width" maxlength=5 size=2 value="<%nvram_get("ptsp2");%>" name="ForwardPortStart2"><script>translate_strWrite("QoS",3);</script>
+								    <input class="mtu_col_width" maxlength=5 size=2 value="<%nvram_get("ptfp2");%>" name="ForwardPortEnd2">
+								  </td>
+								  <td height="25">
+								    <input type=checkbox value=1 name="TriggerEnable2">
+								  </td>
+								</tr>
+								<tr align="center">
+								  <td height="25">
+								    <input maxlength=12 class="ssid_col_width" name="AppName3">
+								  </td>
+
+								  <td height="25">
+								    <input class="mtu_col_width" maxlength=5 size=2 value=0 name="TriggerPortStart3"><script>translate_strWrite("QoS",3);</script>       
+								    <input class="mtu_col_width" maxlength=5 size=2 value=0 name="TriggerPortEnd3">
+								  </td>
+
+								  <td height="25">
+								    <input class="mtu_col_width" maxlength=5 size=2 value="<%nvram_get("ptsp3");%>" name="ForwardPortStart3"><script>translate_strWrite("QoS",3);</script>  
+								    <input class="mtu_col_width" maxlength=5 size=2 value="<%nvram_get("ptfp3");%>" name="ForwardPortEnd3">
+								  </td>
+								  <td height="25">
+								    <input type=checkbox value=1 name="TriggerEnable3">
+								  </td>
+								</tr>
+								<tr align="center">
+								  <td height="25">
+								    <input maxlength=12 class="ssid_col_width" name="AppName4">
+								  </td>
+
+								  <td height="25">
+								    <input class="mtu_col_width" maxlength=5 size=2 value=0 name="TriggerPortStart4"><script>translate_strWrite("QoS",3);</script>        
+								    <input class="mtu_col_width" maxlength=5 size=2 value=0 name="TriggerPortEnd4">
+								  </td>
+
+								  <td height="25">
+								    <input class="mtu_col_width" maxlength=5 size=2 value="<%nvram_get("ptsp4");%>" name="ForwardPortStart4"><script>translate_strWrite("QoS",3);</script>
+								    <input class="mtu_col_width" maxlength=5 size=2 value="<%nvram_get("ptfp4");%>" name="ForwardPortEnd4">
+								  </td>
+								  <td height="25">
+								    <input type=checkbox value=1 name="TriggerEnable4">
+								  </td>
+								</tr>
+								<tr align="center">
+								  <td height="25">
+								    <input maxlength=12 class="ssid_col_width" name="AppName5">
+								  </td>
+
+								  <td height="25">
+								    <input class="mtu_col_width" maxlength=5 size=2 value=0 name="TriggerPortStart5"><script>translate_strWrite("QoS",3);</script>
+								    <input class="mtu_col_width" maxlength=5 size=2 value=0 name="TriggerPortEnd5">
+								  </td>
+
+								  <td height="25">
+								    <input class="mtu_col_width" maxlength=5 size=2 value="<%nvram_get("ptsp5");%>" name="ForwardPortStart5"><script>translate_strWrite("QoS",3);</script>
+								    <input class="mtu_col_width" maxlength=5 size=2 value="<%nvram_get("ptfp5");%>" name="ForwardPortEnd5">
+								  </td>
+								  <td height="25">
+								    <input type=checkbox value=1 name="TriggerEnable5">
+								  </td>
+								</tr>
+								<tr align="center">
+								  <td height="25"> 
+								    <input maxlength=12 class="ssid_col_width" name="AppName6">
+								  </td>
+
+								  <td height="25">
+								    <input class="mtu_col_width" maxlength=5 size=2 value=0 name="TriggerPortStart6"><script>translate_strWrite("QoS",3);</script>        
+								    <input class="mtu_col_width" maxlength=5 size=2 value=0 name="TriggerPortEnd6">
+								  </td>
+
+								  <td height="25">
+								    <input class="mtu_col_width" maxlength=5 size=2 value="<%nvram_get("ptsp6");%>" name="ForwardPortStart6"><script>translate_strWrite("QoS",3);</script>
+								    <input class="mtu_col_width" maxlength=5 size=2 value="<%nvram_get("ptfp6");%>" name="ForwardPortEnd6">
+								  </td>
+								  <td height="25">
+								    <input type=checkbox value=1 name="TriggerEnable6">
+								  </td>
+								</tr>
+								<tr align="center">
+								  <td height="25">
+								    <input maxlength=12 class="ssid_col_width" name="AppName7">
+								  </td>
+								 
+								  <td height="25">
+								    <input class="mtu_col_width" maxlength=5 size=2 value=0 name="TriggerPortStart7"><script>translate_strWrite("QoS",3);</script>       
+								    <input class="mtu_col_width" maxlength=5 size=2 value=0 name="TriggerPortEnd7">
+								  </td>
+								  
+								  <td height="25">
+								    <input class="mtu_col_width" maxlength=5 size=2 value="<%nvram_get("ptsp7");%>" name="ForwardPortStart7"><script>translate_strWrite("QoS",3);</script>
+								    <input class="mtu_col_width" maxlength=5 size=2 value="<%nvram_get("ptfp7");%>" name="ForwardPortEnd7">
+								  </td>
+								  <td height="25">
+								    <input type=checkbox value=1 name="TriggerEnable7">
+								  </td>
+								</tr>
+								<tr align="center">
+								  <td height="25">
+								    <input maxlength=12 class="ssid_col_width" name="AppName8">
+								  </td>
+
+								  <td height="25">
+								    <input class="mtu_col_width" maxlength=5 size=2 value=0 name="TriggerPortStart8"><script>translate_strWrite("QoS",3);</script>       
+								    <input class="mtu_col_width" maxlength=5 size=2 value=0 name="TriggerPortEnd8">
+								  </td>
+								  
+								  <td height="25">
+								    <input class="mtu_col_width" maxlength=5 size=2 value="<%nvram_get("ptsp8");%>" name="ForwardPortStart8"><script>translate_strWrite("QoS",3);</script>  
+								    <input class="mtu_col_width" maxlength=5 size=2 value="<%nvram_get("ptfp8");%>" name="ForwardPortEnd8">
+								  </td>
+								  <td height="25">
+								    <input type=checkbox value=1 name="TriggerEnable8">
+								  </td>
+								</tr>
+								<tr align="center">
+								  <td height="25">
+								    <input maxlength=12 class="ssid_col_width" name="AppName9">
+								  </td>
+								  
+								  <td height="25">
+								    <input class="mtu_col_width" maxlength=5 size=2 value=0 name="TriggerPortStart9"><script>translate_strWrite("QoS",3);</script>        
+								    <input class="mtu_col_width" maxlength=5 size=2 value=0 name="TriggerPortEnd9">
+								  </td>
+								  
+								  <td height="25">
+								    <input class="mtu_col_width" maxlength=5 size=2 value="<%nvram_get("ptsp9");%>" name="ForwardPortStart9"><script>translate_strWrite("QoS",3);</script>
+								    <input class="mtu_col_width" maxlength=5 size=2 value="<%nvram_get("ptfp9");%>" name="ForwardPortEnd9">
+								  </td>
+								  <td height="25">
+								    <input type="checkbox" value=1 name="TriggerEnable9">
+								  </td>
+								</tr>
+							    </table--></div>
+							    <div id="div_ptg_add"></div>
+							    
+      					</td>
+      			    </tr>
+      				<tr  style="height:21pt;">
+   					<td colspan="4" align="right">
+		      			<table cellpadding="0" cellspacing="0" border="0" align="right" style="color:#B8B8B8;line-height:18pt;">
+		      				<tr>
+		      					<td>
+									<table border="0" cellpadding="0" cellspacing="0">
+										<tbody>
+											<tr height="23">
+												<td class="SW_LeftButton">&nbsp;</td>
+												<td class="SW_BottomButton">
+													<a href="javascript:onclick=more_ptg(document.forms[0]);">
+													&nbsp;<font style="color: rgb(184, 184, 184);" onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("SetupWizard",114);</script></font>&nbsp;</a></td>
+												<td class="SW_RightButton">&nbsp;</td>
+											</tr>
+										</tbody>
+									</table>
+		      					</td>
+		      				</tr>
+							    </table>
+      					</td>
+      			    </tr>
+      			</table>
+
+		     <p style="line-heigt:42px;">&nbsp;</p>
+      </div>
+      
+
+
+      		<div class="Router_status" id="flw" style="display:none;">
+      		  <p class="adv_title_hr"> <img src="hr_line.png"></p>
+		      <p class="adv_title"><script>translate_strWrite("SetupWizard",82);</script>&nbsp;</p>
+		      <p class="adv_title_hr"> <img src="hr_line.png"></p>
+      			<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+					<tr height="14"><td colspan="4" align="center" class="adv_title_hr">&nbsp;</td></tr>
+      				<tr height="32">
+      					<td width="200" align="right"><script>translate_strWrite("SecurityFirewall",3);</script>:</td>
+      					<td width="30">&nbsp;</td>
+      					<td align="left">
+	                     	<INPUT type=radio value="1" name=spi_filter>&nbsp;
+		                    <script>translate_strWrite("CheckBox",0);</script>&nbsp;&nbsp;
+		                    <INPUT type=radio value="0" name=spi_filter>&nbsp;
+		                    <script>translate_strWrite("CheckBox",1);</script>&nbsp;
+      					</td>
+      					<td align="center">&nbsp;</td>
+      			    </tr>
+      			 <tr height="14"><td colspan="4" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      				<tr height="32">
+      					<td width="200" align="right"><script>translate_strWrite("SecurityFirewall",1);</script>:</td>
+      					<td width="30">&nbsp;</td>
+      					<td align="left"><input type="checkbox" name="remote_ping" value="checkbox"><script>translate_strWrite("SecurityFirewall",4);</script></td>
+      					<td align="center">&nbsp;</td>
+      			    </tr>
+      			   
+      				<tr height="32">
+      					<td width="200" align="right">&nbsp;</td>
+      					<td width="30">&nbsp;</td>
+      					<td align="left"><input type="checkbox" name="filter_multicast" value="checkbox"><script>translate_strWrite("SecurityFirewall",5);</script></td>
+      					<td align="center">&nbsp;</td>
+      			    </tr>
+
+      				<tr height="32">
+      					<td width="200" align="right">&nbsp;</td>
+      					<td width="30">&nbsp;</td>
+      					<td align="left"><input type="checkbox" name="filter_nat" value="checkbox"><script>translate_strWrite("SecurityFirewall",6);</script></td>
+      					<td align="center">&nbsp;</td>
+      			    </tr>
+
+      				<tr height="32">
+      					<td width="200" align="right">&nbsp;</td>
+      					<td width="30">&nbsp;</td>
+      					<td align="left"><input type="checkbox" name="filter_idnt" value="checkbox"><script>translate_strWrite("SecurityFirewall",7);</script></td>
+      					<td align="center">&nbsp;</td>
+      			    </tr>
+							<tr height="14"><td colspan="4" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      				<tr height="32">
+      					<td width="200" align="right"><script>translate_strWrite("SecurityFirewall",2);</script>:</td>
+      					<td width="30">&nbsp;</td>
+      					<td align="left">
+							<input type="checkbox" name="proxy_filter" value="checkbox"><script>translate_strWrite("SecurityFirewall",8);</script>&nbsp;
+							<input type="checkbox" name="java_filter" value="checkbox"><script>translate_strWrite("SecurityFirewall",9);</script>&nbsp;
+							<input type="checkbox" name="activex_filter" value="checkbox"><script>translate_strWrite("SecurityFirewall",10);</script>&nbsp;
+							<input type="checkbox" name="cookies_filter" value="checkbox"><script>translate_strWrite("SecurityFirewall",11);</script>
+      					</td>
+      					<td align="center">&nbsp;</td>
+      			    </tr>
+
+      			   
+      			</table>
+		     <p style="line-heigt:42px;">&nbsp;</p>
+      </div>
+
+
+
+      		<div class="Router_status" id="dmz" style="display:none;">
+      		  <p class="adv_title_hr"> <img src="hr_line.png"></p>
+		      <p class="adv_title"><script>translate_strWrite("SubMenuBar",1);</script>&nbsp;</p>
+		      <p class="adv_title_hr"> <img src="hr_line.png"></p>
+      			<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+					<tr height="14"><td colspan="4" align="center" class="adv_title_hr">&nbsp;</td></tr>
+      				<tr height="32">
+      					<td colspan="4" align="center">
+							<INPUT type="radio" name="DMZEnableFlag" value="1" onClick="SWDMZCheck(document.forms[0]);">&nbsp;
+							<script>translate_strWrite("CheckBox",0);</script>&nbsp;&nbsp;
+							<INPUT type="radio" name="DMZEnableFlag" value="0" onClick="SWDMZCheck(document.forms[0]);">&nbsp;
+							<script>translate_strWrite("CheckBox",1);</script>&nbsp;
+      					</td>
+      			    </tr>
+      			    <tr height="14"><td colspan="4" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      				<tr height="32">
+      					<td width="200" align="right"><script>translate_strWrite("DMZ",1);</script>:</td>
+      					<td width="30">&nbsp;</td>
+      					<td align="left">
+							<input type="radio" name="source" value="0" onClick="sourceCheck(document.forms[0]);"> 
+ 	                       <script>translate_strWrite("DMZ",2);</script>
+      					</td>
+      					<td align="center">&nbsp;</td>
+      			    </tr>
+
+      				<tr height="32">
+      					<td width="200" align="right">&nbsp;</td>
+      					<td width="30">&nbsp;</td>
+      					<td align="left">
+							<INPUT type="radio" name="source" value="1" onClick="sourceCheck(document.forms[0]);">
+							<INPUT class="ip_col_width" maxLength=3  name="dmz_src_1" value="" >.
+							<INPUT class="ip_col_width" maxLength=3  name="dmz_src_2" value="" >.
+							<INPUT class="ip_col_width" maxLength=3  name="dmz_src_3" value="" >.
+							<INPUT class="ip_col_width" maxLength=3  name="dmz_src_4" value="" >
+							-
+							<INPUT class="ip_col_width" maxLength=3 name="dmz_src_4_1" value="" >
+      					</td>
+      					<td align="center">&nbsp;</td>
+      			    </tr>
+							<tr height="14"><td colspan="4" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      				<tr height="32">
+      					<td width="200" align="right"><script>translate_strWrite("DMZ",3);</script>:</td>
+      					<td width="30">&nbsp;</td>
+      					<td align="left">
+							<input onClick=Destinationcheck(document.forms[0]); type="radio" value=0 name="Destination" >                        
+							<script>translate_strWrite("BasicSetup",71);</script>:
+							<script>document.write(GetIPSegment('<%nvram_get("lan_ipaddr");%>', 1));</script>
+							. 
+							<script>document.write(GetIPSegment('<%nvram_get("lan_ipaddr");%>', 2));</script>
+							. 
+							<script>document.write(GetIPSegment('<%nvram_get("lan_ipaddr");%>', 3));</script>
+							.<INPUT class="ip_col_width" maxLength=3 size=1 name="dmz_ipaddr_4" value="" >
+      					</td>
+      					<td align="center">&nbsp;</td>
+      			    </tr>
+      			    
+      				<tr height="32">
+      					<td width="200" align="right">&nbsp;</td>
+      					<td width="30">&nbsp;</td>
+      					<td align="left">
+							<INPUT onclick=Destinationcheck(document.forms[0]); type="radio" value="1" name="Destination" > <script>translate_strWrite("BasicSetup",105);</script>:
+					  		<input maxlength=17 name=mac class="key_col_width" value="00:00:00:00:00:00">
+      					</td>
+      					<td align="center">&nbsp;</td>
+      			    </tr>
+
+      				<tr height="32">
+      					<td width="200" align="right">&nbsp;</td>
+      					<td width="30">&nbsp;</td>
+      					<td align="left">
+							<INPUT onclick=Destinationcheck(document.forms[0]); type="radio" value="1" name="test" style="visibility:hidden">
+					  		<input value="<?BasicSetup_96?>" onclick="ViewActive()" name="dhcp_select_button" type="button">
+      					</td>
+      					<td align="center">&nbsp;</td>
+      			    </tr>
+      			    
+      			   
+      			</table>
+      			
+		     <p style="line-heigt:42px;">&nbsp;</p>
+
+
+     	  </div>
+
+
+      		<div class="button_status" style="text-align:center;">
+      			<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+
+      				<tr height="23">
+      					<td colspan="5" height="23" align="center">
+							<div id="btn_pf" style="display:none; float:left;">
+								<table border="0" cellpadding="0" cellspacing="0">
+									<tr height="23">
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton" background="button_mid.png"><a href="javascript:div_change('1');">&nbsp;
+										<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("SetupWizard",80);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										<td>&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+															
+							<div id="btn_pt" style="display:none; float:left;">
+								<table border="0" cellpadding="0" cellspacing="0">
+									<tr height="23">
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton" background="button_mid.png"><a href="javascript:div_change('2');">&nbsp;
+										<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("SetupWizard",81);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										<td>&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+															
+							<div id="btn_fw" style="display:none; float:left;">
+								<table border="0" cellpadding="0" cellspacing="0">
+									<tr height="23">
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton" background="button_mid.png"><a href="javascript:div_change('3');">&nbsp;
+										<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("SetupWizard",82);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										<td>&nbsp;</td>
+									</tr>
+								</table>				
+							</div>
+														
+							<div id="btn_dmz" style="display:none; float:left;">
+								<table border="0" cellpadding="0" cellspacing="0">
+									<tr height="23">
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton" background="button_mid.png"><a href="javascript:div_change('4');">&nbsp;
+										<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("SubMenuBar",1);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										<td>&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+							<div class="clear_float"></div>
+      					</td>
+      			    </tr>
+      			</table>
+		     <p style="line-heigt:42px;">&nbsp;</p>
+		      <p class="status_end"></p>   
+      		</div>
+      
+
+   </div> 
+        <div class="angle"></div> 
+     <div class="EZ_mid">  
+      		<p style="height:10px;"></p>      		 		  				    
+				  <div class="Cancel_Save_button">
+				  <table border="0" cellspacing="0" cellpadding="0">
+				  	<tr height=23 width=600>
+				  		<td align="right">
+					  		<table border="0" cellspacing="0" cellpadding="0">
+									<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="adv_edit_router.htm">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",1);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										</tr>
+									</table>
+							</td>
+				  	<td align="center" width="60">&nbsp;<script>translate_strWrite("BasicSetup",162);</script>&nbsp;
+				  		</td>
+				  	<td align="left">
+				  		<table border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+									<td class="SW_LeftButton">&nbsp;</td>
+									<td class="SW_BottomButton"><a href="javascript:ValidateForm(document.forms[0]);">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",0);</script></font>&nbsp;</a></td>
+									<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+							</td>
+						</tr>
+				  </table>
+					</div>	  				    					    														    						    			    
+      </div>
+      
+
+        
+       <div style="height: 50px"></div>    
+		    <div class="EZ_foot">
+						<div class="EZ_foot_L"><img src="bottom_help_icon.png" style="position:relative;top:3pt;">&nbsp;<a href="help/<%nvram_get("language_str");%>/default.htm#Firewall" target="_blank"><script>translate_strWrite("SetupWizard",64);</script></a>&nbsp;<img src="transparency.gif" style="width:15px;height:1px;"><a href="javascript:open_language();"><img src="bottom_language_icon.png" style="position:relative;top:3pt;">&nbsp;<script>translate_strWrite("BasicSetup",167);</script></a>&nbsp;&nbsp
+							<span id="language" style="visibility:hidden;">
+								<a href="javascript:apply_lang('en');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">English</font></a>&nbsp;&nbsp;
+								<!--a href="javascript:apply_lang('fr');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Fran&ccedil;ais</font></a-->&nbsp;&nbsp;
+								<!--a href="javascript:apply_lang('spa');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Spanish</font></a--></span>
+						</div>
+						<div class="EZ_foot_C"></div>
+						<div class="EZ_foot_R">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		      </div>
+         <div class="clear_float"> </div>
+  
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+
+		</td>
+	</tr>
+	</table>
+</center>
+	</form>
+	<form method="post" action="save.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_security.htm">
+<input type="hidden" name="redirect_timer" value="0">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="language_str">
+<input type="hidden" name="language_str" value="<%nvram_get("language_str");%>">
+</form>
+<!--[if lt IE 7]>
+<script defer type="text/javascript" src="ie6fix.js"></script>
+<![endif]-->
+<script type="text/javascript">
+  document.getElementById("router").src = "rt_icon_bri.png";
+</script>
+</body>
+</html>

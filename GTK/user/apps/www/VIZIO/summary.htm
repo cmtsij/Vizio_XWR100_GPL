@@ -1,0 +1,488 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title></title>
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+function delete_ar(f, ar_index)
+{
+		var i=ar_index-1;
+	eval("f.aren"+ar_index).value="0";
+			eval("f.enabled_check"+ar_index).checked=0;
+	eval("f.arn"+ar_index).value="";
+	eval("f.art"+ar_index).value="";
+	eval("f.artt"+ar_index).value="";
+	eval("f.arts"+ar_index).value="";
+	eval("f.artp"+ar_index).value="";
+	eval("f.artd"+ar_index).value="";
+			eval("f.URL"+i).value="";
+			eval("f.Text"+i).value="";
+	eval("f.BSL"+ar_index).value="";
+	eval("f.PSL"+ar_index).value="1:53:53:DNS 0:80:80:HTTP 0:443:443:HTTPS 0:21:21:FTP 0:110:110:POP3 0:143:143:IMAP 0:25:25:SMTP 0:119:119:NNTP 1:161:161:SNMP 0:23:23:Telnet 1:1000:1200:Game";
+	f.data1.value += " PSL" + ar_index + " BSL" + ar_index + " aren" + ar_index + " arn" + ar_index + " art" + ar_index + " artt" + ar_index + " arts" + ar_index + " artp" + ar_index + " artd" + ar_index;
+	window.opener.reload_page();
+	f.submit();
+}
+function ValidateForm(f)
+{
+	var i;
+ 	for (i=1;i<11;i++)
+	{
+	
+		if(eval("f.enabled_check"+i).checked==1)
+			eval("f.aren"+i).value=1;
+		else
+			eval("f.aren"+i).value=0;
+	}
+	window.opener.reload_page();
+
+	f.submit();
+	window.close();
+}
+function InitValue(f)
+{
+	var i,j;
+ 	for (i=1;i<11;i++)
+	{
+
+		if (eval("f.aren"+i).value==1)
+			eval("f.enabled_check"+i).checked=1;
+		else
+			eval("f.enabled_check"+i).checked=0;
+		eval("f.Delete"+i).value=translate_str("BottomButton",6);
+	}
+}
+function wirteDays(f,i)
+{
+	if (eval("f.artd"+i).value=="")
+		document.write("---");
+	else {
+		if (eval("f.artd"+i).value=="128") {
+			document.write(''+translate_str("AccessRestriction",18)+'');
+		}
+		else {
+			var days_index=eval("f.artd"+i).value;
+			for(j=0;j<8;j++) {
+				if((days_index >> j & 0x1)) {
+					if(j==0)
+						document.write(' '+translate_str("AccessRestriction",19)+'');
+					else if(j==7)
+						document.write(' '+translate_str("AccessRestriction",18)+'');
+					else if(j==1)
+						document.write(' '+translate_str("AccessRestriction",20)+'');
+					else if(j==2)
+						document.write(' '+translate_str("AccessRestriction",21)+'');
+					else if(j==3)
+						document.write(' '+translate_str("AccessRestriction",22)+'');
+					else if(j==4)
+						document.write(' '+translate_str("AccessRestriction",23)+'');
+					else if(j==5)
+						document.write(' '+translate_str("AccessRestriction",24)+'');
+				else
+						document.write(' '+translate_str("AccessRestriction",25)+'');
+				}		
+			}
+		}
+	}
+}
+function writeTime(f,i)
+{
+	if (eval("f.artt"+i).value=="")
+		document.write("---");
+	else {
+		if (eval("f.artt"+i).value==1)
+			document.write(eval("f.arts"+i).value + "~" + eval("f.artp"+i).value);
+		else
+			document.write(''+translate_str("AccessRestriction",27)+'');
+	}
+}
+function writeAccess(f,i)
+{
+	if(eval("f.art"+i).value=="")
+		document.write("---");
+	else
+		document.write(((eval("f.art"+i).value) == "1")?translate_str("AccessRestriction",15):translate_str("AccessRestriction",14));
+}
+</Script>
+	
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="wan_detect" action="save.cgi" method="post">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="summary.htm">
+<input type="hidden" name="redirect_timer" value="0">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="URL0 URL1 URL2 URL3 URL4 URL5 URL6 URL7 URL8 URL9 Text0 Text1 Text2 Text3 Text4 Text5 Text6 Text7 Text8 Text9 aren1 aren2 aren3 aren4 aren5 aren6 aren7 aren8 aren9 aren10">
+<input type="hidden" name="select1">
+<input type="hidden" name="aren1" value="<%nvram_get("aren1");%>">
+<input type="hidden" name="aren2" value="<%nvram_get("aren2");%>">
+<input type="hidden" name="aren3" value="<%nvram_get("aren3");%>">
+<input type="hidden" name="aren4" value="<%nvram_get("aren4");%>">
+<input type="hidden" name="aren5" value="<%nvram_get("aren5");%>">
+<input type="hidden" name="aren6" value="<%nvram_get("aren6");%>">
+<input type="hidden" name="aren7" value="<%nvram_get("aren7");%>">
+<input type="hidden" name="aren8" value="<%nvram_get("aren8");%>">
+<input type="hidden" name="aren9" value="<%nvram_get("aren9");%>">
+<input type="hidden" name="aren10" value="<%nvram_get("aren10");%>">
+<input type="hidden" name="arn1" value="<%nvram_get("arn1");%>">
+<input type="hidden" name="arn2" value="<%nvram_get("arn2");%>">
+<input type="hidden" name="arn3" value="<%nvram_get("arn3");%>">
+<input type="hidden" name="arn4" value="<%nvram_get("arn4");%>">
+<input type="hidden" name="arn5" value="<%nvram_get("arn5");%>">
+<input type="hidden" name="arn6" value="<%nvram_get("arn6");%>">
+<input type="hidden" name="arn7" value="<%nvram_get("arn7");%>">
+<input type="hidden" name="arn8" value="<%nvram_get("arn8");%>">
+<input type="hidden" name="arn9" value="<%nvram_get("arn9");%>">
+<input type="hidden" name="arn10" value="<%nvram_get("arn10");%>">
+<input type="hidden" name="art1" value="<%nvram_get("art1");%>">
+<input type="hidden" name="art2" value="<%nvram_get("art2");%>">
+<input type="hidden" name="art3" value="<%nvram_get("art3");%>">
+<input type="hidden" name="art4" value="<%nvram_get("art4");%>">
+<input type="hidden" name="art5" value="<%nvram_get("art5");%>">
+<input type="hidden" name="art6" value="<%nvram_get("art6");%>">
+<input type="hidden" name="art7" value="<%nvram_get("art7");%>">
+<input type="hidden" name="art8" value="<%nvram_get("art8");%>">
+<input type="hidden" name="art9" value="<%nvram_get("art9");%>">
+<input type="hidden" name="art10" value="<%nvram_get("art10");%>">
+<input type="hidden" name="artt1" value="<%nvram_get("artt1");%>">
+<input type="hidden" name="artt2" value="<%nvram_get("artt2");%>">
+<input type="hidden" name="artt3" value="<%nvram_get("artt3");%>">
+<input type="hidden" name="artt4" value="<%nvram_get("artt4");%>">
+<input type="hidden" name="artt5" value="<%nvram_get("artt5");%>">
+<input type="hidden" name="artt6" value="<%nvram_get("artt6");%>">
+<input type="hidden" name="artt7" value="<%nvram_get("artt7");%>">
+<input type="hidden" name="artt8" value="<%nvram_get("artt8");%>">
+<input type="hidden" name="artt9" value="<%nvram_get("artt9");%>">
+<input type="hidden" name="artt10" value="<%nvram_get("artt10");%>">
+<input type="hidden" name="arts1" value="<%nvram_get("arts1");%>">
+<input type="hidden" name="arts2" value="<%nvram_get("arts2");%>">
+<input type="hidden" name="arts3" value="<%nvram_get("arts3");%>">
+<input type="hidden" name="arts4" value="<%nvram_get("arts4");%>">
+<input type="hidden" name="arts5" value="<%nvram_get("arts5");%>">
+<input type="hidden" name="arts6" value="<%nvram_get("arts6");%>">
+<input type="hidden" name="arts7" value="<%nvram_get("arts7");%>">
+<input type="hidden" name="arts8" value="<%nvram_get("arts8");%>">
+<input type="hidden" name="arts9" value="<%nvram_get("arts9");%>">
+<input type="hidden" name="arts10" value="<%nvram_get("arts10");%>">
+<input type="hidden" name="artp1" value="<%nvram_get("artp1");%>">
+<input type="hidden" name="artp2" value="<%nvram_get("artp2");%>">
+<input type="hidden" name="artp3" value="<%nvram_get("artp3");%>">
+<input type="hidden" name="artp4" value="<%nvram_get("artp4");%>">
+<input type="hidden" name="artp5" value="<%nvram_get("artp5");%>">
+<input type="hidden" name="artp6" value="<%nvram_get("artp6");%>">
+<input type="hidden" name="artp7" value="<%nvram_get("artp7");%>">
+<input type="hidden" name="artp8" value="<%nvram_get("artp8");%>">
+<input type="hidden" name="artp9" value="<%nvram_get("artp9");%>">
+<input type="hidden" name="artp10" value="<%nvram_get("artp10");%>">
+<input type="hidden" name="artd1" value="<%nvram_get("artd1");%>">
+<input type="hidden" name="artd2" value="<%nvram_get("artd2");%>">
+<input type="hidden" name="artd3" value="<%nvram_get("artd3");%>">
+<input type="hidden" name="artd4" value="<%nvram_get("artd4");%>">
+<input type="hidden" name="artd5" value="<%nvram_get("artd5");%>">
+<input type="hidden" name="artd6" value="<%nvram_get("artd6");%>">
+<input type="hidden" name="artd7" value="<%nvram_get("artd7");%>">
+<input type="hidden" name="artd8" value="<%nvram_get("artd8");%>">
+<input type="hidden" name="artd9" value="<%nvram_get("artd9");%>">
+<input type="hidden" name="artd10" value="<%nvram_get("artd10");%>">
+  <input type="hidden" name="URL0" value="<%nvram_get("URL0");%>">
+  <input type="hidden" name="URL1" value="<%nvram_get("URL1");%>">
+  <input type="hidden" name="URL2" value="<%nvram_get("URL2");%>">
+  <input type="hidden" name="URL3" value="<%nvram_get("URL3");%>">
+  <input type="hidden" name="URL4" value="<%nvram_get("URL4");%>">
+  <input type="hidden" name="URL5" value="<%nvram_get("URL5");%>">
+  <input type="hidden" name="URL6" value="<%nvram_get("URL6");%>">
+  <input type="hidden" name="URL7" value="<%nvram_get("URL7");%>">
+  <input type="hidden" name="URL8" value="<%nvram_get("URL8");%>">
+  <input type="hidden" name="URL9" value="<%nvram_get("URL9");%>">
+  <input type="hidden" name="Text0" value="<%nvram_get("Text0");%>">
+  <input type="hidden" name="Text1" value="<%nvram_get("Text1");%>">
+  <input type="hidden" name="Text2" value="<%nvram_get("Text2");%>">
+  <input type="hidden" name="Text3" value="<%nvram_get("Text3");%>">
+  <input type="hidden" name="Text4" value="<%nvram_get("Text4");%>">
+  <input type="hidden" name="Text5" value="<%nvram_get("Text5");%>">
+  <input type="hidden" name="Text6" value="<%nvram_get("Text6");%>">
+  <input type="hidden" name="Text7" value="<%nvram_get("Text7");%>">
+  <input type="hidden" name="Text8" value="<%nvram_get("Text8");%>">
+  <input type="hidden" name="Text9" value="<%nvram_get("Text9");%>">
+<input type="hidden" name="PSL1" value="<%nvram_get("PSL1");%>">
+<input type="hidden" name="BSL1" value="<%nvram_get("BSL1");%>">
+<input type="hidden" name="PSL2" value="<%nvram_get("PSL2");%>">
+<input type="hidden" name="BSL2" value="<%nvram_get("BSL2");%>">
+<input type="hidden" name="PSL3" value="<%nvram_get("PSL3");%>">
+<input type="hidden" name="BSL3" value="<%nvram_get("BSL3");%>">
+<input type="hidden" name="PSL4" value="<%nvram_get("PSL4");%>">
+<input type="hidden" name="BSL4" value="<%nvram_get("BSL4");%>">
+<input type="hidden" name="PSL5" value="<%nvram_get("PSL5");%>">
+<input type="hidden" name="BSL5" value="<%nvram_get("BSL5");%>">
+<input type="hidden" name="PSL6" value="<%nvram_get("PSL6");%>">
+<input type="hidden" name="BSL6" value="<%nvram_get("BSL6");%>">
+<input type="hidden" name="PSL7" value="<%nvram_get("PSL7");%>">
+<input type="hidden" name="BSL7" value="<%nvram_get("BSL7");%>">
+<input type="hidden" name="PSL8" value="<%nvram_get("PSL8");%>">
+<input type="hidden" name="BSL8" value="<%nvram_get("BSL8");%>">
+<input type="hidden" name="PSL9" value="<%nvram_get("PSL9");%>">
+<input type="hidden" name="BSL9" value="<%nvram_get("BSL9");%>">
+<input type="hidden" name="PSL10" value="<%nvram_get("PSL10");%>">
+<input type="hidden" name="BSL10" value="<%nvram_get("BSL10");%>">
+
+
+	<center>	 
+<table border="0" width="1000">
+	<tr>
+		<td>
+	 
+<%include_file("adv_PopWin_header.htm");%>
+
+	
+  <div id="warp">
+      <div class="status_title">&nbsp;</div>
+      <div class="status_background">
+      	<div class="status_content">
+      		<p style="height: 10px">&nbsp;</p>
+      		<center>
+<!----Add Pop-up windows start----->
+                      <table border="0" cellpadding="0" cellspacing="0"  width="710">
+                          <tr>
+                            <td align="center" >
+                              <p class="adv_title"><p class="adv_title">
+                              <script>translate_strWrite("SetupWizard",86);</script>  
+                              </p>
+                            </td>
+                          </tr>
+                          <tr><td align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+                      </table>
+                         
+		    		<p style="height: 25px">&nbsp;</p>
+                      
+                      <table border="1" cellpadding="0" cellspacing="0"  id="AutoNumber3" width="710">
+                          
+                          <tr>
+                            <td height="25" width="23" align="center" >
+                              <script>translate_strWrite("AccessRestriction",47);</script>
+                            </td>
+                            <td height="25" width="92" align="center" >
+                              <script>translate_strWrite("AccessRestriction",48);</script>
+                            </td>
+                            <td height="25" width="64" align="center" >
+                              <script>translate_strWrite("AccessRestriction",49);</script>
+                            </td>
+                            <td height="25" width="202" align="center" >
+                              <script>translate_strWrite("AccessRestriction",17);</script>
+                            </td>
+                            <td height="25" width="207" align="center" >
+                              <script>translate_strWrite("AccessRestriction",65);</script>
+                            </td>
+                            <td height="25" width="66" align="center" >
+                              <script>translate_strWrite("CheckBox",0);</script>
+                            </td>
+                            <td height="25" width="57" align="center" >&nbsp;</td>
+                          </tr>
+                          <tr>
+                            <td height="25" width="23" align="center" >1</td>
+                            <td height="25" width="92" align="center" ><script>document.write(("<%nvram_get("arn1");%>" == "")?"---":"<%nvram_get("arn1");%>");</script></td>
+                            <td height="25" width="64" align="center" ><script>writeAccess(document.forms[0],1);</script></td>
+                            <td height="25" width="202" align="center" ><script>wirteDays(document.forms[0],1);</script></td>
+                            <td height="25" width="207" align="center" ><script>writeTime(document.forms[0],1);</script></td>
+                            <td height="25" width="66" align="center" >
+                                <input type=checkbox value=8 name="enabled_check1">
+                            </td>
+                            <td height="25" width="57" align="center" ><p ><font face="Arial" color="#000000" size="2"><b>
+                                <input onClick="delete_ar(this.form, 1);" type=button name=Delete1>
+                            </b></td>
+                          </tr>
+                          <tr>
+                            <td height="25" width="23" align="center" >2</td>
+                            <td height="25" width="92" align="center" ><script>document.write(("<%nvram_get("arn2");%>" == "")?"---":"<%nvram_get("arn2");%>");</script></td>
+                            <td height="25" width="64" align="center" ><script>writeAccess(document.forms[0],2);</script></td>
+                            <td height="25" width="202" align="center" ><script>wirteDays(document.forms[0],2);</script></td>
+                            <td height="25" width="207" align="center" ><script>writeTime(document.forms[0],2);</script></td>
+                            <td height="25" width="66" align="center" >
+                                <input type=checkbox value=8 name="enabled_check2">
+                            </td>
+                            <td height="25" width="57" align="center" ><p ><font face="Arial" color="#000000" size="2"><b>
+                                <input onClick="delete_ar(this.form, 2);" type=button name=Delete2>
+                            </b></td>
+                          </tr>
+                          <tr>
+                            <td height="25" width="23" align="center" >3</td>
+                            <td height="25" width="92" align="center" ><script>document.write(("<%nvram_get("arn3");%>" == "")?"---":"<%nvram_get("arn3");%>");</script></td>
+                            <td height="25" width="64" align="center" ><script>writeAccess(document.forms[0],3);</script></td>
+                            <td height="25" width="202" align="center" ><script>wirteDays(document.forms[0],3);</script></td>
+                            <td height="25" width="207" align="center" ><script>writeTime(document.forms[0],3);</script></td>
+                            <td height="25" width="66" align="center" >
+                                <input type=checkbox value=8 name="enabled_check3">
+                            </td>
+                            <td height="25" width="57" align="center" ><p ><font face="Arial" color="#000000" size="2"><b>
+                                <input onClick="delete_ar(this.form, 3);" type=button name=Delete3>
+                            </b></td>
+                          </tr>
+                          <tr>
+                            <td height="25" width="23" align="center" >4</td>
+                            <td height="25" width="92" align="center" ><script>document.write(("<%nvram_get("arn4");%>" == "")?"---":"<%nvram_get("arn4");%>");</script></td>
+                            <td height="25" width="64" align="center" ><script>writeAccess(document.forms[0],4);</script></td>
+                            <td height="25" width="202" align="center" ><script>wirteDays(document.forms[0],4);</script></td>
+                            <td height="25" width="207" align="center" ><script>writeTime(document.forms[0],4);</script></td>
+                            <td height="25" width="66" align="center" >
+                                <input type=checkbox value=8 name="enabled_check4">
+                            </td>
+                            <td height="25" width="57" align="center" ><p ><font face="Arial" color="#000000" size="2"><b>
+                                <input onClick="delete_ar(this.form, 4);" type=button name=Delete4>
+                            </b></td>
+                          </tr>
+                          <tr>
+                            <td height="25" width="23" align="center" >5</td>
+                            <td height="25" width="92" align="center" ><script>document.write(("<%nvram_get("arn5");%>" == "")?"---":"<%nvram_get("arn5");%>");</script></td>
+                            <td height="25" width="64" align="center" ><script>writeAccess(document.forms[0],5);</script></td>
+                            <td height="25" width="202" align="center" ><script>wirteDays(document.forms[0],5);</script></td>
+                            <td height="25" width="207" align="center" ><script>writeTime(document.forms[0],5);</script></td>
+                            <td height="25" width="66" align="center" >
+                                <input type=checkbox value=8 name="enabled_check5">
+                            </td>
+                            <td height="25" width="57" align="center" ><p ><font face="Arial" color="#000000" size="2"><b>
+                                <input onClick="delete_ar(this.form, 5);" type=button name=Delete5>
+                            </b></td>
+                          </tr>
+                          <tr>
+                <td height="25" width="23" align="center" >
+               6</td>
+                <td height="25" width="92" align="center" >
+				<script>document.write(("<%nvram_get("arn6");%>" == "")?"---":"<%nvram_get("arn6");%>");</script></td>
+                <td height="25" width="64" align="center" >
+				<script>writeAccess(document.forms[0],6);</script></td>
+                <td height="25" width="202" align="center" >
+				<script>wirteDays(document.forms[0],6);</script></td>
+                <td height="25" width="207" align="center" >
+				<script>writeTime(document.forms[0],6);</script></td>
+                <td height="25" width="66" align="center" >
+                
+                <INPUT type=checkbox value=8 name="enabled_check6"></td>
+                <td height="25" width="57" align="center" >
+                <p ><font face="Arial" color="#000000" size="2"><b>
+                <INPUT onclick="delete_ar(this.form, 6);" type=button name=Delete6></b></td>
+                </tr>
+              <tr>
+                <td height="25" width="23" align="center" >
+               7</td>
+                <td height="25" width="92" align="center" >
+				<script>document.write(("<%nvram_get("arn7");%>" == "")?"---":"<%nvram_get("arn7");%>");</script></td>
+                <td height="25" width="64" align="center" >
+				<script>writeAccess(document.forms[0],7);</script></td>
+                <td height="25" width="202" align="center" >
+				<script>wirteDays(document.forms[0],7);</script></td>
+                <td height="25" width="207" align="center" >
+				<script>writeTime(document.forms[0],7);</script></td>
+                <td height="25" width="66" align="center" >
+                
+                <INPUT type=checkbox value=8 name="enabled_check7"></td>
+                <td height="25" width="57" align="center" >
+                <p ><font face="Arial" color="#000000" size="2"><b>
+                <INPUT onclick="delete_ar(this.form, 7);" type=button name=Delete7></b></td>
+                </tr>
+              <tr>
+                <td height="25" width="23" align="center" >
+               8</td>
+                <td height="25" width="92" align="center" >
+				<script>document.write(("<%nvram_get("arn8");%>" == "")?"---":"<%nvram_get("arn8");%>");</script></td>
+                <td height="25" width="64" align="center" >
+				<script>writeAccess(document.forms[0],8);</script></td>
+                <td height="25" width="202" align="center" >
+				<script>wirteDays(document.forms[0],8);</script></td>
+                <td height="25" width="207" align="center" >
+				<script>writeTime(document.forms[0],8);</script></td>
+                <td height="25" width="66" align="center" >
+                
+                <INPUT type=checkbox value=8 name="enabled_check8"></td>
+                <td height="25" width="57" align="center" >
+                <p ><font face="Arial" color="#000000" size="2"><b>
+                <INPUT onclick="delete_ar(this.form, 8);" type=button name=Delete8></b></td>
+                </tr>
+              <tr>
+                <td height="25" width="23" align="center" >
+               9</td>
+                <td height="25" width="92" align="center" >
+				<script>document.write(("<%nvram_get("arn9");%>" == "")?"---":"<%nvram_get("arn9");%>");</script></td>
+                <td height="25" width="64" align="center" >
+				<script>writeAccess(document.forms[0],9);</script></td>
+                <td height="25" width="202" align="center" >
+				<script>wirteDays(document.forms[0],9);</script></td>
+                <td height="25" width="207" align="center" >
+				<script>writeTime(document.forms[0],9);</script></td>
+                <td height="25" width="66" align="center" >
+                
+                <INPUT type=checkbox value=8 name="enabled_check9"></td>
+                <td height="25" width="57" align="center" >
+                <p ><font face="Arial" color="#000000" size="2"><b>
+                <INPUT onclick="delete_ar(this.form, 9);" type=button name=Delete9></b></td>
+                </tr>
+              <tr>
+                <td height="25" width="23" align="center" >
+               10</td>
+                <td height="25" width="92" align="center" >
+				<script>document.write(("<%nvram_get("arn10");%>" == "")?"---":"<%nvram_get("arn10");%>");</script></td>
+                <td height="25" width="64" align="center" >
+				<script>writeAccess(document.forms[0],10);</script></td>
+                <td height="25" width="202" align="center" >
+				<script>wirteDays(document.forms[0],10);</script></td>
+                <td height="25" width="207" align="center" >
+				<script>writeTime(document.forms[0],10);</script></td>
+                <td height="25" width="66" align="center" >
+                
+                <INPUT type=checkbox value=8 name="enabled_check10"></td>
+                <td height="25" width="57" align="center" >
+                <p ><font face="Arial" color="#000000" size="2"><b>
+                <INPUT onclick="delete_ar(this.form, 10);" type=button name=Delete10></b></td>
+                </tr>
+              </table>
+<!----Add Pop-up windows End----->
+			</center>
+		      <p class="status_end"></p>     
+      </div>  
+     </div>               
+      <div class="angle"></div>
+     <div class="EZ_mid">  
+      		<p style="height:10px;"></p>      		 		  				    
+				  	<div class="Cancel_Save_button">
+				  <table border="0" cellspacing="0" cellpadding="0" width=335>
+				  	<tr height=23 width=600>
+				  		<td align="right" width=75>
+					  		<table border="0" cellspacing="0" cellpadding="0" width=75>
+									<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="javascript:location.reload();">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",1);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										</tr>
+									</table>
+							</td>
+				  	<td align="center" width="60">&nbsp;<script>translate_strWrite("BasicSetup",162);</script>&nbsp;
+				  		</td>
+				  	<td align="left" width=200>
+				  		<table border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+									<td class="SW_LeftButton">&nbsp;</td>
+									<td class="SW_BottomButton"><a href="javascript:ValidateForm(document.forms[0]);">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",0);</script></font>&nbsp;</a></td>
+									<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+							</td>
+						</tr>
+				  </table>
+					</div>	  				    					    														    						    			    
+      </div>
+      
+        
+
+         <div class="clear_float"> </div>
+          <div style="height:15px;"></div>>
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+		</td>
+	</tr>
+	</table>
+</center>
+</form>
+</body>
+</html>

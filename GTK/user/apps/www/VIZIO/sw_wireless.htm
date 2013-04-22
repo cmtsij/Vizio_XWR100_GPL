@@ -1,0 +1,379 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_113?></title>
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+	
+var f=document.wireless;
+
+function InitValue(f)
+{
+	  show_network_status();
+}
+
+var language_show = 0;
+function open_language()
+{
+	 var language_choice = document.getElementById('language');
+	 
+	if(language_show == '1') {
+		language_show = 0;
+		language_choice.style.visibility="hidden";
+	}
+	else {
+		language_show = 1;
+		language_choice.style.visibility="visible";
+	}
+}
+
+function apply_lang(e)
+{
+	var f1 = document.forms[1];
+	f1.language_str.value = e;
+ 	f1.submit();
+}
+
+function chage_color(e)
+{
+	e.style.color="#4F81BD";
+	e.style.textDecoration="underline"; 
+}
+
+function back_color(e)
+{
+	e.style.color="#B8B8B8";
+	e.style.textDecoration="none"; 
+}
+
+</Script>
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="wireless" action="post_wl.cgi" method="post">	
+<center>	 
+<table border="0" width="1000">
+	<tr>
+		<td>
+	 	
+<%include_file("sw_logol_header.htm");%>
+
+  <div id="warp">  
+			<div class="status_title"><script>translate_strWrite("SetupWizard",10);</script></div> 
+      <div class="status_background">
+      <div class="status_content">
+      		<div style="height:20px;"></div>
+		   			<div style="height:10px;"></div>
+		     		<div class="wireless_info">
+		 
+		     		<div class="ArangeFourColumn"> 
+					      <div class="FourColumn">
+					          <p style="line-height:15px; _line-height:25px; width:140px; width: 95px \9;¡@_width:85px; text-align:right;"><script>translate_strWrite("SetupWizard",14);</script></p>
+					          <p style="text-align:right;  width:140px; width: 85px \9; _width:85px;"><script>translate_strWrite("SetupWizard",15);</script></p>
+					          <p style="height: 15px; _line-height:20px;">&nbsp;</p> 
+					          <p><script>translate_strWrite("SetupWizard",16);</script></p>
+					          <p style="height: 23px; _line-height:35px;">&nbsp;</p> 
+					          <p><script>translate_strWrite("SetupWizard",17);</script></p>
+					           <p style="height: 17px; _line-height:15px;">&nbsp;</p>
+					          <p><script>translate_strWrite("SetupWizard",18);</script></p>
+					          <p style="height: 10px; _line-height:20px;">&nbsp;</p>    
+					          <p><script>translate_strWrite("SetupWizard",19);</script></p>
+					       </div>
+					  
+					        <div class="FourColumn">
+					        	 <p style="height: 0px; _line-height:10px;">&nbsp;</p> 
+					          <p>
+                            <table border="0" width="190" height="40" style="table-layout:fixed">
+                                <tr>
+                                   <td style="word-wrap : break-word; overflow:hidden;">
+                                       <p class="WirelessText">
+                                       <script>dw('<%nvram_get("wl1_ssid");%>');</script>
+                                       </p>
+                                   </td>
+                                </tr>
+                           </table>
+					          </p>
+							  
+							  <p style="height: 3px; _line-height:20px;">&nbsp;</p> 
+							  <p>
+							    <table border="0" width="190" height="80" style="table-layout:fixed">
+                                <tr>
+                                   <td style="word-wrap : break-word; overflow:hidden;">
+                                       <p class="WirelessText"><script>translate_strWrite("SetupWizard",20);</script></p>
+                                   </td>
+                                </tr>
+                           </table>
+							  </p>
+<!--
+					          <p style="height: 13px; _line-height:20px;">&nbsp;</p> 
+					          <p class="WirelessText"><script>translate_strWrite("SetupWizard",20);</script></p>
+					           <p style="height: 14px; _line-height:25px;">&nbsp;</p> 
+-->
+					           <p><script>
+					        
+					          if ('<%nvram_get("wl1_sec_mode");%>' == 'wep' && '<%nvram_get("wl1_keylength");%>' == '40')
+					          {
+					             dw("WEP 64bits");
+					          }
+					        else if ('<%nvram_get("wl1_sec_mode");%>' == 'wep' && '<%nvram_get("wl1_keylength");%>' == '104')
+					          {
+					          	 dw("WEP 128bits");
+					          }
+					        else
+					        		ShowWEPStatus('<%nvram_get("wl1_sec_mode");%>');
+					            </script>
+					          &nbsp;</p>
+					           <p style="height:7px; _line-height:20px;">&nbsp;</p> 
+					           <p>
+                                                      <table border="0" width="190" height="45" style="table-layout:fixed">
+                                                        <tr>
+                                                           <td style="word-wrap : break-word; overflow:hidden; ">
+                                                           <p class="WirelessText"><script>
+                                                      			if ('<%nvram_get("wl1_sec_mode");%>' == 'wep')
+										dw('<%nvram_get("wl1_key1");%>');
+									else if ('<%nvram_get("wl1_sec_mode");%>' == 'none')
+										dw('');
+									else
+										dw('<%nvram_get("wl1_pskkey");%>'); 
+                                                      		</script> </p>
+                                                          </td>
+                                                         </tr>
+                                                       </table>
+
+					          </p>   
+					           <p style="height:15px; _line-height:20px;">&nbsp;</p>   
+					          <p>
+					          	<script>
+												if('<%nvram_get("wl1_wlmode");%>' == '0')
+													dw(translate_str("WirelessSecurity",42));
+												else
+													dw(translate_str("WirelessSecurity",41));
+					          </script>&nbsp;</p>
+					       </div>
+					      <div class="FourColumn"  style="width:25px;"></div>
+					       <div class="FourColumn">
+					       	<p style="height: 0px; _line-height:10px;">&nbsp;</p> 
+					           <p>
+                            <table border="0" width="190" height="40" style="table-layout:fixed">
+                                <tr>
+                                   <td style="word-wrap : break-word; overflow:hidden;">
+                                       <p class="WirelessText">
+                                       <script>dw('<%nvram_get("wl0_ssid");%>');</script>
+                                       </p>
+                                   </td>
+                                </tr>
+                           </table>
+					          </p>
+					          <p style="height: 3px; _line-height:20px;">&nbsp;</p> 
+							  <p>
+							    <table border="0" width="190" height="80" style="table-layout:fixed">
+                                <tr>
+                                   <td style="word-wrap : break-word; overflow:hidden;">
+                                       <p class="WirelessText"><script>translate_strWrite("SetupWizard",21);</script></p>
+                                   </td>
+                                </tr>
+                           </table>
+							  </p>
+<!--
+					          <p style="height:13px; _line-height:20px;">&nbsp;</p> 
+					          <p class="WirelessText">&nbsp;<script>translate_strWrite("SetupWizard",21);</script></p>
+					          <p style="height: 14px; _line-height:25px;">&nbsp;</p>
+-->
+					         <p><script>
+					        
+					          if ('<%nvram_get("wl0_sec_mode");%>' == 'wep' && '<%nvram_get("wl0_keylength");%>' == '40')
+					          {
+					             dw("WEP 64bits");
+					          }
+					        else if ('<%nvram_get("wl0_sec_mode");%>' == 'wep' && '<%nvram_get("wl0_keylength");%>' == '104')
+					          {
+					          	 dw("WEP 128bits");
+					          }
+					        else
+					        		ShowWEPStatus('<%nvram_get("wl0_sec_mode");%>');
+					            </script>
+					          &nbsp;</p>
+					        <p style="height: 7px; _line-height:20px;">&nbsp;</p> 
+					          <p>
+                                                      <table border="0" width="190" height="45" style="table-layout:fixed">
+                                                        <tr>
+                                                           <td style="word-wrap : break-word; overflow:hidden; ">
+                                                           <p class="WirelessText"><script>
+                                                      			if ('<%nvram_get("wl0_sec_mode");%>' == 'wep')
+										dw('<%nvram_get("wl0_key1");%>');
+									else if ('<%nvram_get("wl0_sec_mode");%>' == 'none')
+										dw('');
+                                                                	else
+										dw('<%nvram_get("wl0_pskkey");%>'); 
+                                                      		</script> </p>
+                                                          </td>
+                                                         </tr>
+                                                       </table>
+					          </p>   
+					           <p style="height:15px; _line-height:20px;">&nbsp;</p>   
+					          <p>
+					          	<script>
+												if('<%nvram_get("wl0_wlmode");%>' == '0')
+													dw(translate_str("WirelessSecurity",42));
+												else
+													dw(translate_str("WirelessSecurity",41));
+					          </script>&nbsp;</p>
+					       </div>
+					          <div class="FourColumn"  style="width:25px;"></div>
+					       <div class="FourColumn">
+					       		<p style="height: 0px; _line-height:10px;">&nbsp;</p> 
+					           <p>
+                            <table border="0" width="190" height="40" style="table-layout:fixed">
+                                <tr>
+                                   <td style="word-wrap : break-word; overflow:hidden;">
+                                       <p class="WirelessText">
+                                       <script>dw('<%nvram_get("wl2_ssid");%>');</script>
+                                       </p>
+                                   </td>
+                                </tr>
+                           </table>
+					          </p>
+							  
+							  <p style="height: 3px; _line-height:20px;">&nbsp;</p> 
+							  <p>
+							    <table border="0" width="190" height="80" style="table-layout:fixed">
+                                <tr>
+                                   <td style="word-wrap : break-word; overflow:hidden;">
+                                       <p class="WirelessText"><script>translate_strWrite("SetupWizard",22);</script></p>
+                                   </td>
+                                </tr>
+                           </table>
+							  </p>
+<!--
+					          	<p style="height: 13px; _line-height:20px;">&nbsp;</p> 
+					          <p class="WirelessText">&nbsp;&nbsp;<script>translate_strWrite("SetupWizard",22);</script><br><br><br></p>
+					               <p style="height: 14px; _line-height:25px;">&nbsp;</p>
+-->	 
+					          <p>
+					          	<script>
+					        
+					          if ('<%nvram_get("wl2_sec_mode");%>' == 'wep' && '<%nvram_get("wl2_keylength");%>' == '40')
+					          {
+					             dw("WEP 64bits");
+					          }
+					        else if ('<%nvram_get("wl2_sec_mode");%>' == 'wep' && '<%nvram_get("wl2_keylength");%>' == '104')
+					          {
+					          	 dw("WEP 128bits");
+					          }
+					        else
+					        		ShowWEPStatus('<%nvram_get("wl2_sec_mode");%>');
+					            </script>
+					          &nbsp;</p>
+					            <p style="height: 7px; _line-height:20px;">&nbsp;</p> 
+					          <p>
+                                                      <table border="0" width="190" height="45" style="table-layout:fixed">
+                                                        <tr>
+                                                           <td style="word-wrap : break-word; overflow:hidden; ">
+                                                           <p class="WirelessText"><script>
+									if ('<%nvram_get("wl2_sec_mode");%>' == 'wep')
+										dw('<%nvram_get("wl2_key1");%>');
+									else if ('<%nvram_get("wl2_sec_mode");%>' == 'none')
+										dw('');
+                                                                	else
+										dw('<%nvram_get("wl2_pskkey");%>'); 
+                                                      		</script> </p>
+                                                          </td>
+                                                         </tr>
+                                                       </table>
+					          </p>
+					        <p style="height:15px; _line-height:20px;">&nbsp;</p>   
+					          <p><script>
+												if('<%nvram_get("wl2_wlmode");%>' == '0')
+													dw(translate_str("WirelessSecurity",42));
+												else
+													dw(translate_str("WirelessSecurity",41));
+					          </script>&nbsp;</p>
+					       </div>
+    				</div>
+    			<div class="clear_float"> </div>   
+    				 </div>  
+					<div class="status_text" >
+						<table width="510px" height="90px;" border="0" cellpadding="0" cellspacing="0" align="center">
+						<tr height="30px;" align="left">
+						<td width="70px">&nbsp;</td>
+						<td><script>translate_strWrite("SetupWizard",11);</script></td></tr>
+						<tr height="30px;" align="left">
+						<td>&nbsp;</td>
+						<td><script>translate_strWrite("SetupWizard",12);</script></td></tr>
+						<tr height="30px;" align="left">
+						<td>&nbsp;</td>
+						<td><script>translate_strWrite("SetupWizard",13);</script></td></tr>
+						</table>
+					</div>
+					<div class="clear_float"> </div>
+   		      <p class="status_end"></p>   
+      </div>
+	</div>  
+</div>         
+      <div class="angle"></div>        
+     <div class="EZ_mid">  
+      		<p style="height:10px;"></p>      		 		  				    
+				  	<div class="sw_Cancel_Save_button">
+				  <table border="0" cellspacing="0" cellpadding="0" width=530>
+				  	<tr height=23 width=600>
+				  		<td align="right" width=200>
+					  		<table border="0" cellspacing="0" cellpadding="0" >
+									<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="sw_edit_wireless.htm">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("SetupWizard",83);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										</tr>
+									</table>
+							</td>
+				  	<td align="center" width="60">&nbsp;<script>translate_strWrite("BasicSetup",162);</script>&nbsp;
+				  		</td>
+				  	<td align="left" width=200>
+				  		<table border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+									<td class="SW_LeftButton">&nbsp;</td>
+									<td class="SW_BottomButton"><a href="sw_ready_network.htm">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("SetupWizard",98);</script></font>&nbsp;</a></td>
+									<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+							</td>
+						</tr>
+				  </table>
+					</div>	  				    					    														    						    			    
+      </div>
+       <div style="height: 50px"></div>    
+		       <div class="EZ_foot">
+						<div class="EZ_foot_L"><img src="bottom_help_icon.png" style="position:relative;top:3pt;">&nbsp;<a href="help/<%nvram_get("language_str");%>/default.htm#SettingUp" target="_blank"><script>translate_strWrite("SetupWizard",64);</script></a>&nbsp;<img src="transparency.gif" style="width:15px;height:1px;"><a href="javascript:open_language();"><img src="bottom_language_icon.png" style="position:relative;top:4pt;">&nbsp;<script>translate_strWrite("BasicSetup",167);</script></a>&nbsp;&nbsp
+								<span id="language" style="visibility:hidden;">
+								<a href="javascript:apply_lang('en');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">English</font></a>&nbsp;&nbsp;
+								<a href="javascript:apply_lang('fr');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Fran&ccedil;ais</font></a>&nbsp;&nbsp;
+								<!--a href="javascript:apply_lang('spa');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Spanish</font></a--></span>
+						</div>
+						<div class="EZ_foot_C"></div>
+						<div class="EZ_foot_R"><a class="EZ_mid_text" href="adv_welcome.htm"><img src="bottom_adv_icon.png" style="position:relative;top:3pt;"><font style="font-size:9pt;"><script>translate_strWrite("SetupWizard",99);</script>&nbsp;&nbsp;&nbsp;&nbsp;</a></div>
+		      </div>
+         <div class="clear_float"> </div>
+  
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+  
+		</td>
+	</tr>
+	</table>
+</center>
+</form>
+<form method="post" action="save.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="sw_wireless.htm">
+<input type="hidden" name="redirect_timer" value="0">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="language_str">
+<input type="hidden" name="language_str" value="<%nvram_get("language_str");%>">
+</form>
+<!--[if lt IE 7]>
+  <script defer type="text/javascript" src="ie6fix.js"></script>
+<![endif]-->
+</body>
+</html>

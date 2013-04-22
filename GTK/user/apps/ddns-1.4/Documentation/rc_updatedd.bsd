@@ -1,0 +1,21 @@
+#!/bin/sh
+#
+# run
+# Updatedd by Philipp Benner
+#          http://philippb.tk
+#
+echo "Edit this file!"
+exit 0
+#
+#
+#
+FLAGS="-n test.dyndns.org -s dyndns -u test:test -y"
+DAEMON="/usr/local/sbin/updatedd"
+#
+#
+if [ -x $DAEMON ]; then
+    $DAEMON $FLAGS
+
+fi
+
+exit 0

@@ -1,0 +1,2 @@
+/home2/oder/VIZIO_1.01.01/wlan/linux/ath/ath_pci.ko
+/home2/oder/VIZIO_1.01.01/wlan/linux/ath/ath_linux.o /home2/oder/VIZIO_1.01.01/wlan/linux/ath/if_ath_pci.o /home2/oder/VIZIO_1.01.01/wlan/linux/ath/../../if_ath_net80211/if_ath.o /home2/oder/VIZIO_1.01.01/wlan/linux/ath/../../if_ath_net80211/if_ath_cwm.o /home2/oder/VIZIO_1.01.01/wlan/linux/ath/../../if_ath_net80211/if_ath_amsdu.o /home2/oder/VIZIO_1.01.01/wlan/linux/ath/../../if_ath_net80211/if_ath_limit_legacy.o

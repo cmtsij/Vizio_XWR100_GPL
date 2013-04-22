@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<meta http-equiv="Pragma" content="no-cache"> 
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
+</head>
+<script language="JavaScript" type="text/javascript" src="nsutil.js"></script>
+<script Language="JavaScript" type="text/javascript" src="language/<%nvram_get("language_str");%>/language.js"></script>
+<!--[if lt IE 7]>
+<script defer type="text/javascript" src="ie6pngfix.js"></script>
+<![endif]-->
+<Script Language="JavaScript">
+
+	var bandwidth = '<%bandwidth();%>';
+	
+	if (bandwidth == '')
+		var bandwidth_M = 0 ;
+	else
+		var bandwidth_M = bandwidth/1024 ;
+
+</Script>
+<style type="text/css">
+
+
+body{
+	font-family: "Trebuchet", "Arial", "Helvetica", "sans-serif";
+	margin:0px;
+	BACKGROUND:transparent none;
+	}
+
+.SW_LeftButton {
+	font-family: "Trebuchet", "Arial", "Helvetica", "sans-serif";
+	background-image: url('button_left.png');
+  _background-image: none;
+  _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='button_left.png', sizingMethod='scale');
+ 	background-repeat: no-repeat; 
+	margin: 0;
+	padding: 0;
+	border: 0;
+	width: 6px;
+	height: 21px;
+} 
+
+.SW_RightButton {
+	font-family: "Trebuchet", "Arial", "Helvetica", "sans-serif";
+	background-image: url('button_right.png');
+  _background-image: none;
+  _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='button_right.png', sizingMethod='scale');
+	background-repeat: no-repeat; 
+	cursor:pointer;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	width: 6px;
+	height: 21px;       
+	color: #000000; 
+}
+
+.SW_BottomButton {
+	font-family: "Trebuchet", "Arial", "Helvetica", "sans-serif";
+  	background-image: url('button_mid.png');
+  _background-image: none;
+  _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='button_mid.png', sizingMethod='scale');
+	font-family: "Arial", "Helvetica", "sans-serif";
+	font-size: 10pt;
+	font-weight: normal;
+	text-align: center;
+	background-repeat: repeat-x; 
+	color: #B8B8B8;
+}
+
+a:link {
+		font-size: 9pt;
+		text-decoration: none;
+		font-weight: normal;
+		color: #B8B8B8;
+}
+
+a:hover {
+		font-family: "Trebuchet", "Arial", "Helvetica", "sans-serif";
+		font-size: 9pt;
+		text-decoration: none;
+		font-weight: normal;
+		color: #B8B8B8;
+}
+
+a:visited {
+		font-family: "Trebuchet", "Arial", "Helvetica", "sans-serif";
+		font-size: 9pt;
+		text-decoration: none;
+		font-weight: normal;
+		color: #B8B8B8;
+}
+
+
+
+</style>
+
+</SCRIPT>
+<body cellspacing="0" cellpadding="0">
+	<table border="0" cellspacing="0" cellpadding="0">
+		<tr height=24>
+			<td style="font-size: 10pt;height:auto;color:#B8B8B8;font-weight: normal;text-align:center;margin: auto auto;">
+			<SCRIPT>document.write(bandwidth_M.toFixed(2) +"Mb/s");</SCRIPT>&nbsp;
+			</td>
+		</tr>
+	</table>
+
+	
+	</div>
+</body>
+</html>

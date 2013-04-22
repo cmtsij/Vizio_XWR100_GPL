@@ -1,0 +1,821 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title></title>
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+
+var policy_index = window.opener.document.forms[0].policy_index.value;
+if (policy_index == "")
+	policy_index = f.index.value;
+var policy_index = window.opener.document.forms[0].policy_index.value;
+if (policy_index == "")
+	policy_index = f.index.value;
+	
+//alert(policy_index);
+function div_change(num){
+	f = document.forms[0] ;
+	
+	if(num == '0'){
+		document.getElementById("mac_add").style.display = "block" ;
+		document.getElementById("ip_add").style.display = "none" ;
+		document.getElementById("ip_ran").style.display = "none" ;
+	}
+	
+	if(num == '1'){
+		document.getElementById("ip_add").style.display = "block" ;
+		document.getElementById("ip_ran").style.display = "none" ;
+		document.getElementById("mac_add").style.display = "none" ;
+	}
+	if(num == '2'){
+		document.getElementById("ip_ran").style.display = "block" ;
+		document.getElementById("ip_add").style.display = "none" ;
+		document.getElementById("mac_add").style.display = "none" ;
+		
+	}
+
+
+}
+
+function IPCheck3(f) {
+	for ( i = 1; i < 5; i ++) {
+		if (eval("f.lan_ipaddr_start"+i).value == '0' && eval("f.lan_ipaddr_end"+i).value != '0') {
+			eval("f.lan_ipaddr_start"+i).focus();
+			return false;
+		}
+		if (eval("f.lan_ipaddr_start"+i).value != '0' && eval("f.lan_ipaddr_end"+i).value == '0') {
+			eval("f.lan_ipaddr_end"+i).focus();
+			return false;
+		}
+	}
+	return true;
+}
+function MAC_Check(I)
+{
+	if ( I.length == 1 ) {
+		I += '0';
+	}
+
+	I = ToUpperCase ( I );
+	
+	for ( iln = 0 ; iln < I.length ; iln++ ) 
+	{
+    ch = I.charAt(iln).toUpperCase();
+		//alert("ch is:["+ ch +"]");
+	  if (ch >= '0' && ch <= '9' || ch >= 'a' && ch <= 'f' || ch==':') 
+		{}
+	  	else 
+		{
+	    alert (translate_str("JavaScript",12));
+	    return false;
+	  }
+	}	
+
+	d = parseInt ( I , 16 );
+
+	if ( !(d<256 && d>=0) ) {
+		alert(translate_str("BasicSetup",99));
+		return false;
+	} else {
+		return true;
+	}
+}
+
+function ValidateForm(f)
+{
+	var i,j;
+	var lan_ipaddr = GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ) + "." + GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ) + "." + GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ) + ".";
+	var data="";
+	var lan_ip=GetIPSegment('<%nvram_get("lan_ipaddr");%>', 1)+"."+GetIPSegment('<%nvram_get("lan_ipaddr");%>', 2)+"."+GetIPSegment('<%nvram_get("lan_ipaddr");%>', 3)+".";
+
+	for (i=1;i<11;i++) eval("f.mac_addr_"+i).value = eval("f.mac_addr_"+i).value.toUpperCase();
+
+	for (i=1;i<11;i++)
+	{
+
+		if (eval("f.mac_addr_"+i).value.length != 17){
+			alert(translate_str("AccessRestriction",73));
+			eval("f.mac_addr_"+i).focus();
+			return;
+		}
+		
+		for (j=(i+1);j<11;j++) {
+			if((eval("f.mac_addr_"+i).value == eval("f.mac_addr_"+j).value) && eval("f.mac_addr_"+i).value != "00:00:00:00:00:00") {
+				alert(translate_str("JavaScript",110));
+				eval("f.mac_addr_"+j).focus();
+				return;
+			}
+		}
+
+		if(!IsLegalMACAddress(eval("f.mac_addr_"+i).value) && eval("f.mac_addr_"+i).value != "00:00:00:00:00:00") {
+			alert(translate_str("AccessRestriction",74));
+			eval("f.mac_addr_"+i).focus();
+			return;
+		}
+
+//		var c1 = eval("f.mac_addr_"+i).value.substring(0,1);
+		var c2 = eval("f.mac_addr_"+i).value.substring(1,2);
+		
+//		if(char_hex_to_oct(c1) % 2 != "0" || char_hex_to_oct(c2) % 2 != "0"){
+		if(char_hex_to_oct(c2) % 2 != "0"){
+			alert(translate_str("JavaScript",18));
+//    			alert(errmsg.err16);
+    			eval("f.mac_addr_"+i).focus();
+			return;
+		}
+	}
+	for (i=1;i<7;i++)
+	{
+		for (j=(i+1);j<7;j++) {
+			if((eval("f.lan_ipaddr_"+i).value == eval("f.lan_ipaddr_"+j).value) && eval("f.lan_ipaddr_"+i).value != "0") {
+				alert(translate_str("JavaScript",110));
+				eval("f.lan_ipaddr_"+j).focus();
+				return;
+			}
+		}
+		if (!IPCheck2(eval("f.lan_ipaddr_"+i)))
+			return;
+
+		var lan_ip = f.cur_ipaddr.value ;
+		var lan_ip_num = lan_ip.lastIndexOf(".",lan_ip.length);
+		
+		if (lan_ip.substring(lan_ip_num+1,lan_ip.length) == eval("f.lan_ipaddr_"+i).value){
+			eval("f.lan_ipaddr_"+i).focus();
+			alert(translate_str("JavaScript",116));
+			return;		
+		}	
+	}
+
+	for (i=1;i<5;i++)
+	{
+		if (!IPCheck2(eval("f.lan_ipaddr_start"+i)) || !IPCheck2(eval("f.lan_ipaddr_end"+i)))
+			return;
+			
+//+++Eric add PM 04:35 2008/3/19
+		var range = parseInt(eval("f.lan_ipaddr_start"+i).value)- parseInt(eval("f.lan_ipaddr_end"+i).value);
+		if ( range > 0){
+			alert (translate_str("JavaScript",66));
+			eval("f.lan_ipaddr_start"+i).focus();
+			return		
+		}
+
+		var lan_ip = f.cur_ipaddr.value ;
+		var lan_ip_num = lan_ip.lastIndexOf(".",lan_ip.length);
+		
+		if (lan_ip.substring(lan_ip_num+1,lan_ip.length) >= eval("f.lan_ipaddr_start"+i).value
+		 && lan_ip.substring(lan_ip_num+1,lan_ip.length) <= eval("f.lan_ipaddr_end"+i).value){
+			alert(translate_str("JavaScript",137)+"["+eval("f.lan_ipaddr_start"+i).value+"-"+eval("f.lan_ipaddr_end"+i).value+"]");
+			eval("f.lan_ipaddr_start"+i).focus();
+			return;		
+		}	
+//---Eric add PM 04:35 2008/3/19
+	}
+//+++Eric Modified AM 11:29 2008/3/21
+//	if(!IPCheck3(f)) {
+//		alert (translate_str("JavaScript",71));
+//			return;
+//	}
+//---Eric Modified AM 11:29 2008/3/21
+	for (i=1;i<11;i++)
+	{
+		if(eval("f.mac_addr_"+i).value == "00:00:00:00:00:00")
+			eval("f.arm"+policy_index+"_"+i).value = "";
+		else
+			eval("f.arm"+policy_index+"_"+i).value=eval("f.mac_addr_"+i).value;
+
+		data += "arm"+policy_index+"_"+i+" ";
+	}
+	for (i=1;i<7;i++)
+	{
+		eval("f.arip"+policy_index+"_"+i).value=eval("f.lan_ipaddr_"+i).value;
+		data += "arip"+policy_index+"_"+i+" ";
+	}
+	for (i=1;i<5;i++)
+	{
+		eval("f.arips"+policy_index+"_"+i).value=eval("f.lan_ipaddr_start"+i).value;
+		eval("f.aripe"+policy_index+"_"+i).value=eval("f.lan_ipaddr_end"+i).value;
+		data += "arips"+policy_index+"_"+i+" aripe"+policy_index+"_"+i+" ";
+	}
+	data += " index";
+	//alert(data);
+	
+	//var main_page = ;
+	
+	for(var m = 1 ; m <= 10 ; m++){
+		//eval("f.arm"+index+"_"+m).value = "";
+		eval("window.opener.document.edit.arm"+policy_index+"_"+m).value = eval("f.mac_addr_"+m).value;
+	}
+
+	for(var m = 1 ; m <= 6 ; m++){
+		eval("window.opener.document.edit.arip"+policy_index+"_"+m).value = eval("f.lan_ipaddr_"+m).value;
+	}
+
+	for(var m = 1 ; m <= 4 ; m++){
+		eval("window.opener.document.edit.arips"+policy_index+"_"+m).value = eval("f.lan_ipaddr_start"+m).value;
+		eval("window.opener.document.edit.aripe"+policy_index+"_"+m).value = eval("f.lan_ipaddr_end"+m).value;
+	}
+
+	f.data1.value=data;
+	f.submit();
+}
+function InitValue(f)
+{
+	var i, j;
+	for (i=1;i<11;i++) {
+		if (eval("f.arm"+policy_index+"_"+i).value=="")
+			eval("f.mac_addr_"+i).value="00:00:00:00:00:00";
+		else
+			eval("f.mac_addr_"+i).value=eval("f.arm"+policy_index+"_"+i).value;
+	}
+	for (i=1;i<7;i++) {
+		if (eval("f.arip"+policy_index+"_"+i).value=="")
+			eval("f.lan_ipaddr_"+i).value="0";
+		else
+			eval("f.lan_ipaddr_"+i).value=eval("f.arip"+policy_index+"_"+i).value;
+	}
+	for (i=1;i<5;i++) {
+		if (eval("f.arips"+policy_index+"_"+i).value=="")
+			eval("f.lan_ipaddr_start"+i).value="0";
+		else
+			eval("f.lan_ipaddr_start"+i).value=eval("f.arips"+policy_index+"_"+i).value;
+		if (eval("f.aripe"+policy_index+"_"+i).value=="")
+			eval("f.lan_ipaddr_end"+i).value="0";
+		else
+			eval("f.lan_ipaddr_end"+i).value=eval("f.aripe"+policy_index+"_"+i).value;
+	}
+	f.index.value=policy_index;
+	div_change(f.selector.value);
+}
+
+</Script>
+	
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="wan_detect" action="save.cgi" method="post">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="EditList.htm">
+<input type="hidden" name="redirect_timer" value="0">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="">
+<input type="hidden" name="index" value="<%nvram_get("index");%>">
+<input type="hidden" name="select1">
+<input type="hidden" name="arn1" value="<%nvram_get("arn1");%>">
+<input type="hidden" name="arn2" value="<%nvram_get("arn2");%>">
+<input type="hidden" name="arn3" value="<%nvram_get("arn3");%>">
+<input type="hidden" name="arn4" value="<%nvram_get("arn4");%>">
+<input type="hidden" name="arn5" value="<%nvram_get("arn5");%>">
+<input type="hidden" name="arn6" value="<%nvram_get("arn6");%>">
+<input type="hidden" name="arn7" value="<%nvram_get("arn7");%>">
+<input type="hidden" name="arn8" value="<%nvram_get("arn8");%>">
+<input type="hidden" name="arn9" value="<%nvram_get("arn9");%>">
+<input type="hidden" name="arn10" value="<%nvram_get("arn10");%>">
+<input type="hidden" name="arm1_1" value="<%nvram_get("arm1_1");%>">
+<input type="hidden" name="arm1_2" value="<%nvram_get("arm1_2");%>">
+<input type="hidden" name="arm1_3" value="<%nvram_get("arm1_3");%>">
+<input type="hidden" name="arm1_4" value="<%nvram_get("arm1_4");%>">
+<input type="hidden" name="arm1_5" value="<%nvram_get("arm1_5");%>">
+<input type="hidden" name="arm1_6" value="<%nvram_get("arm1_6");%>">
+<input type="hidden" name="arm1_7" value="<%nvram_get("arm1_7");%>">
+<input type="hidden" name="arm1_8" value="<%nvram_get("arm1_8");%>">
+<input type="hidden" name="arm1_9" value="<%nvram_get("arm1_9");%>">
+<input type="hidden" name="arm1_10" value="<%nvram_get("arm1_10");%>">
+<input type="hidden" name="arm2_1" value="<%nvram_get("arm2_1");%>">
+<input type="hidden" name="arm2_2" value="<%nvram_get("arm2_2");%>">
+<input type="hidden" name="arm2_3" value="<%nvram_get("arm2_3");%>">
+<input type="hidden" name="arm2_4" value="<%nvram_get("arm2_4");%>">
+<input type="hidden" name="arm2_5" value="<%nvram_get("arm2_5");%>">
+<input type="hidden" name="arm2_6" value="<%nvram_get("arm2_6");%>">
+<input type="hidden" name="arm2_7" value="<%nvram_get("arm2_7");%>">
+<input type="hidden" name="arm2_8" value="<%nvram_get("arm2_8");%>">
+<input type="hidden" name="arm2_9" value="<%nvram_get("arm2_9");%>">
+<input type="hidden" name="arm2_10" value="<%nvram_get("arm2_10");%>">
+<input type="hidden" name="arm3_1" value="<%nvram_get("arm3_1");%>">
+<input type="hidden" name="arm3_2" value="<%nvram_get("arm3_2");%>">
+<input type="hidden" name="arm3_3" value="<%nvram_get("arm3_3");%>">
+<input type="hidden" name="arm3_4" value="<%nvram_get("arm3_4");%>">
+<input type="hidden" name="arm3_5" value="<%nvram_get("arm3_5");%>">
+<input type="hidden" name="arm3_6" value="<%nvram_get("arm3_6");%>">
+<input type="hidden" name="arm3_7" value="<%nvram_get("arm3_7");%>">
+<input type="hidden" name="arm3_8" value="<%nvram_get("arm3_8");%>">
+<input type="hidden" name="arm3_9" value="<%nvram_get("arm3_9");%>">
+<input type="hidden" name="arm3_10" value="<%nvram_get("arm3_10");%>">
+<input type="hidden" name="arm4_1" value="<%nvram_get("arm4_1");%>">
+<input type="hidden" name="arm4_2" value="<%nvram_get("arm4_2");%>">
+<input type="hidden" name="arm4_3" value="<%nvram_get("arm4_3");%>">
+<input type="hidden" name="arm4_4" value="<%nvram_get("arm4_4");%>">
+<input type="hidden" name="arm4_5" value="<%nvram_get("arm4_5");%>">
+<input type="hidden" name="arm4_6" value="<%nvram_get("arm4_6");%>">
+<input type="hidden" name="arm4_7" value="<%nvram_get("arm4_7");%>">
+<input type="hidden" name="arm4_8" value="<%nvram_get("arm4_8");%>">
+<input type="hidden" name="arm4_9" value="<%nvram_get("arm4_9");%>">
+<input type="hidden" name="arm4_10" value="<%nvram_get("arm4_10");%>">
+<input type="hidden" name="arm5_1" value="<%nvram_get("arm5_1");%>">
+<input type="hidden" name="arm5_2" value="<%nvram_get("arm5_2");%>">
+<input type="hidden" name="arm5_3" value="<%nvram_get("arm5_3");%>">
+<input type="hidden" name="arm5_4" value="<%nvram_get("arm5_4");%>">
+<input type="hidden" name="arm5_5" value="<%nvram_get("arm5_5");%>">
+<input type="hidden" name="arm5_6" value="<%nvram_get("arm5_6");%>">
+<input type="hidden" name="arm5_7" value="<%nvram_get("arm5_7");%>">
+<input type="hidden" name="arm5_8" value="<%nvram_get("arm5_8");%>">
+<input type="hidden" name="arm5_9" value="<%nvram_get("arm5_9");%>">
+<input type="hidden" name="arm5_10" value="<%nvram_get("arm5_10");%>">
+<input type="hidden" name="arm6_1" value="<%nvram_get("arm6_1");%>">
+<input type="hidden" name="arm6_2" value="<%nvram_get("arm6_2");%>">
+<input type="hidden" name="arm6_3" value="<%nvram_get("arm6_3");%>">
+<input type="hidden" name="arm6_4" value="<%nvram_get("arm6_4");%>">
+<input type="hidden" name="arm6_5" value="<%nvram_get("arm6_5");%>">
+<input type="hidden" name="arm6_6" value="<%nvram_get("arm6_6");%>">
+<input type="hidden" name="arm6_7" value="<%nvram_get("arm6_7");%>">
+<input type="hidden" name="arm6_8" value="<%nvram_get("arm6_8");%>">
+<input type="hidden" name="arm6_9" value="<%nvram_get("arm6_9");%>">
+<input type="hidden" name="arm6_10" value="<%nvram_get("arm6_10");%>">
+<input type="hidden" name="arm7_1" value="<%nvram_get("arm7_1");%>">
+<input type="hidden" name="arm7_2" value="<%nvram_get("arm7_2");%>">
+<input type="hidden" name="arm7_3" value="<%nvram_get("arm7_3");%>">
+<input type="hidden" name="arm7_4" value="<%nvram_get("arm7_4");%>">
+<input type="hidden" name="arm7_5" value="<%nvram_get("arm7_5");%>">
+<input type="hidden" name="arm7_6" value="<%nvram_get("arm7_6");%>">
+<input type="hidden" name="arm7_7" value="<%nvram_get("arm7_7");%>">
+<input type="hidden" name="arm7_8" value="<%nvram_get("arm7_8");%>">
+<input type="hidden" name="arm7_9" value="<%nvram_get("arm7_9");%>">
+<input type="hidden" name="arm7_10" value="<%nvram_get("arm7_10");%>">
+<input type="hidden" name="arm8_1" value="<%nvram_get("arm8_1");%>">
+<input type="hidden" name="arm8_2" value="<%nvram_get("arm8_2");%>">
+<input type="hidden" name="arm8_3" value="<%nvram_get("arm8_3");%>">
+<input type="hidden" name="arm8_4" value="<%nvram_get("arm8_4");%>">
+<input type="hidden" name="arm8_5" value="<%nvram_get("arm8_5");%>">
+<input type="hidden" name="arm8_6" value="<%nvram_get("arm8_6");%>">
+<input type="hidden" name="arm8_7" value="<%nvram_get("arm8_7");%>">
+<input type="hidden" name="arm8_8" value="<%nvram_get("arm8_8");%>">
+<input type="hidden" name="arm8_9" value="<%nvram_get("arm8_9");%>">
+<input type="hidden" name="arm8_10" value="<%nvram_get("arm8_10");%>">
+<input type="hidden" name="arm9_1" value="<%nvram_get("arm9_1");%>">
+<input type="hidden" name="arm9_2" value="<%nvram_get("arm9_2");%>">
+<input type="hidden" name="arm9_3" value="<%nvram_get("arm9_3");%>">
+<input type="hidden" name="arm9_4" value="<%nvram_get("arm9_4");%>">
+<input type="hidden" name="arm9_5" value="<%nvram_get("arm9_5");%>">
+<input type="hidden" name="arm9_6" value="<%nvram_get("arm9_6");%>">
+<input type="hidden" name="arm9_7" value="<%nvram_get("arm9_7");%>">
+<input type="hidden" name="arm9_8" value="<%nvram_get("arm9_8");%>">
+<input type="hidden" name="arm9_9" value="<%nvram_get("arm9_9");%>">
+<input type="hidden" name="arm9_10" value="<%nvram_get("arm9_10");%>">
+<input type="hidden" name="arm10_1" value="<%nvram_get("arm10_1");%>">
+<input type="hidden" name="arm10_2" value="<%nvram_get("arm10_2");%>">
+<input type="hidden" name="arm10_3" value="<%nvram_get("arm10_3");%>">
+<input type="hidden" name="arm10_4" value="<%nvram_get("arm10_4");%>">
+<input type="hidden" name="arm10_5" value="<%nvram_get("arm10_5");%>">
+<input type="hidden" name="arm10_6" value="<%nvram_get("arm10_6");%>">
+<input type="hidden" name="arm10_7" value="<%nvram_get("arm10_7");%>">
+<input type="hidden" name="arm10_8" value="<%nvram_get("arm10_8");%>">
+<input type="hidden" name="arm10_9" value="<%nvram_get("arm10_9");%>">
+<input type="hidden" name="arm10_10" value="<%nvram_get("arm10_10");%>">
+<input type="hidden" name="arip1_1" value="<%nvram_get("arip1_1");%>">
+<input type="hidden" name="arip1_2" value="<%nvram_get("arip1_2");%>">
+<input type="hidden" name="arip1_3" value="<%nvram_get("arip1_3");%>">
+<input type="hidden" name="arip1_4" value="<%nvram_get("arip1_4");%>">
+<input type="hidden" name="arip1_5" value="<%nvram_get("arip1_5");%>">
+<input type="hidden" name="arip1_6" value="<%nvram_get("arip1_6");%>">
+<input type="hidden" name="arip2_1" value="<%nvram_get("arip2_1");%>">
+<input type="hidden" name="arip2_2" value="<%nvram_get("arip2_2");%>">
+<input type="hidden" name="arip2_3" value="<%nvram_get("arip2_3");%>">
+<input type="hidden" name="arip2_4" value="<%nvram_get("arip2_4");%>">
+<input type="hidden" name="arip2_5" value="<%nvram_get("arip2_5");%>">
+<input type="hidden" name="arip2_6" value="<%nvram_get("arip2_6");%>">
+<input type="hidden" name="arip3_1" value="<%nvram_get("arip3_1");%>">
+<input type="hidden" name="arip3_2" value="<%nvram_get("arip3_2");%>">
+<input type="hidden" name="arip3_3" value="<%nvram_get("arip3_3");%>">
+<input type="hidden" name="arip3_4" value="<%nvram_get("arip3_4");%>">
+<input type="hidden" name="arip3_5" value="<%nvram_get("arip3_5");%>">
+<input type="hidden" name="arip3_6" value="<%nvram_get("arip3_6");%>">
+<input type="hidden" name="arip4_1" value="<%nvram_get("arip4_1");%>">
+<input type="hidden" name="arip4_2" value="<%nvram_get("arip4_2");%>">
+<input type="hidden" name="arip4_3" value="<%nvram_get("arip4_3");%>">
+<input type="hidden" name="arip4_4" value="<%nvram_get("arip4_4");%>">
+<input type="hidden" name="arip4_5" value="<%nvram_get("arip4_5");%>">
+<input type="hidden" name="arip4_6" value="<%nvram_get("arip4_6");%>">
+<input type="hidden" name="arip5_1" value="<%nvram_get("arip5_1");%>">
+<input type="hidden" name="arip5_2" value="<%nvram_get("arip5_2");%>">
+<input type="hidden" name="arip5_3" value="<%nvram_get("arip5_3");%>">
+<input type="hidden" name="arip5_4" value="<%nvram_get("arip5_4");%>">
+<input type="hidden" name="arip5_5" value="<%nvram_get("arip5_5");%>">
+<input type="hidden" name="arip5_6" value="<%nvram_get("arip5_6");%>">
+<input type="hidden" name="arip6_1" value="<%nvram_get("arip6_1");%>">
+<input type="hidden" name="arip6_2" value="<%nvram_get("arip6_2");%>">
+<input type="hidden" name="arip6_3" value="<%nvram_get("arip6_3");%>">
+<input type="hidden" name="arip6_4" value="<%nvram_get("arip6_4");%>">
+<input type="hidden" name="arip6_5" value="<%nvram_get("arip6_5");%>">
+<input type="hidden" name="arip6_6" value="<%nvram_get("arip6_6");%>">
+<input type="hidden" name="arip7_1" value="<%nvram_get("arip7_1");%>">
+<input type="hidden" name="arip7_2" value="<%nvram_get("arip7_2");%>">
+<input type="hidden" name="arip7_3" value="<%nvram_get("arip7_3");%>">
+<input type="hidden" name="arip7_4" value="<%nvram_get("arip7_4");%>">
+<input type="hidden" name="arip7_5" value="<%nvram_get("arip7_5");%>">
+<input type="hidden" name="arip7_6" value="<%nvram_get("arip7_6");%>">
+<input type="hidden" name="arip8_1" value="<%nvram_get("arip8_1");%>">
+<input type="hidden" name="arip8_2" value="<%nvram_get("arip8_2");%>">
+<input type="hidden" name="arip8_3" value="<%nvram_get("arip8_3");%>">
+<input type="hidden" name="arip8_4" value="<%nvram_get("arip8_4");%>">
+<input type="hidden" name="arip8_5" value="<%nvram_get("arip8_5");%>">
+<input type="hidden" name="arip8_6" value="<%nvram_get("arip8_6");%>">
+<input type="hidden" name="arip9_1" value="<%nvram_get("arip9_1");%>">
+<input type="hidden" name="arip9_2" value="<%nvram_get("arip9_2");%>">
+<input type="hidden" name="arip9_3" value="<%nvram_get("arip9_3");%>">
+<input type="hidden" name="arip9_4" value="<%nvram_get("arip9_4");%>">
+<input type="hidden" name="arip9_5" value="<%nvram_get("arip9_5");%>">
+<input type="hidden" name="arip9_6" value="<%nvram_get("arip9_6");%>">
+<input type="hidden" name="arip10_1" value="<%nvram_get("arip10_1");%>">
+<input type="hidden" name="arip10_2" value="<%nvram_get("arip10_2");%>">
+<input type="hidden" name="arip10_3" value="<%nvram_get("arip10_3");%>">
+<input type="hidden" name="arip10_4" value="<%nvram_get("arip10_4");%>">
+<input type="hidden" name="arip10_5" value="<%nvram_get("arip10_5");%>">
+<input type="hidden" name="arip10_6" value="<%nvram_get("arip10_6");%>">
+<input type="hidden" name="arips1_1" value="<%nvram_get("arips1_1");%>">
+<input type="hidden" name="arips1_2" value="<%nvram_get("arips1_2");%>">
+<input type="hidden" name="arips1_3" value="<%nvram_get("arips1_3");%>">
+<input type="hidden" name="arips1_4" value="<%nvram_get("arips1_4");%>">
+<input type="hidden" name="arips2_1" value="<%nvram_get("arips2_1");%>">
+<input type="hidden" name="arips2_2" value="<%nvram_get("arips2_2");%>">
+<input type="hidden" name="arips2_3" value="<%nvram_get("arips2_3");%>">
+<input type="hidden" name="arips2_4" value="<%nvram_get("arips2_4");%>">
+<input type="hidden" name="arips3_1" value="<%nvram_get("arips3_1");%>">
+<input type="hidden" name="arips3_2" value="<%nvram_get("arips3_2");%>">
+<input type="hidden" name="arips3_3" value="<%nvram_get("arips3_3");%>">
+<input type="hidden" name="arips3_4" value="<%nvram_get("arips3_4");%>">
+<input type="hidden" name="arips4_1" value="<%nvram_get("arips4_1");%>">
+<input type="hidden" name="arips4_2" value="<%nvram_get("arips4_2");%>">
+<input type="hidden" name="arips4_3" value="<%nvram_get("arips4_3");%>">
+<input type="hidden" name="arips4_4" value="<%nvram_get("arips4_4");%>">
+<input type="hidden" name="arips5_1" value="<%nvram_get("arips5_1");%>">
+<input type="hidden" name="arips5_2" value="<%nvram_get("arips5_2");%>">
+<input type="hidden" name="arips5_3" value="<%nvram_get("arips5_3");%>">
+<input type="hidden" name="arips5_4" value="<%nvram_get("arips5_4");%>">
+<input type="hidden" name="arips6_1" value="<%nvram_get("arips6_1");%>">
+<input type="hidden" name="arips6_2" value="<%nvram_get("arips6_2");%>">
+<input type="hidden" name="arips6_3" value="<%nvram_get("arips6_3");%>">
+<input type="hidden" name="arips6_4" value="<%nvram_get("arips6_4");%>">
+<input type="hidden" name="arips7_1" value="<%nvram_get("arips7_1");%>">
+<input type="hidden" name="arips7_2" value="<%nvram_get("arips7_2");%>">
+<input type="hidden" name="arips7_3" value="<%nvram_get("arips7_3");%>">
+<input type="hidden" name="arips7_4" value="<%nvram_get("arips7_4");%>">
+<input type="hidden" name="arips8_1" value="<%nvram_get("arips8_1");%>">
+<input type="hidden" name="arips8_2" value="<%nvram_get("arips8_2");%>">
+<input type="hidden" name="arips8_3" value="<%nvram_get("arips8_3");%>">
+<input type="hidden" name="arips8_4" value="<%nvram_get("arips8_4");%>">
+<input type="hidden" name="arips9_1" value="<%nvram_get("arips9_1");%>">
+<input type="hidden" name="arips9_2" value="<%nvram_get("arips9_2");%>">
+<input type="hidden" name="arips9_3" value="<%nvram_get("arips9_3");%>">
+<input type="hidden" name="arips9_4" value="<%nvram_get("arips9_4");%>">
+<input type="hidden" name="arips10_1" value="<%nvram_get("arips10_1");%>">
+<input type="hidden" name="arips10_2" value="<%nvram_get("arips10_2");%>">
+<input type="hidden" name="arips10_3" value="<%nvram_get("arips10_3");%>">
+<input type="hidden" name="arips10_4" value="<%nvram_get("arips10_4");%>">
+<input type="hidden" name="aripe1_1" value="<%nvram_get("aripe1_1");%>">
+<input type="hidden" name="aripe1_2" value="<%nvram_get("aripe1_2");%>">
+<input type="hidden" name="aripe1_3" value="<%nvram_get("aripe1_3");%>">
+<input type="hidden" name="aripe1_4" value="<%nvram_get("aripe1_4");%>">
+<input type="hidden" name="aripe2_1" value="<%nvram_get("aripe2_1");%>">
+<input type="hidden" name="aripe2_2" value="<%nvram_get("aripe2_2");%>">
+<input type="hidden" name="aripe2_3" value="<%nvram_get("aripe2_3");%>">
+<input type="hidden" name="aripe2_4" value="<%nvram_get("aripe2_4");%>">
+<input type="hidden" name="aripe3_1" value="<%nvram_get("aripe3_1");%>">
+<input type="hidden" name="aripe3_2" value="<%nvram_get("aripe3_2");%>">
+<input type="hidden" name="aripe3_3" value="<%nvram_get("aripe3_3");%>">
+<input type="hidden" name="aripe3_4" value="<%nvram_get("aripe3_4");%>">
+<input type="hidden" name="aripe4_1" value="<%nvram_get("aripe4_1");%>">
+<input type="hidden" name="aripe4_2" value="<%nvram_get("aripe4_2");%>">
+<input type="hidden" name="aripe4_3" value="<%nvram_get("aripe4_3");%>">
+<input type="hidden" name="aripe4_4" value="<%nvram_get("aripe4_4");%>">
+<input type="hidden" name="aripe5_1" value="<%nvram_get("aripe5_1");%>">
+<input type="hidden" name="aripe5_2" value="<%nvram_get("aripe5_2");%>">
+<input type="hidden" name="aripe5_3" value="<%nvram_get("aripe5_3");%>">
+<input type="hidden" name="aripe5_4" value="<%nvram_get("aripe5_4");%>">
+<input type="hidden" name="aripe6_1" value="<%nvram_get("aripe6_1");%>">
+<input type="hidden" name="aripe6_2" value="<%nvram_get("aripe6_2");%>">
+<input type="hidden" name="aripe6_3" value="<%nvram_get("aripe6_3");%>">
+<input type="hidden" name="aripe6_4" value="<%nvram_get("aripe6_4");%>">
+<input type="hidden" name="aripe7_1" value="<%nvram_get("aripe7_1");%>">
+<input type="hidden" name="aripe7_2" value="<%nvram_get("aripe7_2");%>">
+<input type="hidden" name="aripe7_3" value="<%nvram_get("aripe7_3");%>">
+<input type="hidden" name="aripe7_4" value="<%nvram_get("aripe7_4");%>">
+<input type="hidden" name="aripe8_1" value="<%nvram_get("aripe8_1");%>">
+<input type="hidden" name="aripe8_2" value="<%nvram_get("aripe8_2");%>">
+<input type="hidden" name="aripe8_3" value="<%nvram_get("aripe8_3");%>">
+<input type="hidden" name="aripe8_4" value="<%nvram_get("aripe8_4");%>">
+<input type="hidden" name="aripe9_1" value="<%nvram_get("aripe9_1");%>">
+<input type="hidden" name="aripe9_2" value="<%nvram_get("aripe9_2");%>">
+<input type="hidden" name="aripe9_3" value="<%nvram_get("aripe9_3");%>">
+<input type="hidden" name="aripe9_4" value="<%nvram_get("aripe9_4");%>">
+<input type="hidden" name="aripe10_1" value="<%nvram_get("aripe10_1");%>">
+<input type="hidden" name="aripe10_2" value="<%nvram_get("aripe10_2");%>">
+<input type="hidden" name="aripe10_3" value="<%nvram_get("aripe10_3");%>">
+<input type="hidden" name="aripe10_4" value="<%nvram_get("aripe10_4");%>">
+<input type=hidden value=Null name="generateButton"> 
+
+	<center>	 
+<table border="0" width="1000">
+	<tr>
+		<td>
+	 
+<%include_file("adv_PopWin_header.htm");%>
+
+
+	
+  <div id="warp">
+      <div class="status_title">&nbsp;<script>translate_strWrite("AccessRestriction",50);</script></div>
+      <div class="status_background">
+      	<div class="status_content">
+      		<p style="height: 10px">&nbsp;</p>
+      		<center>
+<!----Add Pop-up windows start----->
+                      <table border="0" cellpadding="0" cellspacing="0"  width="710">
+                      	  <tr height="22"><td align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+                          <tr>
+                            <td align="center" >
+								<select name=selector class="wireless_select_col_width" onChange="div_change(this.value);">
+									<option value="0"><script>translate_strWrite("BasicSetup",105);</script></option>
+									<option value="1"><script>translate_strWrite("BasicSetup",71);</script></option>
+									<option value="2"><script>translate_strWrite("BasicSetup",26);</script></option>
+								</select>
+                            </td>
+                          </tr>
+ 						  <tr height="22"><td align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+                      </table>						
+
+				<div id="mac_add" style="display:none">
+
+                      <table border="0" cellpadding="0" cellspacing="0"  width="710">
+                          <tr>
+                            <td align="center" >
+                              <p class="adv_title"><p class="adv_title">
+                              <script>translate_strWrite("BasicSetup",105);</script>
+                              </p>
+                            </td>
+                          </tr>
+													<tr><td align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+                      </table>
+                         
+		    		<p style="height: 25px">&nbsp;</p>
+                         
+						<table border="1" cellpadding="0" cellspacing="0" width="378">
+							<tr>
+								<td height="25" width="20" align="center" >
+								01</font></td>
+								<td height="25" width="168" align="center" >
+								<INPUT maxLength=17 class="key_col_width" name=mac_addr_1  value="00:00:00:00:00:00"></font></td>
+								<td height="25" width="20" align="center" >
+								06</font></td>
+								<td height="25" width="168" align="center" >
+								<INPUT maxLength=17 class="key_col_width" name=mac_addr_6  value="00:00:00:00:00:00"></font></td>
+							</tr>
+							<tr>
+								<td height="25" width="20" align="center" >
+								02</font></td>
+								<td height="25" width="168" align="center" >
+								<INPUT maxLength=17 class="key_col_width" name=mac_addr_2  value="00:00:00:00:00:00"></font></td>
+								<td height="25" width="20" align="center" >
+								07</font></td>
+								<td height="25" width="168" align="center" >
+								<INPUT maxLength=17 class="key_col_width" name=mac_addr_7  value="00:00:00:00:00:00"></font></td>
+							</tr>
+							<tr>
+								<td height="25" width="20" align="center" >
+								03</font></td>
+								<td height="25" width="168" align="center" >
+								<INPUT maxLength=17 class="key_col_width" name=mac_addr_3  value="00:00:00:00:00:00"></font></td>
+								<td height="25" width="20" align="center" >
+								08</font></td>
+								<td height="25" width="168" align="center" >
+								<INPUT maxLength=17 class="key_col_width" name=mac_addr_8  value="00:00:00:00:00:00"></font></td>
+							</tr>
+							<tr>
+								<td height="25" width="20" align="center" >
+								04</font></td>
+								<td height="25" width="168" align="center" >
+								<INPUT maxLength=17 class="key_col_width" name=mac_addr_4  value="00:00:00:00:00:00"></font></td>
+								<td height="25" width="20" align="center" >
+								09</font></td>
+								<td height="25" width="168" align="center" >
+								<INPUT maxLength=17 class="key_col_width" name=mac_addr_9  value="00:00:00:00:00:00"></font></td>
+							</tr>
+							<tr>
+								<td height="25" width="20" align="center" >
+								05</font></td>
+								<td height="25" width="168" align="center" >
+								<INPUT maxLength=17 class="key_col_width" name=mac_addr_5  value="00:00:00:00:00:00"></font></td>
+								<td height="25" width="20" align="center" >
+								10</font></td>
+								<td height="25" width="168" align="center" >
+								<INPUT maxLength=17 class="key_col_width" name=mac_addr_10  value="00:00:00:00:00:00"></font></td>
+							</tr>
+						</table>
+						
+		    		<p style="height: 25px">&nbsp;</p>
+			</div>
+			<div id="ip_add" style="display:none">
+
+                      <table border="0" cellpadding="0" cellspacing="0"  width="710">
+                          <tr>
+                            <td align="center" >
+                              <p class="adv_title"><p class="adv_title">
+                              <script>translate_strWrite("BasicSetup",71);</script>
+                              </p>
+                            </td>
+                          </tr>
+                          <tr><td align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+                      </table>
+                         
+		    		<p style="height: 25px">&nbsp;</p>
+		    		
+		    		
+					<table border="1" cellpadding="0" cellspacing="0" id="AutoNumber3" width="378">
+						<tr>
+							<td height="25" width="20" align="center" >
+							01</font></td>
+							<td height="25" width="167" align="center" >
+
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>.
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>.
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>.
+							<INPUT maxLength=3 class="ip_col_width" name=lan_ipaddr_1 value="0">&nbsp; </font>
+							</td>
+							<td height="25" width="21" align="center" >
+							04</font></td>
+							<td height="25" width="167" align="center" >
+
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>.
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>.
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>.
+
+							<INPUT maxLength=3 class="ip_col_width" name=lan_ipaddr_4 value="0">&nbsp; </font>
+							</td>
+						</tr>
+						<tr>
+							<td height="25" width="20" align="center" >
+							02</font></td>
+							<td height="25" width="167" align="center" >
+
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>.
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>.
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>.
+							<INPUT maxLength=3 class="ip_col_width" name=lan_ipaddr_2 value="0">&nbsp; </font>
+							</td>
+							<td height="25" width="21" align="center" >
+							05</font></td>
+							<td height="25" width="167" align="center" >
+
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>.
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>.
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>.
+							<INPUT maxLength=3 class="ip_col_width" name=lan_ipaddr_5 value="0">&nbsp; </font>
+							</td>
+						</tr>
+						<tr>
+							<td height="25" width="20" align="center" >
+							03</font></td>
+							<td height="25" width="167" align="center" >
+
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>.
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>.
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>.
+							<INPUT maxLength=3 class="ip_col_width" name=lan_ipaddr_3 value="0">&nbsp; </font>
+							</td>
+							<td height="25" width="21" align="center" >
+							06</font></td>
+							<td height="25" width="167" align="center" >
+
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>.
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>.
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>.
+							<INPUT maxLength=3 class="ip_col_width" name=lan_ipaddr_6 value="0">&nbsp; </font>
+							</td>
+						</tr>
+					</table>
+
+		    		<p style="height: 25px">&nbsp;</p>
+		   	</div>
+		    <div id="ip_ran" style="display:none">
+                      <table border="0" cellpadding="0" cellspacing="0"  width="710">
+                          <tr>
+                            <td align="center" >
+                              <p class="adv_title"><p class="adv_title">
+               		    		<script>translate_strWrite("BasicSetup",26);</script>
+                              </p>
+                            </td>
+                          </tr>
+                          
+                          <tr><td align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+                      </table>
+                      
+		    		<p style="height: 25px">&nbsp;</p>
+                      
+					<table border="1" cellpadding="0" cellspacing="0" id="AutoNumber3" width="378">
+						<tr>
+							<td height="25" width="20" align="center" >
+							01</font></td>
+							<td height="25" width="167" align="center" >
+
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>.
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>.
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>.
+							<INPUT maxLength=3 class="mac_col_width" name=lan_ipaddr_start1 value="0"> 
+							to
+							<INPUT maxLength=3 class="mac_col_width" name=lan_ipaddr_end1 value="0"></font></td>
+							<td height="25" width="20" align="center" >
+							03</font></td>
+							<td height="25" width="168" align="center" >
+
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>.
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>.
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>.
+							<INPUT maxLength=3 class="mac_col_width" name=lan_ipaddr_start3 value="0"> 
+							to
+							<INPUT maxLength=3 class="mac_col_width" name=lan_ipaddr_end3 value="0"></font></td>
+						</tr>
+						<tr>
+							<td height="25" width="20" align="center" >
+							02</font></td>
+							<td height="25" width="167" align="center" >
+
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>.
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>.
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>.
+							<INPUT maxLength=3 class="mac_col_width" name=lan_ipaddr_start2 value="0"> 
+							to
+							<INPUT maxLength=3 class="mac_col_width" name=lan_ipaddr_end2 value="0"></font></td>
+							<td height="25" width="20" align="center" >
+							04</font></td>
+							<td height="25" width="168" align="center" >
+
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 1 ));</script>.
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 2 ));</script>.
+							<script language="JavaScript" type="text/JavaScript">document.write(GetIPSegment ( '<%nvram_get("lan_ipaddr");%>' , 3 ));</script>.
+							<INPUT maxLength=3 class="mac_col_width" name=lan_ipaddr_start4 value="0"> 
+							to
+							<INPUT maxLength=3 class="mac_col_width" name=lan_ipaddr_end4 value="0"></font></td>
+						</tr>
+					</table>
+
+		    		<p style="height: 25px">&nbsp;</p>
+		    </div>
+<!----Add Pop-up windows End----->
+			</center>
+		      <p class="status_end"></p>     
+      </div>  
+     </div>               
+      <div class="angle"></div> 
+     <div class="EZ_mid">  
+      		<p style="height:10px;"></p>
+				  <div class="Refresh_Add_button">
+				  <table border="0" cellspacing="0" cellpadding="0">
+				  	<tr height=23 width=600>
+				  		<td align="right">
+					  		<table border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+									<td class="SW_LeftButton">&nbsp;</td>
+									<td class="SW_BottomButton"><a href="javascript:window.close();">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",1);</script></font></a>&nbsp;</td>
+									<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+									</table>
+							</td>
+				  	<td align="center" width="60">&nbsp;<script>translate_strWrite("BasicSetup",162);</script>&nbsp;
+				  		</td>
+				  	<td align="left">
+				  		<table border="0" cellspacing="0" cellpadding="0">
+									<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="javascript:ValidateForm(document.forms[0]);">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",0);</script></font></a>&nbsp;</td>
+										<td class="SW_RightButton">&nbsp;</td>
+										</tr>
+
+								</table>
+							</td>
+						<!--td align="center" width="60">&nbsp;<script>translate_strWrite("BasicSetup",162);</script>&nbsp;
+				  		</td>
+				  	<td align="left">
+				  		<table border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+									<td class="SW_LeftButton">&nbsp;</td>
+									<td class="SW_BottomButton"><a href="javascript:window.close();">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",4);</script></font></a>&nbsp;</td>
+									<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+							</td-->	
+						</tr>
+				  </table>
+					</div>
+
+         <div class="clear_float"> </div>
+          <div style="height:20px;"></div>
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+		</td>
+	</tr>
+	</table>
+</center>
+</form>
+</body>
+</html>

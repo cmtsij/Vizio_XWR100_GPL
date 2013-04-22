@@ -1,0 +1,634 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_112?></title>
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+
+var f=document.edit;
+var add_count = 0 ;
+function checkMac(check)
+{
+	var f = document.forms[0];
+	for (var i=1;i<33;i++)
+	{
+		if(check == 0)
+			eval("f.wl_mac" + i).disabled = true;
+		else
+			eval("f.wl_mac" + i).disabled = false;
+	}
+	if(check == 0) {
+		f.wl_access_policy[0].disabled = true;
+		f.wl_access_policy[1].disabled = true;
+		f.mac_filter_button.disabled = true;
+	}
+	else {
+		f.wl_access_policy[0].disabled = false;
+		f.wl_access_policy[1].disabled = false;
+		f.mac_filter_button.disabled = false;
+	}
+}
+
+var active_win = null;
+function ViewActive()
+{
+	active_win = self.open('WClient.htm','ActiveTable','alwaysRaised,resizable,scrollbars,width=1000,height=600');
+	active_win.focus();
+}
+function InitValue(f)
+{
+  var f=document.edit;
+	  show_network_status();
+
+	 	f.mac_filter_button.value=translate_str("WirelessNetworkAccess",7);
+	  //f.Additem.value=translate_str("	SetupWizard	",114);
+	//var f = document.forms[0];
+	var wl_access_policy = '<%nvram_get("wl0_acl_flag");%>';
+	if (wl_access_policy=='2') {
+		checkMac(1);
+		f.wl_access_policy[0].checked = true;
+		f.access_enabled[0].checked = true;
+	}
+	else if (wl_access_policy=='1') {
+		checkMac(1);
+		f.wl_access_policy[1].checked = true;	
+		f.access_enabled[0].checked = true;
+	}
+	else {
+		checkMac(0);
+		f.wl_access_policy[0].checked = true;
+		f.access_enabled[1].checked = true;
+	}
+	
+	var zeromac = "00:00:00:00:00:00";
+	for (var i=1;i<33;i++)
+	{
+		eval("f.wl_mac" + i).value = eval("f.filter_mac_"+i).value;
+		if (eval("f.wl_mac"+i).value == "")
+			eval("f.wl_mac" + i).value = zeromac;
+	}
+	
+	var now=11;
+  var next; 
+	for (var hidden=11; hidden<33; hidden=hidden+2)
+	 { 
+       var k=hidden+1;        
+	    if (eval("f.wl_mac"+hidden).value == "00:00:00:00:00:00" && eval("f.wl_mac"+k).value=="00:00:00:00:00:00")
+	     {
+         $("#" + hidden).hide();
+       }
+      else
+      {
+      	add_count++;
+             next=now+1;
+           $("#" + hidden).show();
+           var item=document.getElementById('MAC' +hidden);      
+           item.innerHTML="MAC "+now+":";
+            var item_next=document.getElementById('MAC' + k);      
+           item_next.innerHTML="MAC "+next+":";
+           now=now+2;          
+      }   
+    }   			
+	//WPS_Show(f);
+} 
+
+var index=11;
+
+function Addrow()
+{
+    var f=document.edit;
+    var search=1;
+              
+      while  (eval("f.wl_mac"+search).value != "00:00:00:00:00:00" && search < 33)
+        {   
+          	search++;
+        }
+        
+        
+        if(add_count == 0)
+        	total_col = search-1 ;
+        else
+        	total_col = 10 + 2*add_count
+        
+//      alert("total_col="+total_col);
+        for(d = 11 ; d <= total_col ; d++){
+        	if(eval("f.wl_mac"+d).value == "00:00:00:00:00:00"){
+//        		alert("1");
+		      alert(translate_str("JavaScript",166));
+			  var empty1=eval('document.getElementById("wl_mac'+ search +'").select()'); 
+			  return;
+        	}
+        }
+        
+        
+      if (search > index-1)
+        {
+         if ((search%2)==0)
+           index=search-1;
+          else
+           index=search;
+          
+           var count=index;
+           if (count<33 )
+           { 
+             $("#" + count).show();
+             add_count++ ;
+           }
+           else{
+		      alert(translate_str("JavaScript",166));
+			  var empty1=eval('document.getElementById("wl_mac'+ search +'").select()'); 
+           }
+        }
+        else{
+		      alert(translate_str("JavaScript",166));
+			  var empty1=eval('document.getElementById("wl_mac'+ search +'").select()'); 
+        }
+      
+        var message= "MAC"+ search+":"+ translate_str("SetupWizard",115);
+        //alert(message);
+//        alert(translate_str("JavaScript",166));
+  //       var empty1=eval('document.getElementById("wl_mac'+ search +'").select()'); 
+         var current=index;
+         var text_current=index;
+         var second;
+         var text_second;            
+     while (current < 32)
+     {   
+       second=current+1;
+       text_second=text_current+1;
+         
+
+        var display1=document.getElementById(current);   
+        var empty1=document.getElementById('MAC'+ current);
+        var empty2=document.getElementById('MAC' + second);
+        if (display1.style.display != 'none')
+        {
+         empty1.innerHTML="MAC "+text_current+":";               
+         empty2.innerHTML="MAC "+text_second+":";
+         text_current=text_current+2; 
+         }
+          current=current+2;
+      }
+                          
+} 
+                     
+
+function ValidateForm(f) 
+{
+	//var f = document.forms[0] ;
+	if (f.wl_access_policy[0].checked == true && f.access_enabled[0].checked == true)
+		f.wl0_acl_flag.value = 2;
+	else if (f.wl_access_policy[1].checked == true && f.access_enabled[0].checked == true)
+		f.wl0_acl_flag.value = 1;
+	else
+		f.wl0_acl_flag.value = 0;
+		
+	var i=0,j=0,str,mac;
+	for (var i=1;i<33;i++) {
+		if ( eval("!macsCheck(f.wl_mac"+i +")") )
+		{
+			eval("f.wl_mac"+i).focus();
+			return;
+		}	
+	}
+	for(i=1;i<33;i++) {
+		str = eval("f."+"wl_mac" + i);
+		if(str.value != "" && str.value != "00:00:00:00:00:00" ){
+			for(j=i+1 ; j<33; j++){
+				str1 = eval("f."+"wl_mac" + j);
+				if(str.value == str1.value){
+					alert(errmsg.err82);
+					return;
+				}
+			}
+		}
+	}
+	var zeromac= '';
+	for (var j=1;j<33;j++)
+	{
+		eval("f.filter_mac_"+j+".value  = ToUpperCase((f.wl_mac"+j+".value == zeromac)?'00:00:00:00:00:00':f.wl_mac"+j+".value);");
+	}	
+
+	if (f.wl0_acl_flag.value == 1) {
+		var count = 0;
+		for (var i=1;i<33;i++)
+			if ( eval("f.wl_mac"+i+".value") != '00:00:00:00:00:00')
+				count++;
+		if (count == 0) {
+			alert(translate_str("JavaScript",172));
+			f.wl_mac1.focus();
+			return;
+		}
+	}
+		f.submit();
+}
+
+function mouseOver(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("wireless").src = "signak_icon_bri.png";
+}
+
+function mouseOut(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("wireless").src = "signak_icon_bri.png";
+}
+
+
+var language_show = 0;
+function open_language()
+{
+	 var language_choice = document.getElementById('language');
+	 
+	if(language_show == '1') {
+		language_show = 0;
+		language_choice.style.visibility="hidden";
+	}
+	else {
+		language_show = 1;
+		language_choice.style.visibility="visible";
+	}
+}
+
+function apply_lang(e)
+{
+	var f1 = document.forms[1];
+	f1.language_str.value = e;
+ 	f1.submit();
+}
+
+function chage_color(e)
+{
+	e.style.color="#4F81BD";
+	e.style.textDecoration="underline"; 
+}
+
+function back_color(e)
+{
+	e.style.color="#B8B8B8";
+	e.style.textDecoration="none"; 
+}
+
+
+</Script>
+
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="edit" action="wl_filter.cgi" method="post">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value='<%nvram_get("lan_ipaddr");%>'>
+<input type="hidden" name="next_page" value="adv_wireless_network_access.htm">
+<input type="hidden" name="redirect_timer" value="1000">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="wl0_acl_flag filter_mac_1 filter_mac_2 filter_mac_3 filter_mac_4 filter_mac_5 filter_mac_6 filter_mac_7 filter_mac_8 filter_mac_9 filter_mac_10 filter_mac_11 filter_mac_12 filter_mac_13 filter_mac_14 filter_mac_15 filter_mac_16 filter_mac_17 filter_mac_18 filter_mac_19 filter_mac_20 filter_mac_21 filter_mac_22 filter_mac_23 filter_mac_24 filter_mac_25 filter_mac_26 filter_mac_27 filter_mac_28 filter_mac_29 filter_mac_30 filter_mac_31 filter_mac_32">
+<input type="hidden" name="wl0_acl_flag">
+<input type="hidden" name="filter_mac_1" value='<%nvram_get("filter_mac_1");%>'>
+<input type="hidden" name="filter_mac_2" value='<%nvram_get("filter_mac_2");%>'>
+<input type="hidden" name="filter_mac_3" value='<%nvram_get("filter_mac_3");%>'>
+<input type="hidden" name="filter_mac_4" value='<%nvram_get("filter_mac_4");%>'>
+<input type="hidden" name="filter_mac_5" value='<%nvram_get("filter_mac_5");%>'>
+<input type="hidden" name="filter_mac_6" value='<%nvram_get("filter_mac_6");%>'>
+<input type="hidden" name="filter_mac_7" value='<%nvram_get("filter_mac_7");%>'>
+<input type="hidden" name="filter_mac_8" value='<%nvram_get("filter_mac_8");%>'>
+<input type="hidden" name="filter_mac_9" value='<%nvram_get("filter_mac_9");%>'>
+<input type="hidden" name="filter_mac_10" value='<%nvram_get("filter_mac_10");%>'>
+<input type="hidden" name="filter_mac_11" value='<%nvram_get("filter_mac_11");%>'>
+<input type="hidden" name="filter_mac_12" value='<%nvram_get("filter_mac_12");%>'>
+<input type="hidden" name="filter_mac_13" value='<%nvram_get("filter_mac_13");%>'>
+<input type="hidden" name="filter_mac_14" value='<%nvram_get("filter_mac_14");%>'>
+<input type="hidden" name="filter_mac_15" value='<%nvram_get("filter_mac_15");%>'>
+<input type="hidden" name="filter_mac_16" value='<%nvram_get("filter_mac_16");%>'>
+<input type="hidden" name="filter_mac_17" value='<%nvram_get("filter_mac_17");%>'>
+<input type="hidden" name="filter_mac_18" value='<%nvram_get("filter_mac_18");%>'>
+<input type="hidden" name="filter_mac_19" value='<%nvram_get("filter_mac_19");%>'>
+<input type="hidden" name="filter_mac_20" value='<%nvram_get("filter_mac_20");%>'>
+<input type="hidden" name="filter_mac_21" value='<%nvram_get("filter_mac_21");%>'>
+<input type="hidden" name="filter_mac_22" value='<%nvram_get("filter_mac_22");%>'>
+<input type="hidden" name="filter_mac_23" value='<%nvram_get("filter_mac_23");%>'>
+<input type="hidden" name="filter_mac_24" value='<%nvram_get("filter_mac_24");%>'>
+<input type="hidden" name="filter_mac_25" value='<%nvram_get("filter_mac_25");%>'>
+<input type="hidden" name="filter_mac_26" value='<%nvram_get("filter_mac_26");%>'>
+<input type="hidden" name="filter_mac_27" value='<%nvram_get("filter_mac_27");%>'>
+<input type="hidden" name="filter_mac_28" value='<%nvram_get("filter_mac_28");%>'>
+<input type="hidden" name="filter_mac_29" value='<%nvram_get("filter_mac_29");%>'>
+<input type="hidden" name="filter_mac_30" value='<%nvram_get("filter_mac_30");%>'>
+<input type="hidden" name="filter_mac_31" value='<%nvram_get("filter_mac_31");%>'>
+<input type="hidden" name="filter_mac_32" value='<%nvram_get("filter_mac_32");%>'>
+	
+	<center>	 
+<table border="0" width="1000">
+	<tr>
+		<td>
+
+<%include_file("adv_logol_header.htm");%>
+
+
+
+  <div id="warp">
+  
+      <div class="Pointer_Wirelesspic"></div>
+			  <p  style="height:11px;"></p> 
+      <div class="status_background">
+					<p  style="height:40px;"></p> 
+      		<p class="adv_title"><script>translate_strWrite("WirelessNetworkAccess",0);</script></p>
+      		
+      	<div class="Router_status">	
+					
+					<center>
+					<table border="0" cellpadding="0" cellspacing="0">
+						<tr><td class="adv_title_hr" align="center"><img src="hr_line.png"></td></tr>
+						<tr> 
+							<td height="25" valign="middle" align="center"><strong>
+							<input type=radio name=access_enabled value=0 onclick="checkMac(1);">&nbsp;
+							<script>translate_strWrite("CheckBox",0);</script>&nbsp;&nbsp;
+							<input type=radio name=access_enabled value=1 onclick="checkMac(0);">&nbsp;
+							<script>translate_strWrite("CheckBox",1);</script>&nbsp;</td>
+						</tr>
+
+						<tr><td class="adv_title_hr" align="center"><img src="hr_line.png"></td></tr>
+						
+						<tr> 
+						<td height="25" align="left">
+							<input type=radio name=wl_access_policy value=2>
+							
+							<script>translate_strWrite("WirelessNetworkAccess",3);</script>
+							 &nbsp;
+							<script>translate_strWrite("WirelessNetworkAccess",5);</script></td>
+						</tr>
+						
+						<tr>
+							<td height="25" align="left">
+							<input type=radio name=wl_access_policy value=2>
+				
+							<script>translate_strWrite("WirelessNetworkAccess",4);</script>&nbsp;&nbsp;
+							 &nbsp;
+							<script>translate_strWrite("WirelessNetworkAccess",6);</script></td>
+						</tr>
+					
+						<tr height="25" >
+							<td class="adv_title_hr" align="center"><img src="hr_line.png"></td>
+						</tr>
+
+						<tr>
+							<td height="25" colspan="2" valign="middle" align="center">   
+							<input value="" onclick="ViewActive()" name="mac_filter_button" type="button">
+							</td>
+						</tr>
+					</table>
+                  <p style="height: 14px;">&nbsp;</p>
+                  <table  border="0" cellpadding="0" cellspacing="0">
+                    <!--MAC List-->
+                    <TR>
+						          <TD id="MAC1" align=right height="" width="80"> MAC 01:</TD>
+						          <TD align=left height=""><b>&nbsp; </b>
+                			<INPUT name="wl_mac1" id="wl_mac1" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+											<TD align=left height="" width="16"></td>
+					           	<TD id="MAC2" align=right height="" width="80"> MAC 02:</TD>
+					           	<TD align=left height="">&nbsp;
+                			<INPUT name="wl_mac2" id="wl_mac2" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+        						</TR>
+ 										<TR>
+						          <TD id="MAC3" align=right height=25 width="80"> MAC 03:</TD>
+											<TD align=left height=25><b>&nbsp; </b>
+						          <INPUT name="wl_mac3" id="wl_mac3" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+						          <TD align=left height=25 width="16"></td>
+						          <TD id="MAC4" align=right height=25 width="80"> MAC 04:</TD>
+						          <TD align=left height=25>&nbsp;
+						          <input name="wl_mac4" id="wl_mac4" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+						        </TR>
+									 	<TR>
+									    <TD id="MAC5" align=right height=25 width="80"> MAC 05:</TD>
+									    <TD align=left height=25><b>&nbsp; </b>
+									    <INPUT name="wl_mac5" id="wl_mac5" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+									    <TD align=left height=25 width="16"></td>
+									    <TD id="MAC6" align=right height=25 width="80"> MAC 06:</TD>
+											<TD align=left height=25>&nbsp;
+									  	<INPUT name="wl_mac6" id="wl_mac6" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+									  </TR>
+									 	<TR>
+									  	<TD id="MAC7" align=right height=25 width="80"> MAC 07:</TD>
+									  	<TD align=left height=25><b>&nbsp; </b>
+									  	<INPUT name="wl_mac7" id="wl_mac7" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+											<TD align=left height=25 width="16"></td>
+									  	<TD id="MAC8" align=right height=25 width="80"> MAC 08:</TD>
+									  	<TD align=left height=25>&nbsp;
+									 		<INPUT name="wl_mac8" id="wl_mac8" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+									  	</TR>
+									 	<TR>
+									  	<TD id="MAC9" align=right height=25 width="80"> MAC 09:</TD>
+											<TD align=left height=25><b>&nbsp; </b>
+									  	<INPUT name="wl_mac9" id="wl_mac9" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+									  	<TD align=left height=25 width="16"></td>
+									  	<TD id="MAC10" align=right height=25 width="80"> MAC 10:</TD>
+									  	<TD align=left height=25>&nbsp;
+									  	<INPUT name="wl_mac10" id="wl_mac10" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+									  </TR>
+									 	<TR id="11">
+									  	<TD id="MAC11" align=right height=25 width="80">MAC 11:</TD>
+									  	<TD align=left height=25><b>&nbsp; </b>
+									  	<INPUT name="wl_mac11" id="wl_mac11" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+									  	<TD align=left height=25 width="16"></td>
+									  	<TD id="MAC12" align=right height=25 width="80"> MAC 12:</TD>
+											<TD align=left height=25>&nbsp;
+									  	<INPUT name="wl_mac12" id="wl_mac12" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+									 	</TR>
+									 	<TR id="13">
+									  	<TD id="MAC13" align=right height=25 width="80"> MAC 13:</TD>
+									  	<TD align=left height=25><b>&nbsp; </b>
+									  	<INPUT name="wl_mac13" id="wl_mac13" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+											<TD align=left height=25 width="16"></td>
+									  	<TD id="MAC14" align=right height=25 width="80"> MAC 14:</TD>
+									  	<TD align=left height=25>&nbsp;
+									  	<INPUT name="wl_mac14" id="wl_mac14" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+									  </TR>
+									 	<TR id="15">
+									  	<TD id="MAC15" align=right height=25 width="80"> MAC 15:</TD>
+											<TD align=left height=25><b>&nbsp; </b>
+									  	<INPUT name="wl_mac15" id="wl_mac15" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+									  	<TD align=left height=25 width="16"></td>
+									  	<TD id="MAC16" align=right height=25 width="80"> MAC 16:</TD>
+									  	<TD align=left height=25>&nbsp;
+									  	<INPUT name="wl_mac16" id="wl_mac16" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+									 	</TR>
+									 	<TR id="17">
+									  	<TD id="MAC17" align=right height=25 width="80"> MAC 17:</TD>
+									  	<TD align=left height=25><b>&nbsp; </b>
+									  	<INPUT name="wl_mac17" id="wl_mac17" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+									  	<TD align=left height=25 width="16"></td>
+									  	<TD id="MAC18" align=right height=25 width="80"> MAC 18:</TD>
+											<TD align=left height=25>&nbsp;
+									  	<INPUT name="wl_mac18" id="wl_mac18" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+									  </TR>
+									 	<TR id="19">
+									  	<TD id="MAC19" align=right height=25 width="80"> MAC 19:</TD>
+									  	<TD align=left height=25><b>&nbsp; </b>
+									  	<INPUT name="wl_mac19" id="wl_mac19" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+											<TD align=left height=25 width="16"></td>
+									  	<TD id="MAC20" align=right height=25 width="80"> MAC 20:</TD>
+									  	<TD align=left height=25>&nbsp;
+									  	<INPUT name="wl_mac20" id="wl_mac20" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+									  </TR>
+									  <TR id="21">
+						          <TD id="MAC21" align=right height=25 width="80"> MAC 21: </TD>
+						          <TD align=left height=25><b>&nbsp; </b>
+						          <INPUT name="wl_mac21" id="wl_mac21" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+						          <TD align=left height=25 width="16"></td>
+											<TD id="MAC22" align=right height=25 width="80"> MAC 22: </TD>
+						          <TD align=left height=25>&nbsp;
+						          <INPUT name="wl_mac22" id="wl_mac22" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+						        </TR>
+						 				<TR id="23">
+						          <TD id="MAC23" align=right height=25 width="80"> MAC 23: </TD>
+											<TD align=left height=25><b>&nbsp; </b>
+						          <INPUT name="wl_mac23" id="wl_mac23" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+						          <TD align=left height=25 width="16"></td>
+						          <TD id="MAC24" align=right height=25 width="80"> MAC 24: </TD>
+						          <TD align=left height=25>&nbsp;
+						          <INPUT name="wl_mac24" id="wl_mac24" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+						        </TR>
+						 				<TR id="25">
+						          <TD id="MAC25" align=right height=25 width="80"> MAC 25: </TD>
+						          <TD align=left height=25><b>&nbsp; </b>
+						          <INPUT name="wl_mac25" id="wl_mac25" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+						          <TD align=left height=25 width="16"></td>
+						          <TD id="MAC26" align=right height=25 width="80"> MAC 26: </TD>
+											<TD align=left height=25>&nbsp;
+						          <INPUT name="wl_mac26" id="wl_mac26" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+						        </TR>
+						 				<TR id="27">
+						          <TD id="MAC27" align=right height=25 width="80"> MAC 27: </TD>
+						          <TD align=left height=25><b>&nbsp; </b>
+						          <INPUT name="wl_mac27" id="wl_mac27" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+											<TD align=left height=25 width="16"></td>
+						          <TD id="MAC28" align=right height=25 width="80"> MAC 28: </TD>
+						          <TD align=left height=25>&nbsp;
+						          <INPUT name="wl_mac28" id="wl_mac28" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+						        </TR>
+						 				<TR id="29">
+						          <TD id="MAC29" align=right height=25 width="80"> MAC 29: </TD>
+											<TD align=left height=25><b>&nbsp; </b>
+						          <INPUT name="wl_mac29" id="wl_mac29" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+						          <TD align=left height=25 width="16"></td>
+						          <TD id="MAC30" align=right height=25 width="80"> MAC 30: </TD>
+						          <TD align=left height=25>&nbsp;
+						          <INPUT name="wl_mac30" id="wl_mac30" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+						        </TR>
+						 				<TR id="31">
+						          <TD id="MAC31" align=right height=25 width="80"> MAC 31: </TD>
+						          <TD align=left height=25><b>&nbsp; </b>
+						          <INPUT name="wl_mac31" id="wl_mac31" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+						          <TD align=left height=25 width="16"></td>
+						          <TD id="MAC32" align=right height=25 width="80"> MAC 32: </TD>
+											<TD align=left height=25>&nbsp;
+						          <INPUT name="wl_mac32" id="wl_mac32" onBlur=valid_macs_all(this) value="" size=17 maxLength=17 class="ssid_col_width"></TD>
+						        </TR>
+						        <tr>
+						        <tr height="30"><td>&nbsp;</td></tr>
+						        <td colspan="5"  align="right" width="430" style="line-height:20px;">
+                         <table border="0" cellspacing="0" cellpadding="0" align="left" width="430">
+              				  	<tr height=23 width="600">
+              				  		<td align="right">
+              					  		<table border="0" cellspacing="0" cellpadding="0">
+              									<tr height=23>
+              										<td class="SW_LeftButton">&nbsp;</td>
+              										<td class="SW_BottomButton"><a href="javascript:Addrow();">&nbsp;<script>translate_strWrite("SetupWizard",114);</script>&nbsp;</a></td>
+              										<td class="SW_RightButton">&nbsp;</td>
+              										</tr>
+              									</table>
+              							</td>				  
+              						</tr>
+              				  </table>
+                                  
+                    </td>
+						        </tr>
+                  </table>
+                  </center>
+		  				<p style="height: 14px;">&nbsp;</p>
+		    
+    			    <div class="clear_float"> </div>            
+    			 </div>
+    			 <p style="height:20px;"></p> 
+    			 
+    			
+		      <div class="clear_float"></div>    			 
+           <p style="height:20px;"></p>       
+		      <p class="status_end"></p>    
+
+      </div> 
+   </div>
+ </div>
+    <div class="angle"></div>      
+           <div class="EZ_mid">  
+      		<p style="height:10px;"></p>      		 		  				    
+				  	<div class="Cancel_Save_button">
+				  <table border="0" cellspacing="0" cellpadding="0" width=335>
+				  	<tr height=23 width=600>
+				  		<td align="right" width=75>
+					  		<table border="0" cellspacing="0" cellpadding="0" width=75>
+									<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="adv_wireless_setting.htm">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",1);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										</tr>
+									</table>
+							</td>
+				  	<td align="center" width="60">&nbsp;<script>translate_strWrite("BasicSetup",162);</script>&nbsp;
+				  		</td>
+				  	<td align="left" width=200>
+				  		<table border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+									<td class="SW_LeftButton">&nbsp;</td>
+									<td class="SW_BottomButton"><a href="javascript:ValidateForm(document.forms[0]);">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",0);</script></font>&nbsp;</a></td>
+									<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+							</td>
+						</tr>
+				  </table>
+					</div>	  				    					    														    						    			    
+      </div>			    														    						    			    
+    
+      
+         		
+       <div style="height: 20px"></div>    
+		      <div class="EZ_foot">
+						<div class="EZ_foot_L"><img src="bottom_help_icon.png" style="position:relative;top:3pt;">&nbsp;<a href="help/<%nvram_get("language_str");%>/default.htm#Advanced" target="_blank"><script>translate_strWrite("SetupWizard",64);</script></a>&nbsp;<img src="transparency.gif" style="width:15px;height:1px;"><a href="javascript:open_language();"><img src="bottom_language_icon.png" style="position:relative;top:3pt;">&nbsp;<script>translate_strWrite("BasicSetup",167);</script></a>&nbsp;&nbsp
+							<span id="language" style="visibility:hidden;">
+								<a href="javascript:apply_lang('en');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">English</font></a>&nbsp;&nbsp;
+								<a href="javascript:apply_lang('fr');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Fran&ccedil;ais</font></a>&nbsp;&nbsp;
+								<!--a href="javascript:apply_lang('spa');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Spanish</font></a--></span>
+						</div>
+						<div class="EZ_foot_C"></div>
+						<div class="EZ_foot_R"></div>
+		      </div>
+         <div class="clear_float"> </div>
+  
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+		</td>
+	</tr>
+	</table>
+</center>
+</form>
+
+<form method="post" action="save.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_wireless_network_access.htm">
+<input type="hidden" name="redirect_timer" value="0">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="language_str">
+<input type="hidden" name="language_str" value="<%nvram_get("language_str");%>">
+</form>
+<!--[if lt IE 7]>
+<script defer type="text/javascript" src="ie6fix.js"></script>
+<![endif]-->
+<script type="text/javascript">
+  document.getElementById("wireless").src = "signak_icon_bri.png";
+</script>
+</body>
+</html>

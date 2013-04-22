@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_116?></title>
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+
+
+function InitValue()
+{
+	  show_network_status();
+}
+
+
+function mouseOver(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+}
+
+function mouseOut(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+}
+
+var language_show = 0;
+function open_language()
+{
+	 var language_choice = document.getElementById('language');
+	 
+	if(language_show == '1') {
+		language_show = 0;
+		language_choice.style.visibility="hidden";
+	}
+	else {
+		language_show = 1;
+		language_choice.style.visibility="visible";
+	}
+}
+
+function apply_lang(e)
+{
+	var f1 = document.forms[1];
+	f1.language_str.value = e;
+ 	f1.submit();
+}
+
+function chage_color(e)
+{
+	e.style.color="#4F81BD";
+	e.style.textDecoration="underline"; 
+}
+
+function back_color(e)
+{
+	e.style.color="#B8B8B8";
+	e.style.textDecoration="none"; 
+}
+
+</Script>
+<!--[if lt IE 7]>
+  <script defer type="text/javascript" src="ie6fix.js"></script>
+<![endif]-->
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="welcome" action="post.cgi" method="post">
+	
+
+	<center>	 
+<table border="0" width="1000" >
+	<tr>
+		<td>
+	 	
+<%include_file("sw_logol_header.htm");%>
+
+<div id="warp">	
+			 <div class="status_title"><script>translate_strWrite("SetupWizard",54);</script></div>	  
+      <div class="status_background">
+      	<div class="status_content">
+      				<div style="height:20px;"></div>       			
+		      <p class="status_title" style="font-weight:normal;"><script>translate_strWrite("SetupWizard",55);</script></p>
+		        <p style="height:20px;"></p>		  		       
+			  	<div class="ArangeThreeColumn">              	          
+						    <div class="ThreeColumn" style="position:relative; left:0px; top:15px; _top:45px;"> 
+						      <p><a href="adv_edit_internet.htm">
+                  <!--[if lt IE 7]>
+                    <img id="internet_bri" name="internet_bri" src="internet_icon_bri_big.png">
+                  <![endif]-->
+                  <img id="internet" name="internet" src="internet_icon_dark_big.png" onMouseOver="mouseOver(this.id,'internet_icon_bri_big.png')" onMouseOut="mouseOut(this.id, 'internet_icon_dark_big.png')"></a></p>						       
+						      <p><a href="adv_edit_internet.htm"><font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("JavaScript",160);</script></font></a></p>
+						      <p style="height:5px;"></p>
+						 
+						    </div>
+						 	 
+						    <div class="ThreeColumn" style="position:relative; left:0px; top:0px;">
+						    	<p style="height:5px;"></p>  
+						    	<p><a href="adv_edit_router.htm">
+                  <!--[if lt IE 7]>
+                    <img id="router_bri" name="internet_bri" src="rt_icon_bri_big.png">
+                  <![endif]-->                 
+                  <img id="router" name="router" src="rt_icon_dark_big.png" onmouseOver="mouseOver(this.id,'rt_icon_bri_big.png')" onmouseOut="mouseOut(this.id, 'rt_icon_dark_big.png')"></a></p>			    	
+						    	<p><a href="adv_edit_router.htm"><font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("JavaScript",161);</script></font></a></p>
+						    	<p style="height:5px;"></p>
+						   
+						   </div>
+						   
+						   <div class="ThreeColumn" style="position:relative; left:0px; top:12px;">
+						   	  <p style="height:5px;"></p>
+						 			<p><a href="adv_status_wireless.htm">
+                  <!--[if lt IE 7]>
+                    <img id="wireless_bri" name="wireless_bri" src="signak_icon_bri_big.png">
+                  <![endif]-->                     
+                   <img id="wireless" style="position:relative;top:-15pt;_position:relative;top:0pt;" name="wireless" src="signak_icon_dark_big.png" onmouseOver="mouseOver(this.id,'signak_icon_bri_big.png')" onmouseOut="mouseOut(this.id, 'signak_icon_dark_big.png')"></a></p>
+						   		<p><a href="adv_status_wireless.htm"><font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("JavaScript",162);</script></font></a></p>
+						   		<p style="height:5px;"></p>
+						  			   		
+						   </div> 
+						  </div>
+								<div class="clear_float"></div>
+		      <p class="status_end"></p>     
+      </div> 
+      
+       <div class="EZ_mid">
+      	
+      		<p style="height:20px;"></p>
+      		
+      		
+      		
+      </div>
+        
+       <div style="height: 50px"></div>    
+		      <div class="EZ_foot">
+						<div class="EZ_foot_L"><img src="bottom_help_icon.png" style="position:relative;top:3pt;">&nbsp;<a href="help/<%nvram_get("language_str");%>/default.htm#ChangeAdvanced" target="_blank"><script>translate_strWrite("SetupWizard",64);</script></a><img src="transparency.gif" style="width:15px;height:1px;"><a href="javascript:open_language();"><img src="bottom_language_icon.png" style="position:relative;top:3pt;">&nbsp;<script>translate_strWrite("BasicSetup",167);</script></a>&nbsp;&nbsp																				
+							<span id="language" style="visibility:hidden;">
+								<a href="javascript:apply_lang('en');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">English</font></a>&nbsp;&nbsp;
+								<a href="javascript:apply_lang('fr');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Fran&ccedil;ais</font></a>&nbsp;&nbsp;
+								<!--a href="javascript:apply_lang('spa');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Spanish</font></a--></span>
+						</div>
+						<div class="EZ_foot_C"></div>
+						<div class="EZ_foot_R"><a class="EZ_mid_text" href="first.htm"><img src="bottom_adv_icon.png" style="position:relative;top:3pt;"><font style="font-size: 9pt;"><script>translate_strWrite("SetupWizard",94);</script></font>&nbsp;&nbsp;&nbsp;&nbsp;</a></div>
+		      </div>
+         <div class="clear_float"> </div>
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+ 		 
+		</td>
+	</tr>
+	</table>
+</center>
+</form>
+
+<form method="post" action="save.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_welcome.htm">
+<input type="hidden" name="redirect_timer" value="0">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="language_str">
+<input type="hidden" name="language_str" value="<%nvram_get("language_str");%>">
+</form>
+
+</body>
+</html>

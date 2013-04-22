@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_112?></title>
+<base target="_self">
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+
+var f=document.ws_wpapsk;
+
+function ignoreSpaces ( string )
+{
+	var temp = "";
+	string = '' + string;
+	splitstring = string.split(" ");
+
+	for ( i = 0 ; i < splitstring.length ; i++ ) 
+	{
+		temp += splitstring[i];
+	}
+
+	return temp;
+}
+function ValidateHexKey()
+{
+	var Passphrase = 0;
+	var Space = 0;
+	var key = document.forms[0].wl_wpa_psk.value;
+
+	
+	for ( iln = 0 ; iln < key.length ; iln++ ) 
+	{
+    	ch = key.charAt(iln).toLowerCase();
+		
+	  	if (ch >= '0' && ch <= '9' || ch >= 'a' && ch <= 'f') 
+		{
+
+		}
+	  	else 
+		{
+			Passphrase = 1;
+	  	}
+	}
+	
+	if ( Passphrase == 0 )
+	{
+		if ( document.forms[0].wl_wpa_psk.value.length < 8 || document.forms[0].wl_wpa_psk.value.length > 64 )
+		{
+			alert(translate_str("WirelessSecurity",28));
+			return false;
+		}
+	}
+	else
+	{
+		if ( document.forms[0].wl_wpa_psk.value.length < 8 || document.forms[0].wl_wpa_psk.value.length > 63 ) 
+		{
+			alert(translate_str("WirelessSecurity",28));
+			return false;
+		}
+	}		
+	
+	return true;
+}
+
+function ValidateForm(f)
+{
+	self.parent.document.forms[0].wl1_data1.value += " wl1_sec_mode wl1_pskkey wl1_wpaenc wl1_key_renew";
+	if (!CheckEmpty(document.forms[0].wl_wpa_psk, translate_str("WirelessSecurity",27)))
+	{
+		return;
+	}
+	
+	if ( ValidateHexKey() == false ) {
+		return;
+	} 
+		
+	
+	if(!valid_range(document.forms[0].key_renewal,600,7200,wlansec.rekey,document.forms[0].key_renewal.defaultValue))
+		return;
+	self.parent.document.forms[0].wl1_sec_mode.value = document.forms[0].wl_security.value;
+	self.parent.document.forms[0].wl1_wpaenc.value = document.forms[0].wl_encryp_type.value;
+	self.parent.document.forms[0].wl1_pskkey.value = document.forms[0].wl_wpa_psk.value;
+	self.parent.document.forms[0].wl1_key_renew.value = document.forms[0].key_renewal.value;
+
+	return true;
+}
+
+function InitValue(f)
+{
+	
+	var encryptype = '<%nvram_get("wl1_wpaenc");%>';
+	if (encryptype == '0')
+	{
+		document.forms[0].wl_encryp_type.selectedIndex = 0;
+	}
+	else
+	{
+		document.forms[0].wl_encryp_type.selectedIndex = 1;
+	}
+	f.wl_wpa_psk.value = '<%nvram_get("wl1_pskkey");%>';
+	f.key_renewal.value = '<%nvram_get("wl1_key_renew");%>';
+	showMix = getLayer("SSIDAuthMode1");
+	showMix.height="210";
+
+}
+
+</Script>
+
+<style type="text/css">
+
+
+body{
+	margin:0px;
+	BACKGROUND:transparent none;
+	}
+
+</style>
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="ws_wpapsk" method="post">
+
+		 
+<table border="0" width="530" cellpadding="0" cellspacing="0">
+	<tr>
+		<td>
+
+  <div id="WS_WEP1" style="text-align:left;">
+  
+      <div class="iframe_background">     
+      	<div class="iframe_status" style="line-height:35px;">	
+      		<table border="0" width="530" align="center" cellpadding="0" cellspacing="0">
+      				<tr height="35">
+      				<td colspan="3" width="530" class="status_title" align="center"><script>translate_strWrite("SetupWizard",59);</script></td>  								
+      			</tr>
+      			<tr  height="35">     
+      				<td width="250" align="right"><script>translate_strWrite("WirelessSecurity",1);</script>:</td>
+      				<td width="30">&nbsp;</td>
+      				<td width="250" align="left">
+      					<select name="wl_security"  class="wireless_select_col_width_v2" onChange="WirelessSecurityType1( this.value,<%nvram_get("wps_page");%> )">
+				           	<option value="wep"><script>translate_strWrite("WirelessSecurity",3);</script></font></option>
+						   		 	<option value="psk"  selected><script>translate_strWrite("WirelessSecurity",4);</script></option>
+				            <option value="WPA2"><script>translate_strWrite("WirelessSecurity",5);</script></option>
+				            <option value="wparadius"><script>translate_strWrite("WirelessSecurity",7);</script></option>
+				            <option value="wpa2radius"><script>translate_strWrite("WirelessSecurity",8);</script></option>
+				            <option value="radius"><script>translate_strWrite("WirelessSecurity",9);</script></option>
+				           <option value="none"><script>translate_strWrite("WirelessSecurity",2);</script></option></option>					
+         				</select>     									
+      						</td></tr>
+      		
+      					<tr height="35"><td align="right"><script>translate_strWrite("WirelessSecurity",10);</script>:</td>
+      					<td>&nbsp;</td>
+      					<td align="left">     							    								      								
+									<SELECT name="wl_encryp_type" class="wireless_select_col_width_v2">
+					            <OPTION value="0"><script>translate_strWrite("WirelessSecurity",21);</script></OPTION>
+					            <OPTION value="1"><script>translate_strWrite("WirelessSecurity",20);</script></OPTION>
+          				</SELECT>
+      								</td></tr>
+      					<tr height="35">
+      						<td  align="right"><script>translate_strWrite("WirelessSecurity",17);</script>:</td>	
+      						<td>&nbsp; </td>
+      						<td align="left"> 
+      						<input class="key_col_width" maxlength="64" size="20" name="wl_wpa_psk" value=""  onBlur="CheckSemicolon(this);">  
+      							
+					          </td>
+      				  </tr>	
+      					<tr height="35"><td  align="right"><script>translate_strWrite("WirelessSecurity",40);</script>:</td>	
+      						<td>&nbsp; </td>
+      						<td align="left">
+      	      			<input class="key_col_width"  maxlength="5" size="5" name="key_renewal"  value=""  onBlur=valid_range(this,600,7200,wlansec.rekey,this.defaultValue)>
+  											&nbsp; 
+          					<script>translate_strWrite("WirelessSecurity",19);</script>     							
+      							</td>
+      					</tr>      					
+								
+      		</table>
+      	      						
+   </div>
+ </div>       
+
+  </div>
+		</td>
+	</tr>
+	</table>
+</form>
+
+</body>
+</html>

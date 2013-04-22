@@ -1,0 +1,7 @@
+#!/bin/sh
+##
+## Compatability scripts for older versions
+##
+
+/etc/ath/killVAP all
+rm -f /tmp/.apup

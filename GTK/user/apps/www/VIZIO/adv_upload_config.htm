@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title></title>
+<%include_file("javascript.htm");%>
+
+<script language="JavaScript">
+function Try_Submit() 
+{	
+	if(document.form_upgrade.file.value.length == 0) 
+	{
+ 		alert(translate_str("Management",28));
+		return false;
+	} 
+	else 
+	{
+		//window.opener.redirect_URL();
+		try 
+		{
+		document.form_upgrade.submit();
+	}
+		catch(e) 
+		{
+		//window.close();
+			alert(translate_str("Management",29));
+		}
+	}
+}
+function initialValue()
+{
+	document.forms[0].LoadCFGBtn.value=translate_str("Management",25);
+}
+</SCRIPT>
+</head>
+
+<body  bgcolor="#FFFFFF" ONDRAGSTART="window.event.returnValue=false" ONCONTEXTMENU="window.event.returnValue=false" onLoad="initialValue()">>
+<form name="form_upgrade"  enctype="multipart/form-data" method=POST action="UploadCfgFile.cgi">
+
+	<center>	 
+<table border="0" width="1000">
+	<tr>
+		<td>
+	 
+<%include_file("adv_PopWin_header.htm");%>
+
+
+	
+  <div id="warp">
+      <div class="status_title">&nbsp;</div>
+      <div class="status_background">
+      	<div class="status_content">
+      		<p style="height: 10px">&nbsp;</p>
+      		<center>
+<!----Add Pop-up windows start----->
+
+		    		<p style="height: 25px">&nbsp;</p>
+
+					<table cellPadding=0 cellSpacing=0 width="420" border=0>
+					  <tr> 
+						<td valign="middle" height="33" align=right ><font face="Arial, Helvetica, sans-serif" style="font-size: 8pt"><script>translate_strWrite("Management",31);</script>:</font></td>
+						<td colspan="3" valign="middle">&nbsp;&nbsp; 
+							<INPUT type=file size=25 name="file" style="font-size:8pt;">		</td>
+					  </tr>
+					  <tr> 
+						<td height="29" colspan="4" valign="top" align="center"> 
+					    <input type="button" name="LoadCFGBtn" style="font-size:8pt;" onClick="Try_Submit();"></td>
+					  </tr>
+
+					</table>
+                      
+		    		<p style="height: 25px">&nbsp;</p>
+
+<!----Add Pop-up windows End----->
+			</center>
+		      <p class="status_end"></p>     
+      </div>  
+     </div>               
+         		
+         <div class="clear_float"> </div>
+  
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+		</td>
+	</tr>
+	</table>
+</center>
+</form>
+</body>
+</html>

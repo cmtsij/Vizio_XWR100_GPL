@@ -1,0 +1,16 @@
+Before Compile please make sure the follow things.
+
+1.Please make sure you have selected the developement packages during installing your linux machine.
+
+2.Please make sure you have gcc (GCC) 3.3.3 or gcc (GCC) 3.4.6 installed in your machine.You can find them from ftp://mirrors.kernel.org/gnu/, or any other mirror sites from http://www.gnu.org/prep/ftp.html .
+
+3.Please make sure you have sharutils installed in your machine .You can find them from ftp://mirrors.kernel.org/gnu/, or any other mirror sites from http://www.gnu.org/prep/ftp.html .
+
+Compile Steps:
+ .untar VIZIO_1.01.02_GPL.tgz
+ 
+ .cd VIZIO_1.01.02_GPL/build
+ 
+ .make
+ 
+ .After the compile finish you can find the target image F/W in "VIZIO_1.01.02_GPL/GTK/user/image/VIZIO_1.01.02_Jun-9-2010.bin"

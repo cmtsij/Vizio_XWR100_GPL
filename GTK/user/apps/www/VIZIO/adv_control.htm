@@ -1,0 +1,1895 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_117?></title>
+<%include_file("javascript.htm");%>
+</head>
+ 
+<Script Language="JavaScript">
+
+var f=document.edit;
+
+var c = 0;
+//var policy_index='<%nvram_get("select1");%>';
+//////////////////
+
+var v = "" ;
+var count = "5";
+
+function DataShow(count)
+{
+	var f = document.forms[0];
+
+		v	+= 	"<table cellpadding=\"0\" cellspacing=\"0\" border=\"1\" align=\"center\" style=\"color:#B8B8B8; width:850px;\" >";
+		v	+= 	"	<tr>";
+		v	+= 	"		<td  style=\"width:25px;\" align=\"center\">"+count+"</td>";
+		v	+= 	"		<td align=\"center\"><input type=\"text\" name=\"arnform_"+count+"\" class=\"policy_col_width\"></td><!---Policy name-->";
+		v	+= 	"		<td width=\"75\" align=\"center\">";
+		v	+= 	"			<select name=\"filterAllow_"+count+"\" class=\"policy_select_col_width\">";
+		v	+= 	"				<option value=\"0\">"+translate_str("AccessRestriction",14)+"</option>";
+		v	+= 	"				<option value=\"1\">"+translate_str("AccessRestriction",15)+"</option>";
+		v	+= 	"			</select>";
+		v	+= 	"		</td>";
+		v	+= 	"		<td width=\"328\" align=\"center\">";
+		v	+= 	"				<INPUT onClick=\"CheckDay(document.forms[0],"+count+", 8);\" type=checkbox value=128 name=days_"+count+"_8 checked>"+translate_str("AccessRestriction",18)+"";
+		v	+= 	"	&nbsp;&nbsp;<INPUT onClick=\"CheckDay(document.forms[0],"+count+", 7);\" type=checkbox value=1 name=days_"+count+"_7>"+translate_str("AccessRestriction",76)+"";
+		v	+= 	"				<INPUT onClick=\"CheckDay(document.forms[0],"+count+", 1);\" type=checkbox value=2 name=days_"+count+"_1>"+translate_str("AccessRestriction",77)+"";
+		v	+= 	"				<INPUT onClick=\"CheckDay(document.forms[0],"+count+", 2);\" type=checkbox value=4 name=days_"+count+"_2>"+translate_str("AccessRestriction",78)+"";
+		v	+= 	"				<INPUT onClick=\"CheckDay(document.forms[0],"+count+", 3);\" type=checkbox value=8 name=days_"+count+"_3>"+translate_str("AccessRestriction",79)+"";
+		v	+= 	"				<INPUT onClick=\"CheckDay(document.forms[0],"+count+", 4);\" type=checkbox value=16 name=days_"+count+"_4>"+translate_str("AccessRestriction",80)+"";
+		v	+= 	"				<INPUT onClick=\"CheckDay(document.forms[0],"+count+", 5);\" type=checkbox value=32 name=days_"+count+"_5>"+translate_str("AccessRestriction",81)+" ";
+		v	+= 	"				<INPUT onClick=\"CheckDay(document.forms[0],"+count+", 6);\" type=checkbox value=64 name=days_"+count+"_6>"+translate_str("AccessRestriction",82)+"";
+		v	+= 	"		</td>";
+		v	+= 	"		<td width=\"200\" align=\"center\">";
+		v	+= 	"				<select name=\"start_hour_"+count+"\" onClick=\"javascript:document.forms[0].time[1].checked=true;\" onChange=\"CheckTimeRange(document.forms[0]);\" class=\"mtu_col_width\" >";
+		v	+= 	"					<option value=\"00\" selected>0</option>";
+		v	+= 	"					<OPTION value=\"01\">1</OPTION>";
+		v	+= 	"					<OPTION value=\"02\">2</OPTION>";
+		v	+= 	"					<OPTION value=\"03\">3</OPTION>";
+		v	+= 	"					<OPTION value=\"04\">4</OPTION>";
+		v	+= 	"					<OPTION value=\"05\">5</OPTION>";
+		v	+= 	"					<OPTION value=\"06\">6</OPTION>";
+		v	+= 	"					<OPTION value=\"07\">7</OPTION>";
+		v	+= 	"					<OPTION value=\"08\">8</OPTION>";
+		v	+= 	"					<OPTION value=\"09\">9</OPTION>";
+		v	+= 	"					<OPTION value=\"10\">10</OPTION>";
+		v	+= 	"					<OPTION value=\"11\">11</OPTION>";
+		v	+= 	"					<OPTION value=\"12\">12</OPTION>";
+		v	+= 	"					<option value=\"13\">13</option>";
+		v	+= 	"					<option value=\"14\">14</option>";
+		v	+= 	"					<option value=\"15\">15</option>";
+		v	+= 	"					<option value=\"16\">16</option>";
+		v	+= 	"					<option value=\"17\">17</option>";
+		v	+= 	"					<option value=\"18\">18</option>";
+		v	+= 	"					<option value=\"19\">19</option>";
+		v	+= 	"					<option value=\"20\">20</option>";
+		v	+= 	"					<option value=\"21\">21</option>";
+		v	+= 	"					<option value=\"22\">22</option>";
+		v	+= 	"					<option value=\"23\">23</option>";
+		v	+= 	"				</select> : ";
+		v	+= 	"				";
+		v	+= 	"				<select name=\"start_min_"+count+"\" onClick=\"javascript:document.forms[0].time[1].checked=true;\" onChange=\"CheckTimeRange(document.forms[0]);\" class=\"mtu_col_width\" >";
+		v	+= 	"					<option value=\"00\" selected>0</option>";
+		v	+= 	"					<option value=\"05\">5</option>";
+		v	+= 	"					<option value=\"10\">10</option>";
+		v	+= 	"					<option value=\"15\">15</option>";
+		v	+= 	"					<option value=\"20\">20</option>";
+		v	+= 	"					<option value=\"25\">25</option>";
+		v	+= 	"					<option value=\"30\">30</option>";
+		v	+= 	"					<option value=\"35\">35</option>";
+		v	+= 	"					<option value=\"40\">40</option>";
+		v	+= 	"					<option value=\"45\">45</option>";
+		v	+= 	"					<option value=\"50\">50</option>";
+		v	+= 	"					<option value=\"55\">55</option>";
+		v	+= 	"					<option value=\"59\">59</option>";
+		v	+= 	"				</select>";
+		v	+= 	"				";
+		v	+= 	"				-";
+		v	+= 	"				";
+		v	+= 	"				<select name=\"end_hour_"+count+"\" onClick=\"javascript:document.forms[0].time[1].checked=true;\" onChange=\"CheckTimeRange(document.forms[0]);\" class=\"mtu_col_width\" >";
+		v	+= 	"					<option value=\"00\" selected>0</option>";
+		v	+= 	"					<OPTION value=\"01\">1</OPTION>";
+		v	+= 	"					<OPTION value=\"02\">2</OPTION>";
+		v	+= 	"					<OPTION value=\"03\">3</OPTION>";
+		v	+= 	"					<OPTION value=\"04\">4</OPTION>";
+		v	+= 	"					<OPTION value=\"05\">5</OPTION> ";
+		v	+= 	"					<OPTION value=\"06\">6</OPTION>";
+		v	+= 	"					<OPTION value=\"07\">7</OPTION>";
+		v	+= 	"					<OPTION value=\"08\">8</OPTION>";
+		v	+= 	"					<OPTION value=\"09\">9</OPTION>";
+		v	+= 	"					<OPTION value=\"10\">10</OPTION>";
+		v	+= 	"					<OPTION value=\"11\">11</OPTION>";
+		v	+= 	"					<OPTION value=\"12\">12</OPTION>";
+		v	+= 	"					<option value=\"13\">13</option>";
+		v	+= 	"					<option value=\"14\">14</option>";
+		v	+= 	"					<option value=\"15\">15</option>";
+		v	+= 	"					<option value=\"16\">16</option>";
+		v	+= 	"					<option value=\"17\">17</option>";
+		v	+= 	"					<option value=\"18\">18</option>";
+		v	+= 	"					<option value=\"19\">19</option>";
+		v	+= 	"					<option value=\"20\">20</option>";
+		v	+= 	"					<option value=\"21\">21</option>";
+		v	+= 	"					<option value=\"22\">22</option>";
+		v	+= 	"					<option value=\"23\">23</option>";
+		v	+= 	"				</select> :";
+		v	+= 	"				";
+		v	+= 	"				<select name=\"end_min_"+count+"\" onClick=\"javascript:document.forms[0].time[1].checked=true;\" onChange=\"CheckTimeRange(document.forms[0]);\" class=\"mtu_col_width\" >";
+		v	+= 	"					<option value=\"00\" selected>0</option>";
+		v	+= 	"					<option value=\"05\">5</option>";
+		v	+= 	"					<option value=\"10\">10</option>";
+		v	+= 	"					<option value=\"15\">15</option>";
+		v	+= 	"					<option value=\"20\">20</option>";
+		v	+= 	"					<option value=\"25\">25</option>";
+		v	+= 	"					<option value=\"30\">30</option>";
+		v	+= 	"					<option value=\"35\">35</option>";
+		v	+= 	"					<option value=\"40\">40</option>";
+		v	+= 	"					<option value=\"45\">45</option>";
+		v	+= 	"					<option value=\"50\">50</option>";
+		v	+= 	"					<option value=\"55\">55</option>";
+		v	+= 	"					<option value=\"59\">59</option>";
+		v	+= 	"				</select>     ";
+		v	+= 	"		</td>";
+		v	+= 	"		<td width=\"35\" align=\"center\"><input type=\"checkbox\" name=\"filterStatus_"+count+"\"></td>";
+		v	+= 	"		<td width=\"45\" align=\"center\"><input value=\""+translate_str("AccessRestriction",86)+"\" onclick=\"edit_list('"+count+"');\" name=\"EditList_"+count+"\" type=\"button\"></td>";
+		v	+= 	"		<td width=\"51\" align=\"center\"><input value=\""+translate_str("AccessRestriction",37)+"\" onclick=\"delete_ar(this.form,'"+count+"');\" name=\"del_policy_"+count+"\" type=\"button\"></td>";
+		v	+= 	"	</tr>";
+		v	+= 	"</table>";
+
+
+	layerWrite('my_div', null, v);
+
+	var i = count ;
+	for (i=6;i < count;i++)
+	{
+
+/*
+		alert("i="+i
+		+"\narnform_"+eval("f.arn"+i).value
+		+"\nfilterAllow_"+eval("f.art"+i).value
+		+"\nartd"+eval("f.artd"+i).value
+		);
+		
+*/		
+		
+		
+		eval("f.arnform_"+i).value=eval("f.arn"+i).value;
+		eval("f.filterAllow_"+i).value=eval("f.art"+i).value;
+
+		// artd checked
+			if (eval("f.artd"+i).value=="128" || eval("f.artd"+i).value=="") {
+		
+			eval("f.days_"+i+"_8").checked=1;
+			
+			for(k=1;k<8;k++){
+				eval("f.days_"+i+"_"+k).checked=0;
+				eval("f.days_"+i+"_"+k).disabled=1;  
+			}
+		}
+		else {
+			var days_index=eval("f.artd"+i).value; 
+			for(m=0;m<8;m++) {
+				if((days_index >> m & 0x1)) {
+					if(m==0)
+						eval("f.days_"+i+"_7").checked=1;
+					else if(m==7)
+						eval("f.days_"+i+"_8").checked=1;
+					else
+						eval("f.days_"+i+"_"+m).checked=1;
+				}			
+				else {
+					if(m==0)
+						eval("f.days_"+i+"_7").checked=0;
+					else if(m==7)
+						eval("f.days_"+i+"_8").checked=0;
+					else
+						eval("f.days_"+i+"_"+m).checked=0;
+				}
+			}
+		}
+
+		if(eval("f.days_"+i+"_8").checked==0 && eval("f.days_"+i+"_1").disabled==1){  
+			for(n=1;n<8;n++){
+				eval("f.days_"+i+"_"+n).checked=0;
+				eval("f.days_"+i+"_"+n).disabled=0;
+			}
+		}
+	
+		if (eval("f.arts"+i).value!="") {
+			var time_start=eval("f.arts"+i).value.split(":");
+			eval("f.start_hour_"+i).selectedIndex=parseInt(time_start[0],10);
+			eval("f.start_min_"+i).selectedIndex=(parseInt(time_start[1],10)/5);
+		}
+		if (eval("f.artp"+i).value!="") {
+			var time_end=eval("f.artp"+i).value.split(":");
+			eval("f.end_hour_"+i).selectedIndex=parseInt(time_end[0],10);
+			eval("f.end_min_"+i).selectedIndex=(parseInt(time_end[1],10)/5);
+			if(time_end[1] == '59')
+				eval("f.end_min_"+i).selectedIndex=((parseInt(time_end[1],10)/5)+1);
+		}
+
+		if (eval("f.aren"+i).value==1)
+			eval("f.filterStatus_"+i).checked=1;
+/*
+		if ( eval("f.days_"+i+"_8").checked==1)
+			eval("f.artd"+i).value="128";
+		else {
+			eval("f.artd"+i).value="";
+			for(j=1;j<8;j++) {
+				if (eval("f.days_"+i+"_"+j).checked==1) {				
+					k+=parseInt(eval("f.days_"+j).value,10);
+				}
+			}
+			eval("f.artd"+i).value=k;
+		}
+
+		eval("f.arts"+i).value = eval("f.start_hour_"+i).value+":"+eval("f.start_min_"+i).value+":00";
+		eval("f.artp"+i).value = eval("f.end_hour_"+i).value+":"+eval("f.end_min_"+i).value+":00";
+*/
+	}
+	
+	eval("f.days_"+count+"_8").checked=1;
+	
+	for(k=1;k<8;k++){
+		eval("f.days_"+count+"_"+k).checked=0;
+		eval("f.days_"+count+"_"+k).disabled=1;  
+	}
+}
+
+
+function more(f)
+{
+	var f=document.edit;
+
+	
+	for (i=1;i<=count;i++)
+	{
+		var k=0;
+	
+		if(eval("f.arnform_"+i).value == ""){
+			alert(translate_str("JavaScript",167));
+			eval("f.arnform_"+i).focus();
+			return ;
+		}
+
+		eval("f.arn"+i).value=eval("f.arnform_"+i).value;
+		eval("f.art"+i).value=eval("f.filterAllow_"+i).value;
+
+		if(eval("f.filterStatus_"+i).checked)
+			eval("f.aren"+i).value= '1';
+		else
+			eval("f.aren"+i).value= '0';
+			
+			
+		if ( eval("f.days_"+i+"_8").checked==1)
+			eval("f.artd"+i).value="128";
+		else {
+			eval("f.artd"+i).value="";
+
+			for(j=1;j<8;j++) {
+				if (eval("f.days_"+i+"_"+j).checked==1) {
+					k+=parseInt(eval("f.days_"+i+"_"+j).value,10);
+				}
+			}
+
+			eval("f.artd"+i).value=k;
+		}
+
+		eval("f.arts"+i).value = eval("f.start_hour_"+i).value+":"+eval("f.start_min_"+i).value+":00";
+		eval("f.artp"+i).value = eval("f.end_hour_"+i).value+":"+eval("f.end_min_"+i).value+":59";
+	}
+
+	count++ ;
+	if (count <= 10){
+		DataShow(count);
+	}
+	else{
+		alert(translate_str("SetupWizard",110));
+		count--;
+	}
+}
+
+
+
+
+function CheckDay(f,no_index,day_index)
+{
+	var i,j=0;
+
+	if (day_index!=8)
+		eval("f.days_"+no_index+"_8").checked=0;
+	else {
+		for(i=1;i<8;i++){
+			eval("f.days_"+no_index+"_"+i).checked=0;
+			eval("f.days_"+no_index+"_"+i).disabled=1;  
+		}
+		
+	}
+	
+	for(i=1;i<8;i++) {
+		if(eval("f.days_"+no_index+"_"+i).checked==1)
+			j++;
+	}
+	if(j==7) {
+		for(i=1;i<8;i++){
+			eval("f.days_"+no_index+"_"+i).checked=0;
+			eval("f.days_"+no_index+"_"+i).disabled=1; 
+		}
+		
+		eval("f.days_"+no_index+"_8").checked=1;
+		eval("f.days_"+no_index+"_1").disabled
+	}
+	
+	if(eval("f.days_"+no_index+"_8").checked ==0 && 	eval("f.days_"+no_index+"_1").disabled ==1){
+		for(i=1;i<8;i++){
+			eval("f.days_"+no_index+"_"+i).checked=0;
+			eval("f.days_"+no_index+"_"+i).disabled=0;
+		}
+	}
+}
+
+function ValidateForm(f)
+{
+	var k=0;
+	var data;
+	var entry_check = 0;
+	data += "";
+	
+	for(index = 1 ; index <= count ; index++){
+		if(eval("f.arnform_"+index).value != '')
+			entry_check++ ;
+		else if((eval("f.arnform_"+index).value == '') && (index == 1))
+			entry_check++ ;
+		else;
+	}
+	
+	if(entry_check == 0){
+		alert(translate_str("AccessRestriction",85));
+		f.arnform_1.focus();
+		return;
+	}
+			
+	for(index = 1 ; index <= count ; index++){
+		k=0;
+		var name_check_index = index ;
+		if (!CheckQuote1(eval("f.arnform_"+name_check_index))) return;
+		index = name_check_index ;
+
+		if(eval("f.arnform_"+index).value == ''){
+			var name_empty_editlist_fill = "0" ;
+
+			for(var m = 1 ; m <= 10 ; m++){
+				if(eval("f.arm"+index+"_"+m).value != "00:00:00:00:00:00" && eval("f.arm"+index+"_"+m).value != "")
+					name_empty_editlist_fill++ ;
+			}
+
+			for(var m = 1 ; m <= 6 ; m++){
+				if(eval("f.arip"+index+"_"+m).value != "0" && eval("f.arip"+index+"_"+m).value != "")
+				 	name_empty_editlist_fill++ ;
+			}
+
+			for(var m = 1 ; m <= 4 ; m++){
+
+				if(eval("f.arips"+index+"_"+m).value != "0" && eval("f.arips"+index+"_"+m).value != "")
+					name_empty_editlist_fill++ ;
+
+				if(eval("f.aripe"+index+"_"+m).value != "0" && eval("f.aripe"+index+"_"+m).value != "")
+					name_empty_editlist_fill++ ;
+
+			}
+			
+			if(name_empty_editlist_fill > 0){
+				alert(translate_str("AccessRestriction",85));
+				eval("f.arnform_"+index).focus();
+				return ;
+			}
+			
+			eval("f.arn"+index).value=eval("f.arnform_"+index).value;
+			eval("f.aren"+index).value= '0';
+			eval("f.art"+index).value= '1';
+			eval("f.arts"+index).value = "";
+			eval("f.artp"+index).value = "";
+			eval("f.artd"+index).value="";
+			
+			eval("f.filterStatus_"+index).checked = false ;
+			eval("f.filterAllow_"+index).value = '0';
+		}
+		else{
+			if(!SpecialCharCheck(eval("f.arnform_"+index), "Policy Name"))
+				return;
+
+			if(!CheckTimeRange(document.forms[0],index))
+					return ;
+
+			eval("f.arn"+index).value=eval("f.arnform_"+index).value;
+			
+			if(eval("f.filterStatus_"+index).checked==1)
+				eval("f.aren"+index).value=1;
+			else
+				eval("f.aren"+index).value=0;
+
+			eval("f.art"+index).value= eval("f.filterAllow_"+index).value;
+
+			eval("f.arts"+index).value=eval("f.start_hour_"+index).value+":"+eval("f.start_min_"+index).value+":00";
+			eval("f.artp"+index).value=eval("f.end_hour_"+index).value+":"+eval("f.end_min_"+index).value+":59";
+			
+			if(eval("f.days_"+index+"_8").checked==1)
+				eval("f.artd"+index).value="128";
+			else {
+				eval("f.artd"+index).value="";
+				for(j=1;j<8;j++) {
+
+					if (eval("f.days_"+index+"_"+j).checked==1) {
+					 	k+=parseInt(eval("f.days_"+index+"_"+j).value,10);
+					}
+				}
+			
+				eval("f.artd"+index).value=k;
+
+			}
+
+		// ------ tproxy releate code start------ //
+		}
+			CombineInternetFilter(f, index);
+
+			if (!CombineScheduleList(f, index))
+				return;
+
+	}
+
+	for (i=1;i<count;i++)//To Fill the empty entry(bubble up)
+	{
+		if(eval("f.arn"+i).value == "" )
+		{
+//			alert(i+" is empty.\n"+"count is"+count);
+			for(k = i ; k< count ; k++){
+				eval("f.arn"+k).value = eval("f.arn"+(k+1)).value;
+				eval("f.aren"+k).value  = eval("f.aren"+(k+1)).value;
+				eval("f.art"+k).value  = eval("f.art"+(k+1)).value;
+				eval("f.arts"+k).value   = eval("f.arts"+(k+1)).value;
+				eval("f.artp"+k).value   = eval("f.artp"+(k+1)).value
+				eval("f.artd"+k).value   = eval("f.artd"+(k+1)).value ;
+
+				var filterStatus = f.FilterStatuss.value.split("|"); 
+				var filterAllow  = f.FilterAllows.value.split("|");
+				var filterStatusList="";
+				var filterAllowList="";
+				
+				for(m = k ; m < count ; m++){
+					filterStatus[m] = filterStatus[(m+1)] ;
+					filterAllow[m] = filterAllow[(m+1)] ;
+				}
+			
+				for(var n=0;n<10;n++)
+				{
+					if (filterStatus[n] == null || filterStatus[n] =="")
+						filterStatus[n] = 0;
+					if (filterAllow[n] == null || filterAllow[n] == "")
+						filterAllow[n] = 0;				
+					if (n!=9)
+					{
+						filterStatusList += (filterStatus[n]+"|");
+						filterAllowList  += (filterAllow[n]+"|");
+
+					}
+					else
+					{
+						filterStatusList += (filterStatus[n]+"|");
+						filterAllowList  += (filterAllow[n]+"|");
+					}
+				}
+				f.FilterStatuss.value = filterStatusList;
+				f.FilterAllows.value = filterAllowList;	
+
+
+				for(t = 1 ; t <= 10 ; t++){
+//					alert(eval("f.arm"+k+"_"+t).value);
+//					alert(eval("f.arm"+(k+1)+"_"+t).value);
+					eval("f.arm"+k+"_"+t).value   = eval("f.arm"+(k+1)+"_"+t).value ;
+				}
+				
+				for(t = 1 ; t <= 6 ; t++){
+					eval("f.arip"+k+"_"+t).value   = eval("f.arip"+(k+1)+"_"+t).value ;
+				}
+				
+				for(t = 1 ; t <= 4 ; t++){
+					eval("f.arips"+k+"_"+t).value   = eval("f.arips"+(k+1)+"_"+t).value ;
+					eval("f.aripe"+k+"_"+t).value   = eval("f.aripe"+(k+1)+"_"+t).value ;
+				}
+
+
+
+			}
+			
+			
+			eval("f.arn"+(count)).value = "";
+			eval("f.aren"+(count)).value = "0";
+			eval("f.art"+(count)).value = "1";
+			eval("f.arts"+(count)).value = "";
+			eval("f.artp"+(count)).value = "";
+			eval("f.artd"+(count)).value = "";
+			
+
+			
+			for(var m = 1 ; m <= 10 ; m++){
+				eval("f.arm"+(count)+"_"+m).value = "";
+			}
+
+			for(var m = 1 ; m <= 6 ; m++){
+				eval("f.arip"+(count)+"_"+m).value = "";
+			}
+
+			for(var m = 1 ; m <= 4 ; m++){
+				eval("f.arips"+(count)+"_"+m).value = "";
+				eval("f.aripe"+(count)+"_"+m).value = "";
+			}
+
+
+			count-- ;
+			i-- ;
+
+		}
+		else{
+			continue ;
+		}
+
+	}
+	
+	for(ar_index = 1 ; ar_index <= 10 ; ar_index++){
+		f.data1.value += " arm" + ar_index + "_1" + " arm" + ar_index + "_2" + " arm" + ar_index + "_3" + " arm" + ar_index + "_4" + " arm" + ar_index + "_5" + " arm" + ar_index + "_6" + " arm" + ar_index + "_7" + " arm" + ar_index + "_8" + " arm" + ar_index + "_9" + " arm" + ar_index + "_10" + " arip" + ar_index + "_1" + " arip" + ar_index + "_2" + " arip" + ar_index + "_3" + " arip" + ar_index + "_4" + " arip" + ar_index + "_5" + " arip" + ar_index + "_6" + " arip" + ar_index + "_7" + " arips" + ar_index + "_1" + " arips" + ar_index + "_2" + " arips" + ar_index + "_3" + " arips" + ar_index + "_4" + " arips" + ar_index + "_5" + " aripe" + ar_index + "_1" + " aripe" + ar_index + "_2" + " aripe" + ar_index + "_3" + " aripe" + ar_index + "_4" + " aripe" + ar_index + "_5" ;
+	}
+	
+	f.submit();
+}
+
+
+function edit_list(policy_index){
+	var f=document.edit;
+
+//	if(eval("f.arn"+policy_index).value == "" && eval("f.arnform_"+policy_index).value == ""){
+//		 alert(translate_str("AccessRestriction",83));
+//		 eval("f.arnform_"+policy_index).focus();
+//	}
+//	else if(eval("f.arn"+policy_index).value == "" && eval("f.arnform_"+policy_index).value != ""){
+//		 alert(translate_str("AccessRestriction",84));
+//		 eval("f.arnform_"+policy_index).focus();
+//	}
+//	else if(eval("f.arn"+policy_index).value != "" && eval("f.arnform_"+policy_index).value == ""){
+//		 alert(translate_str("AccessRestriction",85));
+//		 eval("f.arnform_"+policy_index).focus();
+//	}
+//	else{
+		f.policy_index.value = policy_index ; 
+		self.open('EditList.htm','inLogTable','alwaysRaised,resizable,scrollbars,width=1100,height=650').focus();
+//	}
+}
+////////////////////////////// END ////////////////////////////// 
+
+
+function delete_ar(f,index)
+{
+	if(confirm(translate_str("AccessRestriction",72))){
+		var i,j;
+
+		var ar_index=index;
+		j=ar_index-1;
+		
+		eval("f.aren"+ar_index).value="";
+		eval("f.filterStatus_"+ar_index).checked=0;
+		eval("f.arnform_"+ar_index).value="";
+		eval("f.arn"+ar_index).value="";
+		eval("f.art"+ar_index).value="";
+		eval("f.filterAllow_"+ar_index).checked=1;
+
+		eval("f.arts"+ar_index).value="";
+		eval("f.start_hour_"+ar_index).selectedIndex=0;
+		eval("f.start_min_"+ar_index).selectedIndex=0;
+		eval("f.artp"+ar_index).value="";
+		eval("f.end_hour_"+ar_index).selectedIndex=0;
+		eval("f.end_min_"+ar_index).selectedIndex=0;
+		eval("f.artd"+ar_index).value="";
+		for (i=1;i<8;i++)
+			eval("f.days_"+ar_index+"_"+i).checked=0;
+		eval("f.days_"+ar_index+"_8").checked=1;
+
+		/* added for delete PC List item, by Heidi */
+		for (i=1;i<11;i++)
+		{
+			eval("f.arm"+ar_index+"_"+i).value = "00:00:00:00:00:00";
+		}
+		for (i=1;i<7;i++)
+		{
+			eval("f.arip"+ar_index+"_"+i).value = "0";
+		}
+		for (i=1;i<5;i++)
+		{
+			eval("f.arips"+ar_index+"_"+i).value="0";
+			eval("f.aripe"+ar_index+"_"+i).value="0";
+		}/* ends here */
+		
+		f.reboot.value=0;
+		ValidateForm(f)
+//		f.submit();
+	}
+	else{
+		return 0 ;
+	}
+	
+	
+
+}
+
+function InitValue(f)
+{
+  var f=document.edit; 
+	var i,j,k;
+
+	  show_network_status();
+
+	count = 5 ;
+	for(i =6 ; i<=10 ; i++){
+		if(eval("f.arn"+i).value == "" )
+			break;
+		else{
+			count++;
+		}
+	}
+	
+
+//+++Eric add: Fix for IE 6
+	v = "";
+	layerWrite('my_div', null, v);
+
+	for( i = 6 ; i <= count ; i++){
+		DataShow(i);
+	}
+//---Eric add: Fix for IE 6
+
+	for(k = 1; k<= count ; k++){
+
+		eval("f.arnform_"+k).value=eval("f.arn"+k).value;
+		
+		// aren checked
+		if (eval("f.aren"+k).value==1)
+			eval("f.filterStatus_"+k).checked=1;
+
+		// art checked
+			
+		if (eval("f.art"+k).value == "1")
+			eval("f.filterAllow_"+k).selectedIndex = 1;
+		else
+			eval("f.filterAllow_"+k).selectedIndex = 0;
+
+		// arts selected
+		if (eval("f.arts"+k).value!="") {
+			var time_start=eval("f.arts"+k).value.split(":");
+			eval("f.start_hour_"+k).selectedIndex=parseInt(time_start[0],10);
+			eval("f.start_min_"+k).selectedIndex=(parseInt(time_start[1],10)/5);
+		}
+		if (eval("f.artp"+k).value!="") {
+			var time_end=eval("f.artp"+k).value.split(":");
+			eval("f.end_hour_"+k).selectedIndex=parseInt(time_end[0],10);
+			eval("f.end_min_"+k).selectedIndex=(parseInt(time_end[1],10)/5);
+			if(time_end[1] == '59')
+				eval("f.end_min_"+k).selectedIndex=((parseInt(time_end[1],10)/5)+1);
+		}
+		// artd checked
+		if (eval("f.artd"+k).value=="128" || eval("f.artd"+k).value=="") {
+			eval("f.days_"+k+"_8").checked=1;
+			for(i=1;i<8;i++){
+				eval("f.days_"+k+"_"+i).checked=0;
+				eval("f.days_"+k+"_"+i).disabled=1;  
+			}
+		}
+		else {
+			var days_index=eval("f.artd"+k).value; 
+			for(j=0;j<8;j++) {
+				if((days_index >> j & 0x1)) {
+					if(j==0)
+						eval("f.days_"+k+"_7").checked=1;
+					else if(j==7)
+						eval("f.days_"+k+"_8").checked=1;
+					else
+						eval("f.days_"+k+"_"+j).checked=1;
+				}			
+				else {
+					if(j==0)
+						eval("f.days_"+k+"_7").checked=0;
+					else if(j==7)
+						eval("f.days_"+k+"_8").checked=0;
+					else
+						eval("f.days_"+k+"_"+j).checked=0;
+				}	
+			}
+		}
+
+		if(eval("f.days_"+k+"_8").checked==0 && eval("f.days_"+k+"_1").disabled==1){  
+			for(i=1;i<8;i++){
+				eval("f.days_"+k+"_"+i).checked=0;
+				eval("f.days_"+k+"_"+i).disabled=0;
+			}
+		}
+		
+		eval("f.del_policy_"+k).value=translate_str("AccessRestriction",37);
+		eval("f.EditList_"+k).value=translate_str("AccessRestriction",86);
+
+	}
+
+	
+}
+
+
+function mouseOver(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("internet").src = "internet_icon_bri.png";
+}
+
+function mouseOut(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("internet").src = "internet_icon_bri.png";
+}
+
+var language_show = 0;
+function open_language()
+{
+	 var language_choice = document.getElementById('language');
+	 
+	if(language_show == '1') {
+		language_show = 0;
+		language_choice.style.visibility="hidden";
+	}
+	else {
+		language_show = 1;
+		language_choice.style.visibility="visible";
+	}
+}
+
+function apply_lang(e)
+{
+	var f1 = document.forms[1];
+	f1.language_str.value = e;
+ 	f1.submit();
+}
+
+function chage_color(e)
+{
+	e.style.color="#4F81BD";
+	e.style.textDecoration="underline"; 
+}
+
+function back_color(e)
+{
+	e.style.color="#B8B8B8";
+	e.style.textDecoration="none"; 
+}
+
+
+</Script>
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="edit" action="post_iptable_tproxy.cgi" method="post">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_control.htm">
+<input type="hidden" name="redirect_timer" value="10000">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="fts fswf ScheduleList FilterStatuss FilterAllows aren1 aren2 aren3 aren4 aren5 aren6 aren7 aren8 aren9 aren10 arn1 arn2 arn3 arn4 arn5 arn6 arn7 arn8 arn9 arn10 art1 art2 art3 art4 art5 art6 art7 art8 art9 art10 arts1 arts2 arts3 arts4 arts5 arts6 arts7 arts8 arts9 arts10 artp1 artp2 artp3 artp4 artp5 artp6 artp7 artp8 artp9 artp10 artd1 artd2 artd3 artd4 artd5 artd6 artd7 artd8 artd9 artd10 arpn1_1 arpn1_2 arpn1_3 arpn2_1 arpn2_2 arpn2_3 arpn3_1 arpn3_2 arpn3_3 arpn4_1 arpn4_2 arpn4_3 arpn5_1 arpn5_2 arpn5_3 arpn6_1 arpn6_2 arpn6_3 arpn7_1 arpn7_2 arpn7_3 arpn8_1 arpn8_2 arpn8_3 arpn9_1 arpn9_2 arpn9_3 arpn10_1 arpn10_2 arpn10_3 arpr1_1 arpr1_2 arpr1_3 arpr2_1 arpr2_2 arpr2_3 arpr3_1 arpr3_2 arpr3_3 arpr4_1 arpr4_2 arpr4_3 arpr5_1 arpr5_2 arpr5_3 arpr6_1 arpr6_2 arpr6_3 arpr7_1 arpr7_2 arpr7_3 arpr8_1 arpr8_2 arpr8_3 arpr9_1 arpr9_2 arpr9_3 arpr10_1 arpr10_2 arpr10_3 arpp1_1 arpp1_2 arpp1_3 arpp2_1 arpp2_2 arpp2_3 arpp3_1 arpp3_2 arpp3_3 arpp4_1 arpp4_2 arpp4_3 arpp5_1 arpp5_2 arpp5_3 arpp6_1 arpp6_2 arpp6_3 arpp7_1 arpp7_2 arpp7_3 arpp8_1 arpp8_2 arpp8_3 arpp9_1 arpp9_2 arpp9_3 arpp10_1 arpp10_2 arpp10_3">
+
+<input type="hidden" name="aren1" value="<%nvram_get("aren1");%>">
+<input type="hidden" name="aren2" value="<%nvram_get("aren2");%>">
+<input type="hidden" name="aren3" value="<%nvram_get("aren3");%>">
+<input type="hidden" name="aren4" value="<%nvram_get("aren4");%>">
+<input type="hidden" name="aren5" value="<%nvram_get("aren5");%>">
+<input type="hidden" name="aren6" value="<%nvram_get("aren6");%>">
+<input type="hidden" name="aren7" value="<%nvram_get("aren7");%>">
+<input type="hidden" name="aren8" value="<%nvram_get("aren8");%>">
+<input type="hidden" name="aren9" value="<%nvram_get("aren9");%>">
+<input type="hidden" name="aren10" value="<%nvram_get("aren10");%>">
+
+<input type="hidden" name="arn1" value="<%nvram_get("arn1");%>">
+<input type="hidden" name="arn2" value="<%nvram_get("arn2");%>">
+<input type="hidden" name="arn3" value="<%nvram_get("arn3");%>">
+<input type="hidden" name="arn4" value="<%nvram_get("arn4");%>">
+<input type="hidden" name="arn5" value="<%nvram_get("arn5");%>">
+<input type="hidden" name="arn6" value="<%nvram_get("arn6");%>">
+<input type="hidden" name="arn7" value="<%nvram_get("arn7");%>">
+<input type="hidden" name="arn8" value="<%nvram_get("arn8");%>">
+<input type="hidden" name="arn9" value="<%nvram_get("arn9");%>">
+<input type="hidden" name="arn10" value="<%nvram_get("arn10");%>">
+
+<input type="hidden" name="art1" value="<%nvram_get("art1");%>">
+<input type="hidden" name="art2" value="<%nvram_get("art2");%>">
+<input type="hidden" name="art3" value="<%nvram_get("art3");%>">
+<input type="hidden" name="art4" value="<%nvram_get("art4");%>">
+<input type="hidden" name="art5" value="<%nvram_get("art5");%>">
+<input type="hidden" name="art6" value="<%nvram_get("art6");%>">
+<input type="hidden" name="art7" value="<%nvram_get("art7");%>">
+<input type="hidden" name="art8" value="<%nvram_get("art8");%>">
+<input type="hidden" name="art9" value="<%nvram_get("art9");%>">
+<input type="hidden" name="art10" value="<%nvram_get("art10");%>">
+
+<input type="hidden" name="arts1" value="<%nvram_get("arts1");%>">
+<input type="hidden" name="arts2" value="<%nvram_get("arts2");%>">
+<input type="hidden" name="arts3" value="<%nvram_get("arts3");%>">
+<input type="hidden" name="arts4" value="<%nvram_get("arts4");%>">
+<input type="hidden" name="arts5" value="<%nvram_get("arts5");%>">
+<input type="hidden" name="arts6" value="<%nvram_get("arts6");%>">
+<input type="hidden" name="arts7" value="<%nvram_get("arts7");%>">
+<input type="hidden" name="arts8" value="<%nvram_get("arts8");%>">
+<input type="hidden" name="arts9" value="<%nvram_get("arts9");%>">
+<input type="hidden" name="arts10" value="<%nvram_get("arts10");%>">
+<input type="hidden" name="artp1" value="<%nvram_get("artp1");%>">
+<input type="hidden" name="artp2" value="<%nvram_get("artp2");%>">
+<input type="hidden" name="artp3" value="<%nvram_get("artp3");%>">
+<input type="hidden" name="artp4" value="<%nvram_get("artp4");%>">
+<input type="hidden" name="artp5" value="<%nvram_get("artp5");%>">
+<input type="hidden" name="artp6" value="<%nvram_get("artp6");%>">
+<input type="hidden" name="artp7" value="<%nvram_get("artp7");%>">
+<input type="hidden" name="artp8" value="<%nvram_get("artp8");%>">
+<input type="hidden" name="artp9" value="<%nvram_get("artp9");%>">
+<input type="hidden" name="artp10" value="<%nvram_get("artp10");%>">
+<input type="hidden" name="artd1" value="<%nvram_get("artd1");%>">
+<input type="hidden" name="artd2" value="<%nvram_get("artd2");%>">
+<input type="hidden" name="artd3" value="<%nvram_get("artd3");%>">
+<input type="hidden" name="artd4" value="<%nvram_get("artd4");%>">
+<input type="hidden" name="artd5" value="<%nvram_get("artd5");%>">
+<input type="hidden" name="artd6" value="<%nvram_get("artd6");%>">
+<input type="hidden" name="artd7" value="<%nvram_get("artd7");%>">
+<input type="hidden" name="artd8" value="<%nvram_get("artd8");%>">
+<input type="hidden" name="artd9" value="<%nvram_get("artd9");%>">
+<input type="hidden" name="artd10" value="<%nvram_get("artd10");%>">
+<input type="hidden" name="arpn1_1" value="<%nvram_get("arpn1_1");%>">
+<input type="hidden" name="arpn1_2" value="<%nvram_get("arpn1_2");%>">
+<input type="hidden" name="arpn1_3" value="<%nvram_get("arpn1_3");%>">
+<input type="hidden" name="arpn2_1" value="<%nvram_get("arpn2_1");%>">
+<input type="hidden" name="arpn2_2" value="<%nvram_get("arpn2_2");%>">
+<input type="hidden" name="arpn2_3" value="<%nvram_get("arpn2_3");%>">
+<input type="hidden" name="arpn3_1" value="<%nvram_get("arpn3_1");%>">
+<input type="hidden" name="arpn3_2" value="<%nvram_get("arpn3_2");%>">
+<input type="hidden" name="arpn3_3" value="<%nvram_get("arpn3_3");%>">
+<input type="hidden" name="arpn4_1" value="<%nvram_get("arpn4_1");%>">
+<input type="hidden" name="arpn4_2" value="<%nvram_get("arpn4_2");%>">
+<input type="hidden" name="arpn4_3" value="<%nvram_get("arpn4_3");%>">
+<input type="hidden" name="arpn5_1" value="<%nvram_get("arpn5_1");%>">
+<input type="hidden" name="arpn5_2" value="<%nvram_get("arpn5_2");%>">
+<input type="hidden" name="arpn5_3" value="<%nvram_get("arpn5_3");%>">
+<input type="hidden" name="arpn6_1" value="<%nvram_get("arpn6_1");%>">
+<input type="hidden" name="arpn6_2" value="<%nvram_get("arpn6_2");%>">
+<input type="hidden" name="arpn6_3" value="<%nvram_get("arpn6_3");%>">
+<input type="hidden" name="arpn7_1" value="<%nvram_get("arpn7_1");%>">
+<input type="hidden" name="arpn7_2" value="<%nvram_get("arpn7_2");%>">
+<input type="hidden" name="arpn7_3" value="<%nvram_get("arpn7_3");%>">
+<input type="hidden" name="arpn8_1" value="<%nvram_get("arpn8_1");%>">
+<input type="hidden" name="arpn8_2" value="<%nvram_get("arpn8_2");%>">
+<input type="hidden" name="arpn8_3" value="<%nvram_get("arpn8_3");%>">
+<input type="hidden" name="arpn9_1" value="<%nvram_get("arpn9_1");%>">
+<input type="hidden" name="arpn9_2" value="<%nvram_get("arpn9_2");%>">
+<input type="hidden" name="arpn9_3" value="<%nvram_get("arpn9_3");%>">
+<input type="hidden" name="arpn10_1" value="<%nvram_get("arpn10_1");%>">
+<input type="hidden" name="arpn10_2" value="<%nvram_get("arpn10_2");%>">
+<input type="hidden" name="arpn10_3" value="<%nvram_get("arpn10_3");%>">
+<input type="hidden" name="arpr1_1" value="<%nvram_get("arpr1_1");%>">
+<input type="hidden" name="arpr1_2" value="<%nvram_get("arpr1_2");%>">
+<input type="hidden" name="arpr1_3" value="<%nvram_get("arpr1_3");%>">
+<input type="hidden" name="arpr2_1" value="<%nvram_get("arpr2_1");%>">
+<input type="hidden" name="arpr2_2" value="<%nvram_get("arpr2_2");%>">
+<input type="hidden" name="arpr2_3" value="<%nvram_get("arpr2_3");%>">
+<input type="hidden" name="arpr3_1" value="<%nvram_get("arpr3_1");%>">
+<input type="hidden" name="arpr3_2" value="<%nvram_get("arpr3_2");%>">
+<input type="hidden" name="arpr3_3" value="<%nvram_get("arpr3_3");%>">
+<input type="hidden" name="arpr4_1" value="<%nvram_get("arpr4_1");%>">
+<input type="hidden" name="arpr4_2" value="<%nvram_get("arpr4_2");%>">
+<input type="hidden" name="arpr4_3" value="<%nvram_get("arpr4_3");%>">
+<input type="hidden" name="arpr5_1" value="<%nvram_get("arpr5_1");%>">
+<input type="hidden" name="arpr5_2" value="<%nvram_get("arpr5_2");%>">
+<input type="hidden" name="arpr5_3" value="<%nvram_get("arpr5_3");%>">
+<input type="hidden" name="arpr6_1" value="<%nvram_get("arpr6_1");%>">
+<input type="hidden" name="arpr6_2" value="<%nvram_get("arpr6_2");%>">
+<input type="hidden" name="arpr6_3" value="<%nvram_get("arpr6_3");%>">
+<input type="hidden" name="arpr7_1" value="<%nvram_get("arpr7_1");%>">
+<input type="hidden" name="arpr7_2" value="<%nvram_get("arpr7_2");%>">
+<input type="hidden" name="arpr7_3" value="<%nvram_get("arpr7_3");%>">
+<input type="hidden" name="arpr8_1" value="<%nvram_get("arpr8_1");%>">
+<input type="hidden" name="arpr8_2" value="<%nvram_get("arpr8_2");%>">
+<input type="hidden" name="arpr8_3" value="<%nvram_get("arpr8_3");%>">
+<input type="hidden" name="arpr9_1" value="<%nvram_get("arpr9_1");%>">
+<input type="hidden" name="arpr9_2" value="<%nvram_get("arpr9_2");%>">
+<input type="hidden" name="arpr9_3" value="<%nvram_get("arpr9_3");%>">
+<input type="hidden" name="arpr10_1" value="<%nvram_get("arpr10_1");%>">
+<input type="hidden" name="arpr10_2" value="<%nvram_get("arpr10_2");%>">
+<input type="hidden" name="arpr10_3" value="<%nvram_get("arpr10_3");%>">
+<input type="hidden" name="arpp1_1" value="<%nvram_get("arpp1_1");%>">
+<input type="hidden" name="arpp1_2" value="<%nvram_get("arpp1_2");%>">
+<input type="hidden" name="arpp1_3" value="<%nvram_get("arpp1_3");%>">
+<input type="hidden" name="arpp2_1" value="<%nvram_get("arpp2_1");%>">
+<input type="hidden" name="arpp2_2" value="<%nvram_get("arpp2_2");%>">
+<input type="hidden" name="arpp2_3" value="<%nvram_get("arpp2_3");%>">
+<input type="hidden" name="arpp3_1" value="<%nvram_get("arpp3_1");%>">
+<input type="hidden" name="arpp3_2" value="<%nvram_get("arpp3_2");%>">
+<input type="hidden" name="arpp3_3" value="<%nvram_get("arpp3_3");%>">
+<input type="hidden" name="arpp4_1" value="<%nvram_get("arpp4_1");%>">
+<input type="hidden" name="arpp4_2" value="<%nvram_get("arpp4_2");%>">
+<input type="hidden" name="arpp4_3" value="<%nvram_get("arpp4_3");%>">
+<input type="hidden" name="arpp5_1" value="<%nvram_get("arpp5_1");%>">
+<input type="hidden" name="arpp5_2" value="<%nvram_get("arpp5_2");%>">
+<input type="hidden" name="arpp5_3" value="<%nvram_get("arpp5_3");%>">
+<input type="hidden" name="arpp6_1" value="<%nvram_get("arpp6_1");%>">
+<input type="hidden" name="arpp6_2" value="<%nvram_get("arpp6_2");%>">
+<input type="hidden" name="arpp6_3" value="<%nvram_get("arpp6_3");%>">
+<input type="hidden" name="arpp7_1" value="<%nvram_get("arpp7_1");%>">
+<input type="hidden" name="arpp7_2" value="<%nvram_get("arpp7_2");%>">
+<input type="hidden" name="arpp7_3" value="<%nvram_get("arpp7_3");%>">
+<input type="hidden" name="arpp8_1" value="<%nvram_get("arpp8_1");%>">
+<input type="hidden" name="arpp8_2" value="<%nvram_get("arpp8_2");%>">
+<input type="hidden" name="arpp8_3" value="<%nvram_get("arpp8_3");%>">
+<input type="hidden" name="arpp9_1" value="<%nvram_get("arpp9_1");%>">
+<input type="hidden" name="arpp9_2" value="<%nvram_get("arpp9_2");%>">
+<input type="hidden" name="arpp9_3" value="<%nvram_get("arpp9_3");%>">
+<input type="hidden" name="arpp10_1" value="<%nvram_get("arpp10_1");%>">
+<input type="hidden" name="arpp10_2" value="<%nvram_get("arpp10_2");%>">
+<input type="hidden" name="arpp10_3" value="<%nvram_get("arpp10_3");%>">
+<!-- Edit List Starts here-->
+<input type="hidden" name="arm1_1" value="<%nvram_get("arm1_1");%>">
+<input type="hidden" name="arm1_2" value="<%nvram_get("arm1_2");%>">
+<input type="hidden" name="arm1_3" value="<%nvram_get("arm1_3");%>">
+<input type="hidden" name="arm1_4" value="<%nvram_get("arm1_4");%>">
+<input type="hidden" name="arm1_5" value="<%nvram_get("arm1_5");%>">
+<input type="hidden" name="arm1_6" value="<%nvram_get("arm1_6");%>">
+<input type="hidden" name="arm1_7" value="<%nvram_get("arm1_7");%>">
+<input type="hidden" name="arm1_8" value="<%nvram_get("arm1_8");%>">
+<input type="hidden" name="arm1_9" value="<%nvram_get("arm1_9");%>">
+<input type="hidden" name="arm1_10" value="<%nvram_get("arm1_10");%>">
+<input type="hidden" name="arm2_1" value="<%nvram_get("arm2_1");%>">
+<input type="hidden" name="arm2_2" value="<%nvram_get("arm2_2");%>">
+<input type="hidden" name="arm2_3" value="<%nvram_get("arm2_3");%>">
+<input type="hidden" name="arm2_4" value="<%nvram_get("arm2_4");%>">
+<input type="hidden" name="arm2_5" value="<%nvram_get("arm2_5");%>">
+<input type="hidden" name="arm2_6" value="<%nvram_get("arm2_6");%>">
+<input type="hidden" name="arm2_7" value="<%nvram_get("arm2_7");%>">
+<input type="hidden" name="arm2_8" value="<%nvram_get("arm2_8");%>">
+<input type="hidden" name="arm2_9" value="<%nvram_get("arm2_9");%>">
+<input type="hidden" name="arm2_10" value="<%nvram_get("arm2_10");%>">
+<input type="hidden" name="arm3_1" value="<%nvram_get("arm3_1");%>">
+<input type="hidden" name="arm3_2" value="<%nvram_get("arm3_2");%>">
+<input type="hidden" name="arm3_3" value="<%nvram_get("arm3_3");%>">
+<input type="hidden" name="arm3_4" value="<%nvram_get("arm3_4");%>">
+<input type="hidden" name="arm3_5" value="<%nvram_get("arm3_5");%>">
+<input type="hidden" name="arm3_6" value="<%nvram_get("arm3_6");%>">
+<input type="hidden" name="arm3_7" value="<%nvram_get("arm3_7");%>">
+<input type="hidden" name="arm3_8" value="<%nvram_get("arm3_8");%>">
+<input type="hidden" name="arm3_9" value="<%nvram_get("arm3_9");%>">
+<input type="hidden" name="arm3_10" value="<%nvram_get("arm3_10");%>">
+<input type="hidden" name="arm4_1" value="<%nvram_get("arm4_1");%>">
+<input type="hidden" name="arm4_2" value="<%nvram_get("arm4_2");%>">
+<input type="hidden" name="arm4_3" value="<%nvram_get("arm4_3");%>">
+<input type="hidden" name="arm4_4" value="<%nvram_get("arm4_4");%>">
+<input type="hidden" name="arm4_5" value="<%nvram_get("arm4_5");%>">
+<input type="hidden" name="arm4_6" value="<%nvram_get("arm4_6");%>">
+<input type="hidden" name="arm4_7" value="<%nvram_get("arm4_7");%>">
+<input type="hidden" name="arm4_8" value="<%nvram_get("arm4_8");%>">
+<input type="hidden" name="arm4_9" value="<%nvram_get("arm4_9");%>">
+<input type="hidden" name="arm4_10" value="<%nvram_get("arm4_10");%>">
+<input type="hidden" name="arm5_1" value="<%nvram_get("arm5_1");%>">
+<input type="hidden" name="arm5_2" value="<%nvram_get("arm5_2");%>">
+<input type="hidden" name="arm5_3" value="<%nvram_get("arm5_3");%>">
+<input type="hidden" name="arm5_4" value="<%nvram_get("arm5_4");%>">
+<input type="hidden" name="arm5_5" value="<%nvram_get("arm5_5");%>">
+<input type="hidden" name="arm5_6" value="<%nvram_get("arm5_6");%>">
+<input type="hidden" name="arm5_7" value="<%nvram_get("arm5_7");%>">
+<input type="hidden" name="arm5_8" value="<%nvram_get("arm5_8");%>">
+<input type="hidden" name="arm5_9" value="<%nvram_get("arm5_9");%>">
+<input type="hidden" name="arm5_10" value="<%nvram_get("arm5_10");%>">
+<input type="hidden" name="arm6_1" value="<%nvram_get("arm6_1");%>">
+<input type="hidden" name="arm6_2" value="<%nvram_get("arm6_2");%>">
+<input type="hidden" name="arm6_3" value="<%nvram_get("arm6_3");%>">
+<input type="hidden" name="arm6_4" value="<%nvram_get("arm6_4");%>">
+<input type="hidden" name="arm6_5" value="<%nvram_get("arm6_5");%>">
+<input type="hidden" name="arm6_6" value="<%nvram_get("arm6_6");%>">
+<input type="hidden" name="arm6_7" value="<%nvram_get("arm6_7");%>">
+<input type="hidden" name="arm6_8" value="<%nvram_get("arm6_8");%>">
+<input type="hidden" name="arm6_9" value="<%nvram_get("arm6_9");%>">
+<input type="hidden" name="arm6_10" value="<%nvram_get("arm6_10");%>">
+<input type="hidden" name="arm7_1" value="<%nvram_get("arm7_1");%>">
+<input type="hidden" name="arm7_2" value="<%nvram_get("arm7_2");%>">
+<input type="hidden" name="arm7_3" value="<%nvram_get("arm7_3");%>">
+<input type="hidden" name="arm7_4" value="<%nvram_get("arm7_4");%>">
+<input type="hidden" name="arm7_5" value="<%nvram_get("arm7_5");%>">
+<input type="hidden" name="arm7_6" value="<%nvram_get("arm7_6");%>">
+<input type="hidden" name="arm7_7" value="<%nvram_get("arm7_7");%>">
+<input type="hidden" name="arm7_8" value="<%nvram_get("arm7_8");%>">
+<input type="hidden" name="arm7_9" value="<%nvram_get("arm7_9");%>">
+<input type="hidden" name="arm7_10" value="<%nvram_get("arm7_10");%>">
+<input type="hidden" name="arm8_1" value="<%nvram_get("arm8_1");%>">
+<input type="hidden" name="arm8_2" value="<%nvram_get("arm8_2");%>">
+<input type="hidden" name="arm8_3" value="<%nvram_get("arm8_3");%>">
+<input type="hidden" name="arm8_4" value="<%nvram_get("arm8_4");%>">
+<input type="hidden" name="arm8_5" value="<%nvram_get("arm8_5");%>">
+<input type="hidden" name="arm8_6" value="<%nvram_get("arm8_6");%>">
+<input type="hidden" name="arm8_7" value="<%nvram_get("arm8_7");%>">
+<input type="hidden" name="arm8_8" value="<%nvram_get("arm8_8");%>">
+<input type="hidden" name="arm8_9" value="<%nvram_get("arm8_9");%>">
+<input type="hidden" name="arm8_10" value="<%nvram_get("arm8_10");%>">
+<input type="hidden" name="arm9_1" value="<%nvram_get("arm9_1");%>">
+<input type="hidden" name="arm9_2" value="<%nvram_get("arm9_2");%>">
+<input type="hidden" name="arm9_3" value="<%nvram_get("arm9_3");%>">
+<input type="hidden" name="arm9_4" value="<%nvram_get("arm9_4");%>">
+<input type="hidden" name="arm9_5" value="<%nvram_get("arm9_5");%>">
+<input type="hidden" name="arm9_6" value="<%nvram_get("arm9_6");%>">
+<input type="hidden" name="arm9_7" value="<%nvram_get("arm9_7");%>">
+<input type="hidden" name="arm9_8" value="<%nvram_get("arm9_8");%>">
+<input type="hidden" name="arm9_9" value="<%nvram_get("arm9_9");%>">
+<input type="hidden" name="arm9_10" value="<%nvram_get("arm9_10");%>">
+<input type="hidden" name="arm10_1" value="<%nvram_get("arm10_1");%>">
+<input type="hidden" name="arm10_2" value="<%nvram_get("arm10_2");%>">
+<input type="hidden" name="arm10_3" value="<%nvram_get("arm10_3");%>">
+<input type="hidden" name="arm10_4" value="<%nvram_get("arm10_4");%>">
+<input type="hidden" name="arm10_5" value="<%nvram_get("arm10_5");%>">
+<input type="hidden" name="arm10_6" value="<%nvram_get("arm10_6");%>">
+<input type="hidden" name="arm10_7" value="<%nvram_get("arm10_7");%>">
+<input type="hidden" name="arm10_8" value="<%nvram_get("arm10_8");%>">
+<input type="hidden" name="arm10_9" value="<%nvram_get("arm10_9");%>">
+<input type="hidden" name="arm10_10" value="<%nvram_get("arm10_10");%>">
+<input type="hidden" name="arip1_1" value="<%nvram_get("arip1_1");%>">
+<input type="hidden" name="arip1_2" value="<%nvram_get("arip1_2");%>">
+<input type="hidden" name="arip1_3" value="<%nvram_get("arip1_3");%>">
+<input type="hidden" name="arip1_4" value="<%nvram_get("arip1_4");%>">
+<input type="hidden" name="arip1_5" value="<%nvram_get("arip1_5");%>">
+<input type="hidden" name="arip1_6" value="<%nvram_get("arip1_6");%>">
+<input type="hidden" name="arip2_1" value="<%nvram_get("arip2_1");%>">
+<input type="hidden" name="arip2_2" value="<%nvram_get("arip2_2");%>">
+<input type="hidden" name="arip2_3" value="<%nvram_get("arip2_3");%>">
+<input type="hidden" name="arip2_4" value="<%nvram_get("arip2_4");%>">
+<input type="hidden" name="arip2_5" value="<%nvram_get("arip2_5");%>">
+<input type="hidden" name="arip2_6" value="<%nvram_get("arip2_6");%>">
+<input type="hidden" name="arip3_1" value="<%nvram_get("arip3_1");%>">
+<input type="hidden" name="arip3_2" value="<%nvram_get("arip3_2");%>">
+<input type="hidden" name="arip3_3" value="<%nvram_get("arip3_3");%>">
+<input type="hidden" name="arip3_4" value="<%nvram_get("arip3_4");%>">
+<input type="hidden" name="arip3_5" value="<%nvram_get("arip3_5");%>">
+<input type="hidden" name="arip3_6" value="<%nvram_get("arip3_6");%>">
+<input type="hidden" name="arip4_1" value="<%nvram_get("arip4_1");%>">
+<input type="hidden" name="arip4_2" value="<%nvram_get("arip4_2");%>">
+<input type="hidden" name="arip4_3" value="<%nvram_get("arip4_3");%>">
+<input type="hidden" name="arip4_4" value="<%nvram_get("arip4_4");%>">
+<input type="hidden" name="arip4_5" value="<%nvram_get("arip4_5");%>">
+<input type="hidden" name="arip4_6" value="<%nvram_get("arip4_6");%>">
+<input type="hidden" name="arip5_1" value="<%nvram_get("arip5_1");%>">
+<input type="hidden" name="arip5_2" value="<%nvram_get("arip5_2");%>">
+<input type="hidden" name="arip5_3" value="<%nvram_get("arip5_3");%>">
+<input type="hidden" name="arip5_4" value="<%nvram_get("arip5_4");%>">
+<input type="hidden" name="arip5_5" value="<%nvram_get("arip5_5");%>">
+<input type="hidden" name="arip5_6" value="<%nvram_get("arip5_6");%>">
+<input type="hidden" name="arip6_1" value="<%nvram_get("arip6_1");%>">
+<input type="hidden" name="arip6_2" value="<%nvram_get("arip6_2");%>">
+<input type="hidden" name="arip6_3" value="<%nvram_get("arip6_3");%>">
+<input type="hidden" name="arip6_4" value="<%nvram_get("arip6_4");%>">
+<input type="hidden" name="arip6_5" value="<%nvram_get("arip6_5");%>">
+<input type="hidden" name="arip6_6" value="<%nvram_get("arip6_6");%>">
+<input type="hidden" name="arip7_1" value="<%nvram_get("arip7_1");%>">
+<input type="hidden" name="arip7_2" value="<%nvram_get("arip7_2");%>">
+<input type="hidden" name="arip7_3" value="<%nvram_get("arip7_3");%>">
+<input type="hidden" name="arip7_4" value="<%nvram_get("arip7_4");%>">
+<input type="hidden" name="arip7_5" value="<%nvram_get("arip7_5");%>">
+<input type="hidden" name="arip7_6" value="<%nvram_get("arip7_6");%>">
+<input type="hidden" name="arip8_1" value="<%nvram_get("arip8_1");%>">
+<input type="hidden" name="arip8_2" value="<%nvram_get("arip8_2");%>">
+<input type="hidden" name="arip8_3" value="<%nvram_get("arip8_3");%>">
+<input type="hidden" name="arip8_4" value="<%nvram_get("arip8_4");%>">
+<input type="hidden" name="arip8_5" value="<%nvram_get("arip8_5");%>">
+<input type="hidden" name="arip8_6" value="<%nvram_get("arip8_6");%>">
+<input type="hidden" name="arip9_1" value="<%nvram_get("arip9_1");%>">
+<input type="hidden" name="arip9_2" value="<%nvram_get("arip9_2");%>">
+<input type="hidden" name="arip9_3" value="<%nvram_get("arip9_3");%>">
+<input type="hidden" name="arip9_4" value="<%nvram_get("arip9_4");%>">
+<input type="hidden" name="arip9_5" value="<%nvram_get("arip9_5");%>">
+<input type="hidden" name="arip9_6" value="<%nvram_get("arip9_6");%>">
+<input type="hidden" name="arip10_1" value="<%nvram_get("arip10_1");%>">
+<input type="hidden" name="arip10_2" value="<%nvram_get("arip10_2");%>">
+<input type="hidden" name="arip10_3" value="<%nvram_get("arip10_3");%>">
+<input type="hidden" name="arip10_4" value="<%nvram_get("arip10_4");%>">
+<input type="hidden" name="arip10_5" value="<%nvram_get("arip10_5");%>">
+<input type="hidden" name="arip10_6" value="<%nvram_get("arip10_6");%>">
+<input type="hidden" name="arips1_1" value="<%nvram_get("arips1_1");%>">
+<input type="hidden" name="arips1_2" value="<%nvram_get("arips1_2");%>">
+<input type="hidden" name="arips1_3" value="<%nvram_get("arips1_3");%>">
+<input type="hidden" name="arips1_4" value="<%nvram_get("arips1_4");%>">
+<input type="hidden" name="arips2_1" value="<%nvram_get("arips2_1");%>">
+<input type="hidden" name="arips2_2" value="<%nvram_get("arips2_2");%>">
+<input type="hidden" name="arips2_3" value="<%nvram_get("arips2_3");%>">
+<input type="hidden" name="arips2_4" value="<%nvram_get("arips2_4");%>">
+<input type="hidden" name="arips3_1" value="<%nvram_get("arips3_1");%>">
+<input type="hidden" name="arips3_2" value="<%nvram_get("arips3_2");%>">
+<input type="hidden" name="arips3_3" value="<%nvram_get("arips3_3");%>">
+<input type="hidden" name="arips3_4" value="<%nvram_get("arips3_4");%>">
+<input type="hidden" name="arips4_1" value="<%nvram_get("arips4_1");%>">
+<input type="hidden" name="arips4_2" value="<%nvram_get("arips4_2");%>">
+<input type="hidden" name="arips4_3" value="<%nvram_get("arips4_3");%>">
+<input type="hidden" name="arips4_4" value="<%nvram_get("arips4_4");%>">
+<input type="hidden" name="arips5_1" value="<%nvram_get("arips5_1");%>">
+<input type="hidden" name="arips5_2" value="<%nvram_get("arips5_2");%>">
+<input type="hidden" name="arips5_3" value="<%nvram_get("arips5_3");%>">
+<input type="hidden" name="arips5_4" value="<%nvram_get("arips5_4");%>">
+<input type="hidden" name="arips6_1" value="<%nvram_get("arips6_1");%>">
+<input type="hidden" name="arips6_2" value="<%nvram_get("arips6_2");%>">
+<input type="hidden" name="arips6_3" value="<%nvram_get("arips6_3");%>">
+<input type="hidden" name="arips6_4" value="<%nvram_get("arips6_4");%>">
+<input type="hidden" name="arips7_1" value="<%nvram_get("arips7_1");%>">
+<input type="hidden" name="arips7_2" value="<%nvram_get("arips7_2");%>">
+<input type="hidden" name="arips7_3" value="<%nvram_get("arips7_3");%>">
+<input type="hidden" name="arips7_4" value="<%nvram_get("arips7_4");%>">
+<input type="hidden" name="arips8_1" value="<%nvram_get("arips8_1");%>">
+<input type="hidden" name="arips8_2" value="<%nvram_get("arips8_2");%>">
+<input type="hidden" name="arips8_3" value="<%nvram_get("arips8_3");%>">
+<input type="hidden" name="arips8_4" value="<%nvram_get("arips8_4");%>">
+<input type="hidden" name="arips9_1" value="<%nvram_get("arips9_1");%>">
+<input type="hidden" name="arips9_2" value="<%nvram_get("arips9_2");%>">
+<input type="hidden" name="arips9_3" value="<%nvram_get("arips9_3");%>">
+<input type="hidden" name="arips9_4" value="<%nvram_get("arips9_4");%>">
+<input type="hidden" name="arips10_1" value="<%nvram_get("arips10_1");%>">
+<input type="hidden" name="arips10_2" value="<%nvram_get("arips10_2");%>">
+<input type="hidden" name="arips10_3" value="<%nvram_get("arips10_3");%>">
+<input type="hidden" name="arips10_4" value="<%nvram_get("arips10_4");%>">
+<input type="hidden" name="aripe1_1" value="<%nvram_get("aripe1_1");%>">
+<input type="hidden" name="aripe1_2" value="<%nvram_get("aripe1_2");%>">
+<input type="hidden" name="aripe1_3" value="<%nvram_get("aripe1_3");%>">
+<input type="hidden" name="aripe1_4" value="<%nvram_get("aripe1_4");%>">
+<input type="hidden" name="aripe2_1" value="<%nvram_get("aripe2_1");%>">
+<input type="hidden" name="aripe2_2" value="<%nvram_get("aripe2_2");%>">
+<input type="hidden" name="aripe2_3" value="<%nvram_get("aripe2_3");%>">
+<input type="hidden" name="aripe2_4" value="<%nvram_get("aripe2_4");%>">
+<input type="hidden" name="aripe3_1" value="<%nvram_get("aripe3_1");%>">
+<input type="hidden" name="aripe3_2" value="<%nvram_get("aripe3_2");%>">
+<input type="hidden" name="aripe3_3" value="<%nvram_get("aripe3_3");%>">
+<input type="hidden" name="aripe3_4" value="<%nvram_get("aripe3_4");%>">
+<input type="hidden" name="aripe4_1" value="<%nvram_get("aripe4_1");%>">
+<input type="hidden" name="aripe4_2" value="<%nvram_get("aripe4_2");%>">
+<input type="hidden" name="aripe4_3" value="<%nvram_get("aripe4_3");%>">
+<input type="hidden" name="aripe4_4" value="<%nvram_get("aripe4_4");%>">
+<input type="hidden" name="aripe5_1" value="<%nvram_get("aripe5_1");%>">
+<input type="hidden" name="aripe5_2" value="<%nvram_get("aripe5_2");%>">
+<input type="hidden" name="aripe5_3" value="<%nvram_get("aripe5_3");%>">
+<input type="hidden" name="aripe5_4" value="<%nvram_get("aripe5_4");%>">
+<input type="hidden" name="aripe6_1" value="<%nvram_get("aripe6_1");%>">
+<input type="hidden" name="aripe6_2" value="<%nvram_get("aripe6_2");%>">
+<input type="hidden" name="aripe6_3" value="<%nvram_get("aripe6_3");%>">
+<input type="hidden" name="aripe6_4" value="<%nvram_get("aripe6_4");%>">
+<input type="hidden" name="aripe7_1" value="<%nvram_get("aripe7_1");%>">
+<input type="hidden" name="aripe7_2" value="<%nvram_get("aripe7_2");%>">
+<input type="hidden" name="aripe7_3" value="<%nvram_get("aripe7_3");%>">
+<input type="hidden" name="aripe7_4" value="<%nvram_get("aripe7_4");%>">
+<input type="hidden" name="aripe8_1" value="<%nvram_get("aripe8_1");%>">
+<input type="hidden" name="aripe8_2" value="<%nvram_get("aripe8_2");%>">
+<input type="hidden" name="aripe8_3" value="<%nvram_get("aripe8_3");%>">
+<input type="hidden" name="aripe8_4" value="<%nvram_get("aripe8_4");%>">
+<input type="hidden" name="aripe9_1" value="<%nvram_get("aripe9_1");%>">
+<input type="hidden" name="aripe9_2" value="<%nvram_get("aripe9_2");%>">
+<input type="hidden" name="aripe9_3" value="<%nvram_get("aripe9_3");%>">
+<input type="hidden" name="aripe9_4" value="<%nvram_get("aripe9_4");%>">
+<input type="hidden" name="aripe10_1" value="<%nvram_get("aripe10_1");%>">
+<input type="hidden" name="aripe10_2" value="<%nvram_get("aripe10_2");%>">
+<input type="hidden" name="aripe10_3" value="<%nvram_get("aripe10_3");%>">
+<input type="hidden" name="aripe10_4" value="<%nvram_get("aripe10_4");%>">
+
+<input type="hidden" name="policy_index" >
+
+<center>
+
+ 			 
+<table border="0" width="1000" >
+	<tr>
+		<td>
+
+<%include_file("adv_logol_header.htm");%>
+
+   <div id="warp"> 
+     
+      <div class="Pointer_Internetpic"></div>
+			<p  style="height:11px;"></p>   
+      <div class="status_background">
+			<p  style="height:30px;"></p>
+			<img src="hr_line.png" class="adv_title_hr">
+      		<p class="adv_title"><script>translate_strWrite("SetupWizard",124);</script></p>
+			<img src="hr_line.png" class="adv_title_hr">
+      		<div class="Router_status">
+      			<br>
+      				<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8; width:850px;" >
+      				 <tr><td>
+		      			<table cellpadding="0" cellspacing="0" border="1" align="center" style="color:#B8B8B8; width:850px;" >
+		      				<tr>
+			      				<td align="center" style="width:25px;"><script>translate_strWrite("AccessRestriction",47);</script></td>
+			      				<td align="center"><script>translate_strWrite("AccessRestriction",48);</script></td>
+			      				<td align="center" width="75"><script>translate_strWrite("AccessRestriction",49);</script></td>
+			      				<td align="center" width="328"><script>translate_strWrite("AccessRestriction",17);</script></td>
+			      				<td align="center" width="210"><script>translate_strWrite("AccessRestriction",65);</script></td>
+			      				<td align="center" width="35"><script>translate_strWrite("AccessRestriction",87);</script></td>
+			      				<td align="center" width="45"><script>translate_strWrite("AccessRestriction",75);</script></td>
+			      				<td align="center" width="51">&nbsp;</td>
+		      				</tr>
+		      				
+		      				<tr>
+			      				<td align="center">1</td>
+			      				<td align="center"><input type="text" name="arnform_1" class="policy_col_width"></td><!---Policy name-->
+			      				<td align="center">
+			      					<select name="filterAllow_1" class="policy_select_col_width">
+			      						<option value="0"><script>translate_strWrite("AccessRestriction",14);</script></option>
+			      						<option value="1"><script>translate_strWrite("AccessRestriction",15);</script></option>
+			      					</select>
+			      				</td>
+			      				<td align="center">
+									<INPUT onClick="CheckDay(document.forms[0],1, 8);" type=checkbox value=128 name=days_1_8 ><script>translate_strWrite("AccessRestriction",18);</script>
+							  &nbsp;&nbsp;<INPUT onClick="CheckDay(document.forms[0],1, 7);" type=checkbox value=1 name=days_1_7><script>translate_strWrite("AccessRestriction",76);</script>
+									<INPUT onClick="CheckDay(document.forms[0],1, 1);" type=checkbox value=2 name=days_1_1><script>translate_strWrite("AccessRestriction",77);</script>
+									<INPUT onClick="CheckDay(document.forms[0],1, 2);" type=checkbox value=4 name=days_1_2><script>translate_strWrite("AccessRestriction",78);</script>
+									<INPUT onClick="CheckDay(document.forms[0],1, 3);" type=checkbox value=8 name=days_1_3><script>translate_strWrite("AccessRestriction",79);</script>
+									<INPUT onClick="CheckDay(document.forms[0],1, 4);" type=checkbox value=16 name=days_1_4><script>translate_strWrite("AccessRestriction",80);</script>
+									<INPUT onClick="CheckDay(document.forms[0],1, 5);" type=checkbox value=32 name=days_1_5><script>translate_strWrite("AccessRestriction",81);</script> 
+									<INPUT onClick="CheckDay(document.forms[0],1, 6);" type=checkbox value=64 name=days_1_6><script>translate_strWrite("AccessRestriction",82);</script>
+			      				</td>
+			      				<td align="center">
+									<select name="start_hour_1" onChange="CheckTimeRange(document.forms[0],'1');" class="mtu_col_width" >
+										<option value="00" selected>0</option>
+										<OPTION value="01">1</OPTION>
+										<OPTION value="02">2</OPTION>
+										<OPTION value="03">3</OPTION>
+										<OPTION value="04">4</OPTION>
+										<OPTION value="05">5</OPTION> 
+										<OPTION value="06">6</OPTION>
+										<OPTION value="07">7</OPTION>
+										<OPTION value="08">8</OPTION>
+										<OPTION value="09">9</OPTION>
+										<OPTION value="10">10</OPTION>
+										<OPTION value="11">11</OPTION>
+										<OPTION value="12">12</OPTION>
+										<option value="13">13</option>
+										<option value="14">14</option>
+										<option value="15">15</option>
+										<option value="16">16</option>
+										<option value="17">17</option>
+										<option value="18">18</option>
+										<option value="19">19</option>
+										<option value="20">20</option>
+										<option value="21">21</option>
+										<option value="22">22</option>
+										<option value="23">23</option>
+									</select> : 
+									
+									<select name="start_min_1" onChange="CheckTimeRange(document.forms[0],'1');" class="mtu_col_width" >
+										<option value="00" selected>0</option>
+										<option value="05">5</option>
+										<option value="10">10</option>
+										<option value="15">15</option>
+										<option value="20">20</option>
+										<option value="25">25</option>
+										<option value="30">30</option>
+										<option value="35">35</option>
+										<option value="40">40</option>
+										<option value="45">45</option>
+										<option value="50">50</option>
+										<option value="55">55</option>
+										<option value="59">59</option>
+									</select>
+									
+									-
+									
+									<select name="end_hour_1" onChange="CheckTimeRange(document.forms[0],'1');" class="mtu_col_width" >
+										<option value="00" selected>0</option>
+										<OPTION value="01">1</OPTION>
+										<OPTION value="02">2</OPTION>
+										<OPTION value="03">3</OPTION>
+										<OPTION value="04">4</OPTION>
+										<OPTION value="05">5</OPTION> 
+										<OPTION value="06">6</OPTION>
+										<OPTION value="07">7</OPTION>
+										<OPTION value="08">8</OPTION>
+										<OPTION value="09">9</OPTION>
+										<OPTION value="10">10</OPTION>
+										<OPTION value="11">11</OPTION>
+										<OPTION value="12">12</OPTION>
+										<option value="13">13</option>
+										<option value="14">14</option>
+										<option value="15">15</option>
+										<option value="16">16</option>
+										<option value="17">17</option>
+										<option value="18">18</option>
+										<option value="19">19</option>
+										<option value="20">20</option>
+										<option value="21">21</option>
+										<option value="22">22</option>
+										<option value="23">23</option>
+									</select> :
+									
+									<select name="end_min_1" onChange="CheckTimeRange(document.forms[0],'1');" class="mtu_col_width" >
+										<option value="00" selected>0</option>
+										<option value="05">5</option>
+										<option value="10">10</option>
+										<option value="15">15</option>
+										<option value="20">20</option>
+										<option value="25">25</option>
+										<option value="30">30</option>
+										<option value="35">35</option>
+										<option value="40">40</option>
+										<option value="45">45</option>
+										<option value="50">50</option>
+										<option value="55">55</option>
+										<option value="59">59</option>
+									</select>     
+			      				</td>
+			      				<td align="center"><input type="checkbox" name="filterStatus_1"></td>
+			      				<td align="center"><input onclick="edit_list('1');" name="EditList_1" type="button"></td>
+			      				<td align="center"><input onclick="delete_ar(this.form,'1');" name="del_policy_1" type="button"></td>
+		      				</tr>
+		      				
+		      				<tr>
+			      				<td align="center">2</td>
+			      				<td align="center"><input type="text" name="arnform_2" class="policy_col_width"></td><!---Policy name-->
+			      				<td align="center">
+			      					<select name="filterAllow_2" class="policy_select_col_width">
+			      						<option value="0"><script>translate_strWrite("AccessRestriction",14);</script></option>
+			      						<option value="1"><script>translate_strWrite("AccessRestriction",15);</script></option>
+			      					</select>
+			      				</td>
+			      				<td align="center">
+									<INPUT onClick="CheckDay(document.forms[0],2, 8);" type=checkbox value=128 name=days_2_8 ><script>translate_strWrite("AccessRestriction",18);</script>
+							  &nbsp;&nbsp;<INPUT onClick="CheckDay(document.forms[0],2, 7);" type=checkbox value=1 name=days_2_7><script>translate_strWrite("AccessRestriction",76);</script>
+									<INPUT onClick="CheckDay(document.forms[0],2, 1);" type=checkbox value=2 name=days_2_1><script>translate_strWrite("AccessRestriction",77);</script>
+									<INPUT onClick="CheckDay(document.forms[0],2, 2);" type=checkbox value=4 name=days_2_2><script>translate_strWrite("AccessRestriction",78);</script>
+									<INPUT onClick="CheckDay(document.forms[0],2, 3);" type=checkbox value=8 name=days_2_3><script>translate_strWrite("AccessRestriction",79);</script>
+									<INPUT onClick="CheckDay(document.forms[0],2, 4);" type=checkbox value=16 name=days_2_4><script>translate_strWrite("AccessRestriction",80);</script>
+									<INPUT onClick="CheckDay(document.forms[0],2, 5);" type=checkbox value=32 name=days_2_5><script>translate_strWrite("AccessRestriction",81);</script> 
+									<INPUT onClick="CheckDay(document.forms[0],2, 6);" type=checkbox value=64 name=days_2_6><script>translate_strWrite("AccessRestriction",82);</script>
+			      				</td>
+			      				<td align="center">
+									<select name="start_hour_2" onChange="CheckTimeRange(document.forms[0],'2');" class="mtu_col_width" >
+										<option value="00" selected>0</option>
+										<OPTION value="01">1</OPTION>
+										<OPTION value="02">2</OPTION>
+										<OPTION value="03">3</OPTION>
+										<OPTION value="04">4</OPTION>
+										<OPTION value="05">5</OPTION> 
+										<OPTION value="06">6</OPTION>
+										<OPTION value="07">7</OPTION>
+										<OPTION value="08">8</OPTION>
+										<OPTION value="09">9</OPTION>
+										<OPTION value="10">10</OPTION>
+										<OPTION value="11">11</OPTION>
+										<OPTION value="12">12</OPTION>
+										<option value="13">13</option>
+										<option value="14">14</option>
+										<option value="15">15</option>
+										<option value="16">16</option>
+										<option value="17">17</option>
+										<option value="18">18</option>
+										<option value="19">19</option>
+										<option value="20">20</option>
+										<option value="21">21</option>
+										<option value="22">22</option>
+										<option value="23">23</option>
+									</select> : 
+									
+									<select name="start_min_2" onChange="CheckTimeRange(document.forms[0],'2');" class="mtu_col_width" >
+										<option value="00" selected>0</option>
+										<option value="05">5</option>
+										<option value="10">10</option>
+										<option value="15">15</option>
+										<option value="20">20</option>
+										<option value="25">25</option>
+										<option value="30">30</option>
+										<option value="35">35</option>
+										<option value="40">40</option>
+										<option value="45">45</option>
+										<option value="50">50</option>
+										<option value="55">55</option>
+										<option value="59">59</option>
+									</select>
+									
+									-
+									
+									<select name="end_hour_2" onChange="CheckTimeRange(document.forms[0],'2');" class="mtu_col_width" >
+										<option value="00" selected>0</option>
+										<OPTION value="01">1</OPTION>
+										<OPTION value="02">2</OPTION>
+										<OPTION value="03">3</OPTION>
+										<OPTION value="04">4</OPTION>
+										<OPTION value="05">5</OPTION> 
+										<OPTION value="06">6</OPTION>
+										<OPTION value="07">7</OPTION>
+										<OPTION value="08">8</OPTION>
+										<OPTION value="09">9</OPTION>
+										<OPTION value="10">10</OPTION>
+										<OPTION value="11">11</OPTION>
+										<OPTION value="12">12</OPTION>
+										<option value="13">13</option>
+										<option value="14">14</option>
+										<option value="15">15</option>
+										<option value="16">16</option>
+										<option value="17">17</option>
+										<option value="18">18</option>
+										<option value="19">19</option>
+										<option value="20">20</option>
+										<option value="21">21</option>
+										<option value="22">22</option>
+										<option value="23">23</option>
+									</select> :
+									
+									<select name="end_min_2" onChange="CheckTimeRange(document.forms[0],'2');" class="mtu_col_width" >
+										<option value="00" selected>0</option>
+										<option value="05">5</option>
+										<option value="10">10</option>
+										<option value="15">15</option>
+										<option value="20">20</option>
+										<option value="25">25</option>
+										<option value="30">30</option>
+										<option value="35">35</option>
+										<option value="40">40</option>
+										<option value="45">45</option>
+										<option value="50">50</option>
+										<option value="55">55</option>
+										<option value="59">59</option>
+									</select>     
+			      				</td>
+			      				<td align="center"><input type="checkbox" name="filterStatus_2"></td>
+			      				<td align="center"><input onclick="edit_list('2');" name="EditList_2" type="button"></td>
+			      				<td align="center"><input onclick="delete_ar(this.form,'2');" name="del_policy_2" type="button"></td>
+		      				</tr>
+
+		      				
+		      				<tr>
+			      				<td align="center">3</td>
+			      				<td align="center"><input type="text" name="arnform_3" class="policy_col_width"></td><!---Policy name-->
+			      				<td align="center">
+			      					<select name="filterAllow_3" class="policy_select_col_width">
+			      						<option value="0"><script>translate_strWrite("AccessRestriction",14);</script></option>
+			      						<option value="1"><script>translate_strWrite("AccessRestriction",15);</script></option>
+			      					</select>
+			      				</td>
+			      				<td align="center">
+									<INPUT onClick="CheckDay(document.forms[0],3, 8);" type=checkbox value=128 name=days_3_8 ><script>translate_strWrite("AccessRestriction",18);</script>
+							  &nbsp;&nbsp;<INPUT onClick="CheckDay(document.forms[0],3, 7);" type=checkbox value=1 name=days_3_7><script>translate_strWrite("AccessRestriction",76);</script>
+									<INPUT onClick="CheckDay(document.forms[0],3, 1);" type=checkbox value=2 name=days_3_1><script>translate_strWrite("AccessRestriction",77);</script>
+									<INPUT onClick="CheckDay(document.forms[0],3, 2);" type=checkbox value=4 name=days_3_2><script>translate_strWrite("AccessRestriction",78);</script>
+									<INPUT onClick="CheckDay(document.forms[0],3, 3);" type=checkbox value=8 name=days_3_3><script>translate_strWrite("AccessRestriction",79);</script>
+									<INPUT onClick="CheckDay(document.forms[0],3, 4);" type=checkbox value=16 name=days_3_4><script>translate_strWrite("AccessRestriction",80);</script>
+									<INPUT onClick="CheckDay(document.forms[0],3, 5);" type=checkbox value=32 name=days_3_5><script>translate_strWrite("AccessRestriction",81);</script> 
+									<INPUT onClick="CheckDay(document.forms[0],3, 6);" type=checkbox value=64 name=days_3_6><script>translate_strWrite("AccessRestriction",82);</script>
+			      				</td>
+			      				<td align="center">
+									<select name="start_hour_3" onChange="CheckTimeRange(document.forms[0],'3');" class="mtu_col_width" >
+										<option value="00" selected>0</option>
+										<OPTION value="01">1</OPTION>
+										<OPTION value="02">2</OPTION>
+										<OPTION value="03">3</OPTION>
+										<OPTION value="04">4</OPTION>
+										<OPTION value="05">5</OPTION> 
+										<OPTION value="06">6</OPTION>
+										<OPTION value="07">7</OPTION>
+										<OPTION value="08">8</OPTION>
+										<OPTION value="09">9</OPTION>
+										<OPTION value="10">10</OPTION>
+										<OPTION value="11">11</OPTION>
+										<OPTION value="12">12</OPTION>
+										<option value="13">13</option>
+										<option value="14">14</option>
+										<option value="15">15</option>
+										<option value="16">16</option>
+										<option value="17">17</option>
+										<option value="18">18</option>
+										<option value="19">19</option>
+										<option value="20">20</option>
+										<option value="21">21</option>
+										<option value="22">22</option>
+										<option value="23">23</option>
+									</select> : 
+									
+									<select name="start_min_3" onChange="CheckTimeRange(document.forms[0],'3');" class="mtu_col_width" >
+										<option value="00" selected>0</option>
+										<option value="05">5</option>
+										<option value="10">10</option>
+										<option value="15">15</option>
+										<option value="20">20</option>
+										<option value="25">25</option>
+										<option value="30">30</option>
+										<option value="35">35</option>
+										<option value="40">40</option>
+										<option value="45">45</option>
+										<option value="50">50</option>
+										<option value="55">55</option>
+										<option value="59">59</option>
+									</select>
+									
+									-
+									
+									<select name="end_hour_3" onChange="CheckTimeRange(document.forms[0],'3');" class="mtu_col_width" >
+										<option value="00" selected>0</option>
+										<OPTION value="01">1</OPTION>
+										<OPTION value="02">2</OPTION>
+										<OPTION value="03">3</OPTION>
+										<OPTION value="04">4</OPTION>
+										<OPTION value="05">5</OPTION> 
+										<OPTION value="06">6</OPTION>
+										<OPTION value="07">7</OPTION>
+										<OPTION value="08">8</OPTION>
+										<OPTION value="09">9</OPTION>
+										<OPTION value="10">10</OPTION>
+										<OPTION value="11">11</OPTION>
+										<OPTION value="12">12</OPTION>
+										<option value="13">13</option>
+										<option value="14">14</option>
+										<option value="15">15</option>
+										<option value="16">16</option>
+										<option value="17">17</option>
+										<option value="18">18</option>
+										<option value="19">19</option>
+										<option value="20">20</option>
+										<option value="21">21</option>
+										<option value="22">22</option>
+										<option value="23">23</option>
+									</select> :
+									
+									<select name="end_min_3" onChange="CheckTimeRange(document.forms[0],'3');" class="mtu_col_width" >
+										<option value="00" selected>0</option>
+										<option value="05">5</option>
+										<option value="10">10</option>
+										<option value="15">15</option>
+										<option value="20">20</option>
+										<option value="25">25</option>
+										<option value="30">30</option>
+										<option value="35">35</option>
+										<option value="40">40</option>
+										<option value="45">45</option>
+										<option value="50">50</option>
+										<option value="55">55</option>
+										<option value="59">59</option>
+									</select>     
+			      				</td>
+			      				<td align="center"><input type="checkbox" name="filterStatus_3"></td>
+			      				<td align="center"><input onclick="edit_list('3');" name="EditList_3" type="button"></td>
+			      				<td align="center"><input onclick="delete_ar(this.form,'3');" name="del_policy_3" type="button"></td>
+		      				</tr>
+
+		      				
+		      				<tr>
+			      				<td align="center">4</td>
+			      				<td align="center"><input type="text" name="arnform_4" class="policy_col_width"></td><!---Policy name-->
+			      				<td align="center">
+			      					<select name="filterAllow_4" class="policy_select_col_width">
+			      						<option value="0"><script>translate_strWrite("AccessRestriction",14);</script></option>
+			      						<option value="1"><script>translate_strWrite("AccessRestriction",15);</script></option>
+			      					</select>
+			      				</td>
+			      				<td align="center">
+									<INPUT onClick="CheckDay(document.forms[0],4, 8);" type=checkbox value=128 name=days_4_8 ><script>translate_strWrite("AccessRestriction",18);</script>
+							  &nbsp;&nbsp;<INPUT onClick="CheckDay(document.forms[0],4, 7);" type=checkbox value=1 name=days_4_7><script>translate_strWrite("AccessRestriction",76);</script>
+									<INPUT onClick="CheckDay(document.forms[0],4, 1);" type=checkbox value=2 name=days_4_1><script>translate_strWrite("AccessRestriction",77);</script>
+									<INPUT onClick="CheckDay(document.forms[0],4, 2);" type=checkbox value=4 name=days_4_2><script>translate_strWrite("AccessRestriction",78);</script>
+									<INPUT onClick="CheckDay(document.forms[0],4, 3);" type=checkbox value=8 name=days_4_3><script>translate_strWrite("AccessRestriction",79);</script>
+									<INPUT onClick="CheckDay(document.forms[0],4, 4);" type=checkbox value=16 name=days_4_4><script>translate_strWrite("AccessRestriction",80);</script>
+									<INPUT onClick="CheckDay(document.forms[0],4, 5);" type=checkbox value=32 name=days_4_5><script>translate_strWrite("AccessRestriction",81);</script> 
+									<INPUT onClick="CheckDay(document.forms[0],4, 6);" type=checkbox value=64 name=days_4_6><script>translate_strWrite("AccessRestriction",82);</script>
+			      				</td>
+			      				<td align="center">
+									<select name="start_hour_4" onChange="CheckTimeRange(document.forms[0],'4');" class="mtu_col_width" >
+										<option value="00" selected>0</option>
+										<OPTION value="01">1</OPTION>
+										<OPTION value="02">2</OPTION>
+										<OPTION value="03">3</OPTION>
+										<OPTION value="04">4</OPTION>
+										<OPTION value="05">5</OPTION> 
+										<OPTION value="06">6</OPTION>
+										<OPTION value="07">7</OPTION>
+										<OPTION value="08">8</OPTION>
+										<OPTION value="09">9</OPTION>
+										<OPTION value="10">10</OPTION>
+										<OPTION value="11">11</OPTION>
+										<OPTION value="12">12</OPTION>
+										<option value="13">13</option>
+										<option value="14">14</option>
+										<option value="15">15</option>
+										<option value="16">16</option>
+										<option value="17">17</option>
+										<option value="18">18</option>
+										<option value="19">19</option>
+										<option value="20">20</option>
+										<option value="21">21</option>
+										<option value="22">22</option>
+										<option value="23">23</option>
+									</select> : 
+									
+									<select name="start_min_4" onChange="CheckTimeRange(document.forms[0],'4');" class="mtu_col_width" >
+										<option value="00" selected>0</option>
+										<option value="05">5</option>
+										<option value="10">10</option>
+										<option value="15">15</option>
+										<option value="20">20</option>
+										<option value="25">25</option>
+										<option value="30">30</option>
+										<option value="35">35</option>
+										<option value="40">40</option>
+										<option value="45">45</option>
+										<option value="50">50</option>
+										<option value="55">55</option>
+										<option value="59">59</option>
+									</select>
+									
+									-
+									
+									<select name="end_hour_4" onChange="CheckTimeRange(document.forms[0],'4');" class="mtu_col_width" >
+										<option value="00" selected>0</option>
+										<OPTION value="01">1</OPTION>
+										<OPTION value="02">2</OPTION>
+										<OPTION value="03">3</OPTION>
+										<OPTION value="04">4</OPTION>
+										<OPTION value="05">5</OPTION> 
+										<OPTION value="06">6</OPTION>
+										<OPTION value="07">7</OPTION>
+										<OPTION value="08">8</OPTION>
+										<OPTION value="09">9</OPTION>
+										<OPTION value="10">10</OPTION>
+										<OPTION value="11">11</OPTION>
+										<OPTION value="12">12</OPTION>
+										<option value="13">13</option>
+										<option value="14">14</option>
+										<option value="15">15</option>
+										<option value="16">16</option>
+										<option value="17">17</option>
+										<option value="18">18</option>
+										<option value="19">19</option>
+										<option value="20">20</option>
+										<option value="21">21</option>
+										<option value="22">22</option>
+										<option value="23">23</option>
+									</select> :
+									
+									<select name="end_min_4" onChange="CheckTimeRange(document.forms[0],'4');" class="mtu_col_width" >
+										<option value="00" selected>0</option>
+										<option value="05">5</option>
+										<option value="10">10</option>
+										<option value="15">15</option>
+										<option value="20">20</option>
+										<option value="25">25</option>
+										<option value="30">30</option>
+										<option value="35">35</option>
+										<option value="40">40</option>
+										<option value="45">45</option>
+										<option value="50">50</option>
+										<option value="55">55</option>
+										<option value="59">59</option>
+									</select>     
+			      				</td>
+			      				<td align="center"><input type="checkbox" name="filterStatus_4"></td>
+			      				<td align="center"><input onclick="edit_list('4');" name="EditList_4" type="button"></td>
+			      				<td align="center"><input onclick="delete_ar(this.form,'4');" name="del_policy_4" type="button"></td>
+		      				</tr>
+
+		      				
+		      				<tr>
+			      				<td align="center">5</td>
+			      				<td align="center"><input type="text" name="arnform_5" class="policy_col_width"></td><!---Policy name-->
+			      				<td align="center">
+			      					<select name="filterAllow_5" class="policy_select_col_width">
+			      						<option value="0"><script>translate_strWrite("AccessRestriction",14);</script></option>
+			      						<option value="1"><script>translate_strWrite("AccessRestriction",15);</script></option>
+			      					</select>
+			      				</td>
+			      				<td align="center">
+									<INPUT onClick="CheckDay(document.forms[0],5, 8);" type=checkbox value=128 name=days_5_8 ><script>translate_strWrite("AccessRestriction",18);</script>
+					 		  &nbsp;&nbsp;<INPUT onClick="CheckDay(document.forms[0],5, 7);" type=checkbox value=1 name=days_5_7><script>translate_strWrite("AccessRestriction",76);</script>
+									<INPUT onClick="CheckDay(document.forms[0],5, 1);" type=checkbox value=2 name=days_5_1><script>translate_strWrite("AccessRestriction",77);</script>
+									<INPUT onClick="CheckDay(document.forms[0],5, 2);" type=checkbox value=4 name=days_5_2><script>translate_strWrite("AccessRestriction",78);</script>
+									<INPUT onClick="CheckDay(document.forms[0],5, 3);" type=checkbox value=8 name=days_5_3><script>translate_strWrite("AccessRestriction",79);</script>
+									<INPUT onClick="CheckDay(document.forms[0],5, 4);" type=checkbox value=16 name=days_5_4><script>translate_strWrite("AccessRestriction",80);</script>
+									<INPUT onClick="CheckDay(document.forms[0],5, 5);" type=checkbox value=32 name=days_5_5><script>translate_strWrite("AccessRestriction",81);</script> 
+									<INPUT onClick="CheckDay(document.forms[0],5, 6);" type=checkbox value=64 name=days_5_6><script>translate_strWrite("AccessRestriction",82);</script>
+			      				</td>
+			      				<td align="center">
+									<select name="start_hour_5" onChange="CheckTimeRange(document.forms[0],'5');" class="mtu_col_width" >
+										<option value="00" selected>0</option>
+										<OPTION value="01">1</OPTION>
+										<OPTION value="02">2</OPTION>
+										<OPTION value="03">3</OPTION>
+										<OPTION value="04">4</OPTION>
+										<OPTION value="05">5</OPTION> 
+										<OPTION value="06">6</OPTION>
+										<OPTION value="07">7</OPTION>
+										<OPTION value="08">8</OPTION>
+										<OPTION value="09">9</OPTION>
+										<OPTION value="10">10</OPTION>
+										<OPTION value="11">11</OPTION>
+										<OPTION value="12">12</OPTION>
+										<option value="13">13</option>
+										<option value="14">14</option>
+										<option value="15">15</option>
+										<option value="16">16</option>
+										<option value="17">17</option>
+										<option value="18">18</option>
+										<option value="19">19</option>
+										<option value="20">20</option>
+										<option value="21">21</option>
+										<option value="22">22</option>
+										<option value="23">23</option>
+									</select> : 
+									
+									<select name="start_min_5" onChange="CheckTimeRange(document.forms[0],'5');" class="mtu_col_width" >
+										<option value="00" selected>0</option>
+										<option value="05">5</option>
+										<option value="10">10</option>
+										<option value="15">15</option>
+										<option value="20">20</option>
+										<option value="25">25</option>
+										<option value="30">30</option>
+										<option value="35">35</option>
+										<option value="40">40</option>
+										<option value="45">45</option>
+										<option value="50">50</option>
+										<option value="55">55</option>
+										<option value="59">59</option>
+									</select>
+									
+									-
+									
+									<select name="end_hour_5" onChange="CheckTimeRange(document.forms[0],'5');" class="mtu_col_width" >
+										<option value="00" selected>0</option>
+										<OPTION value="01">1</OPTION>
+										<OPTION value="02">2</OPTION>
+										<OPTION value="03">3</OPTION>
+										<OPTION value="04">4</OPTION>
+										<OPTION value="05">5</OPTION> 
+										<OPTION value="06">6</OPTION>
+										<OPTION value="07">7</OPTION>
+										<OPTION value="08">8</OPTION>
+										<OPTION value="09">9</OPTION>
+										<OPTION value="10">10</OPTION>
+										<OPTION value="11">11</OPTION>
+										<OPTION value="12">12</OPTION>
+										<option value="13">13</option>
+										<option value="14">14</option>
+										<option value="15">15</option>
+										<option value="16">16</option>
+										<option value="17">17</option>
+										<option value="18">18</option>
+										<option value="19">19</option>
+										<option value="20">20</option>
+										<option value="21">21</option>
+										<option value="22">22</option>
+										<option value="23">23</option>
+									</select> :
+									
+									<select name="end_min_5" onChange="CheckTimeRange(document.forms[0],'5');" class="mtu_col_width" >
+										<option value="00" selected>0</option>
+										<option value="05">5</option>
+										<option value="10">10</option>
+										<option value="15">15</option>
+										<option value="20">20</option>
+										<option value="25">25</option>
+										<option value="30">30</option>
+										<option value="35">35</option>
+										<option value="40">40</option>
+										<option value="45">45</option>
+										<option value="50">50</option>
+										<option value="55">55</option>
+										<option value="59">59</option>
+									</select>     
+			      				</td>
+			      				<td align="center"><input type="checkbox" name="filterStatus_5"></td>
+			      				<td align="center"><input onclick="edit_list('5');" name="EditList_5" type="button"></td>
+			      				<td align="center"><input onclick="delete_ar(this.form,'5');" name="del_policy_5" type="button"></td>
+		      				</tr>
+
+		      			</table>
+			      	</td></tr>
+					<tr><td>
+		      			<div id="my_div"></div>
+		     	 	</td></tr>
+					<tr><td>
+		      			<table cellpadding="0" cellspacing="0" border="0" align="right" style="color:#B8B8B8; width:850px;line-height:18pt;" >
+		      				<tr>
+		      					<td>
+									<table border="0" cellpadding="0" cellspacing="0" align="right">
+										<tbody>
+											<tr height="23">
+												<td class="SW_LeftButton">&nbsp;</td>
+												<td class="SW_BottomButton">
+													<a href="javascript:onclick=more(document.forms[0]);">
+													&nbsp;<font style="color: rgb(184, 184, 184);" onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("SetupWizard",114);</script></font>&nbsp;</a></td>
+												<td class="SW_RightButton">&nbsp;</td>
+											</tr>
+										</tbody>
+									</table>
+		      					</td>
+		      				</tr>
+		      			</table>
+		      		</td></tr>
+      			</table>
+      			
+      			<!-----------------------v------------------------------->
+      			
+      			
+
+		     <p style="line-heigt:42px;">&nbsp;</p>
+		      <p class="status_end"></p>   
+      </div>
+  
+   </div> 
+       <div class="angle"></div>
+          <div class="EZ_mid">  
+      		<p style="height:10px;"></p>      		 		  				    
+				  	<div class="Cancel_Save_button">
+				  <table border="0" cellspacing="0" cellpadding="0" width=335>
+				  	<tr height=23 width=600>
+				  		<td align="right" width=75>
+					  		<table border="0" cellspacing="0" cellpadding="0" width=75>
+									<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="adv_edit_internet.htm">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",1);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										</tr>
+									</table>
+							</td>
+				  	<td align="center" width="60">&nbsp;<script>translate_strWrite("BasicSetup",162);</script>&nbsp;
+				  		</td>
+				  	<td align="left" width=200>
+				  		<table border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+									<td class="SW_LeftButton">&nbsp;</td>
+									<td class="SW_BottomButton"><a href="javascript:ValidateForm(document.forms[0]);">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",0);</script></font>&nbsp;</a></td>
+									<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+							</td>
+						</tr>
+				  </table>
+					</div>	  				    					    														    						    			    
+      </div>
+      
+
+        
+       <div style="height: 50px"></div>    
+		    <div class="EZ_foot">
+						<div class="EZ_foot_L"><img src="bottom_help_icon.png" style="position:relative;top:3pt;">&nbsp;<a href="help/<%nvram_get("language_str");%>/default.htm#ParentalControls" target="_blank"><script>translate_strWrite("SetupWizard",64);</script></a>&nbsp;<img src="transparency.gif" style="width:15px;height:1px;"><a href="javascript:open_language();"><img src="bottom_language_icon.png" style="position:relative;top:3pt;">&nbsp;<script>translate_strWrite("BasicSetup",167);</script></a>&nbsp;&nbsp
+								<span id="language" style="visibility:hidden;">
+								<a href="javascript:apply_lang('en');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">English</font></a>&nbsp;&nbsp;
+								<a href="javascript:apply_lang('fr');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Fran&ccedil;ais</font></a>&nbsp;&nbsp;
+								<!--a href="javascript:apply_lang('spa');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Spanish</font></a--></span>
+						</div>
+						<div class="EZ_foot_C"></div>
+						<div class="EZ_foot_R">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		      </div>
+         <div class="clear_float"> </div>
+  
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+
+		</td>
+	</tr>
+	</table>
+</center>
+
+
+ <input  type="hidden" name="action" value="Apply">    
+  <input type="hidden" name="fts" value="0000000000">
+  <input type="hidden" name="fswf" value="1111111111">
+  <input type="hidden" name="ScheduleList" value="<%nvram_get("ScheduleList");%>">
+
+  <input type="hidden" name="FilterStatuss" value="<%nvram_get("FilterStatuss");%>">
+  <input type="hidden" name="FilterAllows" value="<%nvram_get("FilterAllows");%>">
+  
+	</form>
+	<form method="post" action="save.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_control.htm">
+<input type="hidden" name="redirect_timer" value="0">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="language_str">
+<input type="hidden" name="language_str" value="<%nvram_get("language_str");%>">
+</form>
+<!--[if lt IE 7]>
+<script defer type="text/javascript" src="ie6fix.js"></script>
+<![endif]-->
+<script type="text/javascript">
+  document.getElementById("internet").src = "internet_icon_bri.png";
+</script>	 
+</body>
+</html>

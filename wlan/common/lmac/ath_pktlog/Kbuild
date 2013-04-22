@@ -1,0 +1,14 @@
+ifeq ($(obj),)
+obj := .
+endif
+
+DEPTH := ../../..
+
+include $(obj)/$(DEPTH)/linux/Makefile-linux.common
+
+INCS += -I$(HAL) -I$(HAL)/$(OS) -I$(ATH) -I$(ATH_RATE) -I$(WLAN) -I$(IF_WLAN)
+
+obj-m += ath_pktlog.o
+
+EXTRA_CFLAGS+= $(INCS) $(COPTS)
+ath_pktlog-objs := pktlog.o linux.o

@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title></title>
+<%include_file("javascript.htm");%>
+
+<script language="JavaScript">
+var DataArray = new Array();
+var	myData = [<%dhcp_client_table("dhcpselect");%>];
+
+function Data(name,iface,ip,mac,check)
+{
+	this.Name = name;
+	this.Interface = iface;
+	this.IP = ip;
+	this.MAC = mac;
+	this.check = check;
+}
+				
+var TBLHeader = "<table border='1' cellpadding='0' cellspacing='0' id='AutoNumber3' >\
+              <tr>\
+                <td height='25' width='176' align='center'>";
+    TBLHeader += translate_str("BasicSetup",107)+"</b></td>\
+                <td height='25' width='107' align='center'>";
+    TBLHeader += translate_str("BasicSetup",106)+"</b></td>\
+                <td height='25' width='112' align='center'>";
+    TBLHeader += translate_str("PortForward",10)+"</b></td>\
+                <td height='25' width='111' align='center'>";
+    TBLHeader += translate_str("BasicSetup",105)+"</b></td>\
+                <td height='25' width='185' align='center'>";
+    TBLHeader += "&nbsp;</b></td></tr>";
+
+var TBLFooter = "</table>" ;
+              
+function DataShow(type)
+{
+	var i = 0;
+	var v = TBLHeader;
+	
+	for(i=0;i<DataArray.length;i++) {
+		if(DataArray[i].Interface == "WL")
+			DataArray[i].Interface = translate_str("RouterStatus",13);
+		else if(DataArray[i].Interface == "A")
+			DataArray[i].Interface = translate_str("RouterStatus",13)+"-A";
+		else if(DataArray[i].Interface == "G")
+			DataArray[i].Interface = translate_str("RouterStatus",13)+"-G";
+		else if(DataArray[i].Interface == "B")
+			DataArray[i].Interface = translate_str("RouterStatus",13)+"-B";
+		else if(DataArray[i].Interface == "N")
+			DataArray[i].Interface = translate_str("RouterStatus",13)+"-N";
+		else if(DataArray[i].Interface == "LAN")
+			DataArray[i].Interface = "LAN";
+	
+		if(type != 1)
+		{
+	  	if(DataArray[i].Name=="")
+	  		DataArray[i].Name = "&nbsp;";
+			v +="<tr>";
+			v +="<td height='25' align='center' >";
+			v +=DataArray[i].Name+"</td>";
+			v +="<td height='25' align='center' >";
+			v +=DataArray[i].Interface+"</td>";
+			v +="<td height='25' align='center' >";
+			v +=DataArray[i].IP+"</td>";
+			v +="<td height='25' align='center' >";
+			v +=DataArray[i].MAC+"</td>";
+			v +="<td height='25' align='center' >";
+			v +="<INPUT  type=button value='"+translate_str("BasicSetup",126)+"' onclick=validate('"+DataArray[i].MAC+"')></td></tr>";
+		}
+	}
+	if(DataArray.length<=0)
+	{
+			v +="<tr>";
+			v +="<td height='25' align='center' >";
+			v +="None</td>";
+			v +="<td height='25' align='center' >";
+			v +="None</td>";
+			v +="<td height='25' align='center' >";
+			v +="None</td>";
+			v +="<td height='25' align='center' >";
+			v +="None</td>";
+			v +="<td height='25' align='center' >";
+			v +="&nbsp;</td></tr>";
+	}
+	v += TBLFooter;
+	layerWrite('myDiv', null, v);
+}
+function check(index)
+{
+	var f = document.forms[0];
+	for( var j=0 ; j<(DataArray.length) ; j++ )
+	{
+		eval("f.onlist"+j).checked = false;
+	}
+	eval("f.onlist"+index).checked = true;
+}
+function CheckLength(e)
+{
+	for( var i=0 ; i<(DataArray.length-1) ; i++ )
+	{
+		for( var j=i+1 ; j<DataArray.length ; j++ )
+		{
+			var a = eval('DataArray[' + i + '].' + e + '.length');
+			var b = eval('DataArray[' + j + '].' + e + '.length');
+
+			if( a > b )
+			{	
+				var t = DataArray[i];
+				DataArray[i]=DataArray[j];
+				DataArray[j]=t;
+			}
+		}
+	}
+}
+
+function doSort(f)
+{
+	if( f.sort_selection.options[0].selected )
+		DataArray.sort(sortByIP);
+	else if( f.sort_selection.options[1].selected )
+		DataArray.sort(sortByMAC);
+	else if( f.sort_selection.options[2].selected )
+		DataArray.sort(sortByInterface);
+	else
+	{
+		DataArray.sort(sortByName);
+		CheckLength("Name", DataArray.length-1);
+	}	
+
+	if( myData.length == 0 )
+		DataShow(1);
+	else
+		DataShow(2);
+}
+
+function InitValue()
+{	
+	
+	for( i=0 ; i<myData.length ; i++ )
+		DataArray[DataArray.length++] = new Data(myData[i][0], myData[i][1], myData[i][2], myData[i][3], myData[i][4]);
+
+	DataArray.sort(sortByIP);
+
+	if( myData.length == 0 )
+		DataShow(1);
+	else
+		DataShow(2);
+	
+}
+
+function validate(mac_addr)
+{
+	var f = document.forms[0];
+	/*
+	var z=1;
+	var same_mac;
+	for (var i=0 ;i< DataArray.length ;i++)
+	{
+		if (eval("f.onlist["+i+"]").checked ==true) 
+		{
+			window.opener.document.forms[0].mac.value=DataArray[i].MAC;
+			break;
+	}
+	}
+	*/
+	window.opener.document.forms[0].add_media_mac.value=mac_addr;
+	window.opener.addForm();
+	window.close();
+	
+}
+//-->
+</script>
+	
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="wan_detect" action="post.cgi" method="post">
+
+	<center>	 
+<table border="0" width="1000">
+	<tr>
+		<td>
+	 
+<%include_file("adv_PopWin_header.htm");%>
+
+
+	
+  <div id="warp">
+      <div class="status_title">&nbsp;</div>
+      <div class="status_background">
+      	<div class="status_content">
+      		<p style="height: 10px">&nbsp;</p>
+      		<center>
+<!----Add Pop-up windows start----->
+                      <table border="0" cellpadding="0" cellspacing="0"  width="710">
+                          <tr>
+                            <td align="center" >
+                              <p class="adv_title"><p class="adv_title">
+                              <script>translate_strWrite("BasicSetup",96);</script>
+                              </p>
+                            </td>
+                          </tr>
+                          <tr><td align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+                      </table>
+                         
+		    		<p style="height: 25px">&nbsp;</p>
+
+                      <table border="0" cellpadding="0" cellspacing="0" >
+                          <tr>
+                            <td align="center" >
+                              <script>translate_strWrite("BasicSetup",104);</script>&nbsp;&nbsp;
+								<SELECT size=1 name=sort_selection onchange="doSort(this.form)"> 
+									<option value=ip><script>translate_strWrite("PortForward",10);</script></option>
+									<option value=mac><script>translate_strWrite("BasicSetup",105);</script></option>
+									<option value=iface><script>translate_strWrite("BasicSetup",106);</script></option>
+									<option value=name><script>translate_strWrite("BasicSetup",107);</script></option>
+								</SELECT>
+                            </td>
+
+                          </tr>
+                          <tr><td align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+                      </table>
+
+					<DIV ID="myDiv"></DIV>
+					
+		    		<p style="height: 25px">&nbsp;</p>
+		    		
+
+<!----Add Pop-up windows End----->
+			</center>
+		      <p class="status_end"></p>     
+      </div>  
+     </div>               
+
+			        
+         <div class="clear_float"> </div>
+          <div style="height:30px;"></div>
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+		</td>
+	</tr>
+	</table>
+</center>
+</form>
+</body>
+</html>

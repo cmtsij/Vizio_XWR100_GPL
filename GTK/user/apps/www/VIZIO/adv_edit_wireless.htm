@@ -1,0 +1,994 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_119?></title>
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+
+var f=document.edit;
+
+function WL1_act_enable(){
+	
+	var f=document.edit;
+	
+	if(f.WL1_ACTIVE.checked){
+		f.SSID1.disabled = false ;
+		f.WL1_SEC.disabled = false ;
+
+		if(f.WL1_SEC.selectedIndex == "0")
+			f.Key1.disabled = true ;
+		else
+			f.Key1.disabled = false;
+	}
+	else{
+		f.SSID1.disabled = true ;
+		f.WL1_SEC.disabled = true ;
+		f.Key1.disabled = true ;
+	}
+}
+
+function WL2_act_enable(){
+	
+	var f=document.edit;
+	
+	if(f.WL2_ACTIVE.checked){
+		f.SSID2.disabled = false ;
+		f.WL2_SEC.disabled = false ;
+
+		if(f.WL2_SEC.selectedIndex == "0")
+			f.Key2.disabled = true ;
+		else
+			f.Key2.disabled = false;
+
+	}
+	else{
+		f.SSID2.disabled = true ;
+		f.WL2_SEC.disabled = true ;
+		f.Key2.disabled = true ;
+	}
+}
+
+function WL3_act_enable(){
+	
+	var f=document.edit;
+	
+	if(f.WL3_ACTIVE.checked){
+		f.SSID3.disabled = false ;
+		f.WL3_SEC.disabled = false ;
+		
+		if(f.WL3_SEC.selectedIndex == "0")
+			f.Key3.disabled = true ;
+		else
+			f.Key3.disabled = false;
+
+	}
+	else{
+		f.SSID3.disabled = true ;
+		f.WL3_SEC.disabled = true ;
+		f.Key3.disabled = true ;
+	}
+}
+
+function InitValue(f)
+{
+	var wl1_sec,wl2_sec,wl3_sec;
+	var f=document.edit;
+	f.SSID1.value = '<%nvram_get("wl1_ssid");%>';
+	f.SSID2.value = '<%nvram_get("wl0_ssid");%>';
+	f.SSID3.value = '<%nvram_get("wl2_ssid");%>';
+	
+	show_network_status();
+
+	if ('<%nvram_get("wl1_sec_mode");%>' == 'wep')
+		f.Key1.value =  '<%nvram_get("wl1_key1");%>';
+	else if ('<%nvram_get("wl1_sec_mode");%>' == 'none')
+		f.Key1.value =  '' ;
+	else
+		f.Key1.value =  '<%nvram_get("wl1_pskkey");%>';
+
+	if ('<%nvram_get("wl0_sec_mode");%>' == 'wep')
+		f.Key2.value =  '<%nvram_get("wl0_key1");%>';
+	else if ('<%nvram_get("wl0_sec_mode");%>' == 'none')
+		f.Key2.value =  '' ;
+	else
+		f.Key2.value =  '<%nvram_get("wl0_pskkey");%>';
+
+	if ('<%nvram_get("wl2_sec_mode");%>' == 'wep')
+		f.Key3.value =  '<%nvram_get("wl2_key1");%>';
+	else
+		f.Key3.value =  '<%nvram_get("wl2_pskkey");%>';
+
+	if ('<%nvram_get("wl1_sec_mode");%>' == 'none'){
+		f.WL1_SEC.selectedIndex = 0;
+		f.Key1.disabled = true ;
+		wl1_sec = 'none';
+	}
+	else if ('<%nvram_get("wl1_sec_mode");%>' == 'WPA1WPA2') {
+		f.WL1_SEC.selectedIndex = 1;
+		wl1_sec = 'WPA1WPA2';
+	}
+	else if ('<%nvram_get("wl1_sec_mode");%>' == 'psk') {
+		f.WL1_SEC.selectedIndex = 2;
+		wl1_sec = 'psk';
+	}
+	else if ('<%nvram_get("wl1_sec_mode");%>' == 'wep' && '<%nvram_get("wl1_keylength");%>' == '104' ) {
+		f.WL1_SEC.selectedIndex = 3;
+		wl1_sec = 'wep104';
+	}
+	else if ('<%nvram_get("wl1_sec_mode");%>' == 'wep' && '<%nvram_get("wl1_keylength");%>' == '40' ) {
+		f.WL1_SEC.selectedIndex = 4;
+		wl1_sec = 'wep40';
+	}
+
+
+	if ('<%nvram_get("wl0_sec_mode");%>' == 'none'){
+		f.WL2_SEC.selectedIndex = 0;
+		f.Key2.disabled = true ;
+		wl2_sec = 'none';
+	}
+	else if ('<%nvram_get("wl0_sec_mode");%>' == 'WPA1WPA2') {
+		f.WL2_SEC.selectedIndex = 1;
+		wl2_sec = 'WPA1WPA2';
+	}
+	else if ('<%nvram_get("wl0_sec_mode");%>' == 'psk') {
+		f.WL2_SEC.selectedIndex = 2;
+		wl2_sec = 'psk';
+	}
+	else if ('<%nvram_get("wl0_sec_mode");%>' == 'wep' && '<%nvram_get("wl0_keylength");%>' == '104') {
+		f.WL2_SEC.selectedIndex = 3;
+		wl2_sec = 'wep104';
+	}
+	else if ('<%nvram_get("wl0_sec_mode");%>' == 'wep' && '<%nvram_get("wl0_keylength");%>' == '40') {
+		f.WL2_SEC.selectedIndex = 4;
+		wl2_sec = 'wep40';
+	}
+
+	if ('<%nvram_get("wl2_keylength");%>' == '104' && '<%nvram_get("wl2_sec_mode");%>' == 'wep') {
+		f.WL3_SEC.selectedIndex = 0;
+		wl3_sec = 'wep104';
+	}
+	else if ('<%nvram_get("wl2_keylength");%>'== '40' && '<%nvram_get("wl2_sec_mode");%>' == 'wep') {
+		f.WL3_SEC.selectedIndex = 1;
+		wl3_sec = 'wep40';
+	}
+	
+	ChangeKeyLength('WL1_SEC', wl1_sec);
+	ChangeKeyLength('WL2_SEC', wl2_sec);
+	ChangeKeyLength('WL3_SEC', wl3_sec);
+
+	if ('<%nvram_get("wl1_wlmode");%>' == '0') {
+		f.WL1_ACTIVE.checked = false;
+		f.Key1.disabled = true ;
+		f.SSID1.disabled = true ;
+		f.WL1_SEC.disabled = true ;
+	} else {
+		f.WL1_ACTIVE.checked = true;
+	}
+
+	if ('<%nvram_get("wl0_wlmode");%>' == '0') {
+		f.WL2_ACTIVE.checked = false;
+		f.Key2.disabled = true ;
+		f.SSID2.disabled = true ;
+		f.WL2_SEC.disabled = true ;
+	} else {
+		f.WL2_ACTIVE.checked = true;
+	}
+
+	if ('<%nvram_get("wl2_wlmode");%>' == '0') {
+		f.WL3_ACTIVE.checked = false;
+		f.Key3.disabled = true ;
+		f.SSID3.disabled = true ;
+		f.WL3_SEC.disabled = true ;
+	} else {
+		f.WL3_ACTIVE.checked = true;
+	}
+}
+
+function wireless_background_Show()
+{
+	var wireless_background = ""; 
+     
+		 var a=navigator.appVersion.split(";");
+     var b=a[1].split(" ");
+     if (b[2] == '6.0')
+     {
+         wireless_background +='<div style="position:relative; left:0px; top:0px;">';
+         wireless_background +='<div class="IE6_wireless_info"><img src="wireless_info.png" style="width:840px; height:325px;"></div>';
+         wireless_background +='<div class="IE6_ArangeFourColumn">';    
+     }
+     else
+     {		   
+         wireless_background +='<div style="position:relative; left:0px; top:0px;">';
+         wireless_background +='<div  class="wireless_info">';
+         wireless_background +='<div  class="ArangeFourColumn">';
+     }
+     document.write(wireless_background);  
+}
+
+function wireless_background_end_Show()
+{
+     var wireless_background_end=""; 
+  	 var a=navigator.appVersion.split(";");
+     var b=a[1].split(" ");
+     
+     if (b[2] == '6.0')
+     {
+     wireless_background_end=' ';
+     }
+     else
+     {		   
+     wireless_background_end='</div>';
+     }
+      document.write(wireless_background_end);
+}
+
+
+function ignoreSpaces ( string )
+{
+	var temp = "";
+  var	string = '' + string;
+	var splitstring = string.split(" ");
+
+	for ( var i = 0 ; i < splitstring.length ; i++ ) 
+	{
+		temp += splitstring[i];
+	}
+	return temp;
+}
+
+function Hex_check(f,WL){
+	var ch;
+  	var oldkey = eval("f.Key"+WL).value;
+	for ( var iln = 0 ; iln < oldkey.length ; iln++ ) 
+	{
+		var ch = oldkey.charAt(iln).toLowerCase();
+
+		if (ch >= '0' && ch <= '9' || ch >= 'a' && ch <= 'f') 
+		{
+
+		}
+		else 
+		{
+			alert (translate_str("WirelessSecurity",36) + "\"" + ch + "\" " + translate_str("WirelessSecurity",37) + "\"" + oldkey + "\"");
+			eval("f.Key"+WL).focus();;
+			return false;
+		}
+	}
+
+	return true ;
+}
+
+function ValidateHexKey(WL)
+{
+	var f=document.edit;
+
+	if ( eval("f.WL"+WL+"_SEC").value == "none"  ){
+//		alert("Value = "+ eval("f.WL"+WL+"_SEC").value);
+//		Do not need to check.
+	}
+	else if ( eval("f.WL"+WL+"_SEC").value == "wep40" || eval("f.WL"+WL+"_SEC").value == "wep104"  ){
+	
+		//alert("WL="+WL+"\nTYPE is WEP!!!");
+	
+		if ( eval("f.WL"+WL+"_SEC").value == "wep40"  ) 
+		{               
+			if ( eval("f.Key"+WL).value.length == 0 ) 
+			{
+				eval("f.Key"+WL).value = '';
+			} 
+			else if ( eval("f.Key"+WL).value.length != 10 ) 
+			{
+				alert(translate_str("WirelessSecurity",30) + translate_str("WirelessSecurity",31));
+				eval("f.Key"+WL).focus();;
+				return false;
+			}
+		} 
+		else if ( eval("f.WL"+WL+"_SEC").value == "wep104"  ) 
+		{
+			if ( eval("f.Key"+WL).value.length == 0 ) 
+			{
+				feval("f.Key"+WL).value = '';
+			} 
+			else if ( eval("f.Key"+WL).value.length != 26 ) 
+			{
+				alert(translate_str("WirelessSecurity",30) + translate_str("WirelessSecurity",31));
+				eval("f.Key"+WL).focus();;
+				return false;
+			}
+		}
+
+		if(Hex_check(f,WL)){
+			//alert("Hex_check_Passwf!");
+		}
+		else{
+			//alert("Hex_check_Fail");
+			return false;
+		}
+	}
+	else{
+
+		//alert("WL="+WL+"\nTYPE is WPA!!!"+eval("f.WL"+WL+"_SEC").value );
+
+		var oldkey = eval("f.Key"+WL).value;
+
+		if(oldkey.length >= 8 && oldkey.length <= 64)
+		{
+		
+			//alert("WL="+WL+"\nLength is "+oldkey.length);
+		
+			if(oldkey.length == 64){
+				if(Hex_check(f,WL)){
+					//alert("Hex_check_Passed!");
+				}
+				else{
+					//alert("Hex_check_Fail");
+					return false;
+				}
+			}
+			else{
+				//alert("WPA length is <= 63   Despite the Hex \n=== "+ oldkey.length);
+			}
+		}
+		else{
+			alert (translate_str("SetupWizard",90));
+			eval("f.Key"+WL).focus();
+			return false;
+		}
+
+	}
+
+	return true;
+}
+
+function ChangeKeyLength(WL_SEC,LKEY)
+{
+	var f=document.edit;
+	var keylength;
+	var key1='', key2='', key3='';
+
+	switch (WL_SEC)
+	{
+		case "WL1_SEC":
+			if(LKEY=="none")
+			{ 
+				f.Key1.disabled = true ;
+			}	
+			else if(LKEY=="wep104")
+			{ 
+				f.Key1.maxLength = 26;
+				keylength=26;	   				   			
+				f.Key1.value = "<%nvram_get("wl1_key1");%>";
+				f.Key1.disabled = false ;
+			}	
+			else if (LKEY=="wep40")
+			{
+				f.Key1.maxLength = 10;
+				keylength=10;	   					   				
+				f.Key1.value = "<%nvram_get("wl1_key1");%>";
+				f.Key1.disabled = false ;
+			}
+			else {
+				f.Key1.maxLength = 64;
+				keylength=64;	   					   				
+				f.Key1.value = "<%nvram_get("wl1_pskkey");%>";
+				f.Key1.disabled = false ;
+			}
+
+			for (var i=0; i< keylength; i++)
+			{
+				key1 += f.Key1.value.charAt(i);						
+			}	
+				f.Key1.value = key1;
+				
+			break;
+
+		case "WL2_SEC":
+			if (LKEY=="none")
+			{
+				f.Key2.disabled = true ;
+			}
+			else if (LKEY=="wep104")
+			{
+				f.Key2.maxLength = 26;
+				keylength=26;	   			
+				f.Key2.value = "<%nvram_get("wl0_key1");%>";
+				f.Key2.disabled = false ;
+			}
+			else if (LKEY=="wep40")
+			{
+				f.Key2.maxLength = 10;
+				keylength=10;   			
+				f.Key2.value = "<%nvram_get("wl0_key1");%>";
+				f.Key2.disabled = false ;
+			}
+			else {
+				f.Key2.maxLength = 64;
+				keylength=64;	   					   				
+				f.Key2.value = "<%nvram_get("wl0_pskkey");%>";
+				f.Key2.disabled = false ;
+			}
+
+			for (var i=0; i< keylength; i++)
+			{
+				key2 += f.Key2.value.charAt(i);						
+			}	
+				f.Key2.value = key2;
+				
+			break;
+
+		case "WL3_SEC":
+			if (LKEY=="wep104")
+			{
+				f.Key3.maxLength = 26;
+				keylength=26; 	   				
+			}
+			else if (LKEY=="wep40")
+			{
+				f.Key3.maxLength = 10;
+				keylength=10;   				   		
+			}
+
+			for (var i=0; i< keylength; i++)
+			{
+				key3 += f.Key3.value.charAt(i);						
+			}	
+				f.Key3.value = key3;
+				
+			break;		      
+
+		default:
+			f.Key1.maxLength = 26;
+			f.Key2.maxLength = 26;
+			f.Key3.maxLength = 26;
+			keylength=26; 
+
+			for (var i=0; i< keylength; i++)
+			{
+				key1 += f.Key1.value.charAt(i);
+				key2 += f.Key2.value.charAt(i);
+				key3 += f.Key3.value.charAt(i);
+			}	
+				f.Key1.value = key1;
+				f.Key2.value = key2;
+				f.Key3.value = key3;
+
+			break;
+	}
+
+
+	return true;   
+
+}
+
+function ValidateForm(f) 
+{
+  var f=document.edit;
+	f.wl1_ssid.value = f.SSID1.value;
+	f.wl0_ssid.value = f.SSID2.value;
+	f.wl2_ssid.value = f.SSID3.value;
+
+	if (f.WL1_SEC.selectedIndex == 0)
+		f.wl1_sec_mode.value = 'none';
+	else if (f.WL1_SEC.selectedIndex == 1){
+		f.wl1_sec_mode.value = 'WPA1WPA2';
+		f.wl1_wpaenc.value = '2';
+	}
+	else if(f.WL1_SEC.selectedIndex == 2){
+		f.wl1_sec_mode.value = 'psk';
+		f.wl1_wpaenc.value = '0';
+	}
+	else if(f.WL1_SEC.selectedIndex == 3){
+		f.wl1_sec_mode.value = 'wep';
+		f.wl1_keylength.value = "104" ;
+	}
+	else if(f.WL1_SEC.selectedIndex == 4){
+		f.wl1_sec_mode.value = 'wep';
+		f.wl1_keylength.value = "40" ;
+	}
+
+
+	if (f.WL2_SEC.selectedIndex == 0)
+		f.wl0_sec_mode.value = 'none';
+	else if (f.WL2_SEC.selectedIndex == 1){
+		f.wl0_sec_mode.value = 'WPA1WPA2';
+		f.wl0_wpaenc.value = '2';
+	}
+	else if (f.WL2_SEC.selectedIndex == 2){
+		f.wl0_sec_mode.value = 'psk';
+		f.wl0_wpaenc.value = '0';
+	}
+	else if (f.WL2_SEC.selectedIndex == 3){
+		f.wl0_sec_mode.value = 'wep';
+		f.wl0_keylength.value = "104" ;
+	}
+	else if (f.WL2_SEC.selectedIndex == 4){
+		f.wl0_sec_mode.value = 'wep';
+		f.wl0_keylength.value = "40" ;
+	}
+
+	if (f.WL3_SEC.selectedIndex == 0){
+		f.wl2_sec_mode.value = 'wep';
+		f.wl2_keylength.value = "104" ;
+	}
+	else if (f.WL3_SEC.selectedIndex == 1){
+		f.wl2_sec_mode.value = 'wep';
+		f.wl2_keylength.value = "40" ;
+	}
+
+
+	f.wl1_pskkey.value = f.Key1.value;
+	f.wl0_pskkey.value = f.Key2.value;
+	f.wl2_pskkey.value = f.Key3.value;
+	f.wl1_key1.value = f.Key1.value;
+	f.wl0_key1.value = f.Key2.value;
+	f.wl2_key1.value = f.Key3.value;
+	f.wl1_txkey.value = 1;
+	f.wl0_txkey.value = 1;
+	f.wl2_txkey.value = 1;
+
+	if (f.WL1_ACTIVE.checked == false)
+		f.wl1_wlmode.value = 0;
+	else
+		f.wl1_wlmode.value = 1;
+
+	if (f.WL2_ACTIVE.checked == false)
+		f.wl0_wlmode.value = 0;
+	else
+		f.wl0_wlmode.value = 1;
+
+	if (f.WL3_ACTIVE.checked == false)
+		f.wl2_wlmode.value = 0;
+	else
+		f.wl2_wlmode.value = 1;
+		
+			if (f.WL1_ACTIVE.checked == false)
+		f.wl1_wlmode.value = 0;
+				else
+		f.wl1_wlmode.value = 1;
+
+	if (f.WL2_ACTIVE.checked == false)
+		f.wl0_wlmode.value = 0;
+			else
+		f.wl0_wlmode.value = 1;
+
+	if (f.WL3_ACTIVE.checked == false)
+		f.wl2_wlmode.value = 0;
+		else
+		f.wl2_wlmode.value = 1;
+
+
+if (f.WL1_ACTIVE.checked == true)		
+{		
+	if(isBlank(f.SSID1.value)) 
+	{
+		alert(translate_str("BasicWireless",10));
+		f.SSID1.focus();
+		return;
+	}
+
+	if(isBlank(f.Key1.value) && f.WL1_SEC.selectedIndex != "0") 
+	{
+		alert (translate_str("JavaScript",164));
+		f.Key1.focus();
+		return;
+	}
+			 	
+	if ( ValidateHexKey('1') == false )
+		return;
+}
+
+if (f.WL2_ACTIVE.checked == true)		
+ {		
+	if(isBlank(f.SSID2.value)) 
+	{
+		alert(translate_str("BasicWireless",10));
+		f.SSID2.focus();
+		return;
+	}
+
+	if(isBlank(f.Key2.value) && f.WL2_SEC.selectedIndex != "0") 
+	{
+		alert (translate_str("JavaScript",164));
+		f.Key2.focus();
+		return;
+	}
+
+
+
+	if ( ValidateHexKey('2') == false )
+		return;
+
+} 
+
+if (f.WL3_ACTIVE.checked == true)		
+ {		
+	if ( ValidateHexKey('3') == false )
+		return;
+
+		 	if(isBlank(f.SSID3.value)) 
+		 	{
+				alert(translate_str("BasicWireless",10));
+				f.SSID3.focus();
+				return;
+		 	}
+ 	
+ 		if(isBlank(f.Key3.value)) 
+		 	{
+		 		alert (translate_str("JavaScript",164));
+				f.Key3.focus();
+				return;
+		 	}		 	
+} 
+
+	sec_mode0 = '<%nvram_get("wl0_sec_mode");%>';
+	sec_mode1 = '<%nvram_get("wl1_sec_mode");%>';
+	
+	if(sec_mode0.toLowerCase().indexOf("Radius".toLowerCase(),0) != -1 || sec_mode1.toLowerCase().indexOf("Radius".toLowerCase(),0) != -1)
+		f.wps_enabled.value = 0;
+	else
+		f.wps_enabled.value = 1;
+
+	f.wsc_config_state.value = 1;
+
+	if ( (f.Key1.value == '') && (f.Key2.value == '') && (f.Key3.value == '') ) 
+	{
+	   	alert(translate_str("WirelessSecurity",32));
+		return;
+	}
+
+	f.submit();
+}
+
+
+
+
+function mouseOver(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("wireless").src = "signak_icon_bri.png";
+}
+
+function mouseOut(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("wireless").src = "signak_icon_bri.png";
+}
+
+ function isBlank(s) 
+{
+	for(var i = 0; i < s.length; i++) {
+		var c = s.charAt(i);
+		if((c !=' ') && (c!='\n') && (c !='\t')) 
+			return false;
+	}
+	return true;
+}
+
+var language_show = 0;
+function open_language()
+{
+	 var language_choice = document.getElementById('language');
+	 
+	if(language_show == '1') {
+		language_show = 0;
+		language_choice.style.visibility="hidden";
+	}
+	else {
+		language_show = 1;
+		language_choice.style.visibility="visible";
+	}
+}
+
+function apply_lang(e)
+{
+	var f1 = document.forms[1];
+	f1.language_str.value = e;
+ 	f1.submit();
+}
+
+function chage_color(e)
+{
+	e.style.color="#4F81BD";
+	e.style.textDecoration="underline"; 
+}
+
+function back_color(e)
+{
+	e.style.color="#B8B8B8";
+	e.style.textDecoration="none"; 
+}
+
+</Script>
+
+</head>
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="edit" action="post_wl.cgi" method="post">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_status_wireless.htm">
+<input type="hidden" name="redirect_timer" value="20000">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value=" wps_enabled wsc_config_state wl0_ssid wl1_ssid wl2_ssid wl0_sec_mode wl1_sec_mode wl1_wpaenc wl0_wpaenc wl2_sec_mode wl0_pskkey wl1_pskkey wl2_pskkey wl0_key1 wl1_key1 wl2_key1 wl0_txkey wl1_txkey wl2_txkey wl0_wlmode wl1_wlmode wl2_wlmode wl1_keylength wl0_keylength wl2_keylength">
+<input type="hidden" name="wl0_ssid" value="">
+<input type="hidden" name="wl1_ssid" value="">
+<input type="hidden" name="wl2_ssid" value="">
+<input type="hidden" name="wl0_sec_mode" value="">
+<input type="hidden" name="wl1_sec_mode" value="">
+<input type="hidden" name="wl2_sec_mode" value="">
+<input type="hidden" name="wl0_wpaenc" value="">
+<input type="hidden" name="wl1_wpaenc" value="">
+<input type="hidden" name="wl0_pskkey" value="">
+<input type="hidden" name="wl1_pskkey" value="">
+<input type="hidden" name="wl2_pskkey" value="">
+<input type="hidden" name="wl0_key1" value="">
+<input type="hidden" name="wl1_key1" value="">
+<input type="hidden" name="wl2_key1" value="">
+<input type="hidden" name="wl0_txkey" value="">
+<input type="hidden" name="wl1_txkey" value="">
+<input type="hidden" name="wl2_txkey" value="">
+<input type="hidden" name="wl0_wlmode" value="">
+<input type="hidden" name="wl1_wlmode" value="">
+<input type="hidden" name="wl2_wlmode" value="">
+<input type="hidden" name="wps_enabled" value="">
+<input type="hidden" name="wsc_config_state" value="">
+<input type="hidden" name="wl1_keylength" value="">
+<input type="hidden" name="wl0_keylength" value="">
+<input type="hidden" name="wl2_keylength" value="">
+
+	<center>	 
+<table border="0" width="1000">
+	<tr>
+		<td>
+
+<%include_file("adv_logol_header.htm");%>
+
+  <div id="warp">
+  
+    <div class="Pointer_Wirelesspic">&nbsp;</div>
+      <p  style="height:11px;"></p> 
+      <div class="status_background">
+    <p  style="height:40px;">&nbsp;</p> 
+    <p class="adv_title"><script>translate_strWrite("SetupWizard",56);</script></p>
+      	<div class="status_content">
+	    <p  style="height:30px;"></p>
+
+            <Script Language="JavaScript">
+               wireless_background_Show();            
+            </Script>
+					      <div class="FourColumn">  
+					          <p style="text-align:right; line-height:15px; _line-height:25px; width:140px; width: 95px \9; "><script>translate_strWrite("SetupWizard",14);</script></p>
+					          <p style="text-align:right; _line-height:25px; width:140px; width: 85px \9; _width:85px;"><script>translate_strWrite("SetupWizard",15);</script></p>
+					            <p style="height: 15px; _line-height:20px;">&nbsp;</p> 
+					          <p><script>translate_strWrite("SetupWizard",16);</script></p>
+					             <p style="height: 23px; _line-height:10px;">&nbsp;</p> 
+					          <p><script>translate_strWrite("SetupWizard",17);</script></p>
+					           <p style="height: 17px; _line-height:10px;">&nbsp;</p>
+					          <p><script>translate_strWrite("SetupWizard",18);</script></p>
+					          <p style="height: 10px; _line-height:15px;">&nbsp;</p>      
+					          <p><script>translate_strWrite("SetupWizard",19);</script></p>
+					       </div>
+					      
+					        <div class="FourColumn">
+					        	 <p style="line-height: 10px;">&nbsp;</p> 
+					          <p><input class="key_col_width" type="text" name="SSID1" value="" maxlength="32"></p>
+					           <p style="height:9px; _line-height:25px;">&nbsp;</p>
+								<p>
+							    <table border="0" width="190" height="80" style="table-layout:fixed">
+                                <tr>
+                                   <td style="word-wrap : break-word; overflow:hidden;">
+                                       <p class="WirelessText"><script>translate_strWrite("SetupWizard",20);</script></p>
+                                   </td>
+                                </tr>
+                           </table>
+							  </p>
+					          <!--p class="WirelessText"><script>translate_strWrite("SetupWizard",20);</script></p-->
+							
+							    <table border="0" width="190" height="7" style="table-layout:fixed">
+								</table>
+							 
+					           <!--p style="height: 3px; _line-height:25px;">&nbsp;</p-->
+							 
+							    <table border="0" width="190" height="30" style="table-layout:fixed">
+                                <tr>
+                                   <td style="word-wrap : break-word; overflow:hidden;">
+					           <p>&nbsp;<select name="WL1_SEC" class="key_col_width" onChange="ChangeKeyLength(this.name,this.value);">
+																	<option value="none"><?WirelessSecurity_2?></option>
+																	<option value="WPA1WPA2"><?WirelessSecurity_5?></option>
+																	<option value="psk"><?WirelessSecurity_4?></option>
+																	<option value="wep104"><?WirelessSecurity_44?></option>
+																	<option value="wep40"><?WirelessSecurity_43?></option>
+												</select>
+										</p>
+										</td>
+                                </tr>
+                           </table>
+							
+										 <p style="height:13px; _line-height:25px;">&nbsp;</p>  
+					          <p>&nbsp;<input class="key_col_width" type="text" name="Key1" maxlength="64" value=""></p>
+					          <p style="height:12px; _line-height:30px;">&nbsp;</p>  
+					          <p><input name=WL1_ACTIVE type="checkbox" onclick="WL1_act_enable();">&nbsp;&nbsp;
+					          	<script>
+											
+													dw(translate_str("WirelessSecurity",41));
+					          </script>&nbsp;</p>
+					       </div>
+					       <div class="FourColumn"   style="width:25px;"></div>
+					       <div class="FourColumn">
+					       	<p style="line-height:10px;">&nbsp;</p>
+					          <p><input class="key_col_width" type="text" name="SSID2" size="15" value="" maxlength="32"></p>
+					           <p style="height:9px; _line-height:25px;">&nbsp;</p>
+								<p>
+							    <table border="0" width="190" height="80" style="table-layout:fixed">
+                                <tr>
+                                   <td style="word-wrap : break-word; overflow:hidden;">
+                                       <p class="WirelessText"><script>translate_strWrite("SetupWizard",21);</script></p>
+                                   </td>
+                                </tr>
+                           </table>
+							  </p>
+					          <!--p class="WirelessText">&nbsp;<script>translate_strWrite("SetupWizard",21);</script></p-->
+					          <!--p style="height: 9px; _line-height:25px;">&nbsp;</p-->
+							  <table border="0" width="190" height="7" style="table-layout:fixed">
+								</table>
+								
+							    <table border="0" width="190" height="30" style="table-layout:fixed">
+                                <tr>
+                                   <td style="word-wrap : break-word; overflow:hidden;">
+					          <p>&nbsp;<select name="WL2_SEC" class="key_col_width" onChange="ChangeKeyLength(this.name, this.value);">
+																	<option value="none"><?WirelessSecurity_2?></option>
+																	<option value="WPA1WPA2"><?WirelessSecurity_5?></option>
+																	<option value="psk"><?WirelessSecurity_4?></option>
+																	<option value="wep104"><?WirelessSecurity_44?></option>
+																	<option value="wep40"><?WirelessSecurity_43?></option>
+												</select>
+										</p>
+										</td>
+                                </tr>
+                           </table>
+							  
+										 <p style="height: 13px; _line-height:25px;">&nbsp;</p> 
+					          <p>&nbsp;<input class="key_col_width" type="text" name="Key2" maxlength="64" value=""></p>
+					          <p style="height:12px; _line-height:30px;">&nbsp;</p>  
+					          <p><input name=WL2_ACTIVE type="checkbox" onclick="WL2_act_enable();">&nbsp;&nbsp;
+					          	<script>
+											
+													dw(translate_str("WirelessSecurity",41));
+					          </script>&nbsp;</p>
+					       </div>
+					       <div class="FourColumn"   style="width:25px;"></div>
+					       <div class="FourColumn">
+					       		<p style="line-height:10px;">&nbsp;</p> 
+					          <p><input type="text" class="key_col_width" name="SSID3" size="15" value="" maxlength="32"></p>
+					         <p style="height:9px; _line-height:25px;">&nbsp;</p>
+								<p>
+							    <table border="0" width="190" height="80" style="table-layout:fixed">
+                                <tr>
+                                   <td style="word-wrap : break-word; overflow:hidden;">
+                                       <p class="WirelessText"><script>translate_strWrite("SetupWizard",22);</script></p>
+                                   </td>
+                                </tr>
+                           </table>
+							  </p>
+					          <!--p class="WirelessText">&nbsp;&nbsp;<script>translate_strWrite("SetupWizard",22);</script><br><br><br></p-->
+					           <!--p style="height: 9px; _line-height:25px;">&nbsp;</p-->  
+					          <table border="0" width="190" height="7" style="table-layout:fixed">
+								</table>
+							  
+							    <table border="0" width="190" height="30" style="table-layout:fixed">
+                                <tr>
+                                   <td style="word-wrap : break-word; overflow:hidden;">
+							  
+							  <p>&nbsp;<select name="WL3_SEC" class="key_col_width" onChange="ChangeKeyLength(this.name, this.value);">
+																<option value="wep104"><?WirelessSecurity_44?></option>
+																<option value="wep40"><?WirelessSecurity_43?></option>
+												</select>
+										</p>
+									</td>
+                                </tr>
+                           </table>
+							 
+							  
+										 <p style="height: 13px; _line-height:25px;">&nbsp;</p> 
+					          <p>&nbsp;<input class="key_col_width" type="text" name="Key3" maxlength="64" value=""></p>
+					         <p style="height:12px; _line-height:30px;">&nbsp;</p>    
+					          <p><input name=WL3_ACTIVE type="checkbox" onclick="WL3_act_enable();">&nbsp;&nbsp;
+					          	<script>
+																				
+													dw(translate_str("WirelessSecurity",41));
+					          </script>&nbsp;</p>
+					       </div>
+    				</div>
+    			  <Script Language="JavaScript">
+              wireless_background_end_Show();        
+            </Script>	 
+    			<div class="clear_float"> </div>     
+    			 </div>
+		      <p class="status_end"></p>     
+      </div> 
+   </div>
+    		    														    						    			    
+			<div style="text-align:left \9;"><img src="transparency.gif" style="width:190px; height:1px;"><img id="one_angle" src="angle_inverse.png"><img src="transparency.gif" style="width:327px; height:1px;"><img id="two_angle" src="angle_inverse.png"></div>
+    	<div class="EZ_mid">  	 		
+      		<p style="height:10px;"></p>      		 		  				    
+				  <div class="Advanced_WPS_button">
+				  <table border="0" cellspacing="0" cellpadding="0" width=600>
+				  	<tr height=23 width=600>
+				  		<td align="left" width=80>
+					  		<table border="0" cellspacing="0" cellpadding="0">
+									<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="adv_wireless_setting.htm">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("SetupWizard",61);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										</tr>
+									</table>
+							</td>
+							<!--td align="center"><img src="transparency.gif" style="width:210px; _width:215px; height:1px;"></td-->
+							<td align="right" width=285>
+					  		<table border="0" cellspacing="0" cellpadding="0">
+									<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="adv_status_wireless.htm">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",1);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										</tr>
+									</table>
+							</td>
+				  	<td align="center" width="60">&nbsp;<script>translate_strWrite("BasicSetup",162);</script>&nbsp;
+				  		</td>
+				  	<td align="left" width=200>
+				  		<table border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+									<td class="SW_LeftButton">&nbsp;</td>
+									<td class="SW_BottomButton"><a href="javascript:ValidateForm(document.forms[0]);">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",0);</script></font>&nbsp;</a></td>
+									<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+							</td>
+						</tr>
+				  </table>
+					</div>	  				    					    														    						    			    
+      </div>
+      
+         		
+       <div style="height: 20px"></div>    
+		      <div class="EZ_foot">
+						<div class="EZ_foot_L"><img src="bottom_help_icon.png" style="position:relative;top:3pt;">&nbsp;<a href="help/<%nvram_get("language_str");%>/default.htm#EditSettings" target="_blank"><script>translate_strWrite("SetupWizard",64);</script></a>&nbsp;<img src="transparency.gif" style="width:15px;height:1px;"><a href="javascript:open_language();"><img src="bottom_language_icon.png" style="position:relative;top:3pt;">&nbsp;<script>translate_strWrite("BasicSetup",167);</script></a>&nbsp;&nbsp
+							<span id="language" style="visibility:hidden;">
+								<a href="javascript:apply_lang('en');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">English</font></a>&nbsp;&nbsp;
+								<a href="javascript:apply_lang('fr');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Fran&ccedil;ais</font></a>&nbsp;&nbsp;
+								<!--a href="javascript:apply_lang('spa');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Spanish</font></a--></span>
+						</div>
+						<div class="EZ_foot_C"></div>
+						<div class="EZ_foot_R"></div>
+		      </div>
+         <div class="clear_float"> </div>  
+  
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+		</td>
+	</tr>
+	</table>
+</center>
+</form>
+
+<form method="post" action="save.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_edit_wireless.htm">
+<input type="hidden" name="redirect_timer" value="0">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="language_str">
+<input type="hidden" name="language_str" value="<%nvram_get("language_str");%>">
+</form>
+<!--[if lt IE 7]>
+<script defer type="text/javascript" src="ie6fix.js"></script>
+<![endif]-->
+<script type="text/javascript">
+  document.getElementById("wireless").src = "signak_icon_bri.png";
+  document.getElementById("one_angle").src = "angle_inverse.gif";
+  document.getElementById("two_angle").src = "angle_inverse.gif";
+</script>
+
+</body>
+</html>

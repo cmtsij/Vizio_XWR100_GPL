@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title></title>
+<%include_file("javascript.htm");%>
+
+<style type="text/css">
+.Router_status2 {
+    font-family: "Trebuchet", "Arial", "Helvetica", "sans-serif";
+	font-size: 12pt;
+	height: auto;
+	color:#B8B8B8;
+	font-weight: normal;
+	text-align:center;
+	line-height:35px;
+	margin: auto auto;
+}
+</style>
+
+
+<script language="JavaScript">
+
+	var bandwidth = '<%bandwidth();%>';
+	if (bandwidth == ''){
+//		alert(translate_str("SetupWizard",1));
+		var bandwidth_M = 0 ;
+	}
+	else
+		var bandwidth_M = bandwidth/1024 ;
+		
+
+</SCRIPT>
+</head>
+<body bgcolor="#FFFFFF" >
+<form name="form_upgrade"  enctype="multipart/form-data" method=POST action="UploadCfgFile.cgi">
+
+<table border="0" >
+	<tr>
+		<td>
+  <div id="warp3">
+
+      	<div class="Router_status2">
+      		<p style="height: 15pt">&nbsp;</p>
+<!----Add Pop-up windows start----->
+                    <table border="0" cellpadding="0" cellspacing="0" >
+					<tr>
+						<td width="250" align="center" valign="bottom">
+						<SCRIPT>
+							if(bandwidth_M <3 && bandwidth_M > 1  )
+								dw("<img src=\"SD_bri.png\">");
+							else
+								dw("<img src=\"SD_dark.png\">");
+						</SCRIPT>
+						</td>
+						<td width="250" align="center" valign="bottom">
+						<SCRIPT>
+							if(bandwidth_M >= 3 && bandwidth_M < 10)
+								dw("<img src=\"HD_bri.png\">");
+							else
+								dw("<img src=\"HD_dark.png\">");
+						</SCRIPT>
+						</td>
+						<td width="250" align="center" valign="bottom">
+						<SCRIPT>
+							if(bandwidth_M >= 10 )
+								dw("<img src=\"HD2_bri.png\">");
+							else
+								dw("<img src=\"HD2_dark.png\">");
+						</SCRIPT>
+						</td>
+					</tr>
+					<tr>
+						<td align="center">1Mb - 3Mb</td>
+						<td align="center">3Mb - 10Mb</td>
+						<td align="center">10Mb +</td>
+					</tr>
+					<tr>
+						<td align="center"><script>translate_strWrite("JavaScript",145);</script><br><script>translate_strWrite("JavaScript",148);</script></td>
+						<td align="center"><script>translate_strWrite("JavaScript",146);</script><br><script>translate_strWrite("JavaScript",149);</script></td>
+						<td align="center"><script>translate_strWrite("JavaScript",147);</script><br><script>translate_strWrite("JavaScript",148);</script></td>
+					</tr>
+
+
+					</table>
+                      
+		    		<p style="height: 25px">&nbsp;</p>
+
+<!----Add Pop-up windows End----->
+  
+      </div>  
+            
+
+  </div>
+		</td>
+	</tr>
+	</table>
+</form>
+</body>
+</html>

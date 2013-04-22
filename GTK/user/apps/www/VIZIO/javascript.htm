@@ -1,0 +1,43 @@
+
+<meta http-equiv="Pragma" content="no-cache"> 
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
+<link rel="stylesheet" type="text/css" href="template.css">
+<script language="JavaScript" type="text/javascript" src="nsutil.js"></script>
+<script Language="JavaScript" type="text/javascript" src="dl.js"></script>
+<script Language="JavaScript" type="text/javascript" src="setup.js"></script>
+<script Language="JavaScript" type="text/javascript" src="lan.js"></script>
+<script Language="JavaScript" type="text/javascript" src="wan.js"></script>
+<script Language="JavaScript" type="text/javascript" src="dhcp.js"></script>
+<script Language="JavaScript" type="text/javascript" src="ddns.js"></script>
+<script language="JavaScript" type="text/javascript" src="routing.js"></script>
+<script Language="JavaScript" type="text/javascript" src="WirelessSecurity.js"></script>
+<script Language="JavaScript" type="text/javascript" src="advwireless.js"></script>
+<script language="JavaScript" type="text/javascript" src="filters.js"></script>
+<script Language="JavaScript" type="text/javascript" src="status.js"></script>
+<script Language="JavaScript" type="text/javascript" src="jquery-1.4.2.min.js"></script>
+<script Language="JavaScript" type="text/javascript" src="ajaxfileupload.js"></script>
+<script Language="JavaScript" type="text/javascript" src="language/<%nvram_get("language_str");%>/language.js"></script>
+
+
+<!--[if lt IE 7]>
+<script defer type="text/javascript" src="ie6pngfix.js"></script>
+<![endif]-->
+
+<script>
+ function show_network_status()
+ {
+	var img_connect=document.getElementById("pic_connect_state");
+	
+	var connect_check='<%nvram_get("wan_connect");%>';	
+		if (connect_check==1)
+	 { 
+    $("#pic_connect_state").removeClass().addClass("network_status_on");
+	  img_connect.src="internet_online.png";	
+	 }	
+	else
+	{
+	  $("#pic_connect_state").removeClass().addClass("network_status_on");
+		img_connect.src="internet_offline.png";	
+	}
+	}
+</script>	

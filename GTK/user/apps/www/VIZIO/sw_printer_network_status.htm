@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title></title>
+<%include_file("javascript.htm");%>
+
+<style>
+	
+body {
+	background-image:url(background_line.png);
+	font-family: "Trebuchet", "Arial", "Helvetica", "sans-serif";
+	width:auto;
+	text-align:left;
+	color:black;
+	margin:0;
+	padding:0;
+}
+
+
+a.EZ_mid_text {
+	height:auto;
+	font-size: 10pt;
+	color:#B8B8B8;
+	text-align:center;
+	text-decoration: none;
+}
+
+
+a.EZ_mid_text:link {
+	height:auto;
+	font-size: 10pt;
+	color:#B8B8B8;
+	text-align:center;
+	text-decoration: none;
+}
+
+a.EZ_mid_text:hover {
+	height:auto;
+	font-size: 10pt;
+	color:#B8B8B8;
+	text-align:center;
+	text-decoration: none;
+}
+
+a.EZ_mid_text:visited {
+	height:auto;
+	font-size: 10pt;
+	color:#B8B8B8;
+	text-align:center;
+	text-decoration: none;
+}
+
+.printr_status {
+    font-family: "Trebuchet", "Arial", "Helvetica", "sans-serif";
+	font-size: 10.5pt;
+	height: auto;
+	color:#B8B8B8;
+	font-weight: normal;
+	line-height:15pt;
+
+}
+</style>
+</head>
+
+<body onLoad="InitValue(document.forms[0]);">
+
+<form>	
+<center>
+
+			<table border="0" class="adv_title_print">
+			<tr height="80"><td><script>translate_strWrite("SetupWizard",32);</script></td></tr></table> 
+			  
+			<table border="1" bordercolor="#B8B8B8" cellpadding="0" cellspacing="0" class="printr_status">
+				<tr><td colspan="2"><script>translate_strWrite("SetupWizard",27);</script></td></tr>
+				<tr><td colspan="2"><script>translate_strWrite("SetupWizard",28);</script></td></tr>
+				<tr><td colspan="2"><script>translate_strWrite("SetupWizard",29);</script></td></tr>
+				<tr><td colspan="2"><script>translate_strWrite("SetupWizard",31);</script></td></tr>
+				<tr height="15"><td colspan="2">&nbsp;</td></tr>
+				
+				<tr><td colspan="2" align="center"><B><script>translate_strWrite("RouterStatus",14);</script></B></td></tr>
+				<tr><td  width="140"><script>translate_strWrite("BasicWireless",6);</script></td><td><script>dw("<%nvram_get("wl1_ssid");%>");</script>&nbsp;</td></tr>
+				<tr><td><script>translate_strWrite("SetupWizard",16);</script></td><td><script>translate_strWrite("SetupWizard",20);</script></td></tr>
+				<tr><td><script>translate_strWrite("SetupWizard",17);</script></td><td><script>ShowWEPStatus('<%nvram_get("wl1_sec_mode");%>');
+					          </script>&nbsp;</td></tr>
+				<tr><td><script>translate_strWrite("SetupWizard",18);</script></td><td><script>dw("<%nvram_get("wl1_pskkey");%>");</script>&nbsp;</td></tr>					          
+				<tr><td><script>translate_strWrite("SetupWizard",19);</script></td><td>	<script>
+												if('<%nvram_get("wl1_wlmode");%>' == '0')
+													dw(translate_str("WirelessSecurity",42));
+												else
+													dw(translate_str("WirelessSecurity",41));
+													
+					          </script>&nbsp;</td></tr>						
+					
+											
+				<tr height="15"><td colspan="2">&nbsp;</td></tr>
+				<tr><td colspan="2" align="center"><B><script>translate_strWrite("RouterStatus",15);</script></B></td></tr>
+				<tr><td><script>translate_strWrite("BasicWireless",6);</script></td><td><script>dw("<%nvram_get("wl0_ssid");%>");</script>&nbsp;</td></tr>
+				<tr><td><script>translate_strWrite("SetupWizard",16);</script></td><td><script>translate_strWrite("SetupWizard",21);</script></td></tr>
+				<tr><td><script>translate_strWrite("SetupWizard",17);</script></td><td><script>ShowWEPStatus('<%nvram_get("wl0_sec_mode");%>');
+					          </script>&nbsp;</td></tr>
+				<tr><td><script>translate_strWrite("SetupWizard",18);</script></td><td><script>dw("<%nvram_get("wl0_pskkey");%>");</script>&nbsp;</td></tr>					          
+				<tr><td><script>translate_strWrite("SetupWizard",19);</script></td><td>	<script>
+												if('<%nvram_get("wl0_wlmode");%>' == '0')
+													dw(translate_str("WirelessSecurity",42));
+												else
+													dw(translate_str("WirelessSecurity",41));
+													
+					          </script>&nbsp;</td></tr>	
+					          
+				<tr height="15"><td colspan="2">&nbsp;</td></tr>
+				<tr><td colspan="2" align="center" ><B><script>translate_strWrite("SetupWizard",33);</script></B></td></tr>
+				<tr><td><script>translate_strWrite("BasicWireless",6);</script></td><td><script>dw("<%nvram_get("wl2_ssid");%>");</script>&nbsp;</td></tr>
+				<tr><td><script>translate_strWrite("SetupWizard",16);</script></td><td><script>translate_strWrite("SetupWizard",22);</script></td></tr>
+				<tr><td><script>translate_strWrite("SetupWizard",17);</script></td><td><script>ShowWEPStatus('<%nvram_get("wl2_sec_mode");%>');
+					          </script>&nbsp;</td></tr>
+				<tr><td><script>translate_strWrite("SetupWizard",18);</script></td><td><script>dw("<%nvram_get("wl2_key1");%>");</script>&nbsp;</td></tr>					          
+				<tr><td><script>translate_strWrite("SetupWizard",19);</script></td><td>	<script>
+												if('<%nvram_get("wl2_wlmode");%>' == '0')
+													dw(translate_str("WirelessSecurity",42));
+												else
+													dw(translate_str("WirelessSecurity",41));
+													
+					          </script>&nbsp;</td></tr>	
+
+			 								
+				</table>
+					<div style="height: 20px"></div>    
+			   	<table border="0" class="printr_status">
+					<tr><td colspan="2" align="center" style="line-height:20px;">
+					../images class="EZ_mid_text" href="javascript:window.print();"><img src="sw_printer.png">&nbsp;<script>translate_strWrite("SetupWizard",84);</script>&nbsp;</a-->
+					<div class="EZ_foot_C" style="position:relative;top:-8pt; left:110pt;"><a class="EZ_mid_text" href="javascript:window.print();"><img src="sw_printer.png" style="position:relative;top:3pt;">&nbsp;<script>translate_strWrite("SetupWizard",84);</script>&nbsp;</a></div>
+					 </td></tr>	
+			   	
+			   	</table> 
+			   	
+			   	<div style="height:20px;"></div>
+        	<div class="copyright_print" style="text-align:center;">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+
+</form>
+</center>
+</body>
+</html>

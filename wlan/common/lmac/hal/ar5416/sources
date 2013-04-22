@@ -1,0 +1,58 @@
+#
+#  SOURCES file for ar5212 module
+#
+
+HAL_TOP=..
+TOP=$(HAL_TOP)\..\..\..
+INC=$(TOP)\include
+
+!IFDEF BUILD_UMAC
+INC_MP=$(TOP)\os\win_nwf\include
+!ELSE
+INC_MP=$(INC)\winvista
+!ENDIF
+
+!include $(INC_MP)\sources.inc
+
+TARGETNAME=ath_hal_ar5416
+TARGETPATH=$(TOP)\lib
+TARGETTYPE=LIBRARY
+
+INCLUDES= $(INCLUDES)            \
+    $(HAL_TOP);                  \
+    $(INC);                      \
+    $(INC_MP);                   \
+    $(SDXROOT)\net\inc;          \
+    $(DDK_INC_PATH)
+
+HAL_OSDEP_INCLUDES=$(HAL_TOP)\winvista;
+
+INCLUDES=$(HAL_OSDEP_INCLUDES) $(INCLUDES) 
+
+!IF "$(DDKBUILDENV)"=="chk"
+C_DEFINES=$(C_DEFINES) -DAH_DEBUG=1
+!ENDIF
+
+C_DEFINES=$(C_DEFINES) -DAH_SUPPORT_WRITE_EEPROM -DSLOW_ANT_DIV -DATH_BT_COEX
+
+SOURCES=$(SOURCES)            	\
+	ar2133.c		\
+	ar5416_gpio.c        	\
+	ar5416_radar.c    	\
+	ar5416_xmit.c		\
+	ar5416_xmit_ds.c	\
+	ar5416_interrupts.c  	\
+	ar5416_recv.c     	\
+	ar5416_recv_ds.c     	\
+	ar5416_ani.c     	\
+	ar5416_keycache.c    	\
+	ar5416_attach.c  	\
+	ar5416_misc.c        	\
+	ar5416_beacon.c  	\
+	ar5416_phy.c         	\
+	ar5416_eeprom.c  	\
+	ar5416_power.c       	\
+	ar5416_reset.c		\
+	ar5416_eeprom_def.c	\
+	ar5416_eeprom_4k.c	\
+	ar5416_eeprom_ar9287.c

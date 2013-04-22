@@ -1,0 +1,90 @@
+cons="  root tty    666"
+pty="  root tty    666"
+disk="  root disk   666"
+mtd="  root root   666"
+null="  root root   666"
+watchdog="  root root   666"
+ppp="  root root   666"
+makedev () {    # usage: makedev name [bcu] major minor owner group mode
+        if [ "$opt_v" ]
+        then    if [ "$opt_d" ]
+                then    echo "rm -f $1"
+                else    echo "$1        = $2 $3 $4 $5:$6 $7"
+                fi
+        fi
+        [ ! "$opt_n" ] && rm -f $1 &&
+        [ ! "$opt_d" ] && mknod $1 $2 $3 $4 &&
+                chown $5:$6 $1 &&
+                chmod $7 $1
+}
+
+makedev rootdir/dev/console c 5 1 $cons
+makedev rootdir/dev/ram  b 1 1 $disk
+makedev rootdir/dev/ram0 b 1 0 $disk
+makedev rootdir/dev/ram1 b 1 1 $disk
+makedev rootdir/dev/ram2 b 1 2 $disk
+makedev rootdir/dev/ram3 b 1 3 $disk
+makedev rootdir/dev/ram4 b 1 4 $disk
+makedev rootdir/dev/ram5 b 1 5 $disk
+makedev rootdir/dev/ram6 b 1 6 $disk
+makedev rootdir/dev/ram7 b 1 7 $disk
+makedev rootdir/dev/ram8 b 1 8 $disk
+makedev rootdir/dev/ram9 b 1 9 $disk
+makedev rootdir/dev/ram10 b 1 10 $disk
+makedev rootdir/dev/ram11 b 1 11 $disk
+makedev rootdir/dev/ram12 b 1 12 $disk
+makedev rootdir/dev/ram13 b 1 13 $disk
+makedev rootdir/dev/ram14 b 1 14 $disk
+makedev rootdir/dev/ram15 b 1 15 $disk
+
+makedev rootdir/dev/mtd0 c 90 0 $mtd
+makedev rootdir/dev/mtd1 c 90 2 $mtd
+makedev rootdir/dev/mtd2 c 90 4 $mtd
+makedev rootdir/dev/mtd3 c 90 6 $mtd
+makedev rootdir/dev/mtd4 c 90 8 $mtd
+makedev rootdir/dev/mtd5 c 90 10 $mtd
+makedev rootdir/dev/mtd6 c 90 12 $mtd
+makedev rootdir/dev/mtd7 c 90 14 $mtd
+makedev rootdir/dev/mtdblock0 b 31 0 $mtd
+makedev rootdir/dev/mtdblock1 b 31 1 $mtd
+makedev rootdir/dev/mtdblock2 b 31 2 $mtd
+makedev rootdir/dev/mtdblock3 b 31 3 $mtd
+makedev rootdir/dev/mtdblock4 b 31 4 $mtd
+makedev rootdir/dev/mtdblock5 b 31 5 $mtd
+makedev rootdir/dev/mtdblock6 b 31 6 $mtd
+makedev rootdir/dev/mtdblock7 b 31 7 $mtd
+makedev rootdir/dev/mtdr0 c 90 1 $mtd
+makedev rootdir/dev/mtdr1 c 90 3 $mtd
+makedev rootdir/dev/mtdr2 c 90 5 $mtd
+makedev rootdir/dev/mtdr3 c 90 7 $mtd
+makedev rootdir/dev/mtdr4 c 90 9 $mtd
+makedev rootdir/dev/mtdr5 c 90 11 $mtd
+makedev rootdir/dev/mtdr6 c 90 13 $mtd
+makedev rootdir/dev/mtdr7 c 90 15 $mtd
+makedev rootdir/dev/random c 1 8 $mtd
+makedev rootdir/dev/urandom c 1 9 $mtd
+
+makedev rootdir/dev/ptyp0 c 2 0 $pty
+makedev rootdir/dev/ptyp1 c 2 1 $pty
+makedev rootdir/dev/ptyp2 c 2 2 $pty
+
+makedev rootdir/dev/tty0 c 4 0 root root    666
+makedev rootdir/dev/tty1 c 4 1 root root    666
+makedev rootdir/dev/tty2 c 4 2 root root    666
+
+makedev rootdir/dev/ttyp0 c 3 0 root root    666
+makedev rootdir/dev/ttyp1 c 3 1 root root    666
+makedev rootdir/dev/ttyp2 c 3 2 root root    666
+
+makedev rootdir/dev/ttyS0 c 4 64 root root    666
+makedev rootdir/dev/ttyS1 c 4 65 root root    666
+makedev rootdir/dev/ttyS2 c 4 66 root root    666
+
+makedev rootdir/dev/null c 1 3 $null
+makedev rootdir/dev/watchdog c 10 130 $watchdog
+makedev rootdir/dev/ledctrl c 42 0 root root 666
+makedev rootdir/dev/caldata b 31 0 root root 666
+makedev rootdir/dev/ppp c 108 0 $ppp
+makedev rootdir/dev/dk0 c 63 0 root root 666
+makedev rootdir/dev/dk1 c 63 1 root root 666
+cd rootdir/dev;ln -sf ram1 ram

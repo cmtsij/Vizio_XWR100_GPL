@@ -1,0 +1,407 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_117?></title>
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+
+var f=document.edit;
+
+			  //Need Use a CGI function to send the array.
+var myData = [<%vizio_qos_mac_table();%>];
+
+function check_switch(ch){
+	var	f=document.edit;
+
+	if(ch == '1'){
+		f.add_media_mac.disabled = false;
+	}
+	else{
+		f.add_media_mac.disabled = true;
+		f.add_media_mac.value = "00:00:00:00:00:00";
+	}
+}
+
+function delForm(index){
+	var	f=document.edit;
+	
+	if(f.add_media_mac.disabled)
+		return;
+
+	for(i = index ; i < myData.length ; i++){
+		myData[i] = myData[i+1]
+	}
+	
+	//Remove the last entry in array
+	myData.pop();
+   $('#liner_mid').css("height", 23*myData.length);
+  
+	DataShow();
+}
+
+function addForm(){
+	
+	var	f=document.edit;
+	
+	if(f.add_media_mac.disabled)
+		return;
+
+	data_lengh = myData.length;
+	
+	if(data_lengh >= 3){
+		alert(translate_str("SetupWizard",110));
+		return;
+	}
+
+	var new_mac = document.forms[0].add_media_mac.value.toUpperCase(); ; 
+
+	//Check the MAC format
+    if(!IsLegalMACAddress(new_mac)) {
+   		 alert(translate_str("JavaScript",17));
+   		 document.forms[0].add_media_mac.focus();
+            return;
+    }
+
+	//Check the duplicated MAC
+	for(i=0;i<data_lengh;i++){
+		if(new_mac == myData[i]){
+			alert(translate_str("JavaScript",133));
+            return;
+		}
+	}
+
+	myData[data_lengh] = new_mac;
+	  $('#liner_mid').css("height", 23*myData.length);
+	DataShow();		
+}
+
+var TBLHeader = '<table align="left" width="90%" border="0" cellpadding="0" cellspacing="0" align="center" style="color:#B8B8B8;">';
+
+var TBLFooter = "</table>" ;
+
+var TRHeader = "<tr height=\"32\">" ;
+var TRFooter = "</tr>" ;
+
+var TDHeader = "<td valign=\"middle\" class=\"MainTd\" align=\"center\">" ;
+var TDFooter = "</td>" ;
+
+function DataShow()
+{
+	var v = "";
+	v += TBLHeader ;
+		
+	if (myData.length > 0)
+		document.getElementById("qos_tbl").style.display = "block";
+	else
+		document.getElementById("qos_tbl").style.display = "none";
+			
+	for (var i=0; i<myData.length ; i++)	{
+		v += TRHeader ;
+			v += TDHeader ;
+				v += myData[i];
+			v += TDFooter ;
+			v += TDHeader ;
+
+				v += '<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">';
+				v += '<tr height=23>';
+				v += '<td class=\"SW_LeftButton\">&nbsp;</td>';
+				v += '<td class=\"SW_BottomButton\"><a href=\"javascript:onclick=delForm();\">&nbsp;';
+				v	+= '<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);">';
+				v += translate_str("AccessRestriction",37);
+				v	+= '</font>';
+				v += '&nbsp;</a></td><td class=\"SW_RightButton\">&nbsp;</td>';
+				v += '</tr>';
+				v += '</table>';
+				
+			v += TDFooter ;
+		v += TRFooter ;
+
+	}
+	v += TBLFooter;
+	layerWrite('myDiv1', null, v);
+}
+
+var active_win = null;
+function ViewActive()
+{
+	active_win = self.open('WClient_qos.htm','ActiveTable','alwaysRaised,resizable,scrollbars,width=1100,height=540');
+	active_win.focus();
+}
+function InitValue(f)
+{
+ var f=document.edit;
+	  show_network_status();
+
+
+	if ('<%nvram_get("disable_vizio_device");%>' == '1') {
+		f.opt_enable[1].checked = true;
+		check_switch('0');
+	} else {
+		f.opt_enable[0].checked = true;
+		check_switch('1');
+	}
+
+	DataShow();
+}
+
+
+function ValidateForm(f) 
+{
+	if(f.opt_enable[0].checked){
+		f.disable_vizio_device.value = "0" ;
+	}
+	else{
+		f.disable_vizio_device.value = "1" ;
+	}
+	
+	for(i = 0 ; i < myData.length ; i++){
+		eval('f.vizio_device_mac'+i).value = myData[i] ;
+	}
+
+	for(j = myData.length ; j < 3 ; j++){
+		eval('f.vizio_device_mac'+j).value = "00:00:00:00:00:00" ;
+	}
+
+	f.submit();
+}
+
+function mouseOver(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("internet").src = "internet_icon_bri.png";
+}
+
+function mouseOut(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("internet").src = "internet_icon_bri.png";
+}
+var language_show = 0;
+function open_language()
+{
+	 var language_choice = document.getElementById('language');
+	 
+	if(language_show == '1') {
+		language_show = 0;
+		language_choice.style.visibility="hidden";
+	}
+	else {
+		language_show = 1;
+		language_choice.style.visibility="visible";
+	}
+}
+
+function apply_lang(e)
+{
+	var f1 = document.forms[1];
+	f1.language_str.value = e;
+ 	f1.submit();
+}
+
+function chage_color(e)
+{
+	e.style.color="#4F81BD";
+	e.style.textDecoration="underline"; 
+}
+
+function back_color(e)
+{
+	e.style.color="#B8B8B8";
+	e.style.textDecoration="none"; 
+}
+
+
+
+</Script>
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="edit" action="qos.cgi" method="post">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_opt.htm">
+<input type="hidden" name="redirect_timer" value="5000">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value=" disable_vizio_device vizio_device_mac0 vizio_device_mac1 vizio_device_mac2">
+
+<input type="hidden" name="disable_vizio_device">
+<input type="hidden" name="vizio_device_mac0" >
+<input type="hidden" name="vizio_device_mac1" >
+<input type="hidden" name="vizio_device_mac2" >
+
+<center>
+ 			 
+<table border="0" width="1000" >
+	<tr>
+		<td>
+
+<%include_file("adv_logol_header.htm");%>
+   <div id="warp">     
+      <div class="Pointer_Internetpic"></div>
+			<p  style="height:11px;"></p>   
+      <div class="status_background">
+			<p  style="height:30px;"></p>
+			<p class="adv_title_hr"><img src="hr_line.png"> </p>
+      		<p class="adv_title"><script>translate_strWrite("SetupWizard",49);</script></p>
+
+      		<div class="button_status">
+      			<table cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+
+      				<tr height="2"><td colspan="5" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      				<tr height="32">
+      					<td width="300" align="right"><script>translate_strWrite("SetupWizard",50);</script>:</td>
+      					<td width="30">&nbsp;</td>
+      					<td align="left">
+							<input name="opt_enable" value="on" type="radio" onclick="check_switch('1');">&nbsp;
+							<script>translate_strWrite("CheckBox",0);</script>&nbsp;&nbsp;
+							<input name="opt_enable" value="off" type="radio" onclick="check_switch('0');">&nbsp;
+							<script>translate_strWrite("CheckBox",1);</script>&nbsp;
+      					</td>
+      					<td align="center" width="0">&nbsp;</td>
+      			    </tr>
+
+      				<tr height="2"><td colspan="5" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      				<tr height="32">
+      					<td width="300" align="right"><script>translate_strWrite("SetupWizard",51);</script>:</td>
+      					<td width="30">&nbsp;</td>
+      					<td align="left" valign="middle">
+      						<input type="text" name="add_media_mac" maxlength="17" class="ssid_col_width" value="00:00:00:00:00:00">&nbsp;&nbsp;</td>
+      					<td align="center">
+					  		<table border="0" cellspacing="0" cellpadding="0">
+									<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton">
+										<a href="javascript:onclick=addForm();">
+										&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",3);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										</tr>
+							</table>
+						</td>
+						<td width="10">&nbsp;</td>
+							<td width="150" align="left">
+							<table border="0" cellspacing="0" cellpadding="0">
+									<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton">
+										<a href="javascript:onclick=ViewActive();">
+										&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",14);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										</tr>
+							</table>
+							</td>
+      			    </tr>
+
+      				<tr height="2"><td colspan="5" align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+      			    
+      				<tr height="32">
+      					<td colspan="5">
+      					<div id=qos_tbl style="display:none;">
+							<table width="400" cellpadding="0" cellspacing="0" border="0" align="center" style="color:#B8B8B8;">
+								<tr height="32">
+									<td width="120" style="verticle-align:middle;text-align:right;">
+      									<script>translate_strWrite("AccessRestriction",9);</script>
+									</td>
+									<td width="25">&nbsp;</td>
+									<td width="30">
+										<table cellpadding="0" cellspacing="0" border="0" align="center" width="1">
+											<tr height="30">                  
+                        <td class="qos_liner_top">&nbsp;</td>                          
+                      </tr>
+											<tr>
+                        <td id="liner_mid" class="qos_liner_mid">&nbsp;</td>
+                      </tr>
+											<tr height="30">  
+                        <td class="qos_liner_bottom">&nbsp;</td>
+                      </tr>
+										</table>
+									</td>
+									<td width="225">
+										<table width="100%" cellpadding="0" cellspacing="0" border="0" align="center"  align="left">
+											<tr>
+												<td><div id="myDiv1" class="qos_summary_tbl"></td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>		
+							</div>
+      					</td>
+      			    </tr>
+
+      			</table>
+		     <p style="line-heigt:42px;">&nbsp;</p>
+		      <p class="status_end"></p>   
+      </div>                 
+   </div> 
+          <div class="angle"></div>  
+			      <div class="EZ_mid">  
+      		<p style="height:10px;"></p>      		 		  				    
+				  	<div class="Cancel_Save_button">
+				  <table border="0" cellspacing="0" cellpadding="0" width=335>
+				  	<tr height=23 width=600>
+				  		<td align="right" width=75>
+					  		<table border="0" cellspacing="0" cellpadding="0" width=75>
+									<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="adv_edit_internet.htm">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",1);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										</tr>
+									</table>
+							</td>
+				  	<td align="center" width="60">&nbsp;<script>translate_strWrite("BasicSetup",162);</script>&nbsp;
+				  		</td>
+				  	<td align="left" width=200>
+				  		<table border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+									<td class="SW_LeftButton">&nbsp;</td>
+									<td class="SW_BottomButton"><a href="javascript:ValidateForm(document.forms[0]);">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",0);</script></font>&nbsp;</a></td>
+									<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+							</td>
+						</tr>
+				  </table>
+					</div>	  				    					    														    						    			    
+      </div>
+       
+       <div style="height: 50px"></div>    
+		    <div class="EZ_foot">
+						<div class="EZ_foot_L"><img src="bottom_help_icon.png" style="position:relative;top:3pt;">&nbsp;<a href="help/<%nvram_get("language_str");%>/default.htm#OptimizeVideo" target="_blank"><script>translate_strWrite("SetupWizard",64);</script></a>&nbsp;<img src="transparency.gif" style="width:15px;height:1px;"><a href="javascript:open_language();"><img src="bottom_language_icon.png" style="position:relative;top:3pt;">&nbsp;<script>translate_strWrite("BasicSetup",167);</script></a>&nbsp;&nbsp
+								<span id="language" style="visibility:hidden;">
+								<a href="javascript:apply_lang('en');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">English</font></a>&nbsp;&nbsp;
+								<a href="javascript:apply_lang('fr');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Fran&ccedil;ais</font></a>&nbsp;&nbsp;
+								<!--a href="javascript:apply_lang('spa');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Spanish</font></a--></span>
+						</div>
+						<div class="EZ_foot_C"></div>
+						<div class="EZ_foot_R">&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		      </div>
+         <div class="clear_float"> </div>
+  
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+
+		</td>
+	</tr>
+	</table>
+</center>
+	</form>
+	
+<form method="post" action="save.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_opt.htm">
+<input type="hidden" name="redirect_timer" value="0">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="language_str">
+<input type="hidden" name="language_str" value="<%nvram_get("language_str");%>">
+</form>
+<!--[if lt IE 7]>
+<script defer type="text/javascript" src="ie6fix.js"></script>
+<![endif]-->
+<script type="text/javascript">
+  document.getElementById("internet").src = "internet_icon_bri.png";
+</script>
+</body>
+</html>

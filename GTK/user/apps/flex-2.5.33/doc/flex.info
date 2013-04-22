@@ -1,0 +1,273 @@
+This is flex.info, produced by makeinfo version 4.7 from flex.texi.
+
+INFO-DIR-SECTION Programming
+START-INFO-DIR-ENTRY
+* flex: (flex).      Fast lexical analyzer generator (lex replacement).
+END-INFO-DIR-ENTRY
+
+   The flex manual is placed under the same licensing conditions as the
+rest of flex:
+
+   Copyright (C) 1990, 1997 The Regents of the University of California.
+All rights reserved.
+
+   This code is derived from software contributed to Berkeley by Vern
+Paxson.
+
+   The United States Government has rights in this work pursuant to
+contract no. DE-AC03-76SF00098 between the United States Department of
+Energy and the University of California.
+
+   Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+  1.  Redistributions of source code must retain the above copyright
+     notice, this list of conditions and the following disclaimer.
+
+  2. Redistributions in binary form must reproduce the above copyright
+     notice, this list of conditions and the following disclaimer in the
+     documentation and/or other materials provided with the
+     distribution.
+
+   Neither the name of the University nor the names of its contributors
+may be used to endorse or promote products derived from this software
+without specific prior written permission.
+
+   THIS SOFTWARE IS PROVIDED "AS IS" AND WITHOUT ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+
+
+Indirect:
+flex.info-1: 1543
+flex.info-2: 279956
+
+Tag Table:
+(Indirect)
+Node: Top1543
+Node: Copyright7505
+Node: Reporting Bugs8941
+Node: Introduction9238
+Node: Simple Examples10066
+Node: Format13376
+Node: Definitions Section13790
+Ref: Definitions Section-Footnote-116053
+Node: Rules Section16121
+Node: User Code Section17279
+Node: Comments in the Input17717
+Node: Patterns19081
+Ref: case and character ranges24340
+Node: Matching27015
+Node: Actions30301
+Node: Generated Scanner39279
+Node: Start Conditions44297
+Node: Multiple Input Buffers54855
+Ref: Scanning Strings61393
+Node: EOF63023
+Node: Misc Macros64611
+Node: User Values67466
+Node: Yacc69797
+Node: Scanner Options70693
+Node: Options for Specifing Filenames73451
+Ref: option-header73674
+Ref: option-outfile74386
+Ref: option-stdout74711
+Node: Options Affecting Scanner Behavior75693
+Ref: option-case-insensitive75933
+Ref: option-lex-compat76366
+Ref: option-batch76898
+Ref: option-interactive77422
+Ref: option-7bit78776
+Ref: option-8bit80080
+Ref: option-default80492
+Ref: option-always-interactive80556
+Ref: option-posix81160
+Ref: option-stack82307
+Ref: option-stdinit82415
+Ref: option-yylineno82893
+Ref: option-yywrap83336
+Node: Code-Level And API Options83604
+Ref: option-ansi-definitions83831
+Ref: option-ansi-prototypes84083
+Ref: option-bison-bridge84330
+Ref: option-bison-locations84669
+Ref: option-noline84929
+Ref: option-reentrant85443
+Ref: option-c++86054
+Ref: option-array86180
+Ref: option-pointer86278
+Ref: option-prefix86406
+Ref: option-main87935
+Ref: option-nounistd88119
+Ref: option-yyclass88627
+Node: Options for Scanner Speed and Size89107
+Ref: option-align89656
+Ref: option-ecs90157
+Ref: option-meta-ecs91193
+Ref: option-read91680
+Ref: option-full93563
+Ref: option-fast93758
+Node: Debugging Options94696
+Ref: option-backup94883
+Ref: option-debug95428
+Ref: option-perf-report96151
+Ref: option-nodefault96777
+Ref: option-trace97095
+Ref: option-nowarn97386
+Ref: option-verbose97454
+Ref: option-warn97883
+Node: Miscellaneous Options98102
+Node: Performance98586
+Node: Cxx108846
+Node: Reentrant116368
+Node: Reentrant Uses117045
+Node: Reentrant Overview118608
+Node: Reentrant Example119407
+Node: Reentrant Detail120167
+Node: Specify Reentrant120600
+Node: Extra Reentrant Argument121247
+Node: Global Replacement122499
+Node: Init and Destroy Functions123728
+Node: Accessor Methods125877
+Node: Extra Data127221
+Node: About yyscan_t129388
+Node: Reentrant Functions129784
+Ref: bison-functions131268
+Node: Lex and Posix132009
+Node: Memory Management139393
+Ref: memory-management139539
+Node: The Default Memory Management139767
+Ref: The Default Memory Management-Footnote-1143576
+Node: Overriding The Default Memory Management143729
+Ref: Overriding The Default Memory Management-Footnote-1146128
+Node: A Note About yytext And Memory146292
+Node: Serialized Tables147525
+Ref: serialization147669
+Node: Creating Serialized Tables148434
+Node: Loading and Unloading Serialized Tables150044
+Node: Tables File Format151812
+Node: Diagnostics158828
+Node: Limitations162239
+Node: Bibliography164188
+Node: FAQ164861
+Node: When was flex born?169090
+Node: How do I expand \ escape sequences in C-style quoted strings?169459
+Node: Why do flex scanners call fileno if it is not ANSI compatible?170739
+Node: Does flex support recursive pattern definitions?171526
+Node: How do I skip huge chunks of input (tens of megabytes) while using flex?172373
+Node: Flex is not matching my patterns in the same order that I defined them.172840
+Node: My actions are executing out of order or sometimes not at all.174586
+Node: How can I have multiple input sources feed into the same scanner at the same time?175361
+Node: Can I build nested parsers that work with the same input file?177349
+Node: How can I match text only at the end of a file?178355
+Node: How can I make REJECT cascade across start condition boundaries?179160
+Node: Why cant I use fast or full tables with interactive mode?180176
+Node: How much faster is -F or -f than -C?181434
+Node: If I have a simple grammar cant I just parse it with flex?181746
+Node: Why doesnt yyrestart() set the start state back to INITIAL?182226
+Node: How can I match C-style comments?182852
+Node: The period isnt working the way I expected.183664
+Node: Can I get the flex manual in another format?184910
+Node: Does there exist a "faster" NDFA->DFA algorithm?185398
+Node: How does flex compile the DFA so quickly?185908
+Node: How can I use more than 8192 rules?186875
+Node: How do I abandon a file in the middle of a scan and switch to a new file?188287
+Node: How do I execute code only during initialization (only before the first scan)?188840
+Node: How do I execute code at termination?189594
+Node: Where else can I find help?189920
+Node: Can I include comments in the "rules" section of the file?190293
+Node: I get an error about undefined yywrap().190672
+Node: How can I change the matching pattern at run time?191149
+Node: How can I expand macros in the input?191511
+Node: How can I build a two-pass scanner?192544
+Node: How do I match any string not matched in the preceding rules?193459
+Node: I am trying to port code from AT&T lex that uses yysptr and yysbuf.194369
+Node: Is there a way to make flex treat NULL like a regular character?195164
+Node: Whenever flex can not match the input it says "flex scanner jammed".195685
+Node: Why doesnt flex have non-greedy operators like perl does?196329
+Node: Memory leak - 16386 bytes allocated by malloc.197681
+Ref: faq-memory-leak197978
+Node: How do I track the byte offset for lseek()?198946
+Node: How do I use my own I/O classes in a C++ scanner?200457
+Node: How do I skip as many chars as possible?201300
+Node: deleteme00202377
+Node: Are certain equivalent patterns faster than others?202818
+Node: Is backing up a big deal?206237
+Node: Can I fake multi-byte character support?208144
+Node: deleteme01209586
+Node: Can you discuss some flex internals?210696
+Node: unput() messes up yy_at_bol212941
+Node: The | operator is not doing what I want214044
+Node: Why can't flex understand this variable trailing context pattern?215591
+Node: The ^ operator isn't working216841
+Node: Trailing context is getting confused with trailing optional patterns218077
+Node: Is flex GNU or not?219321
+Node: ERASEME53220995
+Node: I need to scan if-then-else blocks and while loops221766
+Node: ERASEME55222966
+Node: ERASEME56224065
+Node: ERASEME57225424
+Node: Is there a repository for flex scanners?226423
+Node: How can I conditionally compile or preprocess my flex input file?226738
+Node: Where can I find grammars for lex and yacc?227211
+Node: I get an end-of-buffer message for each character scanned.227558
+Node: unnamed-faq-62228153
+Node: unnamed-faq-63229172
+Node: unnamed-faq-64230470
+Node: unnamed-faq-65231437
+Node: unnamed-faq-66232224
+Node: unnamed-faq-67233340
+Node: unnamed-faq-68234328
+Node: unnamed-faq-69235471
+Node: unnamed-faq-70236185
+Node: unnamed-faq-71236947
+Node: unnamed-faq-72238157
+Node: unnamed-faq-73239201
+Node: unnamed-faq-74240126
+Node: unnamed-faq-75241072
+Node: unnamed-faq-76242205
+Node: unnamed-faq-77242912
+Node: unnamed-faq-78243806
+Node: unnamed-faq-79244805
+Node: unnamed-faq-80246506
+Node: unnamed-faq-81247825
+Node: unnamed-faq-82250626
+Node: unnamed-faq-83251584
+Node: unnamed-faq-84253365
+Node: unnamed-faq-85254469
+Node: unnamed-faq-86255477
+Node: unnamed-faq-87256416
+Node: unnamed-faq-88257063
+Node: unnamed-faq-90257895
+Node: unnamed-faq-91259159
+Node: unnamed-faq-92261588
+Node: unnamed-faq-93262088
+Node: unnamed-faq-94263016
+Node: unnamed-faq-95264429
+Node: unnamed-faq-96265948
+Node: unnamed-faq-97266708
+Node: unnamed-faq-98267376
+Node: unnamed-faq-99268042
+Node: unnamed-faq-100268972
+Node: unnamed-faq-101269683
+Node: What is the difference between YYLEX_PARAM and YY_DECL?270497
+Node: Why do I get "conflicting types for yylex" error?271019
+Node: How do I access the values set in a Flex action from within a Bison action?271549
+Node: Appendices271980
+Node: Makefiles and Flex272169
+Ref: Makefiles and Flex-Footnote-1275366
+Ref: Makefiles and Flex-Footnote-2275483
+Node: Bison Bridge275534
+Ref: Bison Bridge-Footnote-1278203
+Node: M4 Dependency278395
+Ref: M4 Dependency-Footnote-1279583
+Node: Indices279718
+Node: Concept Index279956
+Node: Index of Functions and Macros305166
+Node: Index of Variables310062
+Node: Index of Data Types311728
+Node: Index of Hooks312616
+Node: Index of Scanner Options313184
+
+End Tag Table

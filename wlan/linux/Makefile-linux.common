@@ -1,0 +1,60 @@
+#
+# (C) Copyright 2007 Atheros Communications, Inc.
+# All rights reserved.
+#
+
+# default to Linux
+ifeq ($(OS),)
+OS := linux
+endif
+
+include $(obj)/$(DEPTH)/common/lmac/Makefile.inc
+
+#
+# TARGET defines the target platform ISA per GNU rules.
+# It must match one of the target platforms supported by
+# the HAL.  To set the set of target platforms look at
+# hal/linux/*.inc.  You can set this in the environment
+# to override the default setting.
+#
+ifeq ($(TARGET),)
+TARGET := i386-elf
+endif
+
+# BUS defines the bus type to which the wireless devices is attached.
+# Currently, the valid BUS types are PCI and AHB.  If BUS is not
+# defined, then, we assume the bus type is PCI
+
+ifndef BUS
+BUS := PCI
+endif
+
+ifeq ($(strip ${BUS}),AHB)
+COPTS += -DATH_AHB
+else
+COPTS += -DATH_PCI
+endif
+
+#
+# Disable the !#@$!@# packet log
+#
+
+#COPTS += -DREMOVE_PKT_LOG
+
+# Include path
+INCS = -include $(COMINC)/compat.h -I$(COMINC) -I$(COMINC)/$(OS) -I$(COMINC)/../$(OS) -I$(KERNELPATH)/include
+
+ifeq ($(AP71_DEBUG),1)
+COPTS += -Werror
+else
+COPTS += -Werror -O2 
+endif
+
+COPTS += -Wno-undef 
+
+ifeq ($(BUILD_OPTIMIZED),y)
+COPTS += -Os -funit-at-a-time
+endif
+
+include $(HAL)/$(OS)/public/$(TARGET).inc
+include $(obj)/$(DEPTH)/linux/BuildCaps.inc

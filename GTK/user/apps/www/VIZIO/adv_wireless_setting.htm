@@ -1,0 +1,408 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?SetupWizard_119?></title>
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+
+var f=document.wireless_setting;
+
+function WlanSecPage()
+{
+	
+	var SecurityType_g = '<%nvram_get("wl0_sec_mode");%>';
+	self.SSIDAuthMode.location.href = SecurityTypePage[GetAuthModePageIndex(SecurityType_g)];
+	var SecurityType_g1 = '<%nvram_get("wl1_sec_mode");%>';
+	self.SSIDAuthMode1.location.href = SecurityTypePage1[GetAuthModePageIndex(SecurityType_g1)];
+	
+	self.WS_Basic.location.href="adv_WS_Basic.htm";
+	self.WS_Basic2.location.href="adv_WS_Basic2.htm";
+//	self.WS_Adv.location.href="adv_WS_Adv.htm";
+//	self.WS_Adv2.location.href="adv_WS_Adv2.htm";
+
+}
+function ValidateForm(f)
+{
+	
+  var Set_mode=document.getElementById("div_setting");
+  
+	switch (Set_mode.value)
+	{
+		case "5g":
+   			var checkmode= self.SSIDAuthMode1.ValidateForm(f) == true &&  self.WS_Basic2.ValidateForm(f) == true; /*&&   self.WS_Adv2.ValidateForm(f) == true*/ 
+			break; 
+		case "2_4g":
+   			var checkmode= self.SSIDAuthMode.ValidateForm(f) == true &&  self.WS_Basic.ValidateForm(f) == true ;  /*&&  self.WS_Adv.ValidateForm(f) == true */
+			break; 
+  
+		default:
+			break;
+	}
+	
+	if (checkmode==true)
+	{
+		wps_config_state = '<%nvram_get("wsc_config_state");%>';
+	
+			f.data1.value = f.wl0_data1.value + f.wl1_data1.value + " wsc_config_state wps_enabled";
+			
+			f.wsc_config_state.value = "1";
+		
+			sec_mode0 = f.wl0_sec_mode.value;
+			sec_mode1 = f.wl1_sec_mode.value;
+
+	if(sec_mode0.toLowerCase().indexOf("Radius".toLowerCase(),0) != -1 || sec_mode1.toLowerCase().indexOf("Radius".toLowerCase(),0) != -1)
+		f.wps_enabled.value = 0;
+	else
+		f.wps_enabled.value = 1;
+
+		f.submit();
+	}
+}
+
+
+function InitValue(f)
+{
+
+	  show_network_status();
+	
+	WlanSecPage();
+
+}
+
+function Change_div_setting(setmode)
+{
+   var title_5g = document.getElementById('title_5g');
+	 var AuthMode5G = document.getElementById('AuthMode5G');
+	 var title_2_4g = document.getElementById('title_2_4g');
+	 var AuthMode2_4G = document.getElementById('AuthMode2_4G');	 
+			 title_5g.style.display='none';
+			 AuthMode5G.style.display='none';
+			 title_2_4g .style.display='none';
+			 AuthMode2_4G.style.display='none';
+			 
+	if(setmode=="5g") 
+	{
+		 title_5g.style.display='';
+		AuthMode5G.style.display='';
+	}
+	else
+		{ 
+		title_2_4g.style.display='';
+		AuthMode2_4G.style.display='';
+	}  
+	  
+}
+
+
+function mouseOver(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("wireless").src = "signak_icon_bri.png";
+}
+
+function mouseOut(pic_id, pic_src)
+{
+	eval('document.getElementById("'+ pic_id +'").src ="'+ pic_src +'"');
+	  document.getElementById("wireless").src = "signak_icon_bri.png";
+}
+
+ function isBlank(s) 
+{
+	for(var i = 0; i < s.length; i++) {
+		var c = s.charAt(i);
+		if((c !=' ') && (c!='\n') && (c !='\t')) 
+			return false;
+	}
+	return true;
+}
+
+
+var language_show = 0;
+function open_language()
+{
+	 var language_choice = document.getElementById('language');
+	 
+	if(language_show == '1') {
+		language_show = 0;
+		language_choice.style.visibility="hidden";
+	}
+	else {
+		language_show = 1;
+		language_choice.style.visibility="visible";
+	}
+}
+
+function apply_lang(e)
+{
+	var f1 = document.forms[1];
+	f1.language_str.value = e;
+ 	f1.submit();
+}
+
+function chage_color(e)
+{
+	e.style.color="#4F81BD";
+	e.style.textDecoration="underline"; 
+}
+
+function back_color(e)
+{
+	e.style.color="#B8B8B8";
+	e.style.textDecoration="none"; 
+}
+
+
+
+
+
+</Script>
+
+</head>
+
+<body onLoad="InitValue(document.forms[0]);">
+		<DIV ID="searching" style="position:absolute;width:101.5%;height:150%;margin:0pt; padding:0pt; ;z-index:50;top:0pt;left:0pt;background-color:#000000;display:none;filter:alpha(opacity=50);-moz-opacity:0.5;opacity: 0.5;" >
+		<br><br><br><br><br><br><br><br>
+		</DIV>			
+			<DIV ID="searching_iframe" style="position:absolute;width:100%;height:100%;;z-index:60;top:100pt;left:0pt;display:none;">
+				<iframe width="400" id="WPS_search" name="WPS_search" height="200" src="" frameborder="2" marginheight="0" scrolling="no"><br>
+				</iframe>
+		</DIV>
+<form name="wireless_setting" method="post" action="post_wl.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value='<%nvram_get("lan_ipaddr");%>'>
+<input type="hidden" name="next_page" value="adv_wireless_setting.htm">
+<input type="hidden" name="redirect_timer" value="20000">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="">
+<input type="hidden" name="wsc_config_state">	
+<input type="hidden" name="wl0_data1">
+<input type="hidden" name="wl0_sec_mode">
+<input type="hidden" name="wl0_wpaenc">
+<input type="hidden" name="wl0_pskkey">
+<input type="hidden" name="wl0_keylength">
+<input type="hidden" name="wl0_key1">
+<input type="hidden" name="wl0_key2">
+<input type="hidden" name="wl0_key3">
+<input type="hidden" name="wl0_key4">
+<input type="hidden" name="wl0_txkey">
+<input type="hidden" name="wl0_authRadiusIp">
+<input type="hidden" name="wl0_authRadiusPort">
+<input type="hidden" name="wl0_authRadiusPasswd">
+<input type="hidden" name="wl0_key_renew">
+<input type="hidden" name="wl0_ssid">
+<input type="hidden" name="wl0_ssid_bcast_enabled">
+<input type="hidden" name="wl0_channel">
+<input type="hidden" name="wl0_wlmode">
+<input type="hidden" name="wl0_mode">
+<input type="hidden" name="wl0_enabled">
+<input type="hidden" name="wl0_radioband">
+<input type="hidden" name="wl0_nctrlsb">
+<input type="hidden" name="wl0_WideChannel">
+<input type="hidden" name="wl0_apisolation">
+<input type="hidden" name="wl0_authtype">
+<input type="hidden" name="wl0_basicRate">
+<input type="hidden" name="wl0_datarate">
+<input type="hidden" name="wl0_datarate_index">
+<input type="hidden" name="wl0_ndatarate">
+<input type="hidden" name="wl0_txPower">
+<input type="hidden" name="wl0_ctsprotect">
+<input type="hidden" name="wl0_rtsThPeriod">
+<input type="hidden" name="wl0_beaconPeriod">
+<input type="hidden" name="wl0_fragThPeriod">
+<input type="hidden" name="wl0_dtimPeriod">
+<input type="hidden" name="wl1_data1">
+<input type="hidden" name="wl1_sec_mode">
+<input type="hidden" name="wl1_wpaenc">
+<input type="hidden" name="wl1_pskkey">
+<input type="hidden" name="wl1_keylength">
+<input type="hidden" name="wl1_key1">
+<input type="hidden" name="wl1_key2">
+<input type="hidden" name="wl1_key3">
+<input type="hidden" name="wl1_key4">
+<input type="hidden" name="wl1_txkey">
+<input type="hidden" name="wl1_authRadiusIp">
+<input type="hidden" name="wl1_authRadiusPort">
+<input type="hidden" name="wl1_authRadiusPasswd">
+<input type="hidden" name="wl1_key_renew">
+<input type="hidden" name="wl1_ssid">
+<input type="hidden" name="wl1_ssid_bcast_enabled">
+<input type="hidden" name="wl1_channel">
+<input type="hidden" name="wl1_wlmode">
+<input type="hidden" name="wl1_mode">
+<input type="hidden" name="wl1_enabled">
+<input type="hidden" name="wl1_radioband">
+<input type="hidden" name="wl1_nctrlsb">
+<input type="hidden" name="wl1_WideChannel">
+<input type="hidden" name="wl1_apisolation">
+<input type="hidden" name="wl1_authtype">
+<input type="hidden" name="wl1_basicRate">
+<input type="hidden" name="wl1_datarate">
+<input type="hidden" name="wl1_datarate_index">
+<input type="hidden" name="wl1_ndatarate">
+<input type="hidden" name="wl1_txPower">
+<input type="hidden" name="wl1_ctsprotect">
+<input type="hidden" name="wl1_rtsThPeriod">
+<input type="hidden" name="wl1_beaconPeriod">
+<input type="hidden" name="wl1_fragThPeriod">
+<input type="hidden" name="wl1_dtimPeriod">
+<input type="hidden" name="wps_enabled">
+	
+	
+	<center>	 
+<table border="0" width="1000" >
+	<tr>
+		<td>
+
+<%include_file("adv_logol_header.htm");%>
+
+
+  <div id="warp">
+  		
+      <div class="Pointer_Wirelesspic"></div>
+			  <p  style="height:11px;"></p> 
+      <div class="status_background">      
+					<p  style="height:30px;"></p> 
+      		<p class="adv_title"><script>translate_strWrite("SetupWizard",57);</script></p>
+      		<p  class="adv_title_hr"><img src="hr_line.png"></p>    	   	     		
+      	<div class="button_status">
+      				<p  style="height:30px;"></p> 	
+      		 <table border="0" border="0" cellspacing="0" cellpadding="0" align="center" height="23" width="390">
+      		 	<tr height="23">
+      		 		<td width="20">
+      			<SELECT id="div_setting" name="div_setting" class="wireless_select_col_width" onChange="Change_div_setting(this.options[this.options.selectedIndex].value);">
+								            <OPTION value="5g" selected><script>dw("<%nvram_get("wl1_ssid");%>");</script></OPTION>
+								            <OPTION value="2_4g"><script>dw("<%nvram_get("wl0_ssid");%>");</script></OPTION>
+          		</SELECT>
+          	</td>
+          	<td width="200">
+          		<table border="0" border="0" cellspacing="0" cellpadding="0" width="200">
+								<tr height="23" width="200">
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="adv_wireless_network_access.htm">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("SubMenuBar",0);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+							</td>
+						</tr>
+          </table>
+        
+          		<p  style="height:30px;"></p> 
+         <div id="title_5g"> 		
+  				<p  class="adv_title_hr"><img src="hr_line.png"></p>
+					<p class="status_title"><script>translate_strWrite("RouterStatus",14);</script>&nbsp;&nbsp;-&nbsp;&nbsp;<script>dw("<%nvram_get("wl1_ssid");%>");</script></p>
+					<p  class="adv_title_hr"><img src="hr_line.png"></p>
+				</div>
+				
+      	 <div id="AuthMode5G" style="text-align:left; padding:0px 0px 0px 250px;"> 
+      	 <iframe  width="530" height="0" id="WS_Basic2" name="WS_Basic2" frameborder="0" marginheight="0" scrolling="no" allowtransparency="true" style="background-color:transparent;"> 
+					</iframe>
+					 <br> 
+				<!--	 <iframe  width="550" height="0" id="WS_Adv2" name="WS_Adv2" frameborder="0" marginheight="0" scrolling="no" allowtransparency="true" style="background-color:transparent;"> 
+					</iframe>
+					 <br>  -->     	 
+      	  <iframe width="530" height="0" id="SSIDAuthMode1" name="SSIDAuthMode1" frameborder="0" marginheight="0" scrolling="no" allowtransparency="true" style="background-color:transparent;"> 
+					</iframe>
+				</div>
+				<div id="title_2_4g" style="display:none;">		  	
+			  <p  class="adv_title_hr"><img src="hr_line.png"></p>
+				<p class="status_title"><script>translate_strWrite("RouterStatus",15);</script>&nbsp;&nbsp;-&nbsp;&nbsp;<script>dw("<%nvram_get("wl0_ssid");%>");</script></p>
+				<p  class="adv_title_hr"><img src="hr_line.png"></p>
+			</div>
+				<div id="AuthMode2_4G" style="text-align:left; padding:0px 0px 0px 250px; display:none;">
+					<iframe  width="530" height="0" id="WS_Basic" name="WS_Basic" frameborder="0" marginheight="0" scrolling="no" allowtransparency="true" style="background-color:transparent;"> 
+					</iframe>
+					<br>
+	<!--				<iframe  width="550" height="0" id="WS_Adv" name="WS_Adv" frameborder="0" marginheight="0" scrolling="no" allowtransparency="true" style="background-color:transparent;"> 
+					</iframe>
+					 <br>  -->  
+					<iframe width="530" height="0" id="SSIDAuthMode" name="SSIDAuthMode" frameborder="0" marginheight="0" scrolling="no" allowtransparency="true" style="background-color:transparent;"> 
+					</iframe>		
+				</div> 
+				
+					<p  style="height:30px;"></p>		
+		    <p class="status_end"></p>  
+   </div>
+ </div>       
+   <div class="angle"></div>    
+           <div class="EZ_mid">  
+      		<p style="height:10px;"></p>      		 		  				    
+				  	<div class="Cancel_Save_button">
+				  <table border="0" cellspacing="0" cellpadding="0" width=335>
+				  	<tr height=23 width=600>
+				  		<td align="right" width=75>
+					  		<table border="0" cellspacing="0" cellpadding="0" width=75>
+									<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="adv_status_wireless.htm">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",1);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										</tr>
+									</table>
+							</td>
+				  	<td align="center" width="60">&nbsp;<script>translate_strWrite("BasicSetup",162);</script>&nbsp;
+				  		</td>
+				  	<td align="left" width=200>
+				  		<table border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+									<td class="SW_LeftButton">&nbsp;</td>
+									<td class="SW_BottomButton"><a href="javascript:ValidateForm(document.forms[0]);">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",0);</script></font>&nbsp;</a></td>
+									<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+							</td>
+						</tr>
+				  </table>
+					</div>	  				    					    														    						    			    
+      </div>								    						    			    
+    
+      
+         		
+       <div style="height: 20px"></div>    
+		      <div class="EZ_foot">
+						<div class="EZ_foot_L"><img src="bottom_help_icon.png" style="position:relative;top:3pt;">&nbsp;<a href="help/<%nvram_get("language_str");%>/default.htm#Advanced" target="_blank"><script>translate_strWrite("SetupWizard",64);</script></a>&nbsp;<img src="transparency.gif" style="width:15px;height:1px;"><a href="javascript:open_language();"><img src="bottom_language_icon.png" style="position:relative;top:3pt;">&nbsp;<script>translate_strWrite("BasicSetup",167);</script></a>&nbsp;&nbsp
+								<span id="language" style="visibility:hidden;">
+								<a href="javascript:apply_lang('en');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">English</font></a>&nbsp;&nbsp;
+								<a href="javascript:apply_lang('fr');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Fran&ccedil;ais</font></a>&nbsp;&nbsp;
+								<!--a href="javascript:apply_lang('spa');"><font onmouseout="javascript:back_color(this);" onmouseover="javascript:chage_color(this);">Spanish</font></a--></span>
+						</div>
+						<div class="EZ_foot_C"></div>
+						<div class="EZ_foot_R"></div>
+		      </div>
+         <div class="clear_float"> </div>
+  
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+		</td>
+	</tr>
+	</table>
+</center>
+</form>
+<form method="post" action="save.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="adv_wireless_setting.htm">
+<input type="hidden" name="redirect_timer" value="0">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="language_str">
+<input type="hidden" name="language_str" value="<%nvram_get("language_str");%>">
+</form>
+
+<form name="passphrase" method="post" action="wep_passphrase.cgi">
+	<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+	<input type="hidden" name="next_page" value="adv_WS_WEP2.htm">
+	<input type="hidden" name="reboot" value="0">
+	<input type="hidden" name="passphrase" value="true">
+	<input type="hidden" name="wl0_keylength">
+	<input type="hidden" name="passphrase_key">
+	<input type="hidden" name="wl0_txkey">
+	<input type="hidden" name="wl_mode">
+</form>
+<!--[if lt IE 7]>
+<script defer type="text/javascript" src="ie6fix.js"></script>
+<![endif]-->
+<script type="text/javascript">
+  document.getElementById("wireless").src = "signak_icon_bri.png";
+</script>
+</body>
+</html>

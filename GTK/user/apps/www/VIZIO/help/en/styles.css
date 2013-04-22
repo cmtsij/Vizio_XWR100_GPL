@@ -1,0 +1,181 @@
+﻿html {
+	height: 100.1%;
+}
+body {
+	margin: 0;
+	padding: 0;
+	font-family: verdana, arial, helvetica, sans-serif;
+	font-size: 76%;/* font sizing in ems, baby. if you want to change anything, just change this.*/ /*funny thing happens at 75% and lower. opera goes to a nice small size, but moz and ie pc change almost not at all. seems 76% is as small as you can go and stay the same across browsers. poop.*/;
+	font-size-adjust: .71; /*New feature for Firefox 3. this value is a pretty good for matching up with IE */;
+	color:#000;
+	background-color: #fff;
+	background-image: url('images/Chrome5.png');
+	background-repeat: repeat;
+
+}
+table {
+	width: 90%;
+	text-align: center;
+}
+tr.head {
+	background-color: #666;
+	color: #fff;
+	font-weight:bold;
+}
+td.left {
+	text-align:left;
+}
+/*	BEGIN MAJOR BLOCKS SECTION	*/
+div.center-ie5 {
+	/* this is needed in IE5 to center content*/
+	text-align: center;
+	width: 100%;
+}
+div.container {
+	background-color: #fff;
+	margin-top: 10px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 10px;
+	border-width: 0px;
+	width: 920px;
+	text-align: left;
+}
+div.main {
+	background-color: #fff;
+	width: 880px;
+	margin: 0em 0em 0em 0em;
+	padding: 1em 2em 1em 2em;
+/* use padding instead of margin for multicolumn layouts because of a really odd ie5pc bug */	float: right;
+	font-size: 1em;
+}
+
+#nomove {
+    position:fixed;
+    top:0;
+	right:0;
+	margin: 10px;
+	padding: 1.2em;
+	font-size: 1.3em;
+	background:#ccc;
+	border:2px #000 solid;
+}
+#nomove a{
+	color:#000;
+}
+div.rightpic {
+	/*    width:180px; */
+    float: right;
+	margin: 1.2em 0em 1.2em 1.2em;
+}
+div.leftpic {
+	float: left; /*	width:229px; */;
+	margin: 2em 1.2em 1.2em 0em;
+}
+div.imgcenter {
+	text-align:center;
+}
+/*	END MAJOR BLOCKS SECTION	*/
+a:visited {
+	color:blue;
+}
+a:link {
+	color:blue;
+}
+a:hover {
+	color:blue;
+	text-decoration: underline;
+}
+p {
+	font-size: 1.0em;
+	line-height: 1.7em; /*FF*/;
+	#line-height: 1.3em; /*IE */;
+	margin: .8em 0em .8em 0em;
+}
+p.h4 {
+	margin-left:3em;
+}
+li {
+	/*
+	list-style: none;*/
+		font-size: 1.0em;
+	line-height: 1.8em; /*FF*/;
+	#line-height: 1.3em; /*IE */;
+	margin-top: 0.1em;
+	margin-bottom: 0.1em;
+}
+ul {
+	/*
+	list-style: none;*/
+		font-size: 1.0em;
+	line-height: 1.8em; /*FF*/;
+	#line-height: 1.3em; /*IE */;
+	margin-top: 0.1em;
+	margin-bottom: 0.1em;
+}
+ol {
+	/*
+	list-style: none;*/
+		font-size: 1.0em;
+	line-height: 1.8em; /*FF*/;
+	#line-height: 1.3em; /*IE */;
+	margin-top: 0.1em;
+	margin-bottom: 0.1em;
+}
+ul.h4, ol.h4 {
+	margin-left:6em;
+}
+
+ul#toc {list-style:none;width:320px;}
+#toc li {background:url(dot.gif) repeat-x 0 0.85em;}
+#toc li a {float:left;background:#FFF;padding: .25em 0 0 0;color:blue;font-size:1.2em;}
+#toc li.ToCH2 a {float:left;background:#FFF;padding: -.25em 0 0 0;margin-left:2em; color:blue;font-size:1em;}
+#toc li br {clear:both;}
+
+b {
+	font-weight: bold;
+}
+img {
+	border: none;
+}
+/*	BEGIN TITLES AND TEXT HEADER SECTION	*/
+.note {
+	color: #FF6401;
+	font-weight: bold;
+}
+.important {
+	font-weight: bold;
+}
+.italic {
+	font-style: italic;
+}
+
+h1 {
+	font-size: 1.7em;
+	font-weight: normal;
+	margin-top: 1.5em;
+	margin-bottom: 0em;
+	font-weight: bold;
+}
+h2 {
+	color: #000;
+	font-size: 1.2em;
+	margin: .75em 0em .2em 0em;
+	font-weight: bold;
+}
+h3 {
+	color: #000;
+	font-size: 1.25em;
+	margin: .1em 0em .1em 0em;
+	font-weight: bold;
+}
+h4 {
+	color: #000;
+	font-size: 1.2em;
+	margin: 1.2em 0em .25em 2.5em;
+	font-weight: bold;
+	font-style: italic;
+	text-transform: uppercase;
+}
+
+/*	END TITLES AND TEXT HEADER SECTION	*/

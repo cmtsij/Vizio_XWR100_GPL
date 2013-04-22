@@ -1,0 +1,588 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="<%nvram_get("charset");%>">
+<title><?BasicSetup_96?></title>
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+var DataArray = new Array();
+var myData = [<%dhcp_client_table("showarray");%>];
+
+var lan_ipaddr = "<%nvram_get("lan_ipaddr");%>";
+
+function Data(name, interfx, ip, mac, expire) 
+{
+	this.Name = name;
+	this.Interface = interfx;
+	this.IP = ip ;
+	this.MAC = mac ;
+	this.EXPIRE = expire ;
+}
+				
+var TBLHeader = "<table border='1' cellpadding='0' cellspacing='0' id='table' width='469'>\
+								<tr> \
+								<td height='25' width='179' align='center' >"+translate_str("BasicSetup",107)+"</td>\
+								<td height='25' width='107' align='center' >"+translate_str("BasicSetup",106)+"</td>\
+								<td height='25' width='104' align='center' >"+translate_str("PortForward",10)+"</td>\
+								<td height='25' width='117' align='center' >"+translate_str("BasicSetup",105)+"</td>\
+								<td height='25' width='82'  align='center'  >"+translate_str("BasicSetup",126)+"</td>\
+								</tr>";
+var TBLFooter = "</table>" ;
+
+var TBLHeader_Refresh = "<table border='0' cellpadding='0' cellspacing='0' id='table' width='469' style='line-height:10pt;'>\
+								<tr> \
+								<td align='right' width=\"250\">&nbsp;\
+								</td>\
+								<td align='right' ><br>\
+							  		<table border='0' cellspacing='0' cellpadding='0'>\
+									<tr height=23>\
+										<td class='SW_LeftButton'>&nbsp;</td>\
+										<td class='SW_BottomButton'><a href=\"javascript:location.replace(\'Static_dhcp.htm\');\">&nbsp;<font onmouseout='javascript:back_color_no_underline(this);' onmouseover='javascript:chage_color_no_underline(this);'>"+translate_str('BottomButton',2)+"</font>&nbsp;</a></td>\
+										<td class='SW_RightButton'>&nbsp;</td>\
+										<td class='SW_LeftButton'>&nbsp;</td>\
+										<td class='SW_BottomButton'><a href=\"javascript:select_add();\">&nbsp;<font onmouseout='javascript:back_color_no_underline(this);' onmouseover='javascript:chage_color_no_underline(this);'>"+translate_str('BasicSetup',127)+"</font>&nbsp;</a></td>\
+										<td class='SW_RightButton'>&nbsp;</td>\
+									</tr>\
+									</table>\
+								</td>\
+								</tr>";
+var TBLFooter_Refresh = "</table>" ;
+              
+function DataShow()
+{
+	var i,j;
+	var ret = 0;
+	var v = TBLHeader;
+	var f = document.forms[0];
+
+	if(myData.length != 0) ret = 1;
+
+	for(i=0;i<DataArray.length;i++) {
+		if(DataArray[i].Interface == "WL")
+			DataArray[i].Interface = translate_str("RouterStatus",13);
+		else if(DataArray[i].Interface == "A")
+			DataArray[i].Interface = translate_str("RouterStatus",13)+"-A";
+		else if(DataArray[i].Interface == "G")
+			DataArray[i].Interface = translate_str("RouterStatus",13)+"-G";
+		else if(DataArray[i].Interface == "B")
+			DataArray[i].Interface = translate_str("RouterStatus",13)+"-B";
+		else if(DataArray[i].Interface == "N")
+			DataArray[i].Interface = translate_str("RouterStatus",13)+"-N";
+		else if(DataArray[i].Interface == "LAN")
+			DataArray[i].Interface = "LAN";
+
+	  if(ret == "1")
+	  {
+		var check = "";
+
+		for(j=0;j<10;j++) {
+			if (eval("f.static_ip_"+j).value == GetIPSegment(DataArray[i].IP,4) || eval("f.static_mac_"+j).value == DataArray[i].MAC) {
+				check = " checked";
+				break;
+			}
+		}
+
+	  	if(DataArray[i].Name=="")
+	  		DataArray[i].Name = "&nbsp;";
+		v +="<tr>";
+		v +="<td height=\"25\" align=\"center\" >";
+		v +=DataArray[i].Name+"</td>";
+		v +="<td height=\"25\" align=\"center\" >";
+		v +=DataArray[i].Interface+"</td>";
+		v +="<td height=\"25\" align=\"center\" >";
+		v +=DataArray[i].IP+"</td>";
+		v +="<td height=\"25\" align=\"center\" >";
+		v +=DataArray[i].MAC+"</td>";
+		v +="<td height='25' align='center' ><font face='Arial' color='#0000000' size='2'><INPUT type=checkbox name=check_"+i+check+"></font></td></tr>";
+	  }
+	}
+
+	if(myData.length <= 0)
+	{
+		v +="<tr>";
+		v +="<td height=\"25\" align=\"center\" >";
+		v +="None</td>";
+		v +="<td height=\"25\" align=\"center\" >";
+		v +="None</td>";
+		v +="<td height=\"25\" align=\"center\" >";
+		v +="None</td>";
+		v +="<td height=\"25\" align=\"center\" >";
+		v +="None</td>";
+		v +="<td height='25' align='center' ><font face='Arial' color='#0000000' size='2'>&nbsp;</font></td></tr>";	  
+	}
+
+	v += TBLFooter;
+	
+	v += TBLHeader_Refresh ; 
+	v += TBLFooter_Refresh
+	
+	layerWrite('myDiv', null, v);
+}
+	
+function select_add()
+{
+	var f = document.forms[0];
+	var same;
+	var i,j;
+	
+	for(j=0;j<DataArray.length;j++) {
+
+		same = 0;
+
+		if(eval("f.check_"+j).checked == true) {
+
+			for(i=0;i<10;i++) {
+				if (eval("f.static_ip_"+i).value == GetIPSegment(DataArray[j].IP,4) || eval("f.static_mac_"+i).value == DataArray[j].MAC) {
+
+					if(eval("f.static_ip_"+i).value == GetIPSegment(DataArray[j].IP,4))
+						alert(translate_str("BasicSetup",71) + " [" + DataArray[j].IP + "] " + translate_str("JavaScript",136));
+					else
+						alert(translate_str("BasicSetup",105) + " [" + DataArray[j].MAC + "] " + translate_str("JavaScript",136));
+
+					same = 1;
+					break;
+				}
+			}
+
+			if (same == 1) continue;
+			
+			for(i=0;i<10;i++) {
+				if(eval("f.static_name_"+i).value == "" && eval("f.static_ip_"+i).value == "") {
+					eval("f.static_name_"+i).value = DataArray[j].Name;
+					eval("f.static_ip_"+i).value = GetIPSegment(DataArray[j].IP,4);
+					eval("f.static_mac_"+i).value = DataArray[j].MAC;
+					eval("f.static_enabled_"+i).value = "1";
+					eval("f.static_expire_"+i).value = DataArray[j].EXPIRE;
+					break;
+				}
+			}
+			if(i == 10) {
+				DataShow();
+				DataShow_Static();
+				alert(translate_str("JavaScript", 134));
+				return ;
+			}
+		}
+	}
+
+	DataShow();
+	DataShow_Static();
+}
+
+function add(f)
+{
+	var i;
+	var semicolon = 0;
+	var DhcpStart = parseInt(f.dhcp_start.value,10);
+	var DhcpEnd =  parseInt(f.dhcp_end.value,10);
+
+	if (!CheckQuote1(f.manual_name)) return ;
+
+	if (parseInt(f.manual_ip.value,10)<DhcpStart) {
+		alert(translate_str("BasicSetup",102) + " " + DhcpStart);
+		f.manual_ip.focus();
+		return ;
+	}
+	if (parseInt(f.manual_ip.value,10)>DhcpEnd) {
+		alert(translate_str("BasicSetup",103) + " " + DhcpEnd);
+		f.manual_ip.focus();
+		return ;
+	}
+	if (!IPCheck(f.manual_ip)) {
+		f.manual_ip.focus();
+		return ;
+	}
+
+	f.manual_mac.value = f.manual_mac.value.toUpperCase();
+
+	if(!IsLegalMACAddress(f.manual_mac.value)) {
+		alert(translate_str("JavaScript",17));
+		f.manual_mac.focus();
+		return;
+	}	
+
+//	var c1 = f.manual_mac.value.substring(0,1);
+	var c2 = f.manual_mac.value.substring(1,2);
+		
+//	if(char_hex_to_oct(c1) % 2 != "0" || char_hex_to_oct(c2) % 2 != "0"){
+	if(char_hex_to_oct(c2) % 2 != "0"){
+		alert(translate_str("JavaScript",18));
+// 		alert(errmsg.err16);
+   		f.manual_mac.focus();
+		return;
+	}
+		
+	for(i=0;i<10;i++)
+	{
+		var ip = eval("f.static_ip_"+i).value;
+		var mac = eval("f.static_mac_"+i).value;
+		if (ip !="")	{
+			if (ip == f.manual_ip.value)	{
+				alert(translate_str("JavaScript",132));
+				f.manual_ip.focus();
+				return ;
+			}
+			if (mac == f.manual_mac.value)	{
+				alert(translate_str("JavaScript",133));
+				f.manual_mac.focus();
+				return ;
+			}
+		}
+	}
+
+	for(i=0;i<10;i++) {
+		if(eval("f.static_ip_"+i).value == "") {
+			eval("f.static_name_"+i).value = f.manual_name.value;
+			eval("f.static_ip_"+i).value = f.manual_ip.value;
+			eval("f.static_mac_"+i).value = f.manual_mac.value;
+			eval("f.static_enabled_"+i).value = "1";
+			eval("f.static_expire_"+i).value = "0";
+			break;
+		}
+	}
+
+	if(i == 10) alert(translate_str("JavaScript", 134));
+	
+	DataShow_Static();
+}
+
+function del(index)
+{
+	var f = document.forms[0];
+	eval("f.static_name_"+index).value = ""
+	eval("f.static_ip_"+index).value = ""
+	eval("f.static_mac_"+index).value = ""
+	eval("f.static_enabled_"+index).value = ""
+	eval("f.static_expire_"+index).value = ""
+	DataShow();
+	DataShow_Static();
+}
+
+var TBLHeader_1 = "<table border='1' cellpadding='0' cellspacing='0' id='statics_table' width='470'>\
+								<tr>\
+					 			<td height='25' width='134' align='center' >"+translate_str("BasicSetup",107)+"</font></td>\
+				 				<td height='25' width='135' align='center' >"+translate_str("BasicSetup",122)+"</font></td>\
+				 				<td height='25' width='136' align='center' >"+translate_str("BasicSetup",123)+"</font></td>\
+				 				<td height='25' width='64'  align='center'  ></td>\
+ 				 				</tr>";
+var TBLFooter_1 = "</table>" ;
+function DataShow_Static()
+{
+	var f = document.forms[0];
+	var i;
+	var v = TBLHeader_1;
+		  
+	for(i=0;i<10;i++) {
+		if(eval("f.static_ip_"+i).value != "") {	
+		  v +="<tr>";
+		  	v +="<td height='25' width='134' align='center' ><INPUT type=text maxLength=15 class=\"ssid_col_width\" size=13 name=\"manual_name_"+i+"\" value='"+eval("f.static_name_"+i).value+"' ></td>";
+			v +="<td height='25' width='135' align='center' >"+GetIPSegment ( lan_ipaddr , 1 )+"."+GetIPSegment ( lan_ipaddr , 2 )+"."+GetIPSegment ( lan_ipaddr , 3 )+".<INPUT type=text class=ip_col_width maxLength=3 size=2 name=\"manual_ip_"+i+"\" value='"+eval("f.static_ip_"+i).value+"' ></td>";
+			v +="<td height='25' width='136' align='center' >"+eval("f.static_mac_"+i).value+"</td>";
+			v +="<td height='25' width='64' align='center'  ><INPUT type=button value='"+translate_str("BottomButton",13)+"' name=remove'"+i+"' onclick='del("+i+");'></td>";
+			v +="</tr>\n";
+		 }
+	}
+	v += TBLFooter_1;
+	layerWrite('myDiv_1', null, v);
+}
+
+function select_tbl(num)
+{
+	var f = document.forms[0];
+	if (num == '0')	{
+		document.getElementById("a").style.display = "block";
+		document.getElementById("myDiv").style.display = "block";
+		document.getElementById("b").style.display = "none";
+		document.getElementById("manual_add_tbl").style.display = "none";
+	}
+	else	{
+		document.getElementById("a").style.display = "none";
+		document.getElementById("myDiv").style.display = "none";
+		document.getElementById("b").style.display = "block";
+		document.getElementById("manual_add_tbl").style.display = "block";
+	}
+}
+
+function InitValue()
+{	
+	//this.sizeToContent();
+	for( i=0 ; i<myData.length ; i++ )
+		DataArray[DataArray.length++] = new Data(myData[i][0], myData[i][1], myData[i][2], myData[i][3], myData[i][4]);
+	
+	DataShow();
+	DataShow_Static();
+	select_tbl(0);
+}
+
+function ValidateForm(f)
+{
+	var i;
+	var DhcpStart = parseInt(f.dhcp_start.value,10);
+	var DhcpEnd = parseInt(f.dhcp_end.value,10);
+			
+	for (i=0;i<10;i++)	
+	{
+		if(eval("f.static_ip_"+i).value != "")
+		{
+			eval("f.static_name_"+i).value = eval("f.manual_name_"+i).value;
+			/*if (eval("f.manual_ip_"+i).value<DhcpStart) {
+				alert(translate_str("BasicSetup",102) + " " + DhcpStart);
+				f.manual_ip.focus();
+				return ;
+			}
+			if (eval("f.manual_ip_"+i).value>DhcpEnd) {
+				alert(translate_str("BasicSetup",103) + " " + DhcpEnd);
+				f.manual_ip.focus();
+				return ;
+			}*/
+			if (!IPCheck(eval("f.manual_ip_"+i))) 
+			{
+				f.manual_ip.focus();
+				return ;
+			}
+			eval("f.static_ip_"+i).value = eval("f.manual_ip_"+i).value;
+			if (eval("f.manual_name_"+i).value !="" && eval("f.manual_ip_"+i).value !="" )
+				eval("f.static_enabled_"+i).value = "1";
+			else
+				eval("f.static_enabled_"+i).value = "0";
+		}
+	}	
+
+	document.forms[0].submit();
+}
+
+</Script>
+	
+</head>
+
+<body  onLoad="InitValue(document.forms[0]);">
+<form name="SetupDHCP" method="post" action="dhcpd.cgi">
+<input type="hidden" name="command" value="device_data">
+<input type="hidden" name="cur_ipaddr" value="<%nvram_get("lan_ipaddr");%>">
+<input type="hidden" name="next_page" value="Static_dhcp.htm">
+<input type="hidden" name="redirect_timer" value="1000">
+<input type="hidden" name="reboot" value="0">
+<input type="hidden" name="data1" value="static_name_0 static_name_1 static_name_2 static_name_3 static_name_4 static_name_5 static_name_6 static_name_7 static_name_8 static_name_9 static_ip_0 static_ip_1 static_ip_2 static_ip_3 static_ip_4 static_ip_5 static_ip_6 static_ip_7 static_ip_8 static_ip_9 static_mac_0 static_mac_1 static_mac_2 static_mac_3 static_mac_4 static_mac_5 static_mac_6 static_mac_7 static_mac_8 static_mac_9 static_enabled_0 static_enabled_1 static_enabled_2 static_enabled_3 static_enabled_4 static_enabled_5 static_enabled_6 static_enabled_7 static_enabled_8 static_enabled_9 static_expire_0 static_expire_1 static_expire_2 static_expire_3 static_expire_4 static_expire_5 static_expire_6 static_expire_7 static_expire_8 static_expire_9">
+<input type="hidden" name="dhcp_start" value="<%nvram_get("dhcp_start");%>">
+<input type="hidden" name="dhcp_end" value="<%nvram_get("dhcp_end");%>">
+<input type="hidden" name="static_name_0" value="<%nvram_get("static_name_0");%>">
+<input type="hidden" name="static_name_1" value="<%nvram_get("static_name_1");%>">
+<input type="hidden" name="static_name_2" value="<%nvram_get("static_name_2");%>">
+<input type="hidden" name="static_name_3" value="<%nvram_get("static_name_3");%>">
+<input type="hidden" name="static_name_4" value="<%nvram_get("static_name_4");%>">
+<input type="hidden" name="static_name_5" value="<%nvram_get("static_name_5");%>">
+<input type="hidden" name="static_name_6" value="<%nvram_get("static_name_6");%>">
+<input type="hidden" name="static_name_7" value="<%nvram_get("static_name_7");%>">
+<input type="hidden" name="static_name_8" value="<%nvram_get("static_name_8");%>">
+<input type="hidden" name="static_name_9" value="<%nvram_get("static_name_9");%>">
+<input type="hidden" name="static_ip_0" value="<%nvram_get("static_ip_0");%>">
+<input type="hidden" name="static_ip_1" value="<%nvram_get("static_ip_1");%>">
+<input type="hidden" name="static_ip_2" value="<%nvram_get("static_ip_2");%>">
+<input type="hidden" name="static_ip_3" value="<%nvram_get("static_ip_3");%>">
+<input type="hidden" name="static_ip_4" value="<%nvram_get("static_ip_4");%>">
+<input type="hidden" name="static_ip_5" value="<%nvram_get("static_ip_5");%>">
+<input type="hidden" name="static_ip_6" value="<%nvram_get("static_ip_6");%>">
+<input type="hidden" name="static_ip_7" value="<%nvram_get("static_ip_7");%>">
+<input type="hidden" name="static_ip_8" value="<%nvram_get("static_ip_8");%>">
+<input type="hidden" name="static_ip_9" value="<%nvram_get("static_ip_9");%>">
+<input type="hidden" name="static_mac_0" value="<%nvram_get("static_mac_0");%>">
+<input type="hidden" name="static_mac_1" value="<%nvram_get("static_mac_1");%>">
+<input type="hidden" name="static_mac_2" value="<%nvram_get("static_mac_2");%>">
+<input type="hidden" name="static_mac_3" value="<%nvram_get("static_mac_3");%>">
+<input type="hidden" name="static_mac_4" value="<%nvram_get("static_mac_4");%>">
+<input type="hidden" name="static_mac_5" value="<%nvram_get("static_mac_5");%>">
+<input type="hidden" name="static_mac_6" value="<%nvram_get("static_mac_6");%>">
+<input type="hidden" name="static_mac_7" value="<%nvram_get("static_mac_7");%>">
+<input type="hidden" name="static_mac_8" value="<%nvram_get("static_mac_8");%>">
+<input type="hidden" name="static_mac_9" value="<%nvram_get("static_mac_9");%>">
+<input type="hidden" name="static_enabled_0" value="<%nvram_get("static_enabled_0");%>">
+<input type="hidden" name="static_enabled_1" value="<%nvram_get("static_enabled_1");%>">
+<input type="hidden" name="static_enabled_2" value="<%nvram_get("static_enabled_2");%>">
+<input type="hidden" name="static_enabled_3" value="<%nvram_get("static_enabled_3");%>">
+<input type="hidden" name="static_enabled_4" value="<%nvram_get("static_enabled_4");%>">
+<input type="hidden" name="static_enabled_5" value="<%nvram_get("static_enabled_5");%>">
+<input type="hidden" name="static_enabled_6" value="<%nvram_get("static_enabled_6");%>">
+<input type="hidden" name="static_enabled_7" value="<%nvram_get("static_enabled_7");%>">
+<input type="hidden" name="static_enabled_8" value="<%nvram_get("static_enabled_8");%>">
+<input type="hidden" name="static_enabled_9" value="<%nvram_get("static_enabled_9");%>">
+<input type="hidden" name="static_expire_0" value="<%nvram_get("static_expire_0");%>">
+<input type="hidden" name="static_expire_1" value="<%nvram_get("static_expire_1");%>">
+<input type="hidden" name="static_expire_2" value="<%nvram_get("static_expire_2");%>">
+<input type="hidden" name="static_expire_3" value="<%nvram_get("static_expire_3");%>">
+<input type="hidden" name="static_expire_4" value="<%nvram_get("static_expire_4");%>">
+<input type="hidden" name="static_expire_5" value="<%nvram_get("static_expire_5");%>">
+<input type="hidden" name="static_expire_6" value="<%nvram_get("static_expire_6");%>">
+<input type="hidden" name="static_expire_7" value="<%nvram_get("static_expire_7");%>">
+<input type="hidden" name="static_expire_8" value="<%nvram_get("static_expire_8");%>">
+<input type="hidden" name="static_expire_9" value="<%nvram_get("static_expire_9");%>">
+
+	<center>	 
+<table border="0" width="1000">
+	<tr>
+		<td>
+	 
+<%include_file("adv_PopWin_header.htm");%>
+
+
+
+  <div id="warp">
+      <div class="status_title">&nbsp;<script>translate_strWrite("BasicSetup",96);</script></div>
+      <div class="status_background">
+      	<div class="status_content">
+      		<p style="height: 10px">&nbsp;</p>
+      		<center>
+<!----Add Pop-up windows start----->
+					<select name="select" onChange="select_tbl(this.value);" class="dhcp_select_col_width">
+					<option value="0" selected><?BasicSetup_173?></option>
+					<option value="1"><?BasicSetup_174?></option>
+					</select>
+					<div id="a" style="display:none;">
+                      <table border="0" cellpadding="0" cellspacing="0"  width="710">
+                          <tr>
+                            <td align="center" >
+                              <p class="adv_title"><p class="adv_title">
+                              <script>translate_strWrite("BasicSetup",173);</script>
+                              </p>
+                            </td>
+                          </tr>
+                          <tr><td align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+                          
+                      </table>
+                      <p style="height: 25px">&nbsp;</p>
+             		</div>            
+		    	
+					
+					<DIV ID="myDiv" style="display:none;"></DIV>
+					
+		    		<!--p style="height: 25px">&nbsp;</p-->
+		    		<div id="b" style="display:none;">	
+                      <table border="0" cellpadding="0" cellspacing="0"  width="710">
+                          <tr>
+                            <td align="center" >
+                              <p class="adv_title"><p class="adv_title">
+                              <script>translate_strWrite("BasicSetup",174);</script>
+                              </p>
+                            </td>
+                          </tr>
+                          <tr><td align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+                      </table>
+                      <p style="height: 25px">&nbsp;</p>
+                   </div>       
+		    		
+		    	<div id="manual_add_tbl" style="display:none;">	
+					<table border="1" cellpadding="0" cellspacing="0" id="table" width="469">
+						<tr>
+							<td height="25" width="134" align="center" >
+							<script>translate_strWrite("BasicSetup",121);</script></td>
+							<td height="25" width="139" align="center" >
+							<script>translate_strWrite("BasicSetup",122);</script></td>
+							<td height="25" width="137" align="center" >
+							<script>translate_strWrite("BasicSetup",117);</script></td>
+							<td height="25" width="64" align="center" >&nbsp;</td>
+							
+						</tr>
+
+						<tr>
+							<td height="25" width="134" align="center" ><INPUT type=text maxLength=15 class="ssid_col_width" size=13 name=manual_name value="" ></font></td>
+							<td height="25" width="139" align="center" ><script>dw(GetIPSegment(lan_ipaddr,1))</script> . <script>dw(GetIPSegment(lan_ipaddr,2))</script> . <script>dw(GetIPSegment(lan_ipaddr,3))</script>.&nbsp;<INPUT class=ip_col_width maxLength=3 size=2 name=manual_ip value="0">&nbsp; </font></td>
+							<td height="25" width="137" align="center" ><INPUT type=text maxLength=17 size=15 class="ssid_col_width" name=manual_mac value="00:00:00:00:00:00"></font></td>
+							<td height="25" width="64" align="center"  ><font face="Arial" color="#000000" size="2"><INPUT type=button name="manual_add" value="Add" onclick="add(document.forms[0]);"></font></td>
+						</tr>
+					</table>
+		    		</div>	
+		    		<p style="height: 25px">&nbsp;</p>
+		    		
+                      <table border="0" cellpadding="0" cellspacing="0"  width="710">
+                          <tr>
+                            <td align="center" >
+                              <p class="adv_title"><p class="adv_title">
+                              <script>translate_strWrite("BasicSetup",175);</script>
+                              </p>
+                            </td>
+                          </tr>
+                          <tr><td align="center" class="adv_title_hr"><img src="hr_line.png"></td></tr>
+                      </table>
+                        
+		    		<p style="height: 25px">&nbsp;</p>
+
+					<DIV ID="myDiv_1"></DIV>
+                         
+		    		<p style="height: 25px">&nbsp;</p>	
+
+<!----Add Pop-up windows End----->
+			</center>
+		      <p class="status_end"></p>     
+      </div>  
+     </div>               
+ <!-- Button Starts Here --> 
+ 
+  <div class="angle"></div>  
+   	<div class="EZ_mid">  
+      		<p style="height:10px;"></p>      		 		  				    
+				  <table border="0" cellspacing="0" cellpadding="0" align="center" class="Save_Refresh_button" width=500>
+				  	<tr height=23>
+				  	<!--td align="center" width="50">&nbsp;&nbsp;
+				  		</td-->
+				  	<td align="right" width="220">
+				  		<table border="0" cellspacing="0" cellpadding="0">
+								<tr height="23">
+									<td class="SW_LeftButton">&nbsp;</td>
+									<td class="SW_BottomButton"><a href="javascript:window.close();">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",1);</script></font>&nbsp;</a></td>
+									<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+							</td>
+							
+				  	<td align="center" width="60">&nbsp;<script>translate_strWrite("BasicSetup",162);</script>&nbsp;
+				  		</td>
+				  		
+				  		<td align="left">
+					  		<table border="0" cellspacing="0" cellpadding="0">
+									<tr height=23>
+										<td class="SW_LeftButton">&nbsp;</td>
+										<td class="SW_BottomButton"><a href="javascript:ValidateForm(document.forms[0]);">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",0);</script></font>&nbsp;</a></td>
+										<td class="SW_RightButton">&nbsp;</td>
+										</tr>
+									</table>
+							</td>
+				  		
+
+						<!--td align="center" width="60">&nbsp;<script>translate_strWrite("BasicSetup",162);</script>&nbsp;
+				  		</td>
+				  	<td align="center" width="75">
+				  		<table border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+									<td class="SW_LeftButton">&nbsp;</td>
+									<td class="SW_BottomButton"><a href="javascript:location.replace('Static_dhcp.htm');">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",2);</script></font>&nbsp;</a></td>
+									<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+							</td>	
+						<td align="center" width="60">&nbsp;<script>translate_strWrite("BasicSetup",162);</script>&nbsp;
+				  		</td>
+				  	<td align="center" width="70">
+				  		<table border="0" cellspacing="0" cellpadding="0">
+								<tr height=23>
+									<td class="SW_LeftButton">&nbsp;</td>
+									<td class="SW_BottomButton"><a href="javascript:self.close();">&nbsp;<font onmouseout="javascript:back_color_no_underline(this);" onmouseover="javascript:chage_color_no_underline(this);"><script>translate_strWrite("BottomButton",4);</script></font>&nbsp;</a></td>
+									<td class="SW_RightButton">&nbsp;</td>
+								</tr>
+								</table>
+							</td-->	
+						</tr>
+				  </table> 				    						    														    						    			    
+      </div>
+ <!-- Button Ends Here -->    
+
+         <div class="clear_float"> </div>
+          			   <div style="height: 40px"></div>   
+        	<div class="copyright">&copy; <script>translate_strWrite("SetupWizard",111);</script></div> 
+  </div>
+		</td>
+	</tr>
+	</table>
+</center>
+</form>
+</body>
+</html>

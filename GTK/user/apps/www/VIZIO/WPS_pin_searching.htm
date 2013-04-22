@@ -1,0 +1,37 @@
+<HTML>
+<HEAD>
+<TITLE></TITLE>
+<%include_file("javascript.htm");%>
+
+<Script Language="JavaScript">
+<!--
+
+//function save_pin(enrollee_pin){
+function save_pin(){
+
+
+//	document.register_btn.wsc_sta_pin.value = enrollee_pin;
+//	document.register_btn.wsc_sta_pin.value = self.parent.document.WPS_PIN.value ;
+    $('#wsc_sta_pin').val(parent.$('#WPS_PIN').val());
+   	document.register_btn.submit();
+}
+-->
+</script>
+</HEAD>
+<BODY  topmargin="0" leftmargin="0" bgcolor="#FFFFFF" onload="save_pin();">
+<form name="register_btn" method="post" action="wps_register.cgi">
+<!--form name="register_btn" method="post" action="post.cgi"-->
+	<input type="hidden" name="command" value="device_data">
+	<input type="hidden" name="cur_ipaddr" value='<%nvram_get("lan_ipaddr");%>'>
+	<input type="hidden" name="next_page" value="transparency.gif">
+	<input type="hidden" name="redirect_timer" value="1000">
+	<input type="hidden" name="reboot" value="">
+	<input type="hidden" name="data1" value=" wsc_sta_pin WPS_ClientLinkStatus ">
+  <input type="hidden" id="wsc_sta_pin" name="wsc_sta_pin">
+  <input type="hidden" name="WPS_ClientLinkStatus" value="0">
+
+</form>
+</BODY>
+</HTML>
+
+
